@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateShowroomsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('showrooms', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name',191);
+            $table->string('address')->nullable();
+            $table->string('hotline',191)->nullable();
+            $table->string('phone',191)->nullable();
+            $table->string('embed_google_map')->nullable();
+            $table->string('link',191)->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('showrooms');
+    }
+}
