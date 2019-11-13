@@ -15,8 +15,11 @@ Route::get('/', function () {
     return view('admin.layout.master');
 });
 
-Route::group(['prefix' => 'admin','as' => 'admin.'], function () {
+Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
+Route::post('saveLogin','Auth\LoginController@saveLogin')->name('saveLogin');
+Route::group(['prefix' => 'admin','as' => 'admin.','middleware' => 'auth'], function () {
     Route::get('/', function () {
-        return view('admin.layout.master');
-    })->name('/');
+        return view('admin.home.index');
+    })->name('home');
+
 });
