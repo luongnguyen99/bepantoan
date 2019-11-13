@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.layout.master');
+});
+
+Route::group(['prefix' => 'admin','as' => 'admin.'], function () {
+    Route::get('/', function () {
+        return view('admin.layout.master');
+    })->name('/');
 });
