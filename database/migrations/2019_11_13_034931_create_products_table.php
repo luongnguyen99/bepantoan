@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable();
             $table->string('infomation_detail')->nullable();
             $table->string('specifications')->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
