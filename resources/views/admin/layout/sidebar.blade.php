@@ -59,6 +59,75 @@
                                 class="fa fa-circle-o"></i> Danh mục sản phẩm</a></li>
                 </ul>
             </li>
+            {{-- Post Category --}}
+            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Danh mục tin tức</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.post_categories.add')}}"><i
+                                class="fa fa-circle-o"></i> Danh sách</a></li>
+                </ul>
+            </li>
+            {{-- Post --}}
+            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Bài viết</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.posts.index')}}"><i
+                                class="fa fa-circle-o"></i> Danh sách</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.posts.add')}}"><i
+                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                </ul>
+            </li>
+            {{-- Show rooms --}}
+            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Phòng trưng bày</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.showroom.index')}}"><i
+                                class="fa fa-circle-o"></i> Danh sách</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.showroom.add')}}"><i
+                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                </ul>
+            </li>
+            {{-- Show rooms --}}
+            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Thiết lập</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.logo')}}"><i
+                                class="fa fa-circle-o"></i> Logo</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.hotline')}}"><i
+                        class="fa fa-circle-o"></i>Liên hệ</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.footer')}}"><i
+                        class="fa fa-circle-o"></i>Footer</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.payment')}}"><i
+                        class="fa fa-circle-o"></i>Thanh toán</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.social_network')}}"><i
+                        class="fa fa-circle-o"></i>Mạng xã hội</a></li>
+                </ul>
+            </li>
+
         </ul>
     </section>
     <!-- /.sidebar -->

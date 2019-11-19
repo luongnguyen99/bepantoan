@@ -56,7 +56,7 @@ class LoginController extends Controller
                 'email.exists' => 'Email không tồn tại',
 
                 'password.required' => 'Mật khẩu không được để trống',
-            ],
+            ]
         );
 
         if ($validator->fails()) {
@@ -71,5 +71,4 @@ class LoginController extends Controller
             return redirect()->route('admin.home');
         }
     }
-   
 }

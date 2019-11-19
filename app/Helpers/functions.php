@@ -39,3 +39,62 @@ if (!function_exists('to_slug')) {
         return $str;
     }
 }
+//==============>Validate Input<=====================
+function showError($errors, $nameInput)
+{
+    if ($errors->has($nameInput)) {
+        echo '<div class="alert alert-danger" style="opacity:0.5">';
+        echo '<strong>'.$errors->first($nameInput).'</strong>';
+        echo '</div>';
+    }
+}
+//==============>Get Category<=====================
+function GetCategory($category, $parent, $shift, $id_select)
+{
+    foreach ($category as $value) {
+        if ($value['parent_id'] == $parent) {
+            if ($value['id'] == $id_select) {
+                echo '<option value='.$value['id'].' selected>'.$shift.$value['name'].'</option>';
+            } else {
+                echo '<option value='.$value['id'].'>'.$shift.$value['name'].'</option>';
+            }
+
+            GetCategory($category, $value['id'], $shift.'----|', $id_select);
+        }
+    }
+}
+//==============>Show Category<=====================
+function ShowCategory($category, $parent, $shift)
+{   
+    foreach ($category as $value) {
+        if ($value['parent_id'] == $parent) {
+            echo '
+        <tr>
+            <td>'.$shift.$value['name'].'</td>
+                <td>
+                <a href="/admin/post_categories/edit/'.$value['id'].'" class="btn btn-warning" >Edit</a>
+                <a href="/admin/post_categories/del/'.$value['id'].'" class="btn btn-danger" role="button">Del</a>
+                </td>
+            </td>
+        </tr>';
+            ShowCategory($category, $value['id'], $shift.'----|');
+        }
+    }
+}
+//=================>Cut Content<======================
+function get_excerpt($content, $number)
+    {
+       
+        $excerpt = $content;
+        
+        $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
+        
+        $excerpt = strip_tags($excerpt);
+        
+        $excerpt = substr($excerpt, 0, $number);
+        
+        $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
+        
+        $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
+        return $excerpt."...";
+    }
