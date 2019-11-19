@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('del/{id}', 'Post_categoriesController@del');
     });
-    //=================> Post category <===================
+    //=================> Post  <==========================
     Route::group(['prefix' => 'posts','as' => 'posts.'],function(){
         Route::get('', 'PostsController@getList')->name('index');
 
