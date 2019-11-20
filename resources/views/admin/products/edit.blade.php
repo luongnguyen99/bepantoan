@@ -1,11 +1,9 @@
 @extends('admin.layout.master')
 
-@section('title')
-Sản phẩm
+@section('page_title')
+Sửa sản phẩm
 @endsection
-@section('action')
-Thêm mới
-@endsection
+
 @section('style')
 <style>
     textarea.form-control {
