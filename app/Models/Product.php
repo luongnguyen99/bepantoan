@@ -14,7 +14,7 @@ class Product extends Model
         'category_id',
         'price',
         'sale_price',
-        'gitf',
+        'gift',
         'description',
         'infomation_detail',
         'specifications',

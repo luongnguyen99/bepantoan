@@ -85,6 +85,7 @@
     <script src="{{asset('admin0/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('admin0/plugins/select2/select2.min.js')}}"></script>
     <script src="{{asset('admin0/plugins/sweet_alert/sweetalert.min.js')}}"></script>
+
     <script src="{{asset('admin0/js/main.js')}}"></script>
     <!-- CK Editor -->
     <script src="{{asset('admin0/bower_components/ckeditor/ckeditor.js')}}"></script>

@@ -70,7 +70,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::get('/', 'ProductController@index')->name('index');
 
         Route::get('add', 'ProductController@add')->name('add');
-        Route::post('saveAdd', 'PropertyController@saveAdd')->name('saveAdd');
+        Route::post('saveAdd', 'ProductController@saveAdd')->name('saveAdd');
         
         Route::post('delete', 'ProductController@delete')->name('delete');
         Route::post('deleteMulti', 'ProductController@deleteMulti')->name('deleteMulti');
