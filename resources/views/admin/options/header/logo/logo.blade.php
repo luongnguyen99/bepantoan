@@ -26,11 +26,16 @@ Logo
                 <form id=create_category method="post">
                   @csrf
                    
-                    <div class="form-group">
-                        <label for="name">Tên hình ảnh</label>
-                        <input id="inputName" class="form-control" type="text" name="name"
-                            value="">
-                        <div class="text-danger error_name" id="error_name"></div>
+                    <div class="col-md-12">
+                        <div   class="form-group text-center" ninh='123'>
+                            <input type="button" class="btn btn-info" id="add" name="action"
+                                value="Chọn ảnh">
+                            <input id="img_" type="hidden" name="img[]" value="">
+                            <input type="hidden" name="list_img" id="list-img"
+                                value='<?php echo isset($_POST['list_img']) ? $_POST['list_img'] : '' ?>'>
+                        </div>
+                        <div class="col-sm-12 text-center" id="img-cat">
+                        </div>
                     </div>
                
                     <div class="form-group" style="margin-top:20px">
@@ -57,7 +62,10 @@ Logo
             <div class="box-body">
                 <!--  content here -->
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped text-center" id="table-categories">
+                    <table class="table table-hover table-striped " id="table-categories">
+                        <div class="text-center " >
+                            <img style="max-width:100%" class="img-fluid" src="{{ $db->value }}"  height="100" alt="">
+                        </div>
                         
                     </table>
                 </div>
@@ -67,4 +75,67 @@ Logo
     </div>
 </div>
 <!-- end main content -->
+@endsection
+@section('js')
+<script>
+    jQuery('body').on('click', '#add', function () {
+    // console.log("sss");
+        // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
+        var t = $(this);
+        var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest('.col-md-12')
+            .find('#list-img').val());
+
+        if (typeof (arr_url) == 'string') {
+            //console.log(arr_url);
+            arr_url = arr_url.replace(/\[/g, '');
+            arr_url = arr_url.replace(/\]/g, '');
+            arr_url = arr_url.replace(/"/g, '');
+            arr_url = (arr_url == '') ? [] : arr_url.split(",");
+            //arr_url = arr_url.split(",");
+        }
+        CKFinder.popup({
+            resourceType: "Images",
+            chooseFiles: true,
+            onInit: function (finder) {
+                finder.on('files:choose', function (evt) {
+                    //var arr_url = [];
+                    var mul = evt.data.files;
+
+                    
+                    mul = Object.entries(mul);
+                    mul = mul[1];
+                    mul = mul[1];
+
+                    var list_img = '';
+                    var arr_url_ = [];
+                    for (var i = mul.length - 1; i >= 0; i--) {
+
+                        let url_ = mul[i].getUrl();
+                        var urlParts = url_.replace('http://','').replace('https://','').split(/[/?#]/);
+                        var domain = urlParts[0];
+                        let port = 8000;
+
+                        let new_domain = domain + ":" + port;
+                        
+                        let new_url_ = url_.replace(domain , new_domain);
+
+                        
+                        
+                        list_img = list_img +
+                            "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
+                                new_url_ + "'></i><img alt='' src='" + new_url_ +
+                            "' class='img-cat' width='200' height='200'/></div>";
+                        $('#img_').val(new_url_);
+                        
+                        
+                    }
+                    arr_url = JSON.stringify(arr_url);
+
+                    t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
+                    t.closest('.col-md-12').find('#img-cat').eq(0).append(list_img);
+                });
+            }
+        });
+    });
+</script>
 @endsection

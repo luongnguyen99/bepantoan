@@ -51,21 +51,26 @@ Bài viết
                         <input value="{{ (old('short_desc') ? old('short_desc') :  '' ) }}" 
                             name="short_desc" class="form-control"">
                     </div>
+
+
                     <div class="form-group">
-                        <textarea id="editor1" class="form-control" name="" id="" rows="3">
+                        <label for="image">Nội dung</label>
+                        <textarea id="editor" class="form-control" name="content" rows="3">
                         </textarea>
                     </div>
-                       
-                    <div class="col-md-12" style="margin-top: 20px;">
-                        <label>Chọn ảnh</label>
-                        <div class="form-group" ninh='123'>
+                   
+                    <div class="col-md-12" style="margin-top: 20px;margin-left:-15px;">
+                        <label>Chọn ảnh đại diện</label>
+                        <div class="form-group"  ninh='123'>
                             <input type="button" class="btn btn-info" id="add" name="action"
-                                value="Chọn ảnh">
+                                value="Chọn ảnh đại diện">
+                            <input id="img_" type="hidden" name="img[]" value="">
                             <input type="hidden" name="list_img" id="list-img"
                                 value='<?php echo isset($_POST['list_img']) ? $_POST['list_img'] : '' ?>'>
                         </div>
                         <div class="col-sm-12 text-center" id="img-cat">
                         </div>
+                        
                     </div>
                     <div class="form-group">
                         <label for="name">Số lượng truy cập</label>
@@ -75,7 +80,7 @@ Bài viết
                     <div class="form-group">
                         <label for="parent_id">Chọn danh mục</label>
                         
-                        <select name="parent_id" id="parent_id" class="form-control select2_add">
+                        <select name="id_cate" id="id_cate" class="form-control select2_add">
                             <option value="0">-- Gốc --</option>
                             {{ GetCategory($db,0,'',0) }}
                         </select>
@@ -96,9 +101,12 @@ Bài viết
 
 @endsection
 @section('js')
-<script> CKEDITOR.replace('editor1'); </script>
+
+    <script> CKEDITOR.replace('editor'); </script>
     <script>
+
         jQuery('body').on('click', '#add', function () {
+            // console.log("sss");
         // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
         var t = $(this);
         var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest('.col-md-12')
@@ -120,18 +128,33 @@ Bài viết
                     //var arr_url = [];
                     var mul = evt.data.files;
 
+                    
                     mul = Object.entries(mul);
                     mul = mul[1];
                     mul = mul[1];
 
                     var list_img = '';
-                    //console.log(mul);
+                    var arr_url_ = [];
                     for (var i = mul.length - 1; i >= 0; i--) {
-                        arr_url.push(mul[i].getUrl());
+
+                        let url_ = mul[i].getUrl();
+                        var urlParts = url_.replace('http://','').replace('https://','').split(/[/?#]/);
+                        var domain = urlParts[0];
+                        let port = 8000;
+
+                        let new_domain = domain + ":" + port;
+                        
+                        let new_url_ = url_.replace(domain , new_domain);
+
+                        
+                        
                         list_img = list_img +
                             "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
-                            mul[i].getUrl() + "'></i><img alt='' src='" + mul[i].getUrl() +
+                                new_url_ + "'></i><img alt='' src='" + new_url_ +
                             "' class='img-cat' width='200' height='200'/></div>";
+                        $('#img_').val(new_url_);
+                        
+                        
                     }
                     arr_url = JSON.stringify(arr_url);
 
@@ -140,6 +163,8 @@ Bài viết
                 });
             }
         });
+
+
     });
     $('body').on('click', '.delete-img', function () {
         var image = $(this).data('url');
@@ -215,4 +240,5 @@ Bài viết
 			$("#inputSlug").val(slug);
 		});
     </script>
+    
 @endsection

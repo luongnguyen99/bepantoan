@@ -26,18 +26,6 @@ Danh mục
                 <form id=create_category method="post">
                   @csrf
                     <div class="form-group">
-                        <label for="parent_id">Chọn danh mục</label>
-                        
-                        <select name="parent_id" id="parent_id" class="form-control select2_add">
-                            <option value="0">-- Gốc --</option>
-                            @foreach ($db as $item)
-                            @if ($record_edit->parent_id == $item->id)
-                            {{ GetCategory($db,0,'',$item->id) }}
-                            @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="name">Tên danh mục</label>
                         <input id="inputName" class="form-control" type="text" name="name"
                             value="{{ $record_edit->name }}">
@@ -76,7 +64,27 @@ Danh mục
                 <!--  content here -->
                 <div class="table-responsive">
                     <table class="table table-hover table-striped text-center" id="table-categories">
-                        {{ ShowCategory($db,0,'') }}
+                            <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên</th>
+                                        <th>Đường dẫn</th>
+                                        <th>Quản lý</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($db as $key=>$item)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->slug }}</td>
+                                        <td>
+                                            <a href="/admin/post_categories/edit/{{ $item->id }}" class="btn btn-warning">Sửa</a>
+                                            <a href="/admin/post_categories/del/{{ $item->id }}" class="btn btn-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                     </table>
                 </div>
                 <!-- end content here -->
