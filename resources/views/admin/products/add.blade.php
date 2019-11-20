@@ -259,13 +259,13 @@ Thêm mới
         }
     });
 
-    var i = 0;var k = 0;
+    var i = 9999;var k = 9999;
     $(document).on('click','.add_repeater0',function () {
         $('.gift_div').append(`
         <div class="row" style="display: flex;align-items: flex-start;">
             <div class="col-sm-10">
-                <input type="text" name="gift[${i}][value]" value="" placeholder="Ưu đãi" class="form-control" />
-                <span class="errors error_gift_${i}_value" style="color:red"></span>
+                <input type="text" name="gift[${k}][value]" value="" placeholder="Ưu đãi" class="form-control" />
+                <span class="errors error_gift_${k}_value" style="color:red"></span>
             </div>
             <div class="col-sm-2">
                 <a data-repeater-delete class="btn btn-danger remove_repeater"><i class="fa fa-minus"></i></a>
