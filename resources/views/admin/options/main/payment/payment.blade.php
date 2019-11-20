@@ -24,25 +24,27 @@ Phương thức thanh toán
             <div class="box-body">
                 <!--  content here -->
                 <form id=create_category method="post" class="repeater">
-                  @csrf
-                    
-                  <div class="form-group">
-                    <div data-repeater-list="table[content]">
-                        <div data-repeater-item>
-                            <label>Phương thức</label>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <input type="text" name="type" class="form-control" id="exampleInputPassword4"
-                                        placeholder="Phương thức">
+                    @csrf
+
+                    <div class="form-group">
+                        <div data-repeater-list="table[content]">
+                            <div data-repeater-item>
+                                <label>Phương thức</label>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <input type="text" name="type" class="form-control" id="exampleInputPassword4"
+                                            placeholder="Phương thức">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <input style="margin-top:10px;" data-repeater-create type="button" class="btn btn-info"
+                            value="Thêm" />
                     </div>
-                    <input style="margin-top:10px;" data-repeater-create type="button" class="btn btn-info" value="Thêm" />
-                    </div>
-               
+
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
+                        <a class="edit-menu btn btn-success" href="#modal-menu">Hướng dẫn nhập</a>
                     </div>
                 </form>
                 <!-- end content here -->
@@ -56,6 +58,7 @@ Phương thức thanh toán
                 <h3 class="box-title">
                     Danh sách loại phương thức thanh toán
                 </h3>
+               
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title=""
                         data-original-title="Collapse">
@@ -66,31 +69,70 @@ Phương thức thanh toán
                 <!--  content here -->
                 <div class="table-responsive">
                     <table class="table table-hover table-striped text-center" id="table-categories">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Kiểu thanh toán</th>
-                                    <th>Quản lý</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($json != null)
-                                @foreach ($json as $key=>$item)
-                                <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>{{  $item['type'] }}</td>
-                                    <td>
-                                        <a href="/admin/options/edit_payment/{{ $key }}" class="btn btn-warning">Sửa</a>
-                                        <a href="/admin/options/del_payment/{{ $key }}" class="btn btn-danger">Xóa</a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @endif
-                            </tbody>
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Kiểu thanh toán</th>
+                                <th>Quản lý</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($json != null)
+                            @foreach ($json as $key=>$item)
+                            <tr>
+                                <td>{{ $key+1 }}</td>
+                                <td>{{  $item['type'] }}</td>
+                                <td>
+                                    <a href="/admin/options/edit_payment/{{ $key }}" class="btn btn-warning">Sửa</a>
+                                    <a href="/admin/options/del_payment/{{ $key }}" class="btn btn-danger">Xóa</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
                     </table>
                 </div>
                 <!-- end content here -->
             </div>
+        </div>
+    </div>
+</div>
+<div id="modal-menu" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="display: flex">
+                <h4 class="modal-title" id="editModalLabel" style="width: 50%">Thêm phương thức thanh toán</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    style="width: 50%; text-align: right">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color:red;font-size:18px;font-weight:bold">Bước 1: </p>
+                <p>Click <a target="blank" href="https://fontawesome.com/v4.7.0/icons/">vào đây</a> để chọn icon bạn muốn hiển thị lên phần phương thức thanh toán của website</p>
+                <div style="width:500px">
+                    <img src="{{ url('client/img/Capture.PNG') }}"style="max-width:100%" heigh="20px" alt="">
+                </div>
+                <p style="color:red;font-size:18px;font-weight:bold">Bước 2: </p>
+                <div>
+                    <p>Sau đó chọn bất kì icon nào bạn muốn</p>
+                    <img src="{{ url('client/img/Capture1.PNG') }}" alt="">
+                    <p>Và sao chép phần trong ngoặc kép <span style="color:red">"fa fa-address-book"</span></p>
+                    <p style="color:red;font-size:18px;font-weight:bold">Bước 3: </p>
+                    <p>Tiếp theo sao chép vào phần thêm mới phương thức và bấm lưu</p>
+                    <img src="{{ url('client/img/Capture2.PNG') }}" alt="">
+                </div>
+                <div>
+                    <p style="color:red;font-size:18px;font-weight:bold">Một số icon mẫu</p>
+                    <p>Visa :<span style="color:red"> fa fa-cc-visa</span></p>
+                    <p>Mastercard:<span style="color:red"> fa fa-cc-mastercard</span></p>
+                    <p>Paypal:<span style="color:red"> fa fa-cc-paypal</span></p>
+                    <p>Discover:<span style="color:red"> fa fa-cc-discover</span></p>
+                    <p>Stripe:<span style="color:red"> fa fa-cc-stripe</span></p>
+                </div>
+                
+            </div>
+
         </div>
     </div>
 </div>
@@ -152,6 +194,16 @@ Phương thức thanh toán
                 }
             }]
         });
+        jQuery(".edit-menu").click(function (e) {
+            e.preventDefault();
+            jQuery(this).parent().parent().addClass("editing");
+            var name = jQuery(this).parent().parent().data("name"),
+                link = jQuery(this).parent().parent().data("link");
+            jQuery("#modal-menu .edit-name").val(name);
+            jQuery("#modal-menu .edit-link").val(link);
+            $('#modal-menu').modal('show');
+        });
     })
+
 </script>
 @endsection

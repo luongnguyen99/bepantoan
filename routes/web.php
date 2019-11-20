@@ -149,3 +149,62 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         
     });
 });
+
+Route::group(['prefix' => '','namespace' => 'Client'], function () {
+    Route::get('', 'IndexController@getList');
+});
+//=============> Composer layouts <================
+View::composer('*', function($view) {
+    //=============>HOTLINE<=================
+    $hotline = App\Models\Option::where('key','hotline')->first();
+    if($hotline->value == null){
+        $hotline_j = null; 
+        $view->with('hotline_j', $hotline_j);
+    }
+    else{
+        $hotline_j = json_decode($hotline->value,true);
+        $view->with('hotline_j', $hotline_j);
+    }
+    //=============>FOOTER<=================
+    $footer = App\Models\Option::where('key','footer')->first();
+    if($footer->value == null){
+        $footer_j = null; 
+        $view->with('footer_j', $footer_j);
+    }
+    else{
+        $footer_j = json_decode($footer->value,true);
+        $view->with('footer_j', $footer_j);
+    }
+    //=============>LOGO<=================
+    $logo = App\Models\Option::where('key','logo')->first();
+    
+    if($logo->value == null){
+        $logo = null; 
+        $view->with('logo', $logo->value);
+    }
+    else{
+        $view->with('logo', $logo->value);
+    }
+    //=============>PAYMENT<=================
+    $payment = App\Models\Option::where('key','payment')->first();
+   
+    if($payment->value == null){
+        $payment_j = null; 
+        $view->with('payment_j', $payment_j);
+    }
+    else{
+        $payment_j = json_decode($payment->value,true);
+        $view->with('payment_j', $payment_j);
+    }
+    //=============>SOCIAL NETWORK<=================
+    $social_network = App\Models\Option::where('key','social_network')->first();
+   
+    if($social_network->value == null){
+        $social_network_j = null; 
+        $view->with('social_network_j', $social_network_j);
+    }
+    else{
+        $social_network_j = json_decode($social_network->value,true);
+        $view->with('social_network_j', $social_network_j);
+    }
+});
