@@ -55,8 +55,8 @@
                 <ul class="treeview-menu">
                     <li class="{{activeNav('products')}}"><a href="{{route('admin.products.index')}}"><i class="fa fa-circle-o"></i>
                                     Danh sách sản phẩm</a></li>
-                    <li class="{{activeNav('products','add')}}"><a href="{{route('admin.products.index')}}"><i class="fa fa-circle-o"></i>
-                                            Danh sách sản phẩm</a></li>
+                    <li class="{{activeNav('products','add')}}"><a href="{{route('admin.products.add')}}"><i class="fa fa-circle-o"></i>
+                                            Thêm mới sản phẩm</a></li>
                     <li class="{{activeNav('properties')}}"><a href="{{route('admin.properties.index')}}"><i
                                 class="fa fa-circle-o"></i> Thuộc tính</a></li>
                     <li class="{{activeNav('categories')}}"><a href="{{route('admin.categories.index')}}"><i
