@@ -157,39 +157,39 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList');
 });
 //=============> Composer layouts <================
-// View::composer('*', function($view) {
-//     //=============>HOTLINE<=================
-//     $hotline = App\Models\Option::where('key','hotline')->first();
-//     if($hotline->value == null){
-//         $hotline_j = null; 
-//         $view->with('hotline_j', $hotline_j);
-//     }
-//     else{
-//         $hotline_j = json_decode($hotline->value,true);
-//         $view->with('hotline_j', $hotline_j);
-//     }
-//     //=============>FOOTER<=================
-//     $footer = App\Models\Option::where('key','footer')->first();
-//     if($footer->value == null){
-//         $footer_j = null; 
-//         $view->with('footer_j', $footer_j);
-//     }
-//     else{
-//         $footer_j = json_decode($footer->value,true);
-//         $view->with('footer_j', $footer_j);
-//     }
-//     //=============>LOGO<=================
-//     $logo = App\Models\Option::where('key','logo')->first();
-    
-//     if($logo->value == null){
-//         $logo = null; 
-//         $view->with('logo', $logo->value);
-//     }
-//     else{
-//         $view->with('logo', $logo->value);
-//     }
-//     //=============>PAYMENT<=================
-//     $payment = App\Models\Option::where('key','payment')->first();
+View::composer('*', function($view) {
+    //=============>HOTLINE<=================
+    $hotline = App\Models\Option::where('key','hotline')->first();
+    if($hotline->value == null){
+        $hotline_j = null; 
+        $view->with('hotline_j', $hotline_j);
+    }
+    else{
+        $hotline_j = json_decode($hotline->value,true);
+        $view->with('hotline_j', $hotline_j);
+    }
+    //=============>FOOTER<=================
+    $footer = App\Models\Option::where('key','footer')->first();
+    if($footer->value == null){
+        $footer_j = null; 
+        $view->with('footer_j', $footer_j);
+    }
+    else{
+        $footer_j = json_decode($footer->value,true);
+        $view->with('footer_j', $footer_j);
+    }
+    //=============>LOGO<=================
+    $logo = App\Models\Option::where('key','logo')->first();
+   
+    if($logo->value == null){
+        $logo->value = null; 
+        $view->with('logo', $logo->value);
+    }
+    else{
+        $view->with('logo', $logo->value);
+    }
+    //=============>PAYMENT<=================
+    $payment = App\Models\Option::where('key','payment')->first();
    
 //     if($payment->value == null){
 //         $payment_j = null; 

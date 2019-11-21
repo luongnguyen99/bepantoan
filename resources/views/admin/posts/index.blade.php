@@ -2,7 +2,7 @@
 
 
 {{-- page title --}}
-@section('page_title')
+@section('title')
 Bài viết
 @endsection
 
