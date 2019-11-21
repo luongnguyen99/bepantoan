@@ -16,6 +16,12 @@
 	<link rel="stylesheet" href="client/css/style.css">
 	@yield('css')
 </head>
+
+<?php 
+echo '<pre>';
+print_r($data_general);
+echo '</pre>';
+?>
 <body>
 	<header>
 		<div class="header-pc hidden-xs hidden-sm">
@@ -23,11 +29,11 @@
 				<div class="row">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-							<a href="#"><img src="
+							<a href="<?php echo URL::to('/'); ?>"><img src="
 								@if($logo != null)
 								{{ $logo }}
 								@endif
-								" alt="">
+								" alt="{{ $data_general['name_site'] }}">
 							</a>
 						</div>
 					</div>
@@ -79,8 +85,10 @@
 					        
 					        <a href="#" rel=""><i class="pe-7s-tools"></i>Dịch vụ</a>
 					        
-					        <a class="km" href="#" target="_blank" rel=""><i class="pe-7s-gift"></i>Khuyến mãi</a>
-							<a class="hotline" href="#" target="_blank" rel=""><i class="pe-7s-call"></i>
+							<a class="km" href="#" target="_blank" rel=""><i class="pe-7s-gift"></i>Khuyến mãi</a>
+							
+							
+							<a class="hotline" href="tel:{{ $hotline_j['phone'] }}" rel=""><i class="pe-7s-call"></i>
 								@if ($hotline_j['phone'])
 									{{ $hotline_j['phone'] }}
 								@endif
@@ -95,6 +103,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="header-mobile hidden-md hidden-lg">
 			<div class="container">
 				<div class="row">
@@ -214,6 +223,8 @@
 				
 			</div>
 		</div>
+
+
 		
 	</header><!-- /header -->
 
