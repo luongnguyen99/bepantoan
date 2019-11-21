@@ -44,7 +44,7 @@ Thêm mới
         padding: 5px;
         margin-bottom: 10px;
         position: relative;
-        height: 100px;
+        /* height: 100px; */
         overflow: hidden;
     }
 
