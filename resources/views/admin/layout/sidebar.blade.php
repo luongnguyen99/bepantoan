@@ -64,7 +64,7 @@
                 </ul>
             </li>
             {{-- Post Category --}}
-            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+            <li class="treeview {{activeNav('post_categories')}} {{activeNav('post_categories')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
                     <span>Danh mục tin tức</span>
@@ -73,12 +73,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.post_categories.add')}}"><i
+                    <li class="{{activeNav('post_categories')}}"><a href="{{route('admin.post_categories.add')}}"><i
                                 class="fa fa-circle-o"></i> Danh sách</a></li>
                 </ul>
             </li>
             {{-- Post --}}
-            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+            <li class="treeview {{activeNav('posts')}} {{activeNav('posts')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
                     <span>Bài viết</span>
@@ -87,14 +87,14 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.posts.index')}}"><i
+                    <li class="{{activeNav('posts')}}"><a href="{{route('admin.posts.index')}}"><i
                                 class="fa fa-circle-o"></i> Danh sách</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.posts.add')}}"><i
+                    <li class="{{activeNav('posts')}}"><a href="{{route('admin.posts.add')}}"><i
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                 </ul>
             </li>
             {{-- Show rooms --}}
-            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+            <li class="treeview {{activeNav('showroom')}} {{activeNav('showroom')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
                     <span>Phòng trưng bày</span>
@@ -103,14 +103,14 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.showroom.index')}}"><i
+                    <li class="{{activeNav('showroom')}}"><a href="{{route('admin.showroom.index')}}"><i
                                 class="fa fa-circle-o"></i> Danh sách</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.showroom.add')}}"><i
+                    <li class="{{activeNav('showroom')}}"><a href="{{route('admin.showroom.add')}}"><i
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                 </ul>
             </li>
             {{-- Show rooms --}}
-            <li class="treeview {{activeNav('properties')}} {{activeNav('post_categories')}}">
+            <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
                     <span>Thiết lập</span>
@@ -119,15 +119,15 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.logo')}}"><i
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.logo')}}"><i
                                 class="fa fa-circle-o"></i> Logo</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.hotline')}}"><i
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.hotline')}}"><i
                         class="fa fa-circle-o"></i>Liên hệ</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.footer')}}"><i
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer')}}"><i
                         class="fa fa-circle-o"></i>Footer</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.payment')}}"><i
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.payment')}}"><i
                         class="fa fa-circle-o"></i>Thanh toán</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.options.social_network')}}"><i
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.social_network')}}"><i
                         class="fa fa-circle-o"></i>Mạng xã hội</a></li>
                 </ul>
             </li>

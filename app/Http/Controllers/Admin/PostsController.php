@@ -25,10 +25,14 @@ class PostsController extends Controller
         $db->slug = $r->slug;
         $db->short_desc = $r->short_desc;
         $db->content = $r->content;
-        $imgs = json_decode($r->list_img);
-        $db->views = $r->view;
+
+        $imgs = $r->img;
         $db->image = $imgs[0];
+
+        $db->views = $r->view;
+        
         $db->post_category_id = $r->parent_id;
+        
         $db->save();
         return redirect('admin/posts')->with('add_success','Thêm thành công'); 
     }
@@ -40,14 +44,16 @@ class PostsController extends Controller
     }
     public function postEdit(PostsRequest $r,$id)
     {
+        
         $db = Post::find($id);
         $db->title = $r->name;
         $db->slug = $r->slug;
         $db->short_desc = $r->short_desc;
         $db->content = $r->content;
-        $imgs = json_decode($r->list_img);
-        $db->views = $r->view;
+        $imgs = $r->img;
         $db->image = $imgs[0];
+        
+        $db->views = $r->view;
         $db->post_category_id = $r->parent_id;
         $db->save();
         return redirect('admin/posts')->with('edit_success','Sửa thành công');

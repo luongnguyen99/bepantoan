@@ -10,12 +10,14 @@ class OptionsController extends Controller
     //==========> LOGO <=====================
     public function getLogo()
     {
-        return view('admin.options.header.logo.logo');
+        $db = Option::where('key','logo')->first();
+        return view('admin.options.header.logo.logo',compact('db'));
     }
     public function postLogo(Request $r)
     {
-        $db = new Option;
-        $db->logo = $r->logo;
+        $db = Option::where('key','logo')->first();
+        $db->value = $r->img[0];
+        $db->save();
         return redirect()->back()->with('add_success','Thêm logo thành công');
     }
     //==========> HOTLINE <=====================

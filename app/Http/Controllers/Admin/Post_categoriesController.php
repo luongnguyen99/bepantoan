@@ -15,7 +15,6 @@ class Post_categoriesController extends Controller
    public function postAdd(Request $r)
    {
         $db = new Post_category;
-        $db->parent_id = $r->parent_id;
         $db->name  = $r->name;
         $db->slug =  $r->slug;
         $db->save();
@@ -30,7 +29,6 @@ class Post_categoriesController extends Controller
    public function postEdit(Request $r,$id)
    {
         $record_edit = Post_category::find($id);
-        $record_edit->parent_id = $r->parent_id;
         $record_edit->name = $r->name;
         $record_edit->slug = $r->slug;
         
