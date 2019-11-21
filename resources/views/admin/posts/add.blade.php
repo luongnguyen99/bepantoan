@@ -82,7 +82,11 @@ Bài viết
                         
                         <select name="id_cate" id="id_cate" class="form-control select2_add">
                             <option value="0">-- Gốc --</option>
-                            {{ GetCategory($db,0,'',0) }}
+                            @foreach ($post_cate as $item)
+                            
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

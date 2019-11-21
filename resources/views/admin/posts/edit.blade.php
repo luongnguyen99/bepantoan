@@ -75,11 +75,14 @@ Bài viết
                         <label for="parent_id">Chọn danh mục</label>
                         
                         <select name="parent_id" id="parent_id" class="form-control select2_add">
-                            <option value="0">-- Gốc --</option>
                             @foreach ($post_cate as $item)
+                            
+                            <option 
                             @if ($item->id == $db->post_category_id)
-                            {{ GetCategory($post_cate,0,'',$item->id) }}
-                            @endif
+                                {{ 'selected' }}
+                            @endif 
+                            value="{{ $item->id }}">{{ $item->name }}</option>
+                            
                             @endforeach
                         </select>
                     </div>
