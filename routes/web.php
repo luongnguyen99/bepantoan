@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin.layout.master');
-});
+Route::get('/', 'Client\indexController@getList')->name('homepage');
 
 
 Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
@@ -149,6 +147,11 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('edit_social_network/{id}', 'OptionsController@postEditSocial_network');
 
         Route::get('del_social_network/{id}', 'OptionsController@getDelSocial_network');
+
+
+        // ============> General <============
+
+        Route::get('general', 'OptionsController@getGeneral')->name('general');
         
     });
 });
@@ -191,23 +194,23 @@ View::composer('*', function($view) {
     //=============>PAYMENT<=================
     $payment = App\Models\Option::where('key','payment')->first();
    
-//     if($payment->value == null){
-//         $payment_j = null; 
-//         $view->with('payment_j', $payment_j);
-//     }
-//     else{
-//         $payment_j = json_decode($payment->value,true);
-//         $view->with('payment_j', $payment_j);
-//     }
-//     //=============>SOCIAL NETWORK<=================
-//     $social_network = App\Models\Option::where('key','social_network')->first();
+    if($payment->value == null){
+        $payment_j = null; 
+        $view->with('payment_j', $payment_j);
+    }
+    else{
+        $payment_j = json_decode($payment->value,true);
+        $view->with('payment_j', $payment_j);
+    }
+    //=============>SOCIAL NETWORK<=================
+    $social_network = App\Models\Option::where('key','social_network')->first();
    
-//     if($social_network->value == null){
-//         $social_network_j = null; 
-//         $view->with('social_network_j', $social_network_j);
-//     }
-//     else{
-//         $social_network_j = json_decode($social_network->value,true);
-//         $view->with('social_network_j', $social_network_j);
-    // }
+    if($social_network->value == null){
+        $social_network_j = null; 
+        $view->with('social_network_j', $social_network_j);
+    }
+    else{
+        $social_network_j = json_decode($social_network->value,true);
+        $view->with('social_network_j', $social_network_j);
+    }
 });

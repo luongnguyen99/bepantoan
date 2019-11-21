@@ -235,4 +235,14 @@ class OptionsController extends Controller
         return redirect('admin/options/social_network/')->with('del_success','Xóa thành công');
     }
     
+    //  ==================== General setting ====================== //
+
+    public function getGeneral(){
+        $db = Option::where('key','general');
+        
+
+
+
+
+    }
 }

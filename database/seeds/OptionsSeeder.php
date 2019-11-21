@@ -37,6 +37,29 @@ class OptionsSeeder extends Seeder
                 'key' => 'social_network',
                 'value' => '',
             ],
+
+            [   
+                'name' => 'name_site',
+                'key' => 'general_name_site',
+                'value' => '',
+            ],
+
+            [   
+                'name' => 'desc_site',
+                'key' => 'general_description_site',
+                'value' => '',
+            ],
+            [   
+                'name' => 'header_code',
+                'key' => 'general_header_code',
+                'value' => '',
+            ],
+            [   
+                'name' => 'footer_code',
+                'key' => 'general_footer_code',
+                'value' => '',
+            ]
+
         ];
         DB::table('options')->insert($data);
     }
