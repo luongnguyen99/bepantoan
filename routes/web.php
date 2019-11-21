@@ -155,6 +155,9 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList');
+    
+    // danh muc san pham 
+    Route::get('danh-muc-san-pham','ListCategoryController@index')->name('list-category');
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {
@@ -191,23 +194,23 @@ View::composer('*', function($view) {
     //=============>PAYMENT<=================
     $payment = App\Models\Option::where('key','payment')->first();
    
-//     if($payment->value == null){
-//         $payment_j = null; 
-//         $view->with('payment_j', $payment_j);
-//     }
-//     else{
-//         $payment_j = json_decode($payment->value,true);
-//         $view->with('payment_j', $payment_j);
-//     }
-//     //=============>SOCIAL NETWORK<=================
-//     $social_network = App\Models\Option::where('key','social_network')->first();
+    if($payment->value == null){
+        $payment_j = null; 
+        $view->with('payment_j', $payment_j);
+    }
+    else{
+        $payment_j = json_decode($payment->value,true);
+        $view->with('payment_j', $payment_j);
+    }
+    //=============>SOCIAL NETWORK<=================
+    $social_network = App\Models\Option::where('key','social_network')->first();
    
-//     if($social_network->value == null){
-//         $social_network_j = null; 
-//         $view->with('social_network_j', $social_network_j);
-//     }
-//     else{
-//         $social_network_j = json_decode($social_network->value,true);
-//         $view->with('social_network_j', $social_network_j);
-//     }
-// });
+    if($social_network->value == null){
+        $social_network_j = null; 
+        $view->with('social_network_j', $social_network_j);
+    }
+    else{
+        $social_network_j = json_decode($social_network->value,true);
+        $view->with('social_network_j', $social_network_j);
+    }
+});
