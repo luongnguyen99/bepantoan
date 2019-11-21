@@ -44,7 +44,7 @@
                 </ul>
             </li>
             
-            <li class="treeview {{activeNav('properties')}} {{activeNav('categories')}}">
+            <li class="treeview {{activeNav('properties')}} {{activeNav('categories')}} {{activeNav('products')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
                     <span>Sản phẩm</span>
@@ -53,7 +53,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('products')}}"><a href="{{route('admin.products.index')}}"><i class="fa fa-circle-o"></i>
+                    <li class="{{activeNav('products','index')}}"><a href="{{route('admin.products.index')}}"><i class="fa fa-circle-o"></i>
                                     Danh sách sản phẩm</a></li>
                     <li class="{{activeNav('products','add')}}"><a href="{{route('admin.products.add')}}"><i class="fa fa-circle-o"></i>
                                             Thêm mới sản phẩm</a></li>
