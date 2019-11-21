@@ -158,6 +158,14 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('edit_slide/{id}', 'OptionsController@postEditSlide');
 
         Route::get('del_slide/{id}', 'OptionsController@DelSlide');
+        //======================>Menu <=============================
+        Route::get('menu', 'OptionsController@getMenu')->name('menu');
+        Route::post('menu', 'OptionsController@postMenu')->name('add.menu');
+        Route::post('update', 'OptionsController@postUpdateMenu')->name('update.menu');
+        //======================>Menu Phone<=============================
+        Route::get('menu-phone', 'OptionsController@getMenuPhone')->name('menu-phone');
+        Route::post('menu-phone', 'OptionsController@postMenuPhone')->name('add.menu-phone');
+        Route::post('update-phone', 'OptionsController@postUpdateMenuPhone')->name('update.menu-phone');
         
     });
 });

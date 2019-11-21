@@ -247,10 +247,19 @@ class OptionsController extends Controller
     }
     public function postSlide(Request $r)
     {
+        $r->validate([
+            'img_' =>'required',
+        ],
+        [
+            'img_.required'=>'Không được để trống ảnh slide',
+        ]);
+
         $arr = $r->all();
+        
         $count_arr = count($arr['table']['content']);
         if ($arr['table'] != null) {
             foreach($arr['table'] as $row){
+                
                 if (isset($arr['img_'])) {
                     if($row[$count_arr-1]){
                         $row[$count_arr-1]['img_'] = $arr['img_'];
@@ -289,7 +298,7 @@ class OptionsController extends Controller
         }else{
             $db = null;
         }
-        return view('admin.options.main.slide.edit',compact('db_edit'));
+        return view('admin.options.main.slide.edit',compact('db_edit','db'));
     }
     public function postEditSlide(Request $r,$id)
     {
@@ -297,46 +306,163 @@ class OptionsController extends Controller
         $arr = $r->all();
         $count_arr = count($arr['table']['content']);
         
-        if (isset($arr['img_'])) {
+        foreach ($arr as $value_arr) {
             
-            if ($arr['table'] != null) {
-                foreach($arr['table'] as $row){
-                    if (isset($arr['img_']) || isset($arr['type'])) {
-                        if($row[$count_arr-1]){
-                            $row[$count_arr-1]['img_'] = $arr['img_'];
-                        }else{
-                            $row[$count_arr-1]['img_'] = null;
-                        }
-                    }
-                    $result[] = $row;
-                    unset($result[0][0]['old_img']);
-                    
-                   
-                    $all_slide = json_decode($slide->value,true);
-                  
-                    foreach($all_slide as $key=>$row){
+            if (isset($arr['img_']) || isset($arr['table']['content'][0]['type'])) {
+                if ($arr['table'] != null) {
+                    foreach($arr['table'] as $row){
                         
-                        if ($key == $id) {
-                            
-                            $row[$key] = $result[0][0];
-                            
+                        if (isset($arr['img_']) || isset($arr['table']['content'][0]['type'])) {
+                            if(isset($arr['img_'])){
+                                if($row[$count_arr-1]){
+                                    $row[$count_arr-1]['img_'] = $arr['img_'];
+                                }else{
+                                    $row[$count_arr-1]['img_'] = null;
+                                }
+                            }
+                            else{
+                                $row[$count_arr-1]['img_'] = $row[$count_arr-1]['old_img'];
+                                
+                            }
                         }
-
-                        $slide->value = json_encode($row);
-                        dd($slide->value);
-                        $slide->save();
-                        return redirect('admin/options/slide/add')->with('edit_success','Sửa thành công');
+                        $result[] = $row;
+                        unset($result[0][0]['old_img']);
+                        $all_slide = json_decode($slide->value,true);
+                        foreach ($all_slide as $value) {
+                            foreach($all_slide[0] as $key=>$row){
+                                $id_int = (int) $id;
+                                
+                                if ($key == $id_int) {
+                                   
+                                    $value[$key] = $result[0][0];
+                                    
+                                    $row1[0] = $value;
+                                    
+                                    $slide->value = json_encode($row1);
+                                    
+                                    $slide->save();
+                                    return redirect('admin/options/slide/')->with('edit_success','Sửa thành công');
+                                }
+                            }
+                        }
                     }
-                   
                 }
             }
         }
-        else{
-
+    }
+    public function DelSlide(Request $r,$id)
+    {
+        $slide = Option::where('key','slide')->first();
+        $arr = $r->all();
+        $slide_json = json_decode($slide->value,true);
+        foreach ($slide_json as $value) {
+           foreach ($slide_json[0] as $key => $row) {
+            $id_int = (int) $id;
+               if($key == $id_int){
+                   $ninh = $slide_json[0][$key];
+                   unset($slide_json[0][$key]); 
+                   $slide->value = json_encode($slide_json);
+                   $slide->save();
+                   return redirect('admin/options/slide/')->with('del_success','Xóa thành công');
+               }
+           }
         }
+    }
+    //==========> MENU <=====================
+    public function getMenu()
+    {
+        $options = Option::where('key', '=', 'menu')->first();
         
+        if (!empty($options->value)) {
+            $json = json_decode($options->value);
+            
+            $showMenu = $this->show_menu($json);
+           
+        } else {
+            $showMenu = '';
+        }
+        return view('admin.options.header.menu.add', compact('showMenu'));
+    }
+    public function show_menu($arr_menu, $result = '')
+    {
+        if ($arr_menu) {
+            $result .= '<ol class="dd-list">';
+            foreach ($arr_menu as $key => $item) {
+                $item = get_object_vars($item);
+                $name = $item['name'];
+                $link = $item['link'];
+                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '" >';
+                $result .= '<div class="dd-handle" style="padding:6px 150px;">' . $name . '</div>';
+                if (array_key_exists("children", $item)) {
+                    $result = $this->show_menu($item["children"], $result);
+                }
+                $result .= '<div class="menu-actions"><a href="#modal-menu" class="edit-menu modal-with-form"><i class="fa fa-edit"></i></a><a href="#" class="remove-menu"><i id="rmv-menu" class="fa fa-times"></i></a></div></li>';
+            }
+            $result .= '</ol>';
+        }
+        return $result;
+    }
+    public function postMenu(Request $r)
+    {
+        $options = Option::where('key', '=', 'menu')->first();
+
+        $opt_value = json_decode($options->value);
+
+        $new_item = array(
+            "name" => $r->menu_name,
+            "link" => $r->menu_link,
+        );
+        $new_item = (object) $new_item;
+        $opt_value[] = $new_item;
+        $options->value = json_encode($opt_value);
+        $options->save();
+        return redirect()->back()->with('add-menu-success', 'Thêm menu thành công!');
+    }
+    public function postUpdateMenu(Request $r)
+    {
+        // menu_content
+        $options = Option::where('key', '=', 'menu')->first();
+        $options->value = $r->menu_content;
+        $options->save();
+        return redirect()->back()->with('update-menu-success', 'Thêm menu thành công!');
+    }
+
+    //==========> MENU Phone <==================
+    public function getMenuPhone()
+    {
+        $options = Option::where('key', '=', 'menu_phone')->first();
         
-       
+        if (!empty($options->value)) {
+            $json = json_decode($options->value);
+            $showMenu = $this->show_menu($json);
+        } else {
+            $showMenu = '';
+        }
+
+        return view('admin.options.header.menu.menu-phone', compact('showMenu'));
+    }
+    public function postMenuPhone(Request $r)
+    {
+        $options = Option::where('key', '=', 'menu_phone')->first();
         
+        $opt_value = json_decode($options->value);
+
+        $new_item = array(
+            "name" => $r->menu_name,
+            "link" => $r->menu_link,
+        );
+        $new_item = (object) $new_item;
+        $opt_value[] = $new_item;
+        $options->value = json_encode($opt_value);
+        $options->save();
+        return redirect()->back()->with('add-menu-success', 'Thêm menu thành công!');
+    }
+    public function postUpdateMenuPhone(Request $r)
+    {
+        // menu_content
+        $options = Option::where('key', '=', 'menu_phone')->first();
+        $options->value = $r->menu_content;
+        $options->save();
+        return redirect()->back()->with('update-menu-success', 'Thêm menu thành công!');
     }
 }
