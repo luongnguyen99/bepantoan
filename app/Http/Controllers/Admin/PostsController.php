@@ -50,11 +50,17 @@ class PostsController extends Controller
         $db->slug = $r->slug;
         $db->short_desc = $r->short_desc;
         $db->content = $r->content;
-        $imgs = $r->img;
-        $db->image = $imgs[0];
         
+        if ($r->img == null) {
+            $db->img[0] = $db->image;
+        }
+        else{
+            $imgs = $r->img;
+            $db->image = $imgs[0];
+        }
         $db->views = $r->view;
         $db->post_category_id = $r->parent_id;
+        dd($r->all());
         $db->save();
         return redirect('admin/posts')->with('edit_success','Sửa thành công');
     }
