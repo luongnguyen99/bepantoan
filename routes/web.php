@@ -155,7 +155,9 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::get('edit_slide/{id}', 'OptionsController@getEditSlide');
         Route::post('edit_slide/{id}', 'OptionsController@postEditSlide');
 
-        Route::get('del_slide/{id}', 'OptionsController@DelSlide');
+        Route::get('general', 'OptionsController@getGeneral')->name('general');
+        Route::post('general', 'OptionsController@updateGeneral');
+
         
     });
 });
@@ -220,4 +222,21 @@ View::composer('*', function($view) {
         $social_network_j = json_decode($social_network->value,true);
         $view->with('social_network_j', $social_network_j);
     }
+
+    // ===========> GENERAL <===================//
+
+    $name_site = App\Models\Option::where('key','general_name_site')->first();
+    $desc_site = App\Models\Option::where('key','general_description_site')->first();
+    $h_code = App\Models\Option::where('key','general_header_code')->first();
+    $f_code = App\Models\Option::where('key','general_footer_code')->first();
+
+    $data_general = array(
+        'name_site' => $name_site->value,
+        'desc_site' => $desc_site->value,
+        'h_code' => $h_code->value,
+        'f_code' => $f_code->value,
+    );
+    $view->with( 'data_general' , $data_general );
+
+
 });
