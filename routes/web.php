@@ -209,5 +209,5 @@ View::composer('*', function($view) {
 //     else{
 //         $social_network_j = json_decode($social_network->value,true);
 //         $view->with('social_network_j', $social_network_j);
-//     }
-// });
+    // }
+});
