@@ -113,6 +113,8 @@ Danh mục
                             @endforeach
                         </select>
                     </div>
+
+                    
                     <div class="form-group">
                         <label for="">Ảnh</label>
                         <div id="box-img" class="box-img gallery2">
