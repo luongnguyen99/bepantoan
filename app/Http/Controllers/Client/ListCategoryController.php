@@ -9,7 +9,7 @@ use App\Models\Brand;
 class ListCategoryController extends Controller
 {
     public function index(){
-        $categories = Category::where('parent_id',0)->with('brands', 'properties')->get();
+        $categories = Category::where('parent_id',0)->with('products')->get();
         $brands = Brand::all();
         dd($categories);
         return view('client.list-category',compact('categories','brands'));

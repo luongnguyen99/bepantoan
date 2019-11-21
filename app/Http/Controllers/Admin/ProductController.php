@@ -84,8 +84,8 @@ class ProductController extends Controller
         }else{
             
                 $data = [
-                'name' => $request->name.$i,
-                'slug' => $request->slug.$i,
+                'name' => $request->name,
+                'slug' => $request->slug,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
                 'description' => $request->description,

@@ -16,5 +16,8 @@ class Category extends Model
         return $this->belongsToMany('App\Models\Property', 'categories_properties');
     }
 
+    public function products(){
+        return $this->hasMany('App\Models\Product','category_id','id');
+    }
     
 }
