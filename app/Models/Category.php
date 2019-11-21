@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class Category extends Model
 {
     protected $table = 'categories';
@@ -20,4 +20,5 @@ class Category extends Model
         return $this->hasMany('App\Models\Product','category_id','id');
     }
     
+   
 }

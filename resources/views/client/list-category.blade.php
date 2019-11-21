@@ -52,143 +52,104 @@
            
         </div>
     </div>
-    <div class="single-products">
-        <div class="container">
-            <div class="nav_cate_title">
-                <h2 class="title">
-                    <a href="#" title="Bếp từ">Bếp từ</a>
-                </h2>
-                <div class="list-text-category hidden-xs hidden-sm">
 
-                    <a href="#" class="itemprop" title="Bếp từ Bosch">Bếp từ Bosch</a>
-
-                    <a href="#" class="itemprop" title="Bếp từ Eurosun">Bếp từ Eurosun</a>
-
-                    <a href="#" class="itemprop" title="Bếp từ D'mestik">Bếp từ D'mestik</a>
-
-                    <a href="#" class="itemprop" title="Bếp từ Cata">Bếp từ Cata</a>
-
-                    <a href="#" class="itemprop" title="Bếp từ Canzy">Bếp từ Canzy</a>
-
-                </div>
-                <a href="#" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
-            </div>
-            <div class="hd-card-body">
-                <div class="row">
-                    <?php foreach(range(1, 5) as $number ): ?>
-                    <div class="col-md-5h col-xs-6 col-sm-6">
-                        <div class="product-item">
-                            <div class="product-img">
-
-                                <div class="pro-badge">
-                                    <span>-24%</span>
+    @if (count($categories) > 0 && !empty($categories))
+        {{-- {{dd($categories)}} --}}
+        @foreach ($categories as $item)
+            <div class="single-products">
+                <div class="container">
+                    <div class="nav_cate_title">
+                        <h2 class="title">
+                            <a href="#" title="{{$item->name}}">{{$item->name}}</a>
+                        </h2>
+                        @php
+                            $arr_name_sub_category = explode(",",$item->brand_name);
+                            $arr_slug_sub_category = explode(",",$item->brand_slug);
+                            // dd($arr_name_sub_category);
+                        @endphp
+                        <div class="list-text-category hidden-xs hidden-sm">
+                            @if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
+                                @foreach ($arr_name_sub_category as $key =>  $item2)
+                                    <a href="{{$arr_slug_sub_category[$key]}}" class="itemprop" title="{{$item2}}">{{$item2}}</a>   
+                                @endforeach
+                            @endif
+            
+                        </div>
+                        <a href="#" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <div class="hd-card-body">
+                        <div class="row">
+                            @php
+                                $products = get_products_by_category_id($item->id);
+                            @endphp
+                            @if (count($products) > 0 && !empty($products))
+                            @foreach ($products as $product)
+                                <div class="col-md-5h col-xs-6 col-sm-6">
+                                    <div class="product-item">
+                                        @php
+                                            if (!empty($product->sale_price)) {
+                                                $percent_sale = (($product->sale_price / $product->price)*100);
+                                                
+                                                $percent_sale2 = FLOOR(100 - $percent_sale);
+                                            };
+                                        @endphp
+                                        <div class="product-img">
+                                            @if (!empty($product->sale_price))
+                                                <div class="pro-badge">
+                                                    <span>-{{$percent_sale2}}%</span>
+                                                </div>
+                                            @endif
+                                            
+                                            <div class="img-responsive">
+                                                <a href="#">
+                                                    @if (count($product->galleries) > 0 && !empty($product->galleries))
+                                                        <img src="{{$product->galleries[0]->image}}" alt="{{$product->name}}">
+                                                    @endif
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-dsc">
+                                            <h3><a href="#">{{$product->name}}</a></h3>
+                                            <div class="cate_pro_title">
+                                                <a href="#" class="prdBrand">
+                                                    <img alt="{{$product->brand->name}}" src="{{$product->brand->image}}"></a>
+                                            </div>
+                                            @if (!empty($product->gift))
+                                            @php
+                                            $arr_gift = json_decode($product->gift,true);
+                                            @endphp
+                                                @foreach ($arr_gift as $gift)
+                                                    <div class="gift-sale">
+                                                        <strong>{{$gift['value']}}</strong>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                            
+                                            <div class="cate_pro_bot">
+                                                @if (!empty($product->sale_price))
+                                                    <label>{{pveser_numberformat($product->sale_price)}}</label>   
+                                                    <span>{{pveser_numberformat($product->price)}}</span>
+                                                @else
+                                                    <label>{{pveser_numberformat($product->price)}}</label>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="actions-btn">
+                                            <a href="#"><i class="fa fa-eye"></i></a>
+                                            <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="img-responsive">
-                                    <a href="#">
-                                        <img src="client/img/bep-tu-bosch-pij651bb2ex500x500x4.jpg" alt="Product Title">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-dsc">
-                                <h3><a href="#">Bếp từ Bosch PIJ651BB2E</a></h3>
-                                <div class="cate_pro_title">
-                                    <a href="#" class="prdBrand">
-                                        <img alt="Bosch" src="client/img/logobosch.jpg"></a>
-                                </div>
-                                <div class="gift-sale">
-
-                                    <strong>Quà tặng: Bộ nồi từ Fivestar 5 chiếc </strong>
-
-                                </div>
-                                <div class="cate_pro_bot">
-
-                                    <label>14.950.000₫</label>
-
-                                    <span>19.900.000₫</span>
-
-                                </div>
-                            </div>
-                            <div class="actions-btn">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                                <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-                            </div>
+                            @endforeach
+                            @endif        
                         </div>
                     </div>
-                    <?php endforeach; ?>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="single-products">
-        <div class="container">
-            <div class="nav_cate_title">
-                <h2 class="title">
-                    <a href="#" title="Bếp từ">MÁY HÚT MÙI</a>
-                </h2>
-                <div class="list-text-category hidden-xs hidden-sm">
-
-                    <a href="#" class="itemprop" title="Máy hút mùi Eurosun">Máy hút mùi Eurosun</a>
-
-                    <a href="#" class="itemprop" title="Máy hút mùi Chefs">Máy hút mùi Chefs</a>
-
-                    <a href="#" class="itemprop" title="Máy hút mùi Bosch">Máy hút mùi Bosch</a>
-
-                    <a href="#" class="itemprop" title="Máy hút mùi Canzy">Máy hút mùi Canzy</a>
-
-                    <a href="#" class="itemprop" title="Máy hút mùi Malloca">Máy hút mùi Malloca</a>
-
-                </div>
-                <a href="#" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
-            </div>
-            <div class="hd-card-body">
-                <div class="row">
-                    <?php foreach(range(1, 5) as $number ): ?>
-                    <div class="col-md-5h col-xs-6 col-sm-6">
-                        <div class="product-item">
-                            <div class="product-img">
-
-                                <div class="pro-badge">
-                                    <span>-30%</span>
-                                </div>
-
-                                <div class="img-responsive">
-                                    <a href="#">
-                                        <img src="client/img/large_may-hut-mui-eurosun-eh-90il91x500x500x4.png"
-                                            alt="Product Title">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-dsc">
-                                <h3><a href="#">Máy Hút Mùi Eurosun EH-90IL91</a></h3>
-                                <div class="cate_pro_title">
-                                    <a href="#" class="prdBrand">
-                                        <img alt="Bosch" src="client/img/eurosun(1).jpg"></a>
-                                </div>
-                                <div class="gift-sale">
-
-                                    <strong>Quà tặng: Bộ nồi từ Fivestar 5 chiếc </strong>
-
-                                </div>
-                                <div class="cate_pro_bot">
-
-                                    <label>14.950.000₫</label>
-
-                                    <span>19.900.000₫</span>
-
-                                </div>
-                            </div>
-                            <div class="actions-btn">
-                                <a href="#"><i class="fa fa-eye"></i></a>
-                                <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    </div>
+        @endforeach
+    @endif
+    
+    
     
    
 </div>

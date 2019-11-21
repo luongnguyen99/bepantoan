@@ -160,7 +160,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList');
     
     // danh muc san pham 
-    Route::get('danh-muc-san-pham','ListCategoryController@index')->name('list-category');
+    Route::get('danh-muc','ListCategoryController@index')->name('list-category');
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {
