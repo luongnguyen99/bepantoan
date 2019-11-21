@@ -2,11 +2,14 @@
 @section('title','Trang chủ')
 @section('content')
 <div class="home">
+
 		<div class="owl-carousel owl-theme slide-home">
 		    <div class="item">
-		    	<a href="#">
+				
+				<a href="#">
 		    		<img src="client/img/bosch(1).jpg" alt="">
-		    	</a>
+				</a>
+				
 		    </div>
 		    <div class="item">
 		    	<a href="#">
@@ -18,7 +21,10 @@
 		    		<img src="client/img/CHEFS.jpg" alt="">
 		    	</a>
 		    </div>
-		</div>
+		</div> <!-- end slide --> 
+
+
+		
 		<div class="notice-title">
 			<div class="container">
 				<ul>
@@ -29,6 +35,9 @@
 		        <span><a href="#" target="_blank" class="link-update">Xem thêm </a><i class="pe-7s-right-arrow"></i></span>
 			</div>
 		</div>
+
+
+		
 		<div class="wrap-category">
 			<div class="container">
 				<div class="owl-carousel owl-theme slide-pro-ctg">

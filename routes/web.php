@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin.layout.master');
-});
+Route::get('/', 'Client\indexController@getList')->name('homepage');
 
 
 Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
@@ -149,6 +147,11 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('edit_social_network/{id}', 'OptionsController@postEditSocial_network');
 
         Route::get('del_social_network/{id}', 'OptionsController@getDelSocial_network');
+
+
+        // ============> General <============
+
+        Route::get('general', 'OptionsController@getGeneral')->name('general');
         
     });
 });
