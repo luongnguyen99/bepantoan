@@ -76,13 +76,11 @@ Bài viết
                         
                         <select name="parent_id" id="parent_id" class="form-control select2_add">
                             @foreach ($post_cate as $item)
-                            
                             <option 
                             @if ($item->id == $db->post_category_id)
                                 {{ 'selected' }}
                             @endif 
                             value="{{ $item->id }}">{{ $item->name }}</option>
-                            
                             @endforeach
                         </select>
                     </div>

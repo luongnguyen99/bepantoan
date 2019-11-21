@@ -3,7 +3,7 @@
 
 {{-- page title --}}
 @section('page_title')
-Phương thức thanh toán
+Mạng xã hội
 @endsection
 @section('content')
 <!-- main content -->
@@ -12,7 +12,7 @@ Phương thức thanh toán
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title">
-                    Sửa phương thức thanh toán
+                    Sửa mạng xã hội
                 </h3>
 
                 <div class="box-tools pull-right">

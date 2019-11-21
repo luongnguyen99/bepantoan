@@ -57,7 +57,6 @@ class PostsController extends Controller
             $imgs = $r->img;
             $imgs[0] = $db->image;
             $db->image = $imgs[0];
-            
         }
         else{
             $imgs = $r->img;
