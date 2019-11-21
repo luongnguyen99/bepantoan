@@ -103,15 +103,7 @@ Danh mục
                             @endforeach
                         </select>
                     </div>
-                    <div classs="form-group">
-                        <label for="brands">Hãng sản xuất</label>
-                            <select class="brands_select2 form-control" name="brands[]" multiple="multiple"> 
-                                @foreach ($brands as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                @endforeach
-                            </select>
-                            <div class="text-danger error_brands" id="error_brands"></div>
-                    </div>
+                    
 
                     <div classs="form-group">
                         <label for="properties">Thuộc tính</label>
@@ -122,6 +114,15 @@ Danh mục
                         </select>
                     </div>
 
+                    
+                    <div class="form-group">
+                        <label for="">Ảnh</label>
+                        <div id="box-img" class="box-img gallery2">
+                            <div class="img2">
+                            </div>
+                        </div>
+                        <a class="btn btn-primary choose_image_product" id="choose_image_product" >Chọn ảnh</a> 
+                    </div>
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
                     </div>
@@ -168,7 +169,32 @@ Danh mục
 
 <!----- javascript here -------->
 @section('js')
+<script>
 
+    jQuery('body').on('click', '#choose_image_product', function () {
+        CKFinder.popup({
+            chooseFiles: true,
+            onInit: function (finder) {
+                finder.on('files:choose', function (evt) {
+                    var file = evt.data.files;
+                    file.forEach(function (e) {
+                        var url = e.getUrl();
+                        jQuery('#box-img').html(`
+                                <div class="img2">
+                                    <img src="${url}" alt="image" style="width:300px">
+                                    <input type="hidden" name="image"
+                                        value="${url}">
+                                    
+                                </div>
+								`)
+                    });
+                });
+            }
+        });
+    });
+    
+
+</script>
 <script>
     $(document).ready(function () {
         $("#updateCategory").on("hidden.bs.modal", function () {
@@ -188,10 +214,6 @@ Danh mục
 
         $(document).ready(function() {
             $('.select2_add').select2();
-        });
-
-        $(document).ready(function() {
-            $('.brands_select2').select2();
         });
 
         $(document).ready(function() {
@@ -238,21 +260,6 @@ Danh mục
                     title: "Danh mục gốc",
                     autoWidth: true
                 },
-                {
-                    data:null,
-                    title: 'Hãng sản xuất',
-                    autoWidth : true,
-                    render : function (data,type,row){
-                        var str = '';
-                        if (data.brands.length > 0) {
-                            data.brands.forEach(element => {
-                                str += `<span class="label label-primary" style="margin-right:2px">${element.name}</span>`;
-                            });
-                        }
-                        return str;
-                    }
-                },
-
                 {
                     data:null,
                     title: 'Thuộc tính',

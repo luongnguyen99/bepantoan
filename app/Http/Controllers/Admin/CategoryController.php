@@ -7,23 +7,21 @@ use App\Http\Controllers\Controller;
 use DataTables;
 use App\Models\Category;
 use Validator;
-use App\Models\Brand;
 use App\Models\Property;
 class CategoryController extends Controller
 {
     
     public function getData(){
-        $categories = Category::select()->orderBy('id', 'desc')->with('properties','brands')->get();
+        $categories = Category::select()->orderBy('id', 'desc')->with('properties')->get();
         $categoriesRecursive = $this->categoriesRecursive($categories);
         return Datatables::of($categoriesRecursive)->make();
     }
 
     public function index(){
-
+        
         $categories = Category::all();
-        $brands = Brand::all();
         $properties = Property::all();
-        return view('admin.categories.index',compact('categories','brands','properties'));
+        return view('admin.categories.index',compact('categories','properties'));
     }
 
     public function categoriesRecursive($categories, $parent_id = 0, $step = 0)
@@ -50,14 +48,12 @@ class CategoryController extends Controller
             [
                 'name' => 'required|unique:categories,name',
                 'slug' => 'required|unique:categories,slug',
-                'brands' => 'required',
             ],
             [
                 'name.required' => 'Tên danh mục không được để trống.',
                 'name.unique' => 'Tên danh mục đã tồn tại,chọn tên khác.',
                 'slug.required' => 'Đường dẫn không được để trống.',
                 'slug.unique' => 'Đường dẫn đã tồn tại,chọn tên khác.',
-                'brands.required' => 'Chọn hãng sản xuất mặt hàng này.',
             ]
         );
 
@@ -69,18 +65,20 @@ class CategoryController extends Controller
                     
                 ], 200);
         }else{
-           
-            $check = Category::create([
+            $data = [
                 'name' => $request->name,
                 'slug' => $request->slug,
                 'parent_id' => $request->parent_id,
-            ]);
+            ];
+            
+            if (!empty($request->image)) {
+                $data['image'] = $request->image;
+            };
+            // dd($data);
+            $check = Category::create($data);
 
             $category = Category::find($check->id);
             
-            if (!empty($request->brands)) {
-                $category->brands()->sync($request->brands);
-            };
 
             if (!empty($request->properties)) {
                 $category->properties()->sync($request->properties);
@@ -92,11 +90,9 @@ class CategoryController extends Controller
 
     public function edit($id){
         $categories = Category::all();
-        $brands = Brand::all();
         $properties = Property::all();
-        $category = Category::where('id',$id)->with('brands','properties')->first();
-        // dd($category);
-        return view('admin.categories.edit',compact('category','categories','brands','properties'));
+        $category = Category::where('id',$id)->with('properties')->first();
+        return view('admin.categories.edit',compact('category','categories','properties'));
     }
 
     public function saveEdit(Request $request,$id){
@@ -117,18 +113,19 @@ class CategoryController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
-
-            $check = Category::where('id',$id)->update([
+            $data = [
                 'name' => trim($request->name),
                 'slug' => trim($request->slug),
                 'parent_id' => $request->parent_id,
-            ]);
+            ];
+            if (!empty($request->image)) {
+                $data['image'] = $request->image;
+            };
+
+            $check = Category::where('id',$id)->update($data);
 
             $category = Category::find($id);
 
-            if (!empty($request->brands)) {
-                $category->brands()->sync($request->brands);
-            };
 
             if (!empty($request->properties)) {
                 $category->properties()->sync($request->properties);

@@ -27,8 +27,8 @@ $config['authentication'] = '\App\Http\Middleware\CustomCKFinderAuth';
 /*============================ License Key ============================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = 'localhost';
-$config['licenseKey']  = 'UW8W39C7XNBK8YJTPBWK42Y8T2GK6';
+$config['licenseName'] = 'http://luongnd2286.xyz';
+$config['licenseKey']  = '*2?4-*1**-X**E-*Y**-*A**-D*F*-2**C';
 
 /*============================ CKFinder Internal Directory ============================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_privateDir
@@ -105,7 +105,7 @@ $config['resourceTypes'][] = array(
     'name'              => 'Images',
     'directory'         => 'images',
     'maxSize'           => 0,
-    'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
+    'allowedExtensions' => 'bmp,gif,jpeg,jpg,png,webp',
     'deniedExtensions'  => '',
     'backend'           => 'default'
 );

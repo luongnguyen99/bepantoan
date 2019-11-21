@@ -22,11 +22,12 @@ class ProductController extends Controller
     }
 
     public function add(){
+        $brands = Brand::all();
         $categories = Category::select()->with('properties')->get();
         $categories->each(function($categories){
             $categories->properties->load('property_values');
         });
-        return view('admin.products.add',compact('categories'));
+        return view('admin.products.add',compact('categories','brands'));
     }
 
     public function saveAdd(Request $request){
@@ -39,7 +40,7 @@ class ProductController extends Controller
                 'sale_price' => 'nullable|lt:price|numeric|gt:0',
                 'status' => 'required',
                 'category_id' => 'required',
-                
+                'brand_id' => 'required',
                 'gift.*.value' => 'required',
                 'specifications.*.key' => 'required',
                 'specifications.*.value' => 'required',
@@ -62,6 +63,8 @@ class ProductController extends Controller
                 'status.required' => 'Trạng thái không được để trống',
                 
                 'category_id.required' => 'Danh mục sản phẩm không được để trống',
+
+                'brand_id.required' => 'Hãng sản xuất không được để trống',
 
                 'gift.*.value.required' => 'Nhập ưu đãi',
 
@@ -89,7 +92,7 @@ class ProductController extends Controller
                 'infomation_detail' => $request->infomation_detail,
                 'status' => $request->status,
                 'category_id' => $request->category_id,
-
+                'brand_id' => $request->brand_id
             ];
 
             if (!empty($request->gift)){
