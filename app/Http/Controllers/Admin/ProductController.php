@@ -83,9 +83,9 @@ class ProductController extends Controller
             );
         }else{
             
-            $data = [
-                'name' => $request->name,
-                'slug' => $request->slug,
+                $data = [
+                'name' => $request->name.$i,
+                'slug' => $request->slug.$i,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
                 'description' => $request->description,
@@ -93,35 +93,37 @@ class ProductController extends Controller
                 'status' => $request->status,
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id
-            ];
+                ];
 
-            if (!empty($request->gift)){
-                $data['gift'] = json_encode($request->gift);
-            };
-            
-            if (!empty($request->specifications)) {
-                $data['specifications'] = json_encode($request->specifications);
-            }
-            
-            $insertProduct = Product::create($data);
-            
-            if (!empty($request->gallery) && count($request->gallery) > 0) {
-                foreach ($request->gallery as $key => $value) {
-                    Gallery::insert([
-                        'product_id' => $insertProduct->id,
-                        'image' => $value,
-                    ]);
+                if (!empty($request->gift)){
+                    $data['gift'] = json_encode($request->gift);
                 };
-            }
-            
-            if (!empty($request->value_property) && count($request->value_property) > 0) {
-                foreach ($request->value_property as $key => $value) {
-                    Products_property_values::insert([
-                        'product_id' => $insertProduct->id,
-                        'property_value_id' => $value,
-                    ]);
+                
+                if (!empty($request->specifications)) {
+                    $data['specifications'] = json_encode($request->specifications);
                 }
-            }
+                
+                $insertProduct = Product::create($data);
+                
+                if (!empty($request->gallery) && count($request->gallery) > 0) {
+                    foreach ($request->gallery as $key => $value) {
+                        Gallery::insert([
+                            'product_id' => $insertProduct->id,
+                            'image' => $value,
+                        ]);
+                    };
+                }
+                
+                if (!empty($request->value_property) && count($request->value_property) > 0) {
+                    foreach ($request->value_property as $key => $value) {
+                        Products_property_values::insert([
+                            'product_id' => $insertProduct->id,
+                            'property_value_id' => $value,
+                        ]);
+                    }
+                };
+            
+            
             
             return response(
                 [
@@ -136,14 +138,14 @@ class ProductController extends Controller
 
     public function edit($id){
         $product = Product::where('id',$id)->with('property_values', 'galleries', 'category')->first();
-
+        $brands = Brand::all();
         $categories = Category::select()->with('properties')->get();
         $categories->each(function ($categories) {
             $categories->properties->load('property_values');
         });
         $categoriesArray = $categories->toArray();
         // dd($product);
-        return view('admin.products.edit', compact('categories','product', 'categoriesArray'));
+        return view('admin.products.edit', compact('categories','product', 'categoriesArray', 'brands'));
     }
 
     public function saveEdit(Request $request,$id){

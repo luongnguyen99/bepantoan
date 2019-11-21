@@ -19,7 +19,7 @@ class CreateShowroomsTable extends Migration
             $table->string('address')->nullable();
             $table->string('hotline',191)->nullable();
             $table->string('phone',191)->nullable();
-            $table->string('embed_google_map')->nullable();
+            $table->text('embed_google_map')->nullable();
             $table->string('link',191)->nullable();
             $table->timestamps();
         });

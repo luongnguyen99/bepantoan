@@ -173,6 +173,7 @@ Sửa sản phẩm
                     <label for="">Hãng sản xuất</label>
                     <select name="brand_id" id="brand_id" class="status form-control select2">
                         <option value="">--Chọn--</option>
+                        
                         @foreach ($brands as $item)
                             <option {{$product->brand_id == $item->id ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
                         @endforeach

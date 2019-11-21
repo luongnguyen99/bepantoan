@@ -21,10 +21,10 @@ class CreateProductsTable extends Migration
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->bigInteger('price')->nullable();
             $table->bigInteger('sale_price')->nullable();
-            $table->string('gift')->nullable();
-            $table->string('description')->nullable();
-            $table->string('infomation_detail')->nullable();
-            $table->string('specifications')->nullable();
+            $table->text('gift')->nullable();
+            $table->text('description')->nullable();
+            $table->text('infomation_detail')->nullable();
+            $table->text('specifications')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
