@@ -148,10 +148,14 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('del_social_network/{id}', 'OptionsController@getDelSocial_network');
 
+        //======================>Slide <=============================
+        Route::get('slide', 'OptionsController@getSlide')->name('slide');
+        Route::post('slide', 'OptionsController@postSlide');
 
-        // ============> General <============
+        Route::get('edit_slide/{id}', 'OptionsController@getEditSlide');
+        Route::post('edit_slide/{id}', 'OptionsController@postEditSlide');
 
-        Route::get('general', 'OptionsController@getGeneral')->name('general');
+        Route::get('del_slide/{id}', 'OptionsController@DelSlide');
         
     });
 });

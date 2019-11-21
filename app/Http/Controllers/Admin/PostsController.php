@@ -16,7 +16,8 @@ class PostsController extends Controller
     public function getAdd()
     {
         $db = Post_category::all();
-        return view('admin.posts.add',compact('db'));
+        $post_cate = Post_category::all();
+        return view('admin.posts.add',compact('db','post_cate'));
     }
     public function postAdd(PostsRequest $r)
     {
@@ -40,6 +41,7 @@ class PostsController extends Controller
     {
         $db = Post::find($id);
         $post_cate = Post_category::all();
+        
         return view('admin.posts.edit',compact(['db','post_cate']));
     }
     public function postEdit(PostsRequest $r,$id)
@@ -50,11 +52,19 @@ class PostsController extends Controller
         $db->slug = $r->slug;
         $db->short_desc = $r->short_desc;
         $db->content = $r->content;
-        $imgs = $r->img;
-        $db->image = $imgs[0];
         
+        if ($r->img[0] == null) {
+            $imgs = $r->img;
+            $imgs[0] = $db->image;
+            $db->image = $imgs[0];
+        }
+        else{
+            $imgs = $r->img;
+            $db->image = $imgs[0];
+        }
         $db->views = $r->view;
         $db->post_category_id = $r->parent_id;
+        
         $db->save();
         return redirect('admin/posts')->with('edit_success','Sửa thành công');
     }

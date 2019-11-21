@@ -82,7 +82,11 @@ Bài viết
                         
                         <select name="id_cate" id="id_cate" class="form-control select2_add">
                             <option value="0">-- Gốc --</option>
-                            {{ GetCategory($db,0,'',0) }}
+                            @foreach ($post_cate as $item)
+                            
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
@@ -105,6 +109,7 @@ Bài viết
     <script> CKEDITOR.replace('editor'); </script>
     <script>
 
+<<<<<<< HEAD
         jQuery('body').on('click', '#add', function () {
             // console.log("sss");
         // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
@@ -161,11 +166,63 @@ Bài viết
                     t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
                     t.closest('.col-md-12').find('#img-cat').eq(0).append(list_img);
                 });
+=======
+    jQuery('body').on('click', '#add', function () {
+        // console.log("sss");
+            // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
+            var t = $(this);
+            var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest('.col-md-12')
+                .find('#list-img').val());
+
+            if (typeof (arr_url) == 'string') {
+                //console.log(arr_url);
+                arr_url = arr_url.replace(/\[/g, '');
+                arr_url = arr_url.replace(/\]/g, '');
+                arr_url = arr_url.replace(/"/g, '');
+                arr_url = (arr_url == '') ? [] : arr_url.split(",");
+                //arr_url = arr_url.split(",");
+>>>>>>> 88c0d9bde50c67787e150b13ef15e1b2f42d4454
             }
+            CKFinder.popup({
+                resourceType: "Images",
+                chooseFiles: true,
+                onInit: function (finder) {
+                    finder.on('files:choose', function (evt) {
+                        //var arr_url = [];
+                        var mul = evt.data.files;
+                        mul = Object.entries(mul);
+                        mul = mul[1];
+                        mul = mul[1];
+
+                        var list_img = '';
+                        var arr_url_ = [];
+                        for (var i = mul.length - 1; i >= 0; i--) {
+
+                            let url_ = mul[i].getUrl();
+                            var urlParts = url_.replace('http://','').replace('https://','').split(/[/?#]/);
+                            var domain = urlParts[0];
+                            let port = 8000;
+
+                            let new_domain = domain + ":" + port;
+                            
+                            let new_url_ = url_.replace(domain , new_domain);
+
+                            
+                            
+                            list_img = "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
+                                    new_url_ + "'></i><img alt='' src='" + new_url_ +
+                                "' class='img-cat' width='200' height='200'/></div>";
+                            $('#img_').val(new_url_);
+                        }
+                        arr_url = JSON.stringify(arr_url);
+
+                        t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
+                        
+                        t.closest('.col-md-12').find('#img-cat').html(list_img);
+                    });
+                }
+            });
         });
-
-
-    });
     $('body').on('click', '.delete-img', function () {
         var image = $(this).data('url');
         $(this).parent().remove();

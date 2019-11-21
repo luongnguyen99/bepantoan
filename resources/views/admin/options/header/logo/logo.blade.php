@@ -34,6 +34,7 @@ Logo
                             <input type="hidden" name="list_img" id="list-img"
                                 value='<?php echo isset($_POST['list_img']) ? $_POST['list_img'] : '' ?>'>
                         </div>
+                       
                         <div class="col-sm-12 text-center" id="img-cat">
                         </div>
                     </div>
@@ -100,8 +101,6 @@ Logo
                 finder.on('files:choose', function (evt) {
                     //var arr_url = [];
                     var mul = evt.data.files;
-
-                    
                     mul = Object.entries(mul);
                     mul = mul[1];
                     mul = mul[1];
@@ -121,21 +120,35 @@ Logo
 
                         
                         
-                        list_img = list_img +
-                            "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
+                        list_img = "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
                                 new_url_ + "'></i><img alt='' src='" + new_url_ +
                             "' class='img-cat' width='200' height='200'/></div>";
                         $('#img_').val(new_url_);
-                        
-                        
                     }
                     arr_url = JSON.stringify(arr_url);
 
                     t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
-                    t.closest('.col-md-12').find('#img-cat').eq(0).append(list_img);
+                    
+                    t.closest('.col-md-12').find('#img-cat').html(list_img);
                 });
             }
         });
+    });
+    $('body').on('click', '.delete-img', function () {
+        var image = $(this).data('url');
+        $(this).parent().remove();
+
+        var string = $('#list-img').val();
+        var string_arr = JSON.parse(string);
+        console.log(string_arr);
+
+        string_arr = jQuery.grep(string_arr, function (value) {
+            return value !== image;
+        });
+        console.log(string_arr);
+
+        var final_string = JSON.stringify(string_arr);
+        $('#list-img').val(final_string);
     });
 </script>
 @endsection
