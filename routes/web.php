@@ -180,9 +180,9 @@ View::composer('*', function($view) {
     }
     //=============>LOGO<=================
     $logo = App\Models\Option::where('key','logo')->first();
-    
+   
     if($logo->value == null){
-        $logo = null; 
+        $logo->value = null; 
         $view->with('logo', $logo->value);
     }
     else{

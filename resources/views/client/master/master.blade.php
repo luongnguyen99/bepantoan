@@ -23,7 +23,11 @@
 				<div class="row">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-							<a href="#"><img src="{{ $logo }}" alt=""></a>
+							<a href="#"><img src="
+								@if($logo != null)
+								{{ $logo }}
+								@endif
+								" alt=""></a>
 						</div>
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
