@@ -140,9 +140,9 @@ Bài viết
                         let url_ = mul[i].getUrl();
                         var urlParts = url_.replace('http://','').replace('https://','').split(/[/?#]/);
                         var domain = urlParts[0];
-                        let port = 8000;
+                        let port = '';
 
-                        let new_domain = domain + ":" + port;
+                        let new_domain = domain;
                         
                         let new_url_ = url_.replace(domain , new_domain);
 

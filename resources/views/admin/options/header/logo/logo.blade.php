@@ -115,7 +115,7 @@ Logo
                         var domain = urlParts[0];
                         let port = 8000;
 
-                        let new_domain = domain + ":" + port;
+                        let new_domain = domain;
                         
                         let new_url_ = url_.replace(domain , new_domain);
 
