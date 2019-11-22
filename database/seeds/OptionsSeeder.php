@@ -11,7 +11,8 @@ class OptionsSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+        DB::table('options')->delete();
+        DB::table('options')->insert([
             [
                 'name' => 'logo',
                 'key' => 'logo',
@@ -58,9 +59,24 @@ class OptionsSeeder extends Seeder
                 'name' => 'footer_code',
                 'key' => 'general_footer_code',
                 'value' => ' ',
-            ]
+            ],
+            [
+                'name' => 'slide',
+                'key' => 'slide',
+                'value' => '',
+            ],
+            [
+                'name' => 'menu',
+                'key' => 'menu',
+                'value' => '',
+            ],
+            [
+                'name' => 'menu_phone',
+                'key' => 'menu_phone',
+                'value' => '',
+            ],
 
-        ];
-        DB::table('options')->insert($data);
+        ]);
+
     }
 }

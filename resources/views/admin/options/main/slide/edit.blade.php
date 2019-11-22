@@ -85,10 +85,14 @@ Slide
             <div class="box-body">
                 <!--  content here -->
                 <div class="table-responsive">
-                    
                     @if (isset($db))
-                    @foreach ($db[0] as $item)
-                    <a href="{{ $item['type'] }}"><img class="mySlides" src="{{ $item['img_'] }}" style="width:100%"></a>
+                    @foreach ($db[0] as $key=>$item)
+                    <div  style="position: relative;">
+                        <a href="{{ $item['type'] }}">
+                            <img class="mySlides" src="{{ $item['img_'] }}" style="width:100%">
+                            <a href="/admin/options/edit_slide/{{ $key }}" style="position: absolute; right:0;top:0" href="" class="btn btn-warning">Sửa slide</a>
+                        </a>
+                    </div>
                     @endforeach
                     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
                     <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
