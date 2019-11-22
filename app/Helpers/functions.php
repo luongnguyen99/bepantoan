@@ -1,6 +1,6 @@
 <?php
 use App\Models\Product;
-
+use App\Models\Option;
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -99,18 +99,31 @@ function ShowCategory($category, $parent, $shift)
 }
 //=================>Cut Content<======================
 function get_excerpt($content, $number)
-    {
-       
-        $excerpt = $content;
-        
-        $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
-        
-        $excerpt = strip_tags($excerpt);
-        
-        $excerpt = substr($excerpt, 0, $number);
-        
-        $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
-        
-        $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
-        return $excerpt."...";
+{
+    
+    $excerpt = $content;
+    
+    $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
+    
+    $excerpt = strip_tags($excerpt);
+    
+    $excerpt = substr($excerpt, 0, $number);
+    
+    $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
+    
+    $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
+    return $excerpt."...";
+}
+
+
+function get_option_by_key($key){
+    try {
+        $option = Option::where('key',$key)->first();
+        return $option->value;
+    } catch (Throwable $th) {
+        return false;
     }
+
+}
+
+

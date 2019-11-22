@@ -234,7 +234,6 @@ class OptionsController extends Controller
         $db->save();
         return redirect('admin/options/social_network/')->with('del_success','Xóa thành công');
     }
-<<<<<<< HEAD
     
     //  ==================== General setting ====================== //
 
@@ -260,8 +259,7 @@ class OptionsController extends Controller
         }
         $request->session()->flash('alert-success', 'Cập nhật thành công!');
         return redirect()->back()->with('add_success','Cập nhật thành công!');
-
-=======
+    }
     //==========> SLIDE <=====================
     public function getSlide()
     {
@@ -363,9 +361,5 @@ class OptionsController extends Controller
 
         }
         
-        
-       
-        
->>>>>>> 88c0d9bde50c67787e150b13ef15e1b2f42d4454
     }
 }
