@@ -41,23 +41,23 @@ class OptionsSeeder extends Seeder
             [   
                 'name' => 'name_site',
                 'key' => 'general_name_site',
-                'value' => '',
+                'value' => 'BepAnToan',
             ],
 
             [   
                 'name' => 'desc_site',
                 'key' => 'general_description_site',
-                'value' => '',
+                'value' => 'Bep an toan site',
             ],
             [   
                 'name' => 'header_code',
                 'key' => 'general_header_code',
-                'value' => '',
+                'value' => ' ',
             ],
             [   
                 'name' => 'footer_code',
                 'key' => 'general_footer_code',
-                'value' => '',
+                'value' => ' ',
             ]
 
         ];
