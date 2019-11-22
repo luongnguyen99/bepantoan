@@ -26,7 +26,7 @@ class OptionsSeeder extends Seeder
             [
                 'name' => 'hotline',
                 'key' => 'hotline',
-                'value' => '',
+                'value' => '0123456789',
             ],
             [
                 'name' => 'payment',
