@@ -144,8 +144,8 @@
                         class="fa fa-circle-o"></i>Mạng xã hội</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.menu')}}"><i
                         class="fa fa-circle-o"></i>Menu</a></li>
-
-                   
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.menu-phone')}}"><i
+                        class="fa fa-circle-o"></i>Menu di động</a></li>
                 </ul>
             </li>
 

@@ -119,6 +119,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         //=================>Logo<=============================
         Route::get('logo', 'OptionsController@getLogo')->name('logo');
         Route::post('logo', 'OptionsController@postLogo');
+        Route::get('logo/del', 'OptionsController@delLogo');
 
         //=================>Hotline<=============================
         Route::get('hotline', 'OptionsController@getHotline')->name('hotline');
@@ -226,5 +227,38 @@ View::composer('*', function($view) {
     else{
         $social_network_j = json_decode($social_network->value,true);
         $view->with('social_network_j', $social_network_j);
+    }
+    //=============>SLIDE<=================
+    $slide = App\Models\Option::where('key','slide')->first();
+   
+    if($slide->value == null){
+        $slide_j = null; 
+        $view->with('slide_j', $slide_j);
+    }
+    else{
+        $slide_j = json_decode($slide->value,true);
+        $view->with('slide_j', $slide_j[0]);
+    }
+    //=============>MENU<=================
+    $menu = App\Models\Option::where('key','menu')->first();
+   
+    if($menu->value == null){
+        $menu_j = null; 
+        $view->with('menu_j', $menu_j);
+    }
+    else{
+        $menu_j = json_decode($menu->value,true);
+        $view->with('menu_j', $menu_j);
+    }
+    //=============>MENU PHONE<=================
+    $menu_phone = App\Models\Option::where('key','menu_phone')->first();
+   
+    if($menu_phone->value == null){
+        $menu_phone_j = null; 
+        $view->with('menu_phone_j', $menu_phone_j);
+    }
+    else{
+        $menu_phone_j = json_decode($menu_phone->value,true);
+        $view->with('menu_phone_j', $menu_phone_j);
     }
 });

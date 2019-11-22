@@ -20,6 +20,13 @@ class OptionsController extends Controller
         $db->save();
         return redirect()->back()->with('add_success','Thêm logo thành công');
     }
+    public function delLogo()
+    {
+        $db = Option::where('key','logo')->first();
+        $db->value = null;
+        $db->save();
+        return redirect()->back()->with('add_success','Xóa logo thành công');
+    }
     //==========> HOTLINE <=====================
     public function getHotline()
     {
@@ -281,7 +288,7 @@ class OptionsController extends Controller
             $merge[0] =  array_merge($arr[0],$result[0]);
             $db->value = json_encode($merge);
             $db->save();
-            return redirect()->back()->with('add_success');
+            return redirect()->back()->with('add_success','Thêm slide thành công');
         }
     }
     public function getEditSlide($id)

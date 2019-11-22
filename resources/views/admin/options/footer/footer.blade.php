@@ -48,6 +48,30 @@ Footer
                 <h3 class="box-title">
                     Footer của bạn
                 </h3>
+                @if (session('add_success'))
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-success alert-dismissible show" role="alert">
+                            <strong>{{ session('add_success') }}</strong> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">{{ session('add_success') }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if (session('del_success'))
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-success alert-dismissible show" role="alert">
+                            <strong>{{ session('del_success') }}</strong> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">{{ session('del_success') }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title=""
                         data-original-title="Collapse">
@@ -62,9 +86,11 @@ Footer
                             <textarea class="form-control" name="" id="" rows="4">
                                 {{ $json['footer'] }}
                             </textarea>
-                            <div class="text-center" style="margin-top:5px;">
-                                <a href="/admin/options/del_footer" class="btn btn-danger">Xóa</a>
-                            </div>
+                            @if (!empty($json['footer']))
+                                <div class="text-center" style="margin-top:5px;">
+                                    <a href="/admin/options/del_footer" class="btn btn-danger">Xóa</a>
+                                </div>
+                            @endif
                         </div>
                     </table>
                 </div>

@@ -53,6 +53,7 @@
                     <h3 class="box-title">
                         Danh sách menu của bạn
                     </h3>
+                    
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title=""
                             data-original-title="Collapse">
