@@ -241,6 +241,32 @@ class OptionsController extends Controller
         $db->save();
         return redirect('admin/options/social_network/')->with('del_success','Xóa thành công');
     }
+    
+    //  ==================== General setting ====================== //
+
+    public function getGeneral(){
+        $name_site = Option::where('key','general_name_site')->first();
+        $desc_site = Option::where('key','general_description_site')->first();
+        $header_code = Option::where('key','general_header_code')->first();
+        $footer_code = Option::where('key','general_footer_code')->first();
+        $data  = array( 'name_site' => $name_site->value , 'desc_site'=>$desc_site->value ,'header_code'=>$header_code->value ,'footer_code'=> $footer_code->value  );
+        return view('admin.options.general.view',compact(['data']));
+    }
+
+    public function updateGeneral( Request $request ){
+        $data_arr = $request->input();
+        if(isset($data_arr) && !empty($data_arr)){
+            foreach ($data_arr as $key => $value) {
+                if($key != "_token"){
+                    $db = Option::where('key',$key)->first();
+                    $db->value = $request->input($key);
+                    $db->save();    
+                }  
+            }
+        }
+        $request->session()->flash('alert-success', 'Cập nhật thành công!');
+        return redirect()->back()->with('add_success','Cập nhật thành công!');
+    }
     //==========> SLIDE <=====================
     public function getSlide()
     {
@@ -398,7 +424,11 @@ class OptionsController extends Controller
                 $item = get_object_vars($item);
                 $name = $item['name'];
                 $link = $item['link'];
-                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '" >';
+                $icon = $item['icon'];
+                $clss= $item['clss'];
+                
+                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '" 
+                data-icon="' . $icon . '" data-clss="' . $clss . '">';
                 $result .= '<div class="dd-handle" style="padding:6px 150px;">' . $name . '</div>';
                 if (array_key_exists("children", $item)) {
                     $result = $this->show_menu($item["children"], $result);
@@ -418,10 +448,14 @@ class OptionsController extends Controller
         $new_item = array(
             "name" => $r->menu_name,
             "link" => $r->menu_link,
+            "icon" => $r->menu_icon,
+            "clss"=> $r->menu_class
         );
         $new_item = (object) $new_item;
         $opt_value[] = $new_item;
+        
         $options->value = json_encode($opt_value);
+       
         $options->save();
         return redirect()->back()->with('add-menu-success', 'Thêm menu thành công!');
     }
@@ -457,6 +491,8 @@ class OptionsController extends Controller
         $new_item = array(
             "name" => $r->menu_name,
             "link" => $r->menu_link,
+            "icon" => $r->menu_icon,
+            "clss"=> $r->menu_class
         );
         $new_item = (object) $new_item;
         $opt_value[] = $new_item;

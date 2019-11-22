@@ -170,6 +170,18 @@ Sửa sản phẩm
                     <span class="errors error_status" style="color:red"></span>
                 </div>
                 <div class="form-group">
+                    <label for="">Hãng sản xuất</label>
+                    <select name="brand_id" id="brand_id" class="status form-control select2">
+                        <option value="">--Chọn--</option>
+                        
+                        @foreach ($brands as $item)
+                            <option {{$product->brand_id == $item->id ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                    <span class="errors error_brand_id" style="color:red"></span>
+                </div>
+
+                <div class="form-group">
                     <label for="">Danh mục sản phẩm</label>
                     <select name="category_id" id="category_id" class="category_id form-control select2">
                         <option value="">--Chọn--</option>

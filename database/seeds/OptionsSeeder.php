@@ -38,6 +38,28 @@ class OptionsSeeder extends Seeder
                 'key' => 'social_network',
                 'value' => '',
             ],
+
+            [   
+                'name' => 'name_site',
+                'key' => 'general_name_site',
+                'value' => 'BepAnToan',
+            ],
+
+            [   
+                'name' => 'desc_site',
+                'key' => 'general_description_site',
+                'value' => 'Bep an toan site',
+            ],
+            [   
+                'name' => 'header_code',
+                'key' => 'general_header_code',
+                'value' => ' ',
+            ],
+            [   
+                'name' => 'footer_code',
+                'key' => 'general_footer_code',
+                'value' => ' ',
+            ],
             [
                 'name' => 'slide',
                 'key' => 'slide',
@@ -53,6 +75,8 @@ class OptionsSeeder extends Seeder
                 'key' => 'menu_phone',
                 'value' => '',
             ],
-        ]); 
+
+        ]);
+
     }
 }

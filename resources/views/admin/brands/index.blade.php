@@ -291,10 +291,11 @@ Hãng sản xuất
                         form.find('.error_name').html('');
                         form.find('.error_slug').html('');
                         form.find('.error_image').html('');
-                        swal("Deleted!",
+                        swal("Thành công!",
                                         "Thêm thành công.",
                                         "success").then(function () {
                                         $('#datatable').DataTable().ajax.reload();
+                                        window.location.reload();
                             })
                         };
                     

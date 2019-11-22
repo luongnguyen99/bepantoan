@@ -114,23 +114,6 @@ Sửa danh mục
                             @endforeach
                         </select>
                     </div>
-                    <div classs="form-group">
-                        <label for="brands">Hãng sản xuất</label>
-                        @php
-                            $arr_id_brand = [];
-                            if ($category->brands) {
-                                foreach ($category->brands as $key => $value) {
-                                    $arr_id_brand[] = $value->id;
-                                }
-                            }
-                        @endphp
-                        <select class="brands_select2 form-control" name="brands[]" multiple="multiple">
-                            @foreach ($brands as $brand)
-                                <option {{in_array( $brand->id, (array)$arr_id_brand) ? 'selected' : ''}} value="{{$brand->id}}">{{$brand->name}}</option>
-                            @endforeach
-                        </select>
-                        <div class="text-danger error_brands" id="error_brands"></div>
-                    </div>
                     
                     <div classs="form-group">
                         @php
@@ -148,6 +131,18 @@ Sửa danh mục
                                 <option {{in_array($property->id, (array)$arr_id_property) ? 'selected' : ''}} value="{{$property->id}}">{{$property->name}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Ảnh</label>
+                        <div id="box-img" class="box-img gallery2">
+                            @if (!empty($category->image))
+                                <div class="img2">
+                                    <img src="{{$category->image}}" alt="image" style="width:300px">
+                                    <input type="hidden" name="image" value="{{$category->image}}">
+                                </div>
+                            @endif
+                        </div>
+                        <a class="btn btn-primary choose_image_product" id="choose_image_product">Chọn ảnh</a>
                     </div>
                     <div class="form-group" style="margin-top:20px">
                         <button class="btn btn-success" type="submit">Cập nhập</button>
@@ -173,10 +168,29 @@ Sửa danh mục
 @section('js')
 
 <script>
-    $(document).ready(function() {
-        $('.brands_select2').select2();
+    
+    jQuery('body').on('click', '#choose_image_product', function () {
+        CKFinder.popup({
+            chooseFiles: true,
+            onInit: function (finder) {
+                finder.on('files:choose', function (evt) {
+                    var file = evt.data.files;
+                    file.forEach(function (e) {
+                        var url = e.getUrl();
+                        jQuery('#box-img').html(`
+                                <div class="img2">
+                                    <img src="${url}" alt="image" style="width:300px">
+                                    <input type="hidden" name="image"
+                                        value="${url}">
+                                    
+                                </div>
+								`)
+                    });
+                });
+            }
+        });
     });
-
+    
     $(document).ready(function() {
         $('.properties_select2').select2();
     });

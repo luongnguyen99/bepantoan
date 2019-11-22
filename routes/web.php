@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin.layout.master');
-});
+Route::get('/', 'Client\indexController@getList')->name('homepage');
 
 
 Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
@@ -158,6 +156,9 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::get('edit_slide/{id}', 'OptionsController@getEditSlide');
         Route::post('edit_slide/{id}', 'OptionsController@postEditSlide');
 
+        Route::get('general', 'OptionsController@getGeneral')->name('general');
+        Route::post('general', 'OptionsController@updateGeneral');
+
         Route::get('del_slide/{id}', 'OptionsController@DelSlide');
         //======================>Menu <=============================
         Route::get('menu', 'OptionsController@getMenu')->name('menu');
@@ -172,93 +173,9 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 });
 
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
-    Route::get('', 'IndexController@getList');
+    Route::get('/', 'IndexController@getList');
+    
+    // danh muc san pham 
+    Route::get('danh-muc','ListCategoryController@index')->name('list-category');
 });
-//=============> Composer layouts <================
-View::composer('*', function($view) {
-    //=============>HOTLINE<=================
-    $hotline = App\Models\Option::where('key','hotline')->first();
-    if($hotline->value == null){
-        $hotline_j = null; 
-        $view->with('hotline_j', $hotline_j);
-    }
-    else{
-        $hotline_j = json_decode($hotline->value,true);
-        $view->with('hotline_j', $hotline_j);
-    }
-    //=============>FOOTER<=================
-    $footer = App\Models\Option::where('key','footer')->first();
-    if($footer->value == null){
-        $footer_j = null; 
-        $view->with('footer_j', $footer_j);
-    }
-    else{
-        $footer_j = json_decode($footer->value,true);
-        $view->with('footer_j', $footer_j);
-    }
-    //=============>LOGO<=================
-    $logo = App\Models\Option::where('key','logo')->first();
-   
-    if($logo->value == null){
-        $logo->value = null; 
-        $view->with('logo', $logo->value);
-    }
-    else{
-        $view->with('logo', $logo->value);
-    }
-    //=============>PAYMENT<=================
-    $payment = App\Models\Option::where('key','payment')->first();
-   
-    if($payment->value == null){
-        $payment_j = null; 
-        $view->with('payment_j', $payment_j);
-    }
-    else{
-        $payment_j = json_decode($payment->value,true);
-        $view->with('payment_j', $payment_j);
-    }
-    //=============>SOCIAL NETWORK<=================
-    $social_network = App\Models\Option::where('key','social_network')->first();
-   
-    if($social_network->value == null){
-        $social_network_j = null; 
-        $view->with('social_network_j', $social_network_j);
-    }
-    else{
-        $social_network_j = json_decode($social_network->value,true);
-        $view->with('social_network_j', $social_network_j);
-    }
-    //=============>SLIDE<=================
-    $slide = App\Models\Option::where('key','slide')->first();
-   
-    if($slide->value == null){
-        $slide_j = null; 
-        $view->with('slide_j', $slide_j);
-    }
-    else{
-        $slide_j = json_decode($slide->value,true);
-        $view->with('slide_j', $slide_j[0]);
-    }
-    //=============>MENU<=================
-    $menu = App\Models\Option::where('key','menu')->first();
-   
-    if($menu->value == null){
-        $menu_j = null; 
-        $view->with('menu_j', $menu_j);
-    }
-    else{
-        $menu_j = json_decode($menu->value,true);
-        $view->with('menu_j', $menu_j);
-    }
-    //=============>MENU PHONE<=================
-    $menu_phone = App\Models\Option::where('key','menu_phone')->first();
-   
-    if($menu_phone->value == null){
-        $menu_phone_j = null; 
-        $view->with('menu_phone_j', $menu_phone_j);
-    }
-    else{
-        $menu_phone_j = json_decode($menu_phone->value,true);
-        $view->with('menu_phone_j', $menu_phone_j);
-    }
-});
+

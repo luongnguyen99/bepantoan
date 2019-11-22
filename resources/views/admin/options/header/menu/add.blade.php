@@ -35,7 +35,14 @@
                                 <label for="exampleInputUsername1" style="font-weight:bold" for="menu_link">Đường dẫn</label>
                                 <input style="padding:8px;" size="100"  type="text" id="menu_name" name="menu_link" class="form-control" id="exampleInputUsername1" placeholder="Đường dẫn">
                             </div>
-    
+                            <div class="form-group">
+                                <label for="exampleInputUsername1" style="font-weight:bold" for="menu_icon">Icon</label>
+                                <input style="padding:8px;" size="100"  type="text" id="menu_icon" name="menu_icon" class="form-control" id="exampleInputUsername1" placeholder="Icon">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputUsername1" style="font-weight:bold" for="menu_link">Class</label>
+                                <input style="padding:8px;" size="100"  type="text" id="menu_class" name="menu_class" class="form-control" id="exampleInputUsername1" placeholder="Class">
+                            </div>
     
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-primary waves-effect waves-light" name="add_menu"
@@ -112,14 +119,29 @@
                 <div class="form-group row">
                     <label class="col-sm-3 control-label">Tên hiển thị</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control edit-name" placeholder="Tên hiển thị"
+                        <input type="text" name="" class="form-control edit-name" placeholder="Tên hiển thị"
                             required />
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 control-label">Đường dẫn</label>
                     <div class="col-sm-9">
-                        <input type="text" name="name" class="form-control edit-link" placeholder="Đường dẫn"
+                        <input type="text" name="" class="form-control edit-link" placeholder="Đường dẫn"
+                            required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Icon</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="" class="form-control edit-icon" placeholder="Icon"
+                            required />
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Class</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="" class="form-control edit-clss" placeholder="Class"
                             required />
                     </div>
                 </div>
@@ -150,9 +172,14 @@
             e.preventDefault();
             jQuery(this).parent().parent().addClass("editing");
             var name = jQuery(this).parent().parent().data("name"),
-                link = jQuery(this).parent().parent().data("link");
+                link = jQuery(this).parent().parent().data("link"),
+                icon = jQuery(this).parent().parent().data("icon"),
+                clss = jQuery(this).parent().parent().data("clss");
+
             jQuery("#modal-menu .edit-name").val(name);
             jQuery("#modal-menu .edit-link").val(link);
+            jQuery("#modal-menu .edit-icon").val(icon);
+            jQuery("#modal-menu .edit-clss").val(clss);
             $('#modal-menu').modal('show');
         });
 
@@ -164,8 +191,15 @@
             jQuery(".save-edit-menu").click(function () {
                 var name = jQuery(this).parents("#modal-menu").find(".edit-name").val(),
                     link = jQuery(this).parents("#modal-menu").find(".edit-link").val();
+                   
+                var icon = jQuery(this).parentsUntil("#model-menu").find(".edit-icon").val(),
+                    clss = jQuery(this).parentsUntil("#model-menu").find(".edit-clss").val();
+                    
                 jQuery(".dd-item.editing").data("name", name);
                 jQuery(".dd-item.editing").data("link", link);
+                jQuery(".dd-item.editing").data("icon", icon);
+                jQuery(".dd-item.editing").data("clss", clss);
+
                 jQuery(".dd-item.editing>.dd-handle").html(name);
                 jQuery(".dd-item.editing").removeClass("editing");
                 updateOutput($('#nestable').data('output', $('#nestable-output')));

@@ -22,11 +22,12 @@ class ProductController extends Controller
     }
 
     public function add(){
+        $brands = Brand::all();
         $categories = Category::select()->with('properties')->get();
         $categories->each(function($categories){
             $categories->properties->load('property_values');
         });
-        return view('admin.products.add',compact('categories'));
+        return view('admin.products.add',compact('categories','brands'));
     }
 
     public function saveAdd(Request $request){
@@ -39,7 +40,7 @@ class ProductController extends Controller
                 'sale_price' => 'nullable|lt:price|numeric|gt:0',
                 'status' => 'required',
                 'category_id' => 'required',
-                
+                'brand_id' => 'required',
                 'gift.*.value' => 'required',
                 'specifications.*.key' => 'required',
                 'specifications.*.value' => 'required',
@@ -63,6 +64,8 @@ class ProductController extends Controller
                 
                 'category_id.required' => 'Danh mục sản phẩm không được để trống',
 
+                'brand_id.required' => 'Hãng sản xuất không được để trống',
+
                 'gift.*.value.required' => 'Nhập ưu đãi',
 
                 'specifications.*.required' => 'Không được để trống',
@@ -80,7 +83,7 @@ class ProductController extends Controller
             );
         }else{
             
-            $data = [
+                $data = [
                 'name' => $request->name,
                 'slug' => $request->slug,
                 'price' => $request->price,
@@ -89,36 +92,38 @@ class ProductController extends Controller
                 'infomation_detail' => $request->infomation_detail,
                 'status' => $request->status,
                 'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id
+                ];
 
-            ];
-
-            if (!empty($request->gift)){
-                $data['gift'] = json_encode($request->gift);
-            };
-            
-            if (!empty($request->specifications)) {
-                $data['specifications'] = json_encode($request->specifications);
-            }
-            
-            $insertProduct = Product::create($data);
-            
-            if (!empty($request->gallery) && count($request->gallery) > 0) {
-                foreach ($request->gallery as $key => $value) {
-                    Gallery::insert([
-                        'product_id' => $insertProduct->id,
-                        'image' => $value,
-                    ]);
+                if (!empty($request->gift)){
+                    $data['gift'] = json_encode($request->gift);
                 };
-            }
-            
-            if (!empty($request->value_property) && count($request->value_property) > 0) {
-                foreach ($request->value_property as $key => $value) {
-                    Products_property_values::insert([
-                        'product_id' => $insertProduct->id,
-                        'property_value_id' => $value,
-                    ]);
+                
+                if (!empty($request->specifications)) {
+                    $data['specifications'] = json_encode($request->specifications);
                 }
-            }
+                
+                $insertProduct = Product::create($data);
+                
+                if (!empty($request->gallery) && count($request->gallery) > 0) {
+                    foreach ($request->gallery as $key => $value) {
+                        Gallery::insert([
+                            'product_id' => $insertProduct->id,
+                            'image' => $value,
+                        ]);
+                    };
+                }
+                
+                if (!empty($request->value_property) && count($request->value_property) > 0) {
+                    foreach ($request->value_property as $key => $value) {
+                        Products_property_values::insert([
+                            'product_id' => $insertProduct->id,
+                            'property_value_id' => $value,
+                        ]);
+                    }
+                };
+            
+            
             
             return response(
                 [
@@ -133,14 +138,14 @@ class ProductController extends Controller
 
     public function edit($id){
         $product = Product::where('id',$id)->with('property_values', 'galleries', 'category')->first();
-
+        $brands = Brand::all();
         $categories = Category::select()->with('properties')->get();
         $categories->each(function ($categories) {
             $categories->properties->load('property_values');
         });
         $categoriesArray = $categories->toArray();
         // dd($product);
-        return view('admin.products.edit', compact('categories','product', 'categoriesArray'));
+        return view('admin.products.edit', compact('categories','product', 'categoriesArray', 'brands'));
     }
 
     public function saveEdit(Request $request,$id){

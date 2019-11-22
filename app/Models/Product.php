@@ -12,6 +12,7 @@ class Product extends Model
         'name',
         'slug',
         'category_id',
+        'brand_id',
         'price',
         'sale_price',
         'gift',
@@ -33,5 +34,9 @@ class Product extends Model
 
     public function category(){
         return $this->belongsTo('App\Models\Category', 'category_id', 'id');
+    }
+
+    public function brand(){
+        return $this->hasOne('App\Models\Brand','id','brand_id');
     }
 }

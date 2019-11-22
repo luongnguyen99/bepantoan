@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\Product;
+use App\Models\Option;
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -37,6 +38,21 @@ if (!function_exists('to_slug')) {
         $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
         $str = preg_replace('/([\s]+)/', '-', $str);
         return $str;
+    }
+}
+// get product
+if (!function_exists('get_products_by_category_id')) {
+    function get_products_by_category_id($id){
+        $products = Product::where('category_id',$id)->orderBy('created_at','desc')->with('galleries','brand')->limit(5)->get();
+        return $products;
+    };
+}
+
+// number format 
+if (!function_exists('pveser_numberformat')) {
+    function pveser_numberformat($price){
+        $price =  number_format($price, 0, '', '.').'đ';
+        return $price;
     }
 }
 //==============>Validate Input<=====================
@@ -83,18 +99,32 @@ function ShowCategory($category, $parent, $shift)
 }
 //=================>Cut Content<======================
 function get_excerpt($content, $number)
-    {
-       
-        $excerpt = $content;
-        
-        $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
-        
-        $excerpt = strip_tags($excerpt);
-        
-        $excerpt = substr($excerpt, 0, $number);
-        
-        $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
-        
-        $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
-        return $excerpt."...";
+{
+    
+    $excerpt = $content;
+    
+    $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
+    
+    $excerpt = strip_tags($excerpt);
+    
+    $excerpt = substr($excerpt, 0, $number);
+    
+    $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
+    
+    $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
+    return $excerpt."...";
+}
+
+
+function get_option_by_key($key){
+    try {
+        $option = Option::where('key',$key)->first();
+        return $option->value;
+    } catch (Throwable $th) {
+        return false;
     }
+
+}
+
+
+

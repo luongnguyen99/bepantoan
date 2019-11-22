@@ -16,6 +16,17 @@
 	<link rel="stylesheet" href="client/css/style.css">
 	@yield('css')
 </head>
+
+<?php 
+echo '<pre>';
+print_r($data_general);
+echo '</pre>';
+
+echo '<pre>';
+print_r(get_option_by_key('general_description_site'));
+echo '</pre>';
+
+?>
 <body>
 	<header>
 		<div class="header-pc hidden-xs hidden-sm">
@@ -27,7 +38,8 @@
 								@if(isset($logo))
 								{{ $logo }}
 								@endif
-								" alt=""></a>
+								" alt="{{ $data_general['name_site'] }}">
+							</a>
 						</div>
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
@@ -94,6 +106,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="header-mobile hidden-md hidden-lg">
 			<div class="container">
 				<div class="row">
@@ -213,6 +226,8 @@
 				
 			</div>
 		</div>
+
+
 		
 	</header><!-- /header -->
 
