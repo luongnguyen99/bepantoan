@@ -6,21 +6,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@yield('title')</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-	<link rel="stylesheet" href="client/css/bootstrap.min.css">
-	<link rel="stylesheet" href="client/css/font-awesome.min.css">
-	<link rel="stylesheet" href="client/css/font-akr.css">
-	<link rel="stylesheet" href="client/css/pe-icon-7-stroke.css">
-	<link rel="stylesheet" href="client/css/helper.css">
-	<link rel="stylesheet" href="client/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="client/css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="client/css/style.css">
+	<link rel="stylesheet" href="{{asset('client/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/font-awesome.min.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/font-akr.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/pe-icon-7-stroke.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/helper.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
+	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
 	@yield('css')
 </head>
 
 <?php 
-echo '<pre>';
-print_r($data_general);
-echo '</pre>';
+// echo '<pre>';
+// print_r($data_general);
+// echo '</pre>';
 ?>
 <body>
 	<header>
@@ -29,12 +29,12 @@ echo '</pre>';
 				<div class="row">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-							<a href="<?php echo URL::to('/'); ?>"><img src="
+							{{-- <a href="<?php echo URL::to('/'); ?>"><img src="
 								@if($logo != null)
 								{{ $logo }}
 								@endif
 								" alt="{{ $data_general['name_site'] }}">
-							</a>
+							</a> --}}
 						</div>
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
@@ -474,12 +474,13 @@ echo '</pre>';
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0"></script>
 	
 	
-		<script type="text/javascript" src="client/js/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="client/js/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="client/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="client/js/jquery-scrolltofixed-min.js"></script>
-		<script type="text/javascript" src="client/js/owl.carousel.min.js"></script>
-		<script type="text/javascript" src="client/js/custom.js"></script>
+		<script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/jquery-scrolltofixed-min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
 		@yield('js')
 	</body>
 	</html>

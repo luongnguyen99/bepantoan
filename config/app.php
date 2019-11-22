@@ -176,6 +176,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         App\Providers\HelperProvider::class,
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+        // shopping cart 
+        
 
     ],
 
@@ -228,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-    ],
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+    ],  
 
 ];

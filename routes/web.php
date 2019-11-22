@@ -162,12 +162,31 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
     });
 });
 
+/* ---------Client----------  */
+
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
-    Route::get('/', 'IndexController@getList');
+    Route::get('/', 'IndexController@getList')->name('home_client');
     
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
+    Route::get('san-pham/{slug}','ProductController@detail')->name('product_detail');
+
+    Route::group(['prefix' => 'cart','as' => 'cart.'], function () {
+        Route::post('addCart','CartController@addCart')->name('addCart');
+        Route::post('removeCart/{id}','CartController@removeCart')->name('removeCart');
+        Route::post('updateCart/{id}','CartController@updateCart')->name('updateCart');
+        Route::post('saveOrder','CartController@saveOrder')->name('saveOrder');
+    });
+    
+    Route::get('gio-hang', 'CartController@showCart')->name('showCart');
+    Route::get('abc', function(){
+        dd(Cart::destroy());
+    });
 });
+
+
+
+
 //=============> Composer layouts <================
 View::composer('*', function($view) {
     //=============>HOTLINE<=================
@@ -231,10 +250,10 @@ View::composer('*', function($view) {
     $f_code = App\Models\Option::where('key','general_footer_code')->first();
 
     $data_general = array(
-        'name_site' => $name_site->value,
-        'desc_site' => $desc_site->value,
-        'h_code' => $h_code->value,
-        'f_code' => $f_code->value,
+        'name_site' => $name_site->value ?? null,
+        'desc_site' => $desc_site->value ?? null,
+        'h_code' => $h_code->value ?? null,
+        'f_code' => $f_code->value ?? null,
     );
     $view->with( 'data_general' , $data_general );
 

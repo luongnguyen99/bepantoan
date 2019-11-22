@@ -1,19 +1,26 @@
-<?php require_once('header.php'); ?>
+@extends('client.master.master')
+@section('title')
+{{ $product->name }}
+@endsection
+@section('content')
+
 	<div class="single-pro product">
 		<div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
 		    <div class="container">
 		        <div class="arrows-category">
 		            <div class="menu-cate">
-		            	<?php foreach(range(1, 12) as $number ): ?>
-		                <div class="ctg-pro-item">
-		                    <a href="#">
-		                        <div class="category-card__image">
-		                            <img src="img/bep_tux300x300x4.png" alt="Bếp từ">
-		                        </div>
-		                        <div class="category-card__name "><strong>Bếp từ</strong></div>
-		                    </a>
-		                </div>
-		                <?php endforeach; ?>
+						@if (count($categories) > 0)
+							@foreach ($categories as $category)
+							<div class="ctg-pro-item">
+								<a href="#">
+									<div class="category-card__image">
+										<img src="{{$category->image}}" alt="{{$category->name}}">
+									</div>
+									<div class="category-card__name "><strong>{{$category->name}}</strong></div>
+								</a>
+							</div>
+							@endforeach
+						@endif           
 		            </div>
 		        </div>
 		    </div>
@@ -21,9 +28,9 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="#">beptot.vn</a></li>
-				    <li><a href="#">Lò nướng đa năng </a></li>
-				    <li>Lò nướng Bosch</li>
+				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
+					<li><a href="#">{{get_product_by_id($product->category_id)->name}}</a></li>
+					<li>{{$product->name}}</li>
 				</ul>
 			</div>
 		</div>
@@ -35,37 +42,49 @@
 							<div class="col-md-5 col-xs-12 col-sm-12">
 								<div class="slide-pro-img">
 									<div id="sync1" class="owl-carousel owl-theme">
-									  	<div class="item">
-									    	<img src="img/bep-tu-bosch-pij651bb2ex500x500x4.jpg" alt="">
-										</div>
-										<div class="item">
-									    	<img src="img/large_bep-dien-tu-cata-it-772x500x500x4.png" alt="">
-										</div>
+										@if (count($product->galleries) > 0) 
+											@foreach ($product->galleries as $image)
+												<div class="item">
+													<img src="{{$image->image}}" alt="">
+												</div>
+											@endforeach
+										@endif
 									</div>
 									<div id="sync2" class="owl-carousel owl-theme">
-										<div class="item">
-									    	<img src="img/bep-tu-bosch-pij651bb2ex500x500x4.jpg" alt="">
-									    </div>
-									  	<div class="item">
-									    	<img src="img/large_bep-dien-tu-cata-it-772x500x500x4.png" alt="">
-									    </div>
+										@if (count($product->galleries) > 0) 
+											@foreach ($product->galleries as $image)
+												<div class="item">
+													<img src="{{$image->image}}" alt="">
+												</div>
+											@endforeach
+										@endif
 									</div>
 								</div>
 								<div class="box-qua">
 		                            <span class="icon-qua">
-		                                <img src="img/icon-qua2.png" alt="">
-		                            </span>
-		                            <ul class="ul-b list-qua">
-		                                <li>
-		                                	<span><img style="width: 60px;" src="img/10569106_846093875400964_7585170393470138753_nx200x200x4.jpg"></span>Tặng Bộ nồi từ Fivestar 5 chiếc  trị giá <strong class="red">850.000 đ</strong> 
-		                                </li>
-		                                
-		                            </ul>
+		                                <img src="{{asset('client/img/icon-qua2.png')}}" alt="">
+									</span>
+									@if (!empty($product->gift))
+										@php
+										$gift_arr = json_decode($product->gift,true);
+										
+										@endphp
+										<ul class="ul-b list-qua">
+											
+											@foreach ($gift_arr as $gift)
+											<li>
+												<span><strong class="red">{{$gift['value']}}</strong></span>
+											</li>
+											@endforeach
+											
+										</ul>
+									@endif
+									
 		                        </div>
 							</div>
 							<div class="col-md-4 col-xs-12 col-sm-12">
 								<div class="productdecor-details">
-									<h1>Bếp hồng ngoại đôi Eurosun EU-IF268</h1>
+								<h1>{{$product->name}}</h1>
 									<div class="product-sets">
                                         <div class="pro-rating cendo-pro">
                                             <div class="pro_one">
@@ -77,12 +96,14 @@
                                         </div>
                                     </div>
                                     <div id="product-details-lists">
-                                        <p></p><p>Bếp hồng ngoại Eurosun EU-IF268</p><p></p><p></p><p></p><p></p><p>- Loại bếp : Bếp hồng ngoại</p><p></p><p></p><p>- Danh mục: Bếp hồng ngoại Eurosun</p><p></p><p></p><p>- Số vùng nấu : 2 bếp( 2 điện)</p><p></p><p></p><p>- Xuất xứ: Công nghệ Đức lắp ráp Malaysia</p><p></p><p></p><p>- Bảo hành : 2 năm</p><p></p><p></p><p>- Kích thước sản phẩm: 730R x 430S x 67C mm<br></p><p>- Kích thước khoét đá: 680W x 390D mm&nbsp;</p><p></p>
+										@php echo !empty($product->description) ? $product->description : 'Chưa cập nhập' @endphp
                                     </div>
                                     <div class="productdecor-price">
                                         <strong class="price">
-                                            <del><span>9.680.000 VNĐ</span></del>
-                                            <span>6.680.000 VNĐ</span>
+											@if (!empty($product->sale_price) )
+												<del><span>{{pveser_numberformat($product->price)}}</span></del>
+												<span>{{pveser_numberformat($product->sale_price)}}</span>
+											@endif
                                         </strong>
                                     </div>
                                     <div class="box_support">
@@ -100,10 +121,15 @@
                                     <div class="product-sets">
                                         <div class="qty-block">
                                             <fieldset id="product-actions-fieldset">
-                                                <a class="btn" href="tel:0986 083 083"><i class="pe-7s-call"></i>Liên hệ trực tiếp 0986.083.083 <span>(Để có giá tốt nhất)</span></a>
-                                                <a href="#" class="buy_now btn btn-default btn-b1 btn-cart">
-                                                    <i class="pe-7s-cart"></i>Mua ngay<span>(Xem hàng, không mua không sao)</span>
-                                                </a>
+												<a class="btn" href="tel:0986 083 083"><i class="pe-7s-call"></i>Liên hệ trực tiếp 0986.083.083 <span>(Để có giá tốt nhất)</span></a>
+												<form action="{{route('cart.addCart')}}" method="POST">
+													@csrf
+													<input type="hidden" name="id_product" value={{$product->id}}>
+													<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+													<a href="#" id-product={{$product->id}} class="buy_now btn btn-default btn-b1 btn-cart">
+														<i class="pe-7s-cart"></i>Mua ngay<span>(Xem hàng, không mua không sao)</span>
+													</a>
+												</form>
                                                 
                                             </fieldset>
                                         </div>
@@ -173,27 +199,16 @@
 		                            </li>
 		                        </div>
 		                        <div class="map-bt">
-		                            <label>Hệ thống siêu thị:</label>
-		                            <p>
-		                                <i class="fa fa-map-marker"></i>Beptot.vn - Đường Láng - Đống Đa<br>
-		                                <span>330 Đường Láng - Đống Đa - Hà Nội ( Có Chỗ Để Xe Ô Tô ) </span>
-		                            </p>
-		                            <p>
-		                                <i class="fa fa-map-marker"></i>Beptot.vn - Long Biên<br>
-		                                <span>338 Nguyễn Văn Cừ - Long Biên - Hà Nội ( Đối Diện Siêu Thị Nguyễn Kim, Có Chỗ Để Xe Ô Tô )</span>
-		                            </p>
-		                            <p>
-		                                <i class="fa fa-map-marker"></i>Beptot.vn - Tây Hồ<br>
-		                                <span>359 Nguyễn Hoàng Tôn - Tây Hồ - Hà Nội (Có Chỗ Để Xe Ô Tô) </span>
-		                            </p>
-		                            <p>
-		                                <i class="fa fa-map-marker"></i>Beptot.vn - Hưng Yên<br>
-		                                <span>QL39A ( Sát cầu Đào Viên ) Dân Tiến - Khoái Châu - Hưng yên</span>
-		                            </p>
-		                            <p>
-		                                <i class="fa fa-map-marker"></i>Xưởng Sản Xuất - Thiết Bị Nhà Bếp Inox - Từ Liêm<br>
-		                                <span>249 Đường Xuân Phương, Từ Liêm, Hà Nội (Đối Diện Đình Làng Hậu Ái, Mặt Đường QL70)</span>
-		                            </p>
+									@if (count($showrooms) > 0 && !empty($showrooms) )
+										<label>Hệ thống siêu thị:</label>
+										@foreach ($showrooms as $item)
+											<p>
+											<i class="fa fa-map-marker"></i>{{$item->name}}<br>
+												<span>{{!empty($item->address) ? $item->address : ''}}</span>
+											</p>
+										@endforeach
+									@endif
+		                            
 		                        </div>
 							</div>
 						</div>
@@ -202,35 +217,7 @@
 		                        <div class="col-md-8 pdr_0 col-xs-12 col-sm-8">
 		                            <div class="description-title">Thông tin chi tiết</div>
 		                            <div class="description-content">
-		                                <h3>Thông tin chi tiết:</h3>
-
-										<p><a href="#">Bếp điện từ EUROSUN</a>&nbsp;là dòng sản phẩm đang được các bà nội trợ tin dùng &nbsp;nhất hiện nay với thiết kế 3 lò 2 từ 1 điện, hiện đại thông minh mang đến sự tiện lợi cho người sử dụng, bếp nấu cực kỳ nhanh và đảm bảo an toàn siêu tiết kiệm điện năng bếp thân thiện với môi trường nên đang được thị trường quan tâm đến, bếp điện từ &nbsp;với 2 bên lò nấu công suất đều 2000w và vùng nấu giữa la 1500w cả 3 bếp đều nấu cực kỳ nhanh, mặt kính làm bằng SCHOTT CERAN dòng kính có khả năng chịu nhiệt cao chống chầy xước dễ lau chùi vệ sinh khi đun nấu sản phẩm với tính năng tốt như vậy thì chỉ có&nbsp;<a href="#">bếp điên</a>&nbsp;EUROSUN muốn có sản phẩm chất lượng giá mềm hãy đến với Beptot.vn</p>
-
-										<h3>SHOWROOM BEPTOT.VN ĐƯỜNG LÁNG</h3>
-
-										<p><strong>Địa chỉ:&nbsp;</strong>330 Đường Láng - Đống Đa - Hà Nội ( Có Chỗ Để Xe Ô Tô )&nbsp;<br>
-										<strong>Hotline:&nbsp;</strong><b><a href="#">024 33 100 100</a>&nbsp;-&nbsp;<a href="#">0986 083 083</a></b></p>
-
-										<p>Thông số kỹ thuật:</p>
-
-										<p>- 2 vùng nấu hồng ngoại<br>
-										- Mặt kính VITTROCERAMIC Made in Germany<br>
-										- Công nghệ mới tiết kiệm &gt;35% điện năng<br>
-										- Điều khiển cảm ứng trượt 9 mức gia nhiệt<br>
-										- Tự nhận diện vùng nấu<br>
-										- Hẹn giờ &nbsp;99 phút<br>
-										- Chức năng kích hoạt công suất "Super Booster" siêu nhanh<br>
-										- Chức năng biến tần INVERTER<br>
-										- Chức năng cảm ứng chống tràn<br>
-										- Phím khởi động an toàn<br>
-										- Tự động tắt khi xoong nồi rời vùng nấu<br>
-										- Kiểm soát nhiệt độ trong vùng nấu<br>
-										- Hệ thống &nbsp;bảo &nbsp;vệ an toàn khi &nbsp;quá nhiệt, quá &nbsp;áp<br>
-										- Khoá trẻ em<br>
-										- Công suất lò trái : 2200W<br>
-										- Công suất lò phải: 2200W<br>
-										- Kích thước sản phẩm: 730R x 430S x 67C mm<br>
-										- Kích thước khoét đá: 680W x 390D mm&nbsp;</p>
+		                                @php echo !empty($product->infomation_detail) ? $product->infomation_detail : 'Chưa cập nhập' @endphp
 
 		                            </div>
 		                            <div class="show-more">
@@ -241,147 +228,27 @@
 		                        <div class="col-md-4 col-xs-12 col-sm-4 pdl_0">
 		                            <div class="attribute-title">Thông số kỹ thuật</div>
 		                            <div class="attribute-content">
-										<table border="0" cellpadding="0" class="table">
-											<tbody>
-												<tr>
-													<td>
-													<p>&nbsp;Mã sản phẩm</p>
-													</td>
-													<td>
-													<p>&nbsp;<strong>Eurosun EU-IF268</strong></p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Sản xuất tại</p>
-													</td>
-													<td>
-													<p>&nbsp;Malaysia (Mã Lai)</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Loại bếp</p>
-													</td>
-													<td>
-													<p>&nbsp;2 vùng điện (hồng ngoại)</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Mặt kính</p>
-													</td>
-													<td>
-													<p>&nbsp;<strong>Vitro Ceramic chịu lực cao</strong></p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;Phát nhiệt hồng ngoại Hilight công nghệ cao</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;Điều khiển cảm ứng dạng ẩn</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;<strong>Nấu thông minh</strong></p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;<strong>Tạm dừng khi đang nấu</strong></p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;Hẹn giờ độc lập 99 phút</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;Kiểm soát nhiệt độ trong vùng nấu</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;Hệ thống bảo vệ khi quá nhiệt, quá áp</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Tính năng</p>
-													</td>
-													<td>
-													<p>&nbsp;Khóa trẻ em</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Điện áp</p>
-													</td>
-													<td>
-													<p>&nbsp;220V/50Hz</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Công suất lò trái</p>
-													</td>
-													<td>
-													<p>&nbsp;2200W</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Công suất lò phải</p>
-													</td>
-													<td>
-													<p>&nbsp;2200W</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Kích thước bề mặt</p>
-													</td>
-													<td>
-													<p>&nbsp;735R * 430S * 67C mm</p>
-													</td>
-												</tr>
-												<tr>
-													<td>
-													<p>&nbsp;Kích thước khoét lỗ</p>
-													</td>
-													<td>
-													<p>&nbsp;700R * 405S mm</p>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-
+										@if (!empty($product->specifications))
+										@php
+											$specifications_arr = json_decode($product->specifications,true);
+											
+										@endphp
+											<table border="0" cellpadding="0" class="table">
+												<tbody>
+												@foreach ($specifications_arr as $specification)
+													<tr>
+														<td>
+															<p>{{$specification['key']}}</p>
+														</td>
+														<td>
+															<p>{{$specification['value']}}</p>
+														</td>
+													</tr>
+												@endforeach
+												</tbody>
+											</table>
+										@endif
+									
 		                            </div>
 		                              <div class="show-more">
 		                                <a href="javascript:void(0)" class="readmore" id="js2-show-more">Xem thêm thông số  </a>
@@ -392,100 +259,151 @@
 					</div>
 				</div>
 				<div class="hd-card-body section-margin-bottom">
-					<div class="hd-module-title">
-	                    <h3 class="module-title">Sản phẩm Liên quan</h3>
-	                </div>
-	                <div class="row">
-	            		<?php foreach(range(1, 5) as $number ): ?>
-	            		<div class="col-md-5h col-xs-6 col-sm-6">
-	            			<div class="product-item">
-	                            <div class="product-img">
-	                                
-	                                <div class="pro-badge">
-	                                    <span>-24%</span>
-	                                </div>
-	                                
-	                                <div class="img-responsive">
-	                                    <a href="#">
-	                                        <img src="img/bep-tu-bosch-pij651bb2ex500x500x4.jpg" alt="Product Title">
-	                                    </a>
-	                                </div>
-	                            </div>
-	                            <div class="product-dsc">
-	                                <h3><a href="#">Bếp từ Bosch PIJ651BB2E</a></h3>
-	                                <div class="cate_pro_title">
-	                                    <a href="#" class="prdBrand">
-	                                        <img alt="Bosch" src="img/logobosch.jpg"></a>
-	                                </div>
-	                                <div class="gift-sale">
-	                                    
-	                                    <strong>Quà tặng: Bộ nồi từ Fivestar 5 chiếc </strong>
-	                                    
-	                                </div>
-	                                <div class="cate_pro_bot">
-	                                    
-	                                    <label>14.950.000₫</label>
-	                                    
-	                                    <span>19.900.000₫</span>
-	                                    
-	                                </div>
-	                            </div>
-	                            <div class="actions-btn">
-	                                <a href="#"><i class="fa fa-eye"></i></a>
-	                                <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-	                            </div>
-	                        </div>
-	            		</div>
-	            		<?php endforeach; ?>
-	            	</div>
+					@if (!empty(get_products_by_category_id($product->category_id)))
+						<div class="hd-module-title">
+							<h3 class="module-title">Sản phẩm Liên quan</h3>
+						</div>
+						<div class="row">
+						
+							@foreach (get_products_by_category_id($product->category_id) as $item_product)
+								
+								<div class="col-md-5h col-xs-6 col-sm-6">
+									<div class="product-item">
+										<div class="product-img">
+											@php
+											if (!empty($item_product->sale_price)) {
+												$percent_sale = ((int)$item_product->sale_price / (int)$item_product->price)*100;
+												$percent_sale2 = round(100 - $percent_sale,0);
+												// dd($percent_sale2);
+											};
+											@endphp
+											@if (!empty($item_product->sale_price))
+												<div class="pro-badge">
+													<span>-{{$percent_sale2}}%</span>
+												</div>
+											@endif
+											<div class="img-responsive">
+												<a href="{{route('product_detail',['slug' => $item_product->slug])}}">
+													@if (count($item_product->galleries) > 0 && !empty($item_product->galleries))
+													<img src="{{$item_product->galleries[0]->image}}" alt="{{$item_product->name}}">
+													@endif
+												</a>
+											</div>
+										</div>
+										<div class="product-dsc">
+											<h3><a href="{{route('product_detail',['slug' => $item_product->slug])}}">{{$item_product->name}}</a></h3>
+											<div class="cate_pro_title">
+												<a href="#" class="prdBrand">
+												<img alt="{{$item_product->brand->name}}" src="{{$item_product->brand->image}}"></a>
+											</div>
+											@if (!empty($item_product->gift))
+                                            @php
+                                            $arr_gift = json_decode($item_product->gift,true);
+                                            @endphp
+                                                @foreach ($arr_gift as $gift)
+                                                    <div class="gift-sale">
+                                                        <strong>{{$gift['value']}}</strong>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+											<div class="cate_pro_bot">
+												@if (!empty($item_product->sale_price))
+                                                    <label>{{pveser_numberformat($item_product->sale_price)}}</label>   
+                                                    <span>{{pveser_numberformat($item_product->price)}}</span>
+                                                @else
+                                                    <label>{{pveser_numberformat($item_product->price)}}</label>
+                                                @endif
+									
+											</div>
+										</div>
+										<div class="actions-btn">
+											<a href="#"><i class="fa fa-eye"></i></a>
+											<form action="{{route('cart.addCart')}}" method="POST">
+												@csrf
+												<input type="hidden" name="id_product" value={{$item_product->id}}>
+												<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+												<a href="#" id-product="{{$item_product->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+												
+											</form>
+										</div>
+									</div>
+								</div>
+							@endforeach
+							
+						</div>
+					@endif
 				</div>
 				<div class="hd-card-body section-margin-bottom ">
-					<div class="hd-module-title">
-	                    <h3 class="module-title">Sản phẩm khách hàng quan tâm</h3>
-	                </div>
-	                <div class="row">
-	            		<?php foreach(range(1, 5) as $number ): ?>
-	            		<div class="col-md-5h col-xs-6 col-sm-6">
-	            			<div class="product-item">
-	                            <div class="product-img">
-	                                
-	                                <div class="pro-badge">
-	                                    <span>-24%</span>
-	                                </div>
-	                                
-	                                <div class="img-responsive">
-	                                    <a href="#">
-	                                        <img src="img/bep-tu-bosch-pij651bb2ex500x500x4.jpg" alt="Product Title">
-	                                    </a>
-	                                </div>
-	                            </div>
-	                            <div class="product-dsc">
-	                                <h3><a href="#">Bếp từ Bosch PIJ651BB2E</a></h3>
-	                                <div class="cate_pro_title">
-	                                    <a href="#" class="prdBrand">
-	                                        <img alt="Bosch" src="img/logobosch.jpg"></a>
-	                                </div>
-	                                <div class="gift-sale">
-	                                    
-	                                    <strong>Quà tặng: Bộ nồi từ Fivestar 5 chiếc </strong>
-	                                    
-	                                </div>
-	                                <div class="cate_pro_bot">
-	                                    
-	                                    <label>14.950.000₫</label>
-	                                    
-	                                    <span>19.900.000₫</span>
-	                                    
-	                                </div>
-	                            </div>
-	                            <div class="actions-btn">
-	                                <a href="#"><i class="fa fa-eye"></i></a>
-	                                <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-	                            </div>
-	                        </div>
-	            		</div>
-	            		<?php endforeach; ?>
-	            	</div>
+					@if (count($productsRandom) > 0 && !empty($productsRandom))
+						<div class="hd-module-title">
+							<h3 class="module-title">Sản phẩm khách hàng quan tâm</h3>
+						</div>
+						<div class="row">
+							@foreach ($productsRandom as $product_random)
+								<div class="col-md-5h col-xs-6 col-sm-6">
+									<div class="product-item">
+										<div class="product-img">
+											@php
+											if (!empty($product_random->sale_price)) {
+											$percent_sale = ((int)$product_random->sale_price / (int)$product_random->price)*100;
+											$percent_sale2 = round(100 - $percent_sale,0);
+										
+											};
+											@endphp
+											@if (!empty($product_random->sale_price))
+											<div class="pro-badge">
+												<span>-{{$percent_sale2}}%</span>
+											</div>
+											@endif
+											<div class="img-responsive">
+												<a href="{{route('product_detail',['slug' => $product_random->slug])}}">
+													@if (count($product_random->galleries) > 0 && !empty($product_random->galleries))
+													<img src="{{$product_random->galleries[0]->image}}" alt="{{$product_random->name}}">
+													@endif
+												</a>
+											</div>
+										</div>
+										<div class="product-dsc">
+											<h3><a href="{{route('product_detail',['slug' => $product_random->slug])}}">{{$product_random->name}}</a></h3>
+											<div class="cate_pro_title">
+												<a href="#" class="prdBrand">
+													<img alt="{{$product_random->brand->name}}" src="{{$product_random->brand->image}}"></a>
+											</div>
+											@if (!empty($product_random->gift))
+											@php
+											$arr_gift = json_decode($product_random->gift,true);
+											@endphp
+											@foreach ($arr_gift as $gift)
+											<div class="gift-sale">
+												<strong>{{$gift['value']}}</strong>
+											</div>
+											@endforeach
+											@endif
+											<div class="cate_pro_bot">
+												@if (!empty($product_random->sale_price))
+												<label>{{pveser_numberformat($product_random->sale_price)}}</label>
+												<span>{{pveser_numberformat($product_random->price)}}</span>
+												@else
+												<label>{{pveser_numberformat($product_random->price)}}</label>
+												@endif
+									
+											</div>
+										</div>
+										<div class="actions-btn">
+											<a href="#"><i class="fa fa-eye"></i></a>
+											<form action="{{route('cart.addCart')}}" method="POST">
+												@csrf
+												<input type="hidden" name="id_product" value={{$product_random->id}}>
+												<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+												<a href="#" id-product="{{$product_random->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+												
+											</form>
+										</div>
+									</div>
+								</div>
+							@endforeach
+						</div>
+					@endif
 				</div>
 				<div class="hd-card-body over section-margin-bottom ">
 					<div class="hd-module-title">
@@ -633,5 +551,4 @@
 	
 	</div>
 
-
-<?php require_once('footer.php'); ?>
+@endsection

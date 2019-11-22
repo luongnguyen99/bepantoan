@@ -1,6 +1,6 @@
 <?php
 use App\Models\Product;
-
+use App\Models\Category;
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -40,6 +40,14 @@ if (!function_exists('to_slug')) {
         return $str;
     }
 }
+if (!function_exists('get_detail_products_by_id')) {
+    function get_detail_products_by_id($id)
+    {
+        $products = Product::where('id', $id)->with('galleries', 'brand')->first();
+        return $products;
+    };
+}
+
 // get product
 if (!function_exists('get_products_by_category_id')) {
     function get_products_by_category_id($id){
@@ -53,6 +61,14 @@ if (!function_exists('pveser_numberformat')) {
     function pveser_numberformat($price){
         $price =  number_format($price, 0, '', '.').'đ';
         return $price;
+    }
+}
+// get category
+if (!function_exists('get_product_by_id')) {
+    function get_product_by_id($id)
+    {
+        $category = Category::where('id',$id)->first();
+        return $category;
     }
 }
 //==============>Validate Input<=====================

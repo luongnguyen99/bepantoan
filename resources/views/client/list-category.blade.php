@@ -54,7 +54,6 @@
     </div>
 
     @if (count($categories) > 0 && !empty($categories))
-        {{-- {{dd($categories)}} --}}
         @foreach ($categories as $item)
             <div class="single-products">
                 <div class="container">
@@ -101,7 +100,7 @@
                                             @endif
                                             
                                             <div class="img-responsive">
-                                                <a href="#">
+                                                <a href="{{route('product_detail',['slug' => $product->slug])}}">
                                                     @if (count($product->galleries) > 0 && !empty($product->galleries))
                                                         <img src="{{$product->galleries[0]->image}}" alt="{{$product->name}}">
                                                     @endif
@@ -109,7 +108,7 @@
                                             </div>
                                         </div>
                                         <div class="product-dsc">
-                                            <h3><a href="#">{{$product->name}}</a></h3>
+                                            <h3><a href="{{route('product_detail',['slug' => $product->slug])}}">{{$product->name}}</a></h3>
                                             <div class="cate_pro_title">
                                                 <a href="#" class="prdBrand">
                                                     <img alt="{{$product->brand->name}}" src="{{$product->brand->image}}"></a>
