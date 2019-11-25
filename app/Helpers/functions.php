@@ -1,10 +1,7 @@
 <?php
 use App\Models\Product;
-<<<<<<< HEAD
-use App\Models\Category;
-=======
 use App\Models\Option;
->>>>>>> d3e38fcb262744188c51859f7ea68ac4c031fef1
+use App\Models\Category;
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
