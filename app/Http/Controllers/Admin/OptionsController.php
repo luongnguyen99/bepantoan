@@ -20,6 +20,13 @@ class OptionsController extends Controller
         $db->save();
         return redirect()->back()->with('add_success','Thêm logo thành công');
     }
+    public function delLogo()
+    {
+        $db = Option::where('key','logo')->first();
+        $db->value = null;
+        $db->save();
+        return redirect()->back()->with('add_success','Xóa logo thành công');
+    }
     //==========> HOTLINE <=====================
     public function getHotline()
     {
@@ -307,7 +314,7 @@ class OptionsController extends Controller
             $merge[0] =  array_merge($arr[0],$result[0]);
             $db->value = json_encode($merge);
             $db->save();
-            return redirect()->back()->with('add_success');
+            return redirect()->back()->with('add_success','Thêm slide thành công');
         }
     }
     public function getEditSlide($id)
@@ -417,7 +424,11 @@ class OptionsController extends Controller
                 $item = get_object_vars($item);
                 $name = $item['name'];
                 $link = $item['link'];
-                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '" >';
+                $icon = $item['icon'];
+                $clss= $item['clss'];
+                
+                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '" 
+                data-icon="' . $icon . '" data-clss="' . $clss . '">';
                 $result .= '<div class="dd-handle" style="padding:6px 150px;">' . $name . '</div>';
                 if (array_key_exists("children", $item)) {
                     $result = $this->show_menu($item["children"], $result);
@@ -437,11 +448,15 @@ class OptionsController extends Controller
         $new_item = array(
             "name" => $r->menu_name,
             "link" => $r->menu_link,
+            "icon" => $r->menu_icon,
+            "clss"=> $r->menu_class
         );
         $new_item = (object) $new_item;
+        
         $opt_value[] = $new_item;
         $options->value = json_encode($opt_value);
         $options->save();
+        $the_newoption = Option::where('key', '=', 'menu')->first();
         return redirect()->back()->with('add-menu-success', 'Thêm menu thành công!');
     }
     public function postUpdateMenu(Request $r)
@@ -476,7 +491,10 @@ class OptionsController extends Controller
         $new_item = array(
             "name" => $r->menu_name,
             "link" => $r->menu_link,
+            "icon" => $r->menu_icon,
+            "clss"=> $r->menu_class
         );
+            
         $new_item = (object) $new_item;
         $opt_value[] = $new_item;
         $options->value = json_encode($opt_value);

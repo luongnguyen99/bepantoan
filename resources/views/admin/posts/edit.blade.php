@@ -70,11 +70,13 @@ Bài viết
                         <label for="name">Số lượng truy cập</label>
                         <input class="form-control" type="text" name="view" 
                             value="{{ $db->views }}">
+                        {{ showError($errors,'view') }}
                     </div>
                     <div class="form-group">
                         <label for="parent_id">Chọn danh mục</label>
                         
                         <select name="parent_id" id="parent_id" class="form-control select2_add">
+                            <option value="0">Chọn danh mục</option>
                             @foreach ($post_cate as $item)
                             <option 
                             @if ($item->id == $db->post_category_id)

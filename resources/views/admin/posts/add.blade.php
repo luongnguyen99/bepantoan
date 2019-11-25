@@ -76,6 +76,7 @@ Bài viết
                         <label for="name">Số lượng truy cập</label>
                         <input class="form-control" type="text" name="view" 
                             value="{{ !empty(old('view')) ? old('view') : ''}}">
+                            {{ showError($errors,'view') }}
                     </div>
                     <div class="form-group">
                         <label for="parent_id">Chọn danh mục</label>

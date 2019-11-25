@@ -1,6 +1,7 @@
 <?php
 use App\Models\Product;
 use App\Models\Option;
+use App\Models\Category;
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -115,7 +116,7 @@ function get_excerpt($content, $number)
     return $excerpt."...";
 }
 
-
+// =================> Get option <================= //
 function get_option_by_key($key){
     try {
         $option = Option::where('key',$key)->first();
@@ -125,5 +126,71 @@ function get_option_by_key($key){
     }
 
 }
+
+// ================> Build Tree category <=================== //
+
+function make_tree($dataArr , $id = 0 ) {
+
+    foreach($dataArr as $key => $data){
+        //  break if parent == 0
+        echo '<li class="ng-scope  drop-icon re-icon">';
+        if($data['parent'] == $id){
+            
+            ?>
+                
+                <a href="#"><span>
+                    <img src="<?php echo $data['image'] ?>" alt="<?php echo $data['name'] ?>"></span><?php echo $data['name'] ?>
+                </a>
+                
+
+            <?php
+
+            unset($dataArr[$key]);
+
+        }else{
+
+            ?>
+            <ul class="sub-menu">
+                <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
+                <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
+            </ul>
+            <?php
+
+        }
+
+        echo '</li>';
+
+
+    }
+
+}
+
+
+
+function build_categories_tree(){
+    try {
+        
+        $categories = Category::all();
+        $dataArr = array();
+        foreach ($categories as $key => $value) {
+            $dataArr[] = array(
+                'id' => $value->id,
+                'name' => $value->name,
+                'image' => $value->image,
+                'parent' => $value->parent_id,
+            );
+        }
+
+        make_tree($dataArr , 0);
+
+    } catch (\Throwable $th) {
+        return false;
+    }
+    
+
+
+}
+
+
 
 

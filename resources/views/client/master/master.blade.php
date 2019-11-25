@@ -96,17 +96,13 @@
 						<div class="quick-menu hidden-xs">
 							<?php								
 								$menu = json_decode($menu, true);
-
 							?>
 							
 							@if (isset($menu) && !empty($menu))
 							@foreach ( $menu as $item_menu )
-								<a href="{{ $item_menu['link']  }}"><i class="pe-7s-shopbag"></i>{{ $item_menu['name'] }}</a>
+								<a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : "#"  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}" ><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a>
 							@endforeach
 							@endif
-							
-							<!--<a class="km" href="#" target="_blank" rel=""><i class="pe-7s-gift"></i>Khuyến mãi</a>-->
-							
 
 
 							@php
@@ -194,6 +190,12 @@
 						</div>
 						
 					</div>
+
+					@php
+						echo '<pre>';
+						print_r(build_categories_tree());
+						echo '</pre>';
+					@endphp
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 					        <a href="#" target="_blank" rel="">
@@ -496,7 +498,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 text-center">
-							@if ($footer_j['footer'])
+							@if (isset($footer_j['footer']))
 							<p>
 								{{ $footer_j['footer'] }}
 							</p>

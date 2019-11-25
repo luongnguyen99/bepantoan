@@ -117,6 +117,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         //=================>Logo<=============================
         Route::get('logo', 'OptionsController@getLogo')->name('logo');
         Route::post('logo', 'OptionsController@postLogo');
+        Route::get('logo/del', 'OptionsController@delLogo');
 
         //=================>Hotline<=============================
         Route::get('hotline', 'OptionsController@getHotline')->name('hotline');
@@ -246,6 +247,4 @@ View::composer('*', function($view) {
     //     'f_code' => $f_code->value,
     // );
     // $view->with( 'data_general' , $data_general );
-
-
-});
+    });
