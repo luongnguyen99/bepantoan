@@ -105,16 +105,19 @@ class CartController extends Controller
                 ]);
             }
             $id_order = $insertOrder->id;
-            
+            // gui mail khach hang
             Mail::send('template_mail/order_success', array('data' => $data,'carts' => $carts,'id_order' => $id_order), function ($message) use ($data) {
                 $message->to($data['email'], 'Bếp Tốt')->subject('Đặt hàng thành công!');
             });
 
-            Mail::send('template_mail/order_success_admin', array('data' => $data, 'carts' => $carts, 'id_order' => $id_order), function ($message) use ($data) {
-                $message->to($data['email'], 'Bếp Tốt')->subject('Đơn hàng mới!');
+            // gui mail admin
+            $email_admin = get_option_by_key('email_admin');
+        
+            Mail::send('template_mail/order_success_admin', array('data' => $data, 'carts' => $carts, 'id_order' => $id_order), function ($message) use ($email_admin) {
+                $message->to($email_admin, 'Bếp Tốt')->subject('Đơn hàng mới!');
             });
 
-
+            Cart::destroy();
             return response([
                 'messages' => 'Đặt hàng thành công',
                 'errors' => false,

@@ -1,10 +1,14 @@
-<?php require_once('header.php'); ?>
+@extends('client.master.master')
+@section('title')
+Cảm ơn
+@endsection
+@section('content')
 	<div class="dathang product">
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="#">beptot.vn</a></li>
-				    <li>Giỏ hàng</li>
+				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
+				    <li>Cảm ơn</li>
 				</ul>
 			</div>
 		</div>
@@ -18,7 +22,7 @@
 		                    <br>
 		                    Đơn hàng của quý khách sẽ được nhân viên kiểm tra và giao hàng trong thời gian sớm nhất.</h3>
 		                <div class="flextBet thankyouButton">
-		                    <a href="#" class="btn btnBackBuy btn-lg" rel="nofollow">
+		                    <a href="{{route('home_client')}}" class="btn btnBackBuy btn-lg" rel="nofollow">
 		                        Tiếp tục mua hàng&nbsp;<i class="fa fa-angle-double-right"></i>
 		                    </a>
 		                </div>
@@ -30,4 +34,4 @@
 		</div>
 	</div>
 
-<?php require_once('footer.php'); ?>
+@endsection

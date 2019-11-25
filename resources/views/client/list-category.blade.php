@@ -2,8 +2,6 @@
 @section('title','Sản phẩm')
 @section('content')
 <div class="home">
-    
-    
     <div class="wrap-category">
         <div class="container">
             @if (count($categories) > 0 && !empty($categories))
@@ -59,17 +57,16 @@
                 <div class="container">
                     <div class="nav_cate_title">
                         <h2 class="title">
-                            <a href="#" title="{{$item->name}}">{{$item->name}}</a>
+                            <a href="{{url('danh-muc').'/'.$item->slug}}" title="{{$item->name}}">{{$item->name}}</a>
                         </h2>
                         @php
                             $arr_name_sub_category = explode(",",$item->brand_name);
                             $arr_slug_sub_category = explode(",",$item->brand_slug);
-                            // dd($arr_name_sub_category);
                         @endphp
                         <div class="list-text-category hidden-xs hidden-sm">
                             @if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
                                 @foreach ($arr_name_sub_category as $key =>  $item2)
-                                    <a href="{{$arr_slug_sub_category[$key]}}" class="itemprop" title="{{$item2}}">{{$item2}}</a>   
+                                    <a href="{{url('danh-muc').'/'.$arr_slug_sub_category[$key]}}" class="itemprop" title="{{$item2}}">{{$item2}}</a>   
                                 @endforeach
                             @endif
             

@@ -1,4 +1,8 @@
-<?php require_once('header.php'); ?>
+@extends('client.master.master')
+@section('title','Sản phẩm')
+@section('content')
+<div class="home">
+	{{dd($category)}}
 	<div class="product">
 		<div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
 		    <div class="container">
@@ -366,5 +370,4 @@
 		</div>
 	</div>
 
-
-<?php require_once('footer.php'); ?>
+@endsection

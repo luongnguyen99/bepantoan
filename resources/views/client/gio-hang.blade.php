@@ -267,6 +267,10 @@ Giỏ hàng
 		contentType: false,
 		method: 'POST',
 		data: formData,
+		beforeSend: function() {	
+			$('#btnOrder').attr('href','#');
+			$('#btnOrder').html('Đang gửi đơn hàng. Vui lòng đợi ...');
+		},
 			success:function(data){ 
 				if (data.errors) {					
 					html += `<li>${data.messages.Name[0]}</li>`;
@@ -284,7 +288,7 @@ Giỏ hàng
 							' Ok!',	
 						})
 				}else{
-
+					window.location.href = `{{route('thankyou')}}`;
 				}
 			},
 		});

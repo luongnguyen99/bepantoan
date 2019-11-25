@@ -200,7 +200,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
     Route::get('san-pham/{slug}','ProductController@detail')->name('product_detail');
-
+    Route::get('danh-muc/{slug}/{slug2?}','ListCategoryController@category_detail')->name('category_detail');
     Route::group(['prefix' => 'cart','as' => 'cart.'], function () {
         Route::post('addCart','CartController@addCart')->name('addCart');
         Route::post('removeCart/{id}','CartController@removeCart')->name('removeCart');
@@ -209,6 +209,10 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     });
     
     Route::get('gio-hang', 'CartController@showCart')->name('showCart');
+
+    Route::get('cam-on',function(){
+        return view('client.dathang');
+    })->name('thankyou');
     Route::get('abc', function(){
         dd(Cart::destroy());
     });
