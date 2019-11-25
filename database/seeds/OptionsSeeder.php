@@ -11,7 +11,8 @@ class OptionsSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+        DB::table('options')->delete();
+        DB::table('options')->insert([
             [
                 'name' => 'logo',
                 'key' => 'logo',
@@ -41,31 +42,48 @@ class OptionsSeeder extends Seeder
             [   
                 'name' => 'name_site',
                 'key' => 'general_name_site',
-                'value' => '',
+                'value' => 'BepAnToan',
             ],
 
             [   
                 'name' => 'desc_site',
                 'key' => 'general_description_site',
-                'value' => '',
+                'value' => 'Bep an toan site',
             ],
             [   
                 'name' => 'header_code',
                 'key' => 'general_header_code',
-                'value' => '',
+                'value' => ' ',
             ],
             [   
                 'name' => 'footer_code',
                 'key' => 'general_footer_code',
+                'value' => ' ',
+            ],
+            [
+                'name' => 'slide',
+                'key' => 'slide',
                 'value' => '',
             ],
             [
+<<<<<<< HEAD
                 'name' => 'email_admin',
                 'key' => 'email_admin',
                 'value' => 'luongnd2286@gmail.com'
             ]
+=======
+                'name' => 'menu',
+                'key' => 'menu',
+                'value' => '',
+            ],
+            [
+                'name' => 'menu_phone',
+                'key' => 'menu_phone',
+                'value' => '',
+            ],
 
-        ];
-        DB::table('options')->insert($data);
+        ]);
+>>>>>>> d3e38fcb262744188c51859f7ea68ac4c031fef1
+
     }
 }

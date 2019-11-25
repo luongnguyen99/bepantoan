@@ -3,7 +3,7 @@
 
 {{-- page title --}}
 @section('page_title')
-Phòng trưng bày
+Cửa hàng
 @endsection
 
 
@@ -19,7 +19,7 @@ Phòng trưng bày
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title">
-                    Sửa phòng trưng bày
+                    Sửa cửa hàng
                 </h3>
 
                 <div class="box-tools pull-right">

@@ -21,6 +21,11 @@
 // echo '<pre>';
 // print_r($data_general);
 // echo '</pre>';
+
+// echo '<pre>';
+// print_r(get_option_by_key('general_description_site'));
+// echo '</pre>';
+
 ?>
 <body>
 	<header>

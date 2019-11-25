@@ -97,7 +97,7 @@
             <li class="treeview {{activeNav('showroom')}} {{activeNav('showroom')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
-                    <span>Phòng trưng bày</span>
+                    <span>Cửa hàng</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -119,6 +119,19 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li class="treeview {{activeNav('home-slide')}} {{activeNav('home-slide')}}">
+                        <a href="#">
+                            <i class="fa fa-archive"></i>
+                            <span>Trang chủ</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="{{activeNav('options')}}"><a href="{{route('admin.options.slide')}}"><i
+                                        class="fa fa-circle-o"></i> Danh sách Slide</a></li>
+                        </ul>
+                    </li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.logo')}}"><i
                                 class="fa fa-circle-o"></i> Logo</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.hotline')}}"><i
@@ -129,6 +142,10 @@
                         class="fa fa-circle-o"></i>Thanh toán</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.social_network')}}"><i
                         class="fa fa-circle-o"></i>Mạng xã hội</a></li>
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.menu')}}"><i
+                        class="fa fa-circle-o"></i>Menu</a></li>
+
+                   
                 </ul>
             </li>
 
