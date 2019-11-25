@@ -66,12 +66,11 @@ class OptionsSeeder extends Seeder
                 'value' => '',
             ],
             [
-<<<<<<< HEAD
                 'name' => 'email_admin',
                 'key' => 'email_admin',
                 'value' => 'luongnd2286@gmail.com'
-            ]
-=======
+            ],
+            [
                 'name' => 'menu',
                 'key' => 'menu',
                 'value' => '',
@@ -102,7 +101,6 @@ class OptionsSeeder extends Seeder
                 'value' => '',
             ],
         ]);
->>>>>>> d3e38fcb262744188c51859f7ea68ac4c031fef1
 
     }
 }
