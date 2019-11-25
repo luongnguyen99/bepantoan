@@ -1,10 +1,7 @@
 <?php
 use App\Models\Product;
-<<<<<<< HEAD
 use App\Models\Category;
-=======
 use App\Models\Option;
->>>>>>> d3e38fcb262744188c51859f7ea68ac4c031fef1
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -135,7 +132,7 @@ function get_excerpt($content, $number)
     return $excerpt."...";
 }
 
-
+// =================> Get option <================= //
 function get_option_by_key($key){
     try {
         $option = Option::where('key',$key)->first();
@@ -145,6 +142,160 @@ function get_option_by_key($key){
     }
 
 }
+
+// ================> Build Tree category <=================== //
+
+function make_tree($dataArr , $id = 0 ) {
+    $map_data = array();
+    foreach($dataArr as $key => $data){
+        //  break if parent == 0
+        // echo '<li class="ng-scope  drop-icon re-icon">';
+        if($data['parent'] == $id){
+            
+            unset($dataArr[$key]);
+            $map_data[] = $data;
+            $child = make_tree($map_data , $data['id']);
+
+            $map_data = array_merge( $map_data , $child );
+
+        }
+
+        // echo '</li>';
+
+
+    }
+
+    return $map_data;
+
+}
+
+
+function list_tree( $dataArr , $id = 0){
+    $data_result = array();
+    foreach($dataArr as $key => $data){
+        //  break if parent == 0
+        // echo '<li class="ng-scope  drop-icon re-icon">';
+        if($data['parent'] == $id){
+            $map_data = make_tree($dataArr , $data['id']);
+
+            if( empty($map_data) ){
+
+                // not have child
+
+                echo '<pre>';
+                print_r('het con');
+                echo '</pre>';
+
+            }else{
+                echo '<pre>';
+                print_r('co con');
+                echo '</pre>';
+                foreach( $map_data as $item ){
+                    list_tree($dataArr , $item['id'] );            
+                }
+                
+
+            }
+
+            // $data_result[] = $map_data;
+
+            // if(isset($map_data) && !empty($map_data)){
+
+            //     foreach( $map_data as $item ){
+                    
+            //         list_tree($dataArr , $item['id'] );    
+                
+            //     }
+                
+
+            // }
+
+            // // unset($dataArr[$key]);
+            // // $map_data[] = $data;
+            // // $child = make_tree($map_data , $data['id']);
+
+    
+        }
+
+        // echo '</li>';
+    }
+    // echo '<pre>';
+    // print_r($data_result);
+    // echo '</pre>';
+    // return $map_data;
+}
+
+
+
+function build_categories_tree(){
+    try {
+        
+        $categories = Category::all();
+        $dataArr = array();
+        foreach ($categories as $key => $value) {
+            $dataArr[] = array(
+                'id' => $value->id,
+                'name' => $value->name,
+                'image' => $value->image,
+                'parent' => $value->parent_id,
+            );
+        }
+
+        
+
+        $parents = make_tree($dataArr , 0);
+
+        
+
+        if(isset($dataArr) && !empty($dataArr)){
+           
+            foreach ($dataArr as $item) {
+                $get_tree = make_tree($dataArr , $item['id'] );
+                if($item['parent'] == 0){
+                    //  is root parent
+                    ?>
+                        <li class="ng-scope  drop-icon re-icon menu-item-has-children">
+                            <a href="#"><span>
+                                <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['name'] ?>"></span><?php echo  $item['name']?>
+                            </a>
+
+                            <?php  
+
+                                if(isset($get_tree) && !empty($get_tree)){
+                                    echo '<ul class="sub-menu">';
+                                    foreach ($get_tree as $sub_tree) {
+                                        list_tree($dataArr , $sub_tree['id']);
+                                        echo '  <li class="ng-scope ng-has-child'. $sub_tree['id'] .'"><a href="#">'. $sub_tree['name'] .'</a> </li>';
+                                    }
+                                    echo '</ul>';
+                                }
+
+                            ?>
+
+                        </li>
+                    <?php
+
+                }
+
+            }
+
+
+
+
+        }else{
+            return false;
+        }
+
+
+
+    } catch (\Throwable $th) {
+        return false;
+    }
+    
+
+
+}
+
 
 
 

@@ -18,15 +18,23 @@
 </head>
 
 <?php 
-// echo '<pre>';
-// print_r($data_general);
-// echo '</pre>';
 
-// echo '<pre>';
-// print_r(get_option_by_key('general_description_site'));
-// echo '</pre>';
+	$menu = get_option_by_key('logo');
+	$name_site = get_option_by_key('general_name_site');
+	$desc_site = get_option_by_key('general_description_site');
+	$h_code = get_option_by_key('general_header_code');
+	$f_code = get_option_by_key('general_footer_code');
+	$logo = get_option_by_key('logo');
+	$hotline = get_option_by_key('hotline');
+	$menu = get_option_by_key('menu');
+	$slide = get_option_by_key('slide');
+	$menu_mobile = get_option_by_key('menu_phone');
+	$payment = get_option_by_key('payment');
+	$social_network_j = get_option_by_key('social_network');
+	$footer_j = get_option_by_key('footer');
 
 ?>
+{{ $h_code }}
 <body>
 	<header>
 		<div class="header-pc hidden-xs hidden-sm">
@@ -34,13 +42,15 @@
 				<div class="row">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-							<a href="#"><img src="
-								@if(isset($logo))
-								{{ $logo }}
+
+							<a href="<?php echo URL::to('/'); ?>">
+								@if($logo != null)
+									<img src="{{ $logo }}" alt="{{ $name_site }}">
+								@else
+									<h1 class="text-logo-header"> {{$name_site}} </h1>
 								@endif
-								" alt="{{ $data_general['name_site'] }}">
-							</a> 
-							</div>
+							</a>
+						</div>
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
 						<div class="form-search">
@@ -84,16 +94,25 @@
 					</div>
 					<div class="col-md-7 col-xs-12 col-sm-12">
 						<div class="quick-menu hidden-xs">
-					        <a href="#"><i class="pe-7s-shopbag"></i>Sản phẩm</a>
-					        
-					        <a href="#" rel=""><i class="pe-7s-news-paper"></i>Tin tức</a>
-					        
-					        <a href="#" rel=""><i class="pe-7s-tools"></i>Dịch vụ</a>
-					        
-					        <a class="km" href="#" target="_blank" rel=""><i class="pe-7s-gift"></i>Khuyến mãi</a>
-							<a class="hotline" href="#" target="_blank" rel=""><i class="pe-7s-call"></i>
-								@if (isset($hotline_j['phone']))
-									{{ $hotline_j['phone'] }}
+							<?php								
+								$menu = json_decode($menu, true);
+							?>
+							
+							@if (isset($menu) && !empty($menu))
+							@foreach ( $menu as $item_menu )
+								<a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : "#"  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}" ><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a>
+							@endforeach
+							@endif
+
+
+							@php
+								$hotline = json_decode($hotline, true);
+								$hotline = $hotline['phone'];
+							@endphp
+							
+							<a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
+								@if ($hotline)
+									{{ $hotline }}
 								@endif
 							</a>
 					    </div>
@@ -114,41 +133,41 @@
 						<div class="menu-site">
 			                <button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
 			                <div class="menu-box">
-			                    <div class="bg-menu hidden-md hidden-lg"></div>
+								<div class="bg-menu hidden-md hidden-lg"></div>
+								
 			                    <ul class="main-menu">
 			                    	<span class="logo-menu">
 			                    		<img src="client/img/logo-bepantoan.png" alt="">
-			                    	</span>
-			                        <li class="ng-scope  drop-icon re-icon">
-					                    <a href="#"><span>
-					                        <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ
-					                    </a>
-					                </li>
-			                        <li class="ng-scope  drop-icon re-icon">
-					                    <a href="#"><span>
-					                        <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ
-					                    </a>
-					                </li>
-					                <li class="ng-scope  drop-icon re-icon menu-item-has-children">
-					                    <a href="#"><span>
-					                        <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ
-					                    </a>
-					                    <ul class="sub-menu">
-					                        <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
-					                        <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
-					                    </ul>
-					                </li>
+									</span>
+									
+									@php
+										build_categories_tree();
+
+									@endphp
+
+
+									
+									
 					                <ul class="mobile-support">
-								        <li><i class="pe-7s-news-paper"></i><a href="#c">Tin tức</a></li>
-								        <li><i class="pe-7s-tools"></i><a href="#">Dịch vụ</a></li>
-								        <li><i class="pe-7s-gift"></i><a href="#">Khuyến mãi</a></li>
+
+										@if (isset($menu) && !empty($menu))
+										@foreach ( $menu as $item_menu )
+											<li><i class="pe-7s-news-paper"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+										@endforeach
+										@endif
 								        <li>
-								            <i class="pe-7s-call"></i>
-								            Hotline <b>0986.083.083</b> (24h/7) 
-								        </li>
+											<a href="tel:{{$hotline}}">
+								            	<i class="pe-7s-call"></i>
+												Hotline <b>{{$hotline}}</b> (24h/7)
+											</a> 
+										</li>
+										
+
     								</ul>
 
-			                    </ul>
+								</ul>
+								
+
  			                    <!--<button class="btn btn-hide-menu hidden-md hidden-lg"><i class="fa fa-times"></i></button> -->
 			                </div>
 				        </div>
@@ -159,6 +178,7 @@
 						</div>
 						
 					</div>
+
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 					        <a href="#" target="_blank" rel="">
@@ -225,9 +245,7 @@
 				</div>
 				
 			</div>
-		</div>
-
-
+		</div> <!-- menu mobile  -->
 		
 	</header><!-- /header -->
 
@@ -323,8 +341,8 @@
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="paypal social-icon">
 								<ul>
-									@if ($payment_j != null)
-									@foreach ($payment_j as $item)
+									@if ($payment != null)
+									@foreach ($payment as $item)
 									<li><a href=""><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach
 									@endif
