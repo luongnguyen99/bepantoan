@@ -169,7 +169,7 @@ Giỏ hàng
 														<div class="payment-method">
 															<div class="pay-top sin-payment">
 																<input id="payment_method_1" name="Payment" class="input-radio"
-																	type="radio" value="0" checked="checked">
+																	type="radio" value="1" checked="checked">
 																<label for="payment_method_1">Thanh toán khi nhận hàng - COD </label>
 																<div class="payment_box payment_method_bacs" style="display: block;">
 																	<p>Bạn nhận hàng và kiểm tra hàng sau đó mới phải trả tiền </p>
@@ -177,7 +177,7 @@ Giỏ hàng
 															</div>
 															<div class="pay-top sin-payment">
 																<input id="payment_method_2" name="Payment" class="input-radio"
-																	type="radio" value="1">
+																	type="radio" value="2">
 																<label for="payment_method_2">Chuyển khoản</label>
 																<div class="payment_box payment_method_bacs">
 																	<p>Qúy khách vui lòng chuyển khoản vào một trong các tài khoản sau:

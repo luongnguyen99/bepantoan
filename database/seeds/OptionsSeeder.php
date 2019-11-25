@@ -58,6 +58,11 @@ class OptionsSeeder extends Seeder
                 'name' => 'footer_code',
                 'key' => 'general_footer_code',
                 'value' => '',
+            ],
+            [
+                'name' => 'email_admin',
+                'key' => 'email_admin',
+                'value' => 'luongnd2286@gmail.com'
             ]
 
         ];

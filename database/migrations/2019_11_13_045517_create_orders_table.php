@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('address',191);
             $table->string('note')->nullable();
             $table->string('total',191);
-            $table->string('method_payment')->nullable();
+            $table->string('method_payment')->comment('1:Thanh toán sau,2:Chuyển khoản')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });

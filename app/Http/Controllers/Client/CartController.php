@@ -8,6 +8,10 @@ use Validator;
 use Cart;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\Order_detail;
+use Mail;
+
 class CartController extends Controller
 {
     public function addCart(Request $request){
@@ -73,8 +77,44 @@ class CartController extends Controller
                 'errors' => true,
             ], 200);
         }else{
+            $data = [
+                'name_guest' => $request->Name,
+                'phone' => $request->Phone,
+                'email' => $request->Email,
+                'address' => $request->Address,
+                'total' => Cart::subtotal(0, '', ''),
+                'method_payment' => $request->Payment,
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s', time()),
+            ];
 
+            if ($request->Content) {
+                $data['note'] = $request->Content;
+            };
+
+            // insert bảng order
+            $insertOrder = Order::create($data);
+
+            // insert bảng chi tiết order
+            $carts = Cart::content();
+            foreach ($carts as $key => $value) {
+                Order_detail::insert([
+                    'product_id' => $value->id,
+                    'amount' => ($value->qty*$value->price),
+                    'order_id' => $insertOrder->id,
+                ]);
+            }
+            $id_order = $insertOrder->id;
             
+            Mail::send('template_mail/order_success', array('data' => $data,'carts' => $carts,'id_order' => $id_order), function ($message) use ($data) {
+                $message->to($data['email'], 'Bếp Tốt')->subject('Đặt hàng thành công!');
+            });
+
+            Mail::send('template_mail/order_success_admin', array('data' => $data, 'carts' => $carts, 'id_order' => $id_order), function ($message) use ($data) {
+                $message->to($data['email'], 'Bếp Tốt')->subject('Đơn hàng mới!');
+            });
+
+
             return response([
                 'messages' => 'Đặt hàng thành công',
                 'errors' => false,
@@ -83,3 +123,4 @@ class CartController extends Controller
 
     }
 }
+ 

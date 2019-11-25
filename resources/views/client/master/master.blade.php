@@ -95,8 +95,8 @@
 							</a>
 					    </div>
 					    <div class="quick-cart">
-					        <a href="#" target="_blank" rel="">
-					            <img alt="BẾP TỐT" src="client/img/cart_bg.png"><span class="num">0</span>
+							<a href="{{route('showCart')}}" target="_blank" rel="">
+							<img alt="BẾP TỐT" src="client/img/cart_bg.png"><span class="num">{{Cart::count()}}</span>
 					        </a>
 					    </div>
 					</div>
