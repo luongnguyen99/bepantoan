@@ -452,11 +452,11 @@ class OptionsController extends Controller
             "clss"=> $r->menu_class
         );
         $new_item = (object) $new_item;
-        $opt_value[] = $new_item;
         
+        $opt_value[] = $new_item;
         $options->value = json_encode($opt_value);
-       
         $options->save();
+        $the_newoption = Option::where('key', '=', 'menu')->first();
         return redirect()->back()->with('add-menu-success', 'Thêm menu thành công!');
     }
     public function postUpdateMenu(Request $r)
@@ -494,6 +494,7 @@ class OptionsController extends Controller
             "icon" => $r->menu_icon,
             "clss"=> $r->menu_class
         );
+            
         $new_item = (object) $new_item;
         $opt_value[] = $new_item;
         $options->value = json_encode($opt_value);
