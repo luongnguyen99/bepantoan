@@ -25,7 +25,6 @@
                     <!--  content here -->
                     <form method="post" action="{{ route('admin.options.add.menu-phone') }}">
                             @csrf
-                            
                             <div class="form-group">
                                 <label for="exampleInputUsername1" style="font-weight:bold" for="menu_name">Tiêu đề</label>
                                 <input style="padding:8px;" size="100" type="text" id="menu_name" name="menu_name" class="form-control" id="exampleInputUsername1" placeholder="Tiêu đề">

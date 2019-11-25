@@ -112,7 +112,7 @@ Phương thức thanh toán
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($json != null)
+                            @if (!empty($json))
                             @foreach ($json as $key=>$item)
                             <tr>
                                 <td>{{ $key+1 }}</td>

@@ -75,7 +75,26 @@ class OptionsSeeder extends Seeder
                 'key' => 'menu_phone',
                 'value' => '',
             ],
-
+            [
+                'name' => 'sale',
+                'key' => 'sale',
+                'value' => '',
+            ],
+            [
+                'name' => 'switchboard',
+                'key' => 'switchboard',
+                'value' => '',
+            ],
+            [
+                'name' => 'method_payment',
+                'key' => 'method_payment',
+                'value' => '',
+            ],
+            [
+                'name' => 'sidebar',
+                'key' => 'sidebar',
+                'value' => '',
+            ],
         ]);
 
     }

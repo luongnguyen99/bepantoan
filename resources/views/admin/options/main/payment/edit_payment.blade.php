@@ -73,6 +73,7 @@ Phương thức thanh toán
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (!empty($json))
                                 @foreach ($json as $key=>$item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -83,6 +84,7 @@ Phương thức thanh toán
                                     </td>
                                 </tr>
                                 @endforeach
+                                @endif
                             </tbody>
                     </table>
                 </div>

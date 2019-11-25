@@ -146,6 +146,9 @@
                         class="fa fa-circle-o"></i>Menu</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.menu-phone')}}"><i
                         class="fa fa-circle-o"></i>Menu di động</a></li>
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.prd-detail')}}"><i
+                        class="fa fa-circle-o"></i>Chi tiết sản phẩm</a></li>
+                        
                 </ul>
             </li>
 

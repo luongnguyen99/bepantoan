@@ -160,15 +160,35 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('general', 'OptionsController@updateGeneral');
 
         Route::get('del_slide/{id}', 'OptionsController@DelSlide');
+
         //======================>Menu <=============================
         Route::get('menu', 'OptionsController@getMenu')->name('menu');
         Route::post('menu', 'OptionsController@postMenu')->name('add.menu');
         Route::post('update', 'OptionsController@postUpdateMenu')->name('update.menu');
+
         //======================>Menu Phone<=============================
         Route::get('menu-phone', 'OptionsController@getMenuPhone')->name('menu-phone');
         Route::post('menu-phone', 'OptionsController@postMenuPhone')->name('add.menu-phone');
         Route::post('update-phone', 'OptionsController@postUpdateMenuPhone')->name('update.menu-phone');
-        
+
+        //======================>Product Detail<=============================
+        Route::get('prd-detail', 'OptionsController@getPrdDetail')->name('prd-detail');
+
+        //=================>Sale<=============================
+        Route::post('sale', 'OptionsController@postSale')->name('sale');
+        Route::get('del_sale', 'OptionsController@getDelSale');
+
+        //=================> Switchboard <=============================
+        Route::post('switchboard', 'OptionsController@postSwitchboard')->name('switchboard');
+        Route::get('del_switchboard', 'OptionsController@getDelSwitchboard');
+
+        //=================> Sidebar <=============================
+        Route::post('sidebar', 'OptionsController@postSidebar')->name('sidebar');
+        Route::get('del_sidebar', 'OptionsController@getDelSidebar');
+        //=================> Payment <=============================
+        Route::post('method_payment', 'OptionsController@postMethodPayment')->name('method_payment');
+        Route::get('method_payment', 'OptionsController@getDelMethodPayment');
+
     });
 });
 

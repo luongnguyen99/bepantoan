@@ -41,12 +41,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputUsername1" style="font-weight:bold" for="menu_link">Class</label>
-                                <input style="padding:8px;" size="100"  type="text" id="menu_class" name="menu_class" class="form-control" id="exampleInputUsername1" placeholder="Class">
+                                <input style="padding:8px;" size="100"  type="text" id="menu_class" name="menu_class" class="form-control" id="exampleInputUsername1" placeholder="Class có thể để trống">
                             </div>
     
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-primary waves-effect waves-light" name="add_menu"
                                     value="Thêm mới">
+                                <a class="support_click btn btn-success" href="#modal-menu">Hướng dẫn nhập</a>
                             </div>
                         </form>
                     <!-- end content here -->
@@ -156,7 +157,36 @@
         </div>
     </div>
 </div>
+<div id="support" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="display: flex">
+                <h4 class="modal-title" id="editModalLabel" style="width: 50%">Thêm phương thức thanh toán</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    style="width: 50%; text-align: right">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color:red;font-size:18px;font-weight:bold">Bước 1: </p>
+                <p>Click <a target="blank" href="https://themes-pixeden.com/font-demos/7-stroke/">vào đây</a> để chọn icon bạn muốn hiển thị lên phần phương thức thanh toán của website</p>
+                <div style="width:500px">
+                    <img src="{{ url('client/img/menu_support1.PNG') }}"style="max-width:100%" heigh="20px" alt="">
+                </div>
+                <p style="color:red;font-size:18px;font-weight:bold">Bước 2: </p>
+                <div>
+                    <p>Sau đó chọn bất kì icon nào bạn muốn</p>
+                    <img src="{{ url('client/img/menu_support2.PNG') }}" alt="">
+                    <p>Và sao chép phần chữ bên dưới của ảnh <span style="color:red">"pe-7s-album"</span></p>
+                    <p style="color:red;font-size:18px;font-weight:bold">Bước 3: </p>
+                    <p>Tiếp theo sao chép vào phần icon thức và bấm lưu</p>
+                    <img src="{{ url('client/img/menu_support3.PNG') }}" alt="">
+                </div>
+            </div>
 
+        </div>
+    </div>
+</div>
 
 
 <!-- /.box-header -->
@@ -248,7 +278,15 @@
             });
         }).apply(this, [jQuery]);
 
-
+        jQuery(".support_click").click(function (e) {
+            e.preventDefault();
+            jQuery(this).parent().parent().addClass("editing");
+            var name = jQuery(this).parent().parent().data("name"),
+                link = jQuery(this).parent().parent().data("link");
+            jQuery("#support .edit-name").val(name);
+            jQuery("#support .edit-link").val(link);
+            $('#support').modal('show');
+        });
     });
 
 </script>

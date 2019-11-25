@@ -508,4 +508,137 @@ class OptionsController extends Controller
         $options->save();
         return redirect()->back()->with('update-menu-success', 'Thêm menu thành công!');
     }
+    public function getPrdDetail()
+    {
+        $sale_m = Option::where('key', '=', 'sale')->first();
+        $sale = $sale_m->value;
+
+        $switchboard_m = Option::where('key', '=', 'switchboard')->first();
+        $switchboard = $switchboard_m->value;
+
+        $sidebar_m = Option::where('key', '=', 'sidebar')->first();
+        $sidebar = json_decode($sidebar_m->value,true);
+
+        $payment_m = Option::where('key', '=', 'method_payment')->first();
+        $payment = json_decode($payment_m->value,true);
+       
+        return view('admin.options.main.product_detail.index',compact('sale','switchboard','sidebar','payment'));
+    }
+    public function postSale(Request $r)
+    {
+        $r->validate([
+            'sale'=>'required',
+        ],
+        [
+            'sale.required'=>'Nội dung không được bỏ trống'
+        ]);
+        $sale = Option::where('key', '=', 'sale')->first();
+        $sale->value = $r->sale;
+        $sale->save();
+        return redirect()->back()->with('sale_access');
+    }
+    public function getDelSale()
+    {
+        $sale = Option::where('key', '=', 'sale')->first();
+        $sale->value = null;
+        $sale->save();
+        return redirect()->back()->with('sale_danger');
+    }
+    public function postSwitchboard(Request $r)
+    {
+        $r->validate([
+            'phone'=>'numeric',
+        ],
+        [
+            'phone.numeric'=>'Chỉ được nhập số'
+        ]);
+        $switchboard = Option::where('key', '=', 'switchboard')->first();
+        $switchboard->value = $r->phone;
+        $switchboard->save();
+        return redirect()->back()->with('switchboard_success');
+    }
+    public function getDelSwitchboard()
+    {
+        $switchboard = Option::where('key', '=', 'switchboard')->first();
+        $switchboard->value = null;
+        $switchboard->save();
+        return redirect()->back()->with('switchboard_danger');
+    }
+    public function postSidebar(Request $r)
+    {
+        $sidebar = Option::where('key', '=', 'sidebar')->first();
+        $arr = $r->all();
+        $data_old = [];
+        $data_new = [];
+        if(!empty($arr['text']) || !empty($arr['icon'])){
+            foreach ($arr['text'] as $key=>$text) {
+                foreach ($arr['icon'] as $icon) {
+                    $data_new[$key]['text'] = $text;
+                    $data_new[$key]['icon'] = $icon;
+                }
+            }
+            if(!empty($arr['table']['content'])){
+                $merge_arr =  array_merge($data_new,$arr['table']['content']);
+                $sidebar->value = json_encode($merge_arr);
+                $sidebar->save();
+                return redirect()->back()->with('sidebar_success');
+            }
+            else{
+                $sidebar->value = json_encode($data_new);
+                $sidebar->save();
+                return redirect()->back()->with('sidebar_success');
+            }
+            
+        }else{
+            if(!empty($arr['table']['content'])){
+                $sidebar->value = json_encode($arr['table']['content']);
+                $sidebar->save();
+                return redirect()->back()->with('sidebar_success');
+            }
+            else{
+                $sidebar->value = null;
+                $sidebar->save();
+                return redirect()->back()->with('sidebar_success');
+            }
+        }
+    }
+    public function postMethodPayment(Request $r)
+    {
+        $arr = $r->all();
+        $payment = Option::where('key', '=', 'method_payment')->first();
+       
+        $data_old = [];
+        $data_new = [];
+        if(!empty($arr['name_payment']) || !empty($arr['content_payment'])){
+            foreach ($arr['name_payment'] as $key=>$text) {
+                foreach ($arr['content_payment'] as $icon) {
+                    $data_new[$key]['name_payment'] = $text;
+                    $data_new[$key]['content_payment'] = $icon;
+                }
+            }
+            if(!empty($arr['table']['content'])){
+                $merge_arr =  array_merge($data_new,$arr['table']['content']);
+                $payment->value = json_encode($merge_arr);
+                $payment->save();
+                return redirect()->back()->with('payment_success');
+            }
+            else{
+                $payment->value = json_encode($data_new);
+                $payment->save();
+                return redirect()->back()->with('payment_success');
+            }
+            
+        }else{
+            if(!empty($arr['table']['content'])){
+                $payment->value = json_encode($arr['table']['content']);
+                $payment->save();
+                return redirect()->back()->with('payment_success');
+            }
+            else{
+                $payment->value = null;
+                $payment->save();
+                return redirect()->back()->with('payment_success');
+            }
+        }
+    }
 }
