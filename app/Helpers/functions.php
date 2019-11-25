@@ -130,39 +130,83 @@ function get_option_by_key($key){
 // ================> Build Tree category <=================== //
 
 function make_tree($dataArr , $id = 0 ) {
-
+    $map_data = array();
     foreach($dataArr as $key => $data){
         //  break if parent == 0
-        echo '<li class="ng-scope  drop-icon re-icon">';
+        // echo '<li class="ng-scope  drop-icon re-icon">';
         if($data['parent'] == $id){
             
-            ?>
-                
-                <a href="#"><span>
-                    <img src="<?php echo $data['image'] ?>" alt="<?php echo $data['name'] ?>"></span><?php echo $data['name'] ?>
-                </a>
-                
-
-            <?php
-
             unset($dataArr[$key]);
+            $map_data[] = $data;
+            $child = make_tree($map_data , $data['id']);
 
-        }else{
-
-            ?>
-            <ul class="sub-menu">
-                <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
-                <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
-            </ul>
-            <?php
+            $map_data = array_merge( $map_data , $child );
 
         }
 
-        echo '</li>';
+        // echo '</li>';
 
 
     }
 
+    return $map_data;
+
+}
+
+
+function list_tree( $dataArr , $id = 0){
+    $data_result = array();
+    foreach($dataArr as $key => $data){
+        //  break if parent == 0
+        // echo '<li class="ng-scope  drop-icon re-icon">';
+        if($data['parent'] == $id){
+            $map_data = make_tree($dataArr , $data['id']);
+
+            if( empty($map_data) ){
+
+                // not have child
+
+                echo '<pre>';
+                print_r('het con');
+                echo '</pre>';
+
+            }else{
+                echo '<pre>';
+                print_r('co con');
+                echo '</pre>';
+                foreach( $map_data as $item ){
+                    list_tree($dataArr , $item['id'] );            
+                }
+                
+
+            }
+
+            // $data_result[] = $map_data;
+
+            // if(isset($map_data) && !empty($map_data)){
+
+            //     foreach( $map_data as $item ){
+                    
+            //         list_tree($dataArr , $item['id'] );    
+                
+            //     }
+                
+
+            // }
+
+            // // unset($dataArr[$key]);
+            // // $map_data[] = $data;
+            // // $child = make_tree($map_data , $data['id']);
+
+    
+        }
+
+        // echo '</li>';
+    }
+    // echo '<pre>';
+    // print_r($data_result);
+    // echo '</pre>';
+    // return $map_data;
 }
 
 
@@ -181,7 +225,52 @@ function build_categories_tree(){
             );
         }
 
-        make_tree($dataArr , 0);
+        
+
+        $parents = make_tree($dataArr , 0);
+
+        
+
+        if(isset($dataArr) && !empty($dataArr)){
+           
+            foreach ($dataArr as $item) {
+                $get_tree = make_tree($dataArr , $item['id'] );
+                if($item['parent'] == 0){
+                    //  is root parent
+                    ?>
+                        <li class="ng-scope  drop-icon re-icon menu-item-has-children">
+                            <a href="#"><span>
+                                <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['name'] ?>"></span><?php echo  $item['name']?>
+                            </a>
+
+                            <?php  
+
+                                if(isset($get_tree) && !empty($get_tree)){
+                                    echo '<ul class="sub-menu">';
+                                    foreach ($get_tree as $sub_tree) {
+                                        list_tree($dataArr , $sub_tree['id']);
+                                        echo '  <li class="ng-scope ng-has-child'. $sub_tree['id'] .'"><a href="#">'. $sub_tree['name'] .'</a> </li>';
+                                    }
+                                    echo '</ul>';
+                                }
+
+                            ?>
+
+                        </li>
+                    <?php
+
+                }
+
+            }
+
+
+
+
+        }else{
+            return false;
+        }
+
+
 
     } catch (\Throwable $th) {
         return false;

@@ -138,26 +138,14 @@
 			                    <ul class="main-menu">
 			                    	<span class="logo-menu">
 			                    		<img src="client/img/logo-bepantoan.png" alt="">
-			                    	</span>
-			                        <li class="ng-scope  drop-icon re-icon">
-					                    <a href="#"><span>
-					                        <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ
-					                    </a>
-					                </li>
-			                        <li class="ng-scope  drop-icon re-icon">
-					                    <a href="#"><span>
-					                        <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ
-					                    </a>
-					                </li>
-					                <li class="ng-scope  drop-icon re-icon menu-item-has-children">
-					                    <a href="#"><span>
-					                        <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ
-					                    </a>
-					                    <ul class="sub-menu">
-					                        <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
-					                        <li class="ng-scope ng-has-child1"><a href="#">Máy sấy chén bát âm tủ</a> </li>
-					                    </ul>
-									</li>
+									</span>
+									
+									@php
+										build_categories_tree();
+
+									@endphp
+
+
 									
 									
 					                <ul class="mobile-support">
@@ -191,11 +179,6 @@
 						
 					</div>
 
-					@php
-						echo '<pre>';
-						print_r(build_categories_tree());
-						echo '</pre>';
-					@endphp
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 					        <a href="#" target="_blank" rel="">
