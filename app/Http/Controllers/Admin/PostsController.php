@@ -63,7 +63,9 @@ class PostsController extends Controller
             $db->image = $imgs[0];
         }
         $db->views = $r->view;
-        $db->post_category_id = $r->parent_id;
+        if ($r->parent_id == 0) {
+            $db->post_category_id = null;
+        }
         
         $db->save();
         return redirect('admin/posts')->with('edit_success','Sửa thành công');

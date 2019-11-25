@@ -117,6 +117,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         //=================>Logo<=============================
         Route::get('logo', 'OptionsController@getLogo')->name('logo');
         Route::post('logo', 'OptionsController@postLogo');
+        Route::get('logo/del', 'OptionsController@delLogo');
 
         //=================>Hotline<=============================
         Route::get('hotline', 'OptionsController@getHotline')->name('hotline');
@@ -159,15 +160,35 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('general', 'OptionsController@updateGeneral');
 
         Route::get('del_slide/{id}', 'OptionsController@DelSlide');
+
         //======================>Menu <=============================
         Route::get('menu', 'OptionsController@getMenu')->name('menu');
         Route::post('menu', 'OptionsController@postMenu')->name('add.menu');
         Route::post('update', 'OptionsController@postUpdateMenu')->name('update.menu');
+
         //======================>Menu Phone<=============================
         Route::get('menu-phone', 'OptionsController@getMenuPhone')->name('menu-phone');
         Route::post('menu-phone', 'OptionsController@postMenuPhone')->name('add.menu-phone');
         Route::post('update-phone', 'OptionsController@postUpdateMenuPhone')->name('update.menu-phone');
-        
+
+        //======================>Product Detail<=============================
+        Route::get('prd-detail', 'OptionsController@getPrdDetail')->name('prd-detail');
+
+        //=================>Sale<=============================
+        Route::post('sale', 'OptionsController@postSale')->name('sale');
+        Route::get('del_sale', 'OptionsController@getDelSale');
+
+        //=================> Switchboard <=============================
+        Route::post('switchboard', 'OptionsController@postSwitchboard')->name('switchboard');
+        Route::get('del_switchboard', 'OptionsController@getDelSwitchboard');
+
+        //=================> Sidebar <=============================
+        Route::post('sidebar', 'OptionsController@postSidebar')->name('sidebar');
+        Route::get('del_sidebar', 'OptionsController@getDelSidebar');
+        //=================> Payment <=============================
+        Route::post('method_payment', 'OptionsController@postMethodPayment')->name('method_payment');
+        Route::get('method_payment', 'OptionsController@getDelMethodPayment');
+
     });
 });
 
@@ -193,78 +214,3 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     });
 });
 
-
-
-
-//=============> Composer layouts <================
-View::composer('*', function($view) {
-    //=============>HOTLINE<=================
-    $hotline = App\Models\Option::where('key','hotline')->first();
-    if($hotline->value == null){
-        $hotline_j = null; 
-        $view->with('hotline_j', $hotline_j);
-    }
-    else{
-        $hotline_j = json_decode($hotline->value,true);
-        $view->with('hotline_j', $hotline_j);
-    }
-    //=============>FOOTER<=================
-    $footer = App\Models\Option::where('key','footer')->first();
-    if($footer->value == null){
-        $footer_j = null; 
-        $view->with('footer_j', $footer_j);
-    }
-    else{
-        $footer_j = json_decode($footer->value,true);
-        $view->with('footer_j', $footer_j);
-    }
-    //=============>LOGO<=================
-    $logo = App\Models\Option::where('key','logo')->first();
-   
-    if($logo->value == null){
-        $logo->value = null; 
-        $view->with('logo', $logo->value);
-    }
-    else{
-        $view->with('logo', $logo->value);
-    }
-    //=============>PAYMENT<=================
-    $payment = App\Models\Option::where('key','payment')->first();
-   
-    if($payment->value == null){
-        $payment_j = null; 
-        $view->with('payment_j', $payment_j);
-    }
-    else{
-        $payment_j = json_decode($payment->value,true);
-        $view->with('payment_j', $payment_j);
-    }
-    //=============>SOCIAL NETWORK<=================
-    $social_network = App\Models\Option::where('key','social_network')->first();
-   
-    if($social_network->value == null){
-        $social_network_j = null; 
-        $view->with('social_network_j', $social_network_j);
-    }
-    else{
-        $social_network_j = json_decode($social_network->value,true);
-        $view->with('social_network_j', $social_network_j);
-    }
-
-    // ===========> GENERAL <===================//
-
-    $name_site = App\Models\Option::where('key','general_name_site')->first();
-    $desc_site = App\Models\Option::where('key','general_description_site')->first();
-    $h_code = App\Models\Option::where('key','general_header_code')->first();
-    $f_code = App\Models\Option::where('key','general_footer_code')->first();
-
-    $data_general = array(
-        'name_site' => $name_site->value ?? null,
-        'desc_site' => $desc_site->value ?? null,
-        'h_code' => $h_code->value ?? null,
-        'f_code' => $f_code->value ?? null,
-    );
-    $view->with( 'data_general' , $data_general );
-
-
-});

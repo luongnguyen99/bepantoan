@@ -26,6 +26,7 @@ class PostsRequest extends FormRequest
         return [
             'name'=>'required',
             'slug'=>'required',
+            'view'=>'numeric',
             
         ];
     }
@@ -33,6 +34,7 @@ class PostsRequest extends FormRequest
         return[
             'name.required'=>'Tiêu đề không được để trống',
             'slug.required'=>'Đường dẫn không được để trống',
+            'view.numeric'=>'Số lượng truy cập chỉ được nhập số',
         ];
     }
 }

@@ -34,13 +34,13 @@
 				<div class="row">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-							{{-- <a href="<?php echo URL::to('/'); ?>"><img src="
-								@if($logo != null)
+							<a href="#"><img src="
+								@if(isset($logo))
 								{{ $logo }}
 								@endif
 								" alt="{{ $data_general['name_site'] }}">
-							</a> --}}
-						</div>
+							</a> 
+							</div>
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
 						<div class="form-search">
@@ -90,11 +90,9 @@
 					        
 					        <a href="#" rel=""><i class="pe-7s-tools"></i>Dịch vụ</a>
 					        
-							<a class="km" href="#" target="_blank" rel=""><i class="pe-7s-gift"></i>Khuyến mãi</a>
-							
-							
-							<a class="hotline" href="tel:{{ $hotline_j['phone'] }}" rel=""><i class="pe-7s-call"></i>
-								@if ($hotline_j['phone'])
+					        <a class="km" href="#" target="_blank" rel=""><i class="pe-7s-gift"></i>Khuyến mãi</a>
+							<a class="hotline" href="#" target="_blank" rel=""><i class="pe-7s-call"></i>
+								@if (isset($hotline_j['phone']))
 									{{ $hotline_j['phone'] }}
 								@endif
 							</a>
@@ -465,7 +463,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 text-center">
-							@if ($footer_j['footer'])
+							@if (isset($footer_j['footer']))
 							<p>
 								{{ $footer_j['footer'] }}
 							</p>
