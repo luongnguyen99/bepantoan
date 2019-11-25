@@ -169,6 +169,15 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('update-phone', 'OptionsController@postUpdateMenuPhone')->name('update.menu-phone');
         
     });
+    Route::group(['prefix' => 'status_order','as'=>'status_order'], function () {
+        Route::get('index','StatusorderController@getindex');
+        Route::post('index','StatusorderController@postindex');
+
+        Route::get('edit/{id}','StatusorderController@getedit');
+        Route::post('edit/{id}','StatusorderController@postedit');
+        
+        Route::get('del/{id}','StatusorderController@getdel');
+    });
 });
 
 Route::group(['prefix' => '','namespace' => 'Client'], function () {

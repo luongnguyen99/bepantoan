@@ -141,7 +141,6 @@ Thuộc tính
 
 <!----- javascript here -------->
 @section('js')
-
 <script>
     $('body').on('click', '#choose_image', function(){
         var choose = $(this);
