@@ -269,7 +269,6 @@ Giỏ hàng
 		data: formData,
 		beforeSend: function() {	
 			$('#btnOrder').attr('href','#');
-			$('#btnOrder').html('Đang gửi đơn hàng. Vui lòng đợi ...');
 		},
 			success:function(data){ 
 				if (data.errors) {					

@@ -39,9 +39,13 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="#">beptot.vn</a></li>
-				    <li><a href="#">Bếp gas</a></li>
-				    <li>Bếp gas Teka</li>
+					<li><a href="#">beptot.vn</a></li>
+					@if ($category)
+				    	<li><a href="{{route('category_detail',['slug' => $category->slug])}}">{{$category->name}}</a></li>		
+					@endif
+					@if (!empty($brand))
+				    	<li><a href="{{route('category_detail',['slug' => $category->slug,'slug2' => $brand->slug])}}">{{$category->name}} {{!empty($brand) ? $brand->name : ''}}</a></li>	
+					@endif
 				</ul>
 			</div>
 		</div>
@@ -229,6 +233,7 @@
 	<script>
 		$('.lms-pagination.pagination').on('click',function() {
 			total_post_current = $(this).attr('total-post-current');
+			posts_per_page = `{{get_option_by_key('posts_per_page')}}`;
 			$.ajax({
 				url : `{{url('loadmore')}}`,
 				method : 'POST',
@@ -237,10 +242,16 @@
 					total_post_current : total_post_current,
 					category_id : `{{$category->id}}`,
 					brand_id : `{{!empty($brand) ? $brand->id : null}}`,
-					$_get: `{{!empty($_GET) ? $_GET : ''}}`,
+					arr_get: `<?php echo !empty($_GET) ? json_encode($_GET) : '' ?> `,
 				},
 				success:function(data){ 
-					console.log(data);
+					new_posts_current = Number(total_post_current) + Number(posts_per_page);
+					$('.row.product-fs').find('div.col-md-3.col-xs-6.col-sm-6').last().after(data);
+					$('.lms-pagination.pagination').attr('total-post-current',new_posts_current);
+					
+					if (data.length == 0) {
+						$('.lms-pagination.pagination').remove();
+					}
 				}
 			})
 		});
