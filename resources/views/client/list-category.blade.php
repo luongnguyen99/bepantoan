@@ -2,26 +2,25 @@
 @section('title','Sản phẩm')
 @section('content')
 <div class="home">
-    <div class="wrap-category">
+    <div class="product">
+    <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
         <div class="container">
-            @if (count($categories) > 0 && !empty($categories))
-                <div class="owl-carousel owl-theme slide-pro-ctg">
+            @if (!empty($categories))
+            <div class="arrows-category">
+                <div class="menu-cate">
                     @foreach ($categories as $item)
-                        <div class="item">
-                            <div class="ctg-pro-item">
-                                <a href="#">
-                                    <div class="category-card__image">
-                                    <img src="{{!empty($item->image) ? $item->image : ''}}" alt="{{!empty($item->name) ? $item->name : ''}}">
-                                    </div>
-                                    <div class="category-card__name "><strong>{{!empty($item->name) ? $item->name : ''}}</strong></div>
-                                </a>
+                    <div class="ctg-pro-item">
+                        <a href="{{route('category_detail',['slug' => $item->slug])}}">
+                            <div class="category-card__image">
+                                <img src="{{$item->image}}" alt="{{$item->name}}">
                             </div>
-                        </div>
-                        @endforeach
+                            <div class="category-card__name "><strong>{{$item->name}}</strong></div>
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
+            </div>
             @endif
-            
-
         </div>
     </div>
     <div class="wrap-brand">
@@ -50,7 +49,7 @@
            
         </div>
     </div>
-
+    </div>
     @if (count($categories) > 0 && !empty($categories))
         @foreach ($categories as $item)
             <div class="single-products">

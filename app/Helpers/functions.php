@@ -64,11 +64,11 @@ if (!function_exists('pveser_numberformat')) {
         return $price;
     }
 }
-// get category
+// get product
 if (!function_exists('get_product_by_id')) {
     function get_product_by_id($id)
     {
-        $category = Category::where('id',$id)->first();
+        $category = Category::where(['id' => $id])->first();
         return $category;
     }
 }

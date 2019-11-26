@@ -1056,7 +1056,7 @@ ul.listform_filter {
 .listform_filter .checkbox label {
     font-size: 12px;
 }
-.checkbox label:before {
+/* .radio label:before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -1070,20 +1070,20 @@ ul.listform_filter {
     -webkit-transition: border .15s ease-in-out,color .15s ease-in-out;
     -o-transition: border .15s ease-in-out,color .15s ease-in-out;
     transition: border .15s ease-in-out,color .15s ease-in-out;
-}
-.listform_filter .checkbox {
+} */
+.listform_filter .radio {
     margin-bottom: 0px;
     margin-top: 0;
 }
-.checkbox {
+.radio {
     padding-left: 20px;
 }
-.checkbox label {
+.radio label {
     display: inline-block;
     position: relative;
     padding-left: 5px;
 }
-.checkbox label:after {
+/* .radio label:after {
 	position: absolute;
     top: 0px;
     width: 16px;
@@ -1094,12 +1094,12 @@ ul.listform_filter {
     padding-top: 1px;
     font-size: 11px;
     color: #555555;
-}
+} */
 .checkbox input[type="checkbox"]:checked + label:after {
     font-family: 'FontAwesome';
     content: "\f00c";
 }
-.listform_filter .checkbox label img.icImgBrand{
+.listform_filter .radio label img.icImgBrand{
 	height: 36px;
     object-fit: contain;
     width: 90px;

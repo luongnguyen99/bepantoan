@@ -7,23 +7,23 @@
 	<div class="single-pro product">
 		<div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
 		    <div class="container">
-		        <div class="arrows-category">
-		            <div class="menu-cate">
-						@if (count($categories) > 0)
-							@foreach ($categories as $category)
-							<div class="ctg-pro-item">
-								<a href="#">
-									<div class="category-card__image">
-										<img src="{{$category->image}}" alt="{{$category->name}}">
-									</div>
-									<div class="category-card__name "><strong>{{$category->name}}</strong></div>
-								</a>
-							</div>
-							@endforeach
-						@endif           
-		            </div>
-		        </div>
-		    </div>
+				@if (!empty($categories))
+				<div class="arrows-category">
+					<div class="menu-cate">
+						@foreach ($categories as $item)
+						<div class="ctg-pro-item">
+							<a href="{{route('category_detail',['slug' => $item->slug])}}">
+								<div class="category-card__image">
+									<img src="{{$item->image}}" alt="{{$item->name}}">
+								</div>
+								<div class="category-card__name "><strong>{{$item->name}}</strong></div>
+							</a>
+						</div>
+						@endforeach
+					</div>
+				</div>
+				@endif
+			</div>
 		</div>
 		<div class="page-bread">
 			<div class="container">

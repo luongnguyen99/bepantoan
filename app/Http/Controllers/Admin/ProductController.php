@@ -85,7 +85,7 @@ class ProductController extends Controller
             
                 $data = [
                 'name' => $request->name,
-                'slug' => $request->slug,
+                'slug' => to_slug($request->slug),
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
                 'description' => $request->description,
@@ -201,7 +201,7 @@ class ProductController extends Controller
 
             $data = [
                 'name' => $request->name,
-                'slug' => $request->slug,
+                'slug' => to_slug($request->slug),
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
                 'description' => $request->description,

@@ -118,7 +118,7 @@
 					    </div>
 					    <div class="quick-cart">
 							<a href="{{route('showCart')}}" target="_blank" rel="">
-							<img alt="BẾP TỐT" src="client/img/cart_bg.png"><span class="num">{{Cart::count()}}</span>
+							<img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
 					        </a>
 					    </div>
 					</div>
@@ -182,7 +182,7 @@
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 					        <a href="#" target="_blank" rel="">
-					            <img alt="BẾP TỐT" src="client/img/cart_bg.png"><span class="num">0</span>
+					            <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
 					        </a>
 					    </div>
 					</div>
