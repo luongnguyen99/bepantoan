@@ -152,7 +152,8 @@
 
 										@if (isset($menu) && !empty($menu))
 										@foreach ( $menu as $item_menu )
-											<li><i class="pe-7s-news-paper"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+											
+											<li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
 										@endforeach
 										@endif
 								        <li>
@@ -227,21 +228,43 @@
 						</div>
 						
 					</div>
+
+
 					<div class="col-xs-12 col-sm-12">
 						<div class="btn-group-cate hidden-lg hidden-md">
 					        <button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 					            Danh mục sản phẩm <span class="caret"></span>
-					        </button>
+							</button>
+							
+							@php
+								$all_cateshows = show_heder_list_cate();
+							@endphp
+
+							@if ($all_cateshows)
 					        <ul class="dropdown-menu sub-categories-mobile" role="menu">
-					        	<?php foreach(range(1, 8) as $number ): ?>
-					            <li>
-					            	<a href="#" rel=""><span>
-					                <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ</a> 
-					            </li>
-					            <?php endforeach; ?>
-					        </ul>
+					        	@foreach ( $all_cateshows as $cate_ )
+									
+									<?php 
+									echo '<pre>';
+									print_r($cate_);
+									echo '</pre>';
+									
+									?>
+
+									<li>
+										<a href="#" rel=""><span>
+										<img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ</a> 
+									</li>
+
+								@endforeach
+					            
+							</ul>
+							@endif
 					    </div>
 					</div>
+
+
+
 				</div>
 				
 			</div>
