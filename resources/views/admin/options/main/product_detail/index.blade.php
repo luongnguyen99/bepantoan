@@ -135,7 +135,7 @@ Thiết lập chi tiết sản phẩm
                             </div>
                         </div>
                         <div id="menu1" class="tab-pane fade">
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <div class="box box-success">
                                     <div class="box-header">
                                         <h3 class="box-title">
@@ -152,7 +152,15 @@ Thiết lập chi tiết sản phẩm
                                         <!--  content here -->
                                         <form id=create_category method="post" action="{{ route('admin.options.switchboard') }}">
                                             @csrf
-
+                                            <div class="form-group">
+                                                <label for="content">Nội dung</label>
+                                                <input class="form-control" type="text" name="content_switchboard">
+                                            </div>
+                                            @if($errors->has('content_switchboard'))
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>{{ $errors->first('content_switchboard') }}</strong>
+                                                </div>
+                                            @endif
                                             <div class="form-group">
                                                 <label for="name">Nhập số</label>
                                                 <input class="form-control" type="text" name="phone" value="">
@@ -171,11 +179,11 @@ Thiết lập chi tiết sản phẩm
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-6">
                                 <div class="box box-primary">
                                     <div class="box-header">
                                         <h3 class="box-title">
-                                            Số của bạn
+                                            Tổng đài tư vấn của bạn
                                         </h3>
                                         @if (session('switchboard_success'))
                                         <div class="row">
@@ -215,8 +223,12 @@ Thiết lập chi tiết sản phẩm
                                             <table class="table table-hover table-striped text-center"
                                                 id="table-categories">
                                                 @if (!empty($switchboard))
+                                                <?php $sb = json_decode($switchboard,true) ?>
+                                                <p>
+                                                    Nội dung: <p>{{ $sb['content'] }}</p>
+                                                </p>
                                                 <p>Liên hệ: <span
-                                                    style="color:red;margin-right:10px;">{{ $switchboard }}</span>
+                                                    style="color:red;margin-right:10px;">{{ $sb['phone'] }}</span>
                                                 <a href="/admin/options/del_switchboard" class="btn btn-danger">Xóa</a>
                                                 </p>
                                                 @else
@@ -324,54 +336,17 @@ Thiết lập chi tiết sản phẩm
                                         <!--  content here -->
                                         <form method="post" class="repeater" action="{{ route('admin.options.method_payment') }}">
                                             @csrf
-                                            @if (!empty($payment))
-                                                @foreach ($payment as $item)
-                                                
-                                                    <div class="del_form_payment">
-                                                        <label>Phương thức thanh toán</label>
-                                                        <div class="row">
-                                                            <div class="col-lg-5 col-md-5 col-sm-5">
-                                                                <input type="text" name="name_payment[]" class="form-control input_text"
-                                                                    id="exampleInputPassword4" value="<?php if(!empty($item['name_payment'])){echo $item['name_payment'];} ?>"
-                                                                    placeholder="Nội dung" required>
-                                                            </div>
-                                                            <div class="col-lg-5 col-md-5 col-sm-5 form-group">
-                                                           
-                                                                <textarea class="form-control" name="content_payment[]" id="" rows="3">
-                                                                    <?php if(!empty($item['content_payment'])){echo $item['content_payment'];} ?>
-                                                                </textarea>
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-sm-2 click_form_payment">
-                                                                <p class=" btn btn-danger">x</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                @endforeach
-                                                @endif
                                             <div> 
-                                                <div data-repeater-list="table[content]">
-                                                    <div data-repeater-item class="repeat remove_form_payment">
-                                                        <label>Phương thức thanh toán</label>
-                                                        <div class="row ">
-                                                            <div class="col-lg-5 col-md-5 col-sm-5">
-                                                                <input type="text" name="name_payment" class="form-control input_text"
-                                                                    id="exampleInputPassword4"
-                                                                    placeholder="Nội dung" required>
-                                                            </div>
-                                                            <div class="col-lg-5 col-md-5 col-sm-5 form-group">
-                                                                <textarea id="editor2" class="form-control" name="content_payment" placeholder="Nội dung thanh toán" rows="3">
-
-                                                                </textarea>
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-sm-2 del_form_payment">
-                                                                <p class="btn btn-danger">x</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                    
+                                                    <textarea class="form-control" name="content" id="editor2" rows="3">
+                                                        @if (!empty($payment))
+                                                        {{ $payment }}
+                                                        @endif  
+                                                    </textarea>   
+                                                    
                                                 </div>
-                                                <input style="margin-top:10px;" data-repeater-create type="button"
-                                                    class="btn btn-info" value="Thêm" />
+                                                
                                             </div>
 
                                             <div class="form-group" style="margin-top:20px">
@@ -394,6 +369,7 @@ Thiết lập chi tiết sản phẩm
 @section('js')
 <script> CKEDITOR.replace('editor'); </script>
 <script> CKEDITOR.replace('editor1'); </script>
+<script> CKEDITOR.replace('editor2'); </script>
 <script src="{{ asset('assets/js/jquery.repeater.js') }}"></script>
 
 
@@ -461,15 +437,6 @@ Thiết lập chi tiết sản phẩm
     
     $('body').on('click','.del_form_new',function(){
         var del = $(this).parents('.remove_form_new');
-        $(del).remove();
-    })
-    $('body').on('click','.click_form_payment',function(){
-        var del = $(this).parents('.del_form_payment');
-        $(del).remove();
-    });
-    
-    $('body').on('click','.del_form_payment',function(){
-        var del = $(this).parents('.remove_form_payment');
         $(del).remove();
     })
 </script>

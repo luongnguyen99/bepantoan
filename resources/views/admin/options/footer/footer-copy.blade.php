@@ -3,16 +3,16 @@
 
 {{-- page title --}}
 @section('page_title')
-Liên hệ
+Copyright
 @endsection
 @section('content')
 <!-- main content -->
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title">
-                    Thêm mới liên hệ
+                    Thêm mới Copyright
                 </h3>
 
                 <div class="box-tools pull-right">
@@ -25,21 +25,12 @@ Liên hệ
                 <!--  content here -->
                 <form id=create_category method="post">
                   @csrf
+                   
                     <div class="form-group">
-                        <label for="content">Nội dung</label>
-                        <input type="text" class="form-control" placeholder="Nội dung liên hệ có thể trống" name="content" value="<?php if(isset($json['content'])){echo $json['content']; } ?>">
+                        <label for="name">Chi tiêt Copyright</label>
+                        <textarea class="form-control" name="footer" id="" cols="" rows="4"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="name">Số điện thoại</label>
-                        <input  class="form-control" type="text" name="phone"
-                            value="<?php if(isset($json['phone'])){echo $json['phone']; } ?>" placeholder="Số điện thoại">
-                        <div class="text-danger error_name" id="error_name"></div>
-                    </div>
-                    @if($errors->has('phone'))
-                    <div class="alert alert-danger" role="alert">
-                        <strong>{{ $errors->first('phone') }}</strong>
-                    </div>
-                    @endif
+               
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
                     </div>
@@ -49,11 +40,11 @@ Liên hệ
         </div>
     </div>
     {{-- /////////////////// --}}
-    <div class="col-sm-8">
+    <div class="col-sm-6">
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    Số điện thoại của bạn
+                    Copyright của bạn
                 </h3>
                 @if (session('add_success'))
                 <div class="row">
@@ -89,12 +80,20 @@ Liên hệ
                 <!--  content here -->
                 <div class="table-responsive">
                     <table class="table table-hover table-striped text-center" id="table-categories">
-                        @if (!empty($json['phone']))
-                        <p>Nội dung: {{ $json['content'] }}</p>
-                        <p>Liên hệ: <span style="color:red;margin-right:10px;">{{ $json['phone'] }}</span>
-                            <a href="/admin/options/del_hotline" class="btn btn-danger">Xóa</a>
-                        </p>
-                        @endif
+                        <div class="form-group">
+                            
+                            @if (!empty(get_option_by_key('footer_copy')))
+                            @php
+                                $copyright = json_decode(get_option_by_key('footer_copy'),true);
+                            @endphp
+                            <textarea class="form-control" name="" id="" rows="4">{{ $copyright['footer'] }}</textarea>
+                            @endif
+                            @if (!empty(get_option_by_key('footer_copy')))
+                                <div class="text-center" style="margin-top:5px;">
+                                    <a href="/admin/options/del_copyright" class="btn btn-danger">Xóa</a>
+                                </div>
+                            @endif
+                        </div>
                     </table>
                 </div>
                 <!-- end content here -->

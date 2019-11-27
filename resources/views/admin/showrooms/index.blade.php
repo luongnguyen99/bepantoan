@@ -74,7 +74,6 @@ Phòng trưng bày
                                 <th>Tên phòng</th>
                                 <th>Địa chỉ</th>
                                 <th>Điện thoại</th>
-                                <th>Bản đồ</th>
                                 <th>Đường dẫn</th>
                                 <th>Quản lý</th>
                             </tr>
@@ -86,7 +85,6 @@ Phòng trưng bày
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->address }}</td>
                                 <td>{{ $item->phone }}</td>
-                                <td>{{ $item->embed_google_map }}</td>
                                 <td>{{ $item->link }}</td>
                                 <td>
                                     <a href="/admin/showroom/edit/{{ $item->id }}" type="button" class="btn btn-warning">Sửa</a>

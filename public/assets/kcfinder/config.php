@@ -64,19 +64,9 @@ $config['images'] = array(
 // https://docs.ckeditor.com/ckfinder/ckfinder3-php/configuration.html#configuration_options_backends
 
 $config['backends'][] = array(
-//     'name' => 'default',
-//     'adapter' => 'local',
-//     //'baseUrl' => 'https://' . $_SERVER['HTTP_HOST'] . '/uploads/',
-//     'baseUrl' => 'http://localhost:8000/userfiles/images/',
-    
-// //  'root'         => '', // Can be used to explicitly set the CKFinder user files directory.
-//     'chmodFiles' => 0777,
-//     'chmodFolders' => 0755,
-//     'filesystemEncoding' => 'UTF-8',
-
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => '/userfiles/images/',
+    'baseUrl'      => '/bepantoan/public/userfiles/images/',
     'root'         => '',
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,

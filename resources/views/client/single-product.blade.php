@@ -107,8 +107,9 @@
                                         </strong>
                                     </div>
                                     <div class="box_support">
-                                        <p class="hotline">CHƯƠNG TRÌNH KHUYẾN MÃI</p>
-                                        <p class="value">Giảm tới 10%</p>
+                                        @if(!empty(get_option_by_key('sale')))
+										{!! get_option_by_key('sale') !!}
+										@endif
                                         <div class="product-call-requests">
                                         	<form>
                                         		<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel" placeholder="Nhập số điện thoại " value="">
@@ -121,7 +122,10 @@
                                     <div class="product-sets">
                                         <div class="qty-block">
                                             <fieldset id="product-actions-fieldset">
-												<a class="btn" href="tel:0986 083 083"><i class="pe-7s-call"></i>Liên hệ trực tiếp 0986.083.083 <span>(Để có giá tốt nhất)</span></a>
+												<a class="btn" href="tel:0986 083 083"><i class="pe-7s-call"></i>Liên hệ trực tiếp:@if(!empty(get_option_by_key('hotline')))
+													<?php $hotline = json_decode(get_option_by_key('hotline'),true) ?>
+													{{ $hotline['phone'] }} @endif 
+												<span>(Để có giá tốt nhất)</span></a>
 												<form action="{{route('cart.addCart')}}" method="POST">
 													@csrf
 													<input type="hidden" name="id_product" value={{$product->id}}>
@@ -137,14 +141,24 @@
                                     <div class="whotline">
                                         <li>
                                             <a href="tel:024 33 100 100">
-                                                <span>Tổng đài tư vấn (8:00 - 19:00)</span>
-                                                <p class="hotline">024 33 100 100</p>
+												@if (!empty(get_option_by_key('switchboard')))
+												@php
+													$sb = json_decode(get_option_by_key('switchboard'),true)
+												@endphp
+                                                <span>{{ $sb['content'] }}</span>
+												<p class="hotline">{{ $sb['phone'] }}</p>
+												@endif
                                             </a>
                                         </li>
                                         <li>
                                             <a href="tel:0986 083 083">
-                                                <span>Hotline (24/7)</span>
-                                                <p class="hotline">0986.083.083</p>
+												@if (!empty(get_option_by_key('hotline')))
+												@php
+													$hl = json_decode(get_option_by_key('hotline'),true)
+												@endphp
+												<span>{{ $hl['content'] }}</span>
+												<p class="hotline">{{ $hl['phone'] }}</p>
+												@endif
                                             </a>
                                         </li>
                                     </div>
@@ -155,48 +169,21 @@
 		                            <label>Tại sao mua hàng tại Bếp tốt ?</label>
 		                        </div>
 		                        <div class="wsupport-s">
-		                            <li>
-		                                <i class="akr-icon_Security"></i>
-		                                <p>
-		                                    Cam kết<br>
-		                                    giá tốt nhất
-		                                </p>
-		                            </li>
-		                            <li>
-		                                <i class="akr-icon_Return"></i>
-		                                <p>
-		                                    Nhận đổi trả<br>
-		                                    trong 30 ngày
-		                                </p>
-		                            </li>
-		                            <li>
-		                                <i class="pe-7s-tools"></i>
-		                                <p>
-		                                    Bảo trì vĩnh viễn<br>
-		                                    trọn đời máy
-		                                </p>
-		                            </li>
-		                            <li>
-		                                <i class="akr-icon_Warranty2"></i>
-		                                <p>
-		                                    Miễn phí lắp đặt<br>
-		                                    tại Hà Nội
-		                                </p>
-		                            </li>
-		                            <li>
-		                                <i class="akr-icon_Delivery"></i>
-		                                <p>
-		                                    Giao hàng<br>
-		                                    toàn quốc
-		                                </p>
-		                            </li>
-		                            <li>
-		                                <i class="akr-icon_Cash"></i>
-		                                <p>
-		                                    Thanh toán<br>
-		                                    khi nhận hàng
-		                                </p>
-		                            </li>
+									@if (!empty(get_option_by_key('sidebar')))
+									@php
+										$sb = json_decode(get_option_by_key('sidebar'),true);
+									@endphp
+									@if (!empty($sb))
+										@foreach ($sb as $item)
+										<li>
+											<i class="{{ $item['icon'] }}"></i>
+											<p>
+												{{ $item['text'] }}
+											</p>
+										</li>
+										@endforeach
+									@endif
+									@endif
 		                        </div>
 		                        <div class="map-bt">
 									@if (count($showrooms) > 0 && !empty($showrooms) )
