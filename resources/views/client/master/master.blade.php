@@ -54,39 +54,11 @@
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
 						<div class="form-search">
-							<form>
-								<input type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+							<form method="post" action="{{ route('tim-kiem') }}">
+								@csrf
+								<input id="search" type="text" name="search" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
-								<ul class="resuiltSearch ul-menu-muiten search-suggest">
-								    <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
-								    <li class="page">Tìm trong <a href="#" target="_blank">Tủ lạnh Hafele</a></li>
-								    <li class="page">Tìm trong <a href="#" target="_blank">Tủ rượu Hafele</a></li>
-								    <li>
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                    <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                    <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+								<ul id="search_prd" class="resuiltSearch ul-menu-muiten search-suggest">
 								</ul>
 
 							</form>
@@ -189,7 +161,7 @@
 					<div class="col-xs-12 col-sm-12">
 						<div class="form-search">
 							<form>
-								<input type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+								<input  type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
 								<ul class="resuiltSearch ul-menu-muiten search-suggest">
 								    <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
@@ -386,6 +358,51 @@
 		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
+		<script>
+			
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$("#search").keyup(function() {
+			var key = $('#search').val();
+			
+			if(key != ''){
+				$.ajax({
+					url:"{{ route("master.search") }}",
+					method:"GET",
+					data:{key:key},
+					success:function(data){
+						var arr_prd = data.prd;
+						var arr_cate = data.cate;
+						var html = '';
+						jQuery.each(arr_cate,function(key,item){
+							html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+						});
+						jQuery.each(arr_prd,function(key,item){
+							html += '<li>'+
+							'<a href="san-pham/'+item.slug+'">'+
+								'<div class="media">'+
+									'<div class="media-left">'+
+										'<img src="'+item.image+'" class="media-object thumb">'+
+									'</div>'+
+									'<div class="media-body">'+
+										'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
+										'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+									'</div>'+
+								'</div>'+
+							'</a>'+
+							'</li>'
+						});
+						$('#search_prd').html(html);
+					}
+				});
+			}else{
+				$('#search_prd').html('')
+			}
+		});
+		</script>
 		@yield('js')
 	</body>
 	</html>

@@ -204,6 +204,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList')->name('home_client');
+    Route::get('search', 'IndexController@getSearch')->name('master.search');
     
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
@@ -226,6 +227,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     });
     Route::get('/{slug}','BlogController@getData');
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
+    Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {
