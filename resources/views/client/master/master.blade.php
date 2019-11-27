@@ -364,7 +364,11 @@
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="paypal social-icon">
 								<ul>
-									@if ($payment != null)
+									
+									@php
+										$payment = json_decode($payment,true);
+									@endphp
+									@if (!empty($payment))
 									@foreach ($payment as $item)
 									<li><a href=""><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach
@@ -375,7 +379,10 @@
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="social-icon">
 								<ul class="floatright">
-									@if ($social_network_j != null)
+									@php
+									$social_network_j = json_decode($social_network_j,true);
+									@endphp
+									@if (!empty($social_network_j))
 									@foreach ($social_network_j as $item)
 									<li class="res-mar"><a href="#"><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach

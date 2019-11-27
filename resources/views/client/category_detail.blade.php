@@ -39,7 +39,7 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-					<li><a href="#">beptot.vn</a></li>
+					<li><a href="">beptot.vn</a></li>
 					@if ($category)
 				    	<li><a href="{{route('category_detail',['slug' => $category->slug])}}">{{$category->name}}</a></li>		
 					@endif
@@ -200,7 +200,12 @@
 														</div>
 														<div class="actions-btn">
 															<a href="{{route('product_detail',['slug' => $product->slug])}}"><i class="fa fa-eye"></i></a>
-															<a href="{{route('product_detail',['slug' => $product->slug])}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+															<form action="{{route('cart.addCart')}}" method="POST">
+																@csrf
+																<input type="hidden" name="id_product" value={{$product->id}}>
+																<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+																<a href="#" id-product="{{$product->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+															</form>
 														</div>
 													</div>
 												</div>

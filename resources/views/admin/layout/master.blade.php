@@ -34,7 +34,14 @@
     {{-- css here --}}
     
     @yield('style')
-    {{-- .css --}}
+    <style>
+     tr:hover .div-action {
+        animation-delay: 2s;
+        /* display: block; */
+
+        visibility: visible;
+    }
+    </style>
 </head>
 
 

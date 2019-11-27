@@ -29,7 +29,7 @@
 			<div class="container">
 				<ul>
 				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
-					<li><a href="#">{{get_product_by_id($product->category_id)->name}}</a></li>
+					<li><a href="{{route('category_detail',['slug' => get_category_by_id($product->category_id)->slug])}}">{{get_category_by_id($product->category_id)->name}}</a></li>
 					<li>{{$product->name}}</li>
 				</ul>
 			</div>
@@ -88,10 +88,22 @@
 									<div class="product-sets">
                                         <div class="pro-rating cendo-pro">
                                             <div class="pro_one">
-                                                <div class="tf-stars tf-stars-svg"><span style="width: 86% !important" class="tf-stars-svg"></span></div>
+												@php
+													$width = $avg_comment * 20;
+												@endphp
+												@if ($width != 0)
+                                                	<div class="tf-stars tf-stars-svg"><span style="width: {{$width}}% !important" class="tf-stars-svg"></span></div>
+												@else
+													<div class="tf-stars tf-stars-svg"><span style="width: 100% !important" class="tf-stars-svg"></span></div>
+												@endif
                                             </div>
                                             <p class="rating-links">
-                                                <a href="#">4.5</a> (14 reviews)
+												
+												@if (!empty($avg_comment))
+													<a>{{number_format($avg_comment,1,".","")}}</a> ({{$total_comment}} đánh giá)
+												@else
+													<a>5.0</a> ({{$total_comment}} đánh giá)
+												@endif
                                             </p>
                                         </div>
                                     </div>
@@ -317,14 +329,15 @@
 											</div>
 										</div>
 										<div class="actions-btn">
-											<a href="#"><i class="fa fa-eye"></i></a>
+											<a href="{{route('product_detail',['slug' => $item->slug])}}"><i class="fa fa-eye"></i></a>
+											
 											<form action="{{route('cart.addCart')}}" method="POST">
 												@csrf
 												<input type="hidden" name="id_product" value={{$item_product->id}}>
 												<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
 												<a href="#" id-product="{{$item_product->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-												
 											</form>
+											
 										</div>
 									</div>
 								</div>
@@ -390,13 +403,12 @@
 											</div>
 										</div>
 										<div class="actions-btn">
-											<a href="#"><i class="fa fa-eye"></i></a>
+											<a href="{{route('product_detail',['slug' => $product_random->slug])}}"><i class="fa fa-eye"></i></a>
 											<form action="{{route('cart.addCart')}}" method="POST">
 												@csrf
 												<input type="hidden" name="id_product" value={{$product_random->id}}>
 												<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
-												<a href="#" id-product="{{$product_random->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-												
+												<a href="#" id-product="{{$product_random->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>					
 											</form>
 										</div>
 									</div>
@@ -413,57 +425,67 @@
 	                	<div class="row">
 	                        <div class="col-md-4 col-sm-6 col-xs-6">
 	                            <div class="tf-score">
-	                                <div class="tf-rating">5/5</div>
+									
+	                                <div class="tf-rating">{{ !empty($avg_comment) ? number_format($avg_comment,1,".","") : 5}}/5</div>
 	                                <div class="tf-stars tf-stars-svg"><span style="width: 100% !important" class="tf-stars-svg"></span></div>
-	                                <div class="tf-based">Có 0 đánh giá</div>
+	                                <div class="tf-based">Có {{$total_comment}} đánh giá</div>
 	                            </div>
-	                        </div>
+							</div>
+							@php
+								$total_comment = $total_comment < 1 ? 1 :  $total_comment;
+								$width_5s = ($total_comment_5s / $total_comment) * 100;
+								$width_4s = ($total_comment_4s / $total_comment) * 100;
+								$width_3s = ($total_comment_3s / $total_comment) * 100;
+								$width_2s = ($total_comment_2s / $total_comment) * 100;
+								$width_1s = ($total_comment_1s / $total_comment) * 100;
+								// dd($width_5s);
+							@endphp
 	                        <div class="col-md-4 col-sm-6 col-xs-6">
 	                            <ul class="ratingBarList">
 	                                <li class="ratingBarListItem">
 	                                    <span class="ratingBarLabel ">5 ☆</span>
 	                                    <span class="ratingBarLineCell">
 	                                        <span class="ratingBarLine">
-	                                            <span style="width: 30%;" class="ratingBarLevel"></span>
+	                                            <span style="width: {{$width_5s}}%;" class="ratingBarLevel"></span>
 	                                        </span>
 	                                    </span>
-	                                    <span class="ratingBarCount">0</span>
+										<span class="ratingBarCount">{{$total_comment_5s}}</span>
 	                                </li>
 	                                <li class="ratingBarListItem">
 	                                    <span class="ratingBarLabel ">4 ☆</span>
 	                                    <span class="ratingBarLineCell">
 	                                        <span class="ratingBarLine">
-	                                            <span style="width: 0%;" class="ratingBarLevel"></span>
+	                                            <span style="width: {{$width_4s}}%;" class="ratingBarLevel"></span>
 	                                        </span>
 	                                    </span>
-	                                    <span class="ratingBarCount">0</span>
+	                                    <span class="ratingBarCount">{{$total_comment_4s}}</span>
 	                                </li>
 	                                <li class="ratingBarListItem">
 	                                    <span class="ratingBarLabel ">3 ☆</span>
 	                                    <span class="ratingBarLineCell">
 	                                        <span class="ratingBarLine">
-	                                            <span style="width: 0%;" class="ratingBarLevel"></span>
+	                                            <span style="width: {{$width_3s}}%;" class="ratingBarLevel"></span>
 	                                        </span>
 	                                    </span>
-	                                    <span class="ratingBarCount">0</span>
+	                                    <span class="ratingBarCount">{{$total_comment_3s}}</span>
 	                                </li>
 	                                <li class="ratingBarListItem">
 	                                    <span class="ratingBarLabel ">2 ☆</span>
 	                                    <span class="ratingBarLineCell">
 	                                        <span class="ratingBarLine">
-	                                            <span style="width: 15%;" class="ratingBarLevel"></span>
+	                                            <span style="width: {{$width_2s}}%;" class="ratingBarLevel"></span>
 	                                        </span>
 	                                    </span>
-	                                    <span class="ratingBarCount">0</span>
+	                                    <span class="ratingBarCount">{{$total_comment_2s}}</span>
 	                                </li>
 	                                <li class="ratingBarListItem">
 	                                    <span class="ratingBarLabel ">1 ☆</span>
 	                                    <span class="ratingBarLineCell">
 	                                        <span class="ratingBarLine">
-	                                            <span style="width: 0%;" class="ratingBarLevel"></span>
+	                                            <span style="width: {{$width_1s}}%;" class="ratingBarLevel"></span>
 	                                        </span>
 	                                    </span>
-	                                    <span class="ratingBarCount">0</span>
+	                                    <span class="ratingBarCount">{{$total_comment_1s}}</span>
 	                                </li>
 	                            </ul>
 	                        </div>
@@ -474,19 +496,20 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <form class="form-horizontal form-review" method="post" name="comment_form" id="CommentForm" >
-	                        <h2 class="write">Viết nội dung đánh giá</h2>
+						<form class="form-horizontal form-review" method="post" name="comment_form" id="commentForm" >
+							<h2 class="write">Viết nội dung đánh giá</h2>
+							@csrf
 	                        <div class="ratingStars">
 	                            <div class="ratingStarsWrap">
-	                                <input class="ratingStarsInput" id="ratingStarsItem-5" type="radio" name="Vote" value="5">
+	                                <input class="ratingStarsInput" id="ratingStarsItem-5" type="radio" name="vote" value="5">
 	                                <label class="ratingStarsStar" for="ratingStarsItem-5" data-title="Rất tốt"></label>
-	                                <input class="ratingStarsInput" id="ratingStarsItem-4" type="radio" name="Vote" value="4">
+	                                <input class="ratingStarsInput" id="ratingStarsItem-4" type="radio" name="vote" value="4">
 	                                <label class="ratingStarsStar" for="ratingStarsItem-4" data-title="Tốt"></label>
-	                                <input class="ratingStarsInput" id="ratingStarsItem-3" type="radio" name="Vote" value="3">
+	                                <input class="ratingStarsInput" id="ratingStarsItem-3" type="radio" name="vote" value="3">
 	                                <label class="ratingStarsStar" for="ratingStarsItem-3" data-title="Bình thường"></label>
-	                                <input class="ratingStarsInput" id="ratingStarsItem-2" type="radio" name="Vote" value="2">
+	                                <input class="ratingStarsInput" id="ratingStarsItem-2" type="radio" name="vote" value="2">
 	                                <label class="ratingStarsStar" for="ratingStarsItem-2" data-title="Tệ"></label>
-	                                <input class="ratingStarsInput" id="ratingStarsItem-1" type="radio" name="Vote" value="1">
+	                                <input class="ratingStarsInput" id="ratingStarsItem-1" type="radio" name="vote" value="1">
 	                                <label class="ratingStarsStar" for="ratingStarsItem-1" data-title="Rất tệ"></label>
 	                            </div>
 	                        </div>
@@ -494,29 +517,29 @@
 	                        <div class="form-group required">
 	                            <div class="col-sm-6">
 	                                <label class="control-label" for="input-name">Họ và tên</label>
-	                                <input name="Name" id="Name" class="form-control" type="text" value="">
+	                                <input name="name" id="name" class="form-control" type="text" value="">
 	                            </div>
 	                            <div class="col-sm-6">
 	                                <label class="control-label" for="input-name">Số điện thoại</label>
-	                                <input name="Phone" id="Phone" class="form-control" type="text" value="">
+	                                <input name="phone" id="phone" class="form-control" type="text" value="">
 	                            </div>
 	                        </div>
 	                        <div class="form-group required">
 	                            <div class="col-sm-12">
 	                                <label class="control-label" for="input-review">Nội dung</label>
-	                                <textarea name="Content" id="Content" class="form-control" rows="5"></textarea>
+	                                <textarea name="content" id="content" class="form-control" rows="5"></textarea>
 	                            </div>
 	                        </div>
-	                        <div class="form-group info-cus col-md-6">
-	                            <input type="text" class="form-control w30p security fl" name="XNCode" id="ValidCode" required="required" autocomplete="off" value="" size="40" placeholder="Mã bảo mật">
+	                        {{-- <div class="form-group info-cus col-md-6"> --}}
+	                            {{-- <input type="text" class="form-control w30p security fl" name="XNCode" id="ValidCode" required="required" autocomplete="off" value="" size="40" placeholder="Mã bảo mật"> --}}
 	                            <!-- <img src="/ajax/Security.html" class="vAlignMiddle pl10" id="imgValidCode" alt="security code">
 	                            <a href="javascript:void(0)" onclick="change_captcha()" title="Tạo mã khác" rel="nofollow">
 	                                <img src="/Content/pc/css/images/icon-refreh.png" alt="refresh security code">
 	                            </a> -->
-	                        </div>
+	                        {{-- </div> --}}
 	                        
 	                        <div class="form-group">
-	                            <button type="button" class="btn">Gửi</button>
+	                            <button type="submit" class="btn submitcomment">Gửi</button>
 	                        </div>
 	                    </form>
 	                    <ul class="comments-list"></ul>
@@ -528,21 +551,31 @@
 	                </div>
 	                <div class="single-sidebar">
 	                	<div class="owl-carousel owl-theme slide-pro-seen">
-	                		<?php foreach(range(1, 6) as $number ): ?>
-						    <div class="item">
-						    	<div class="slide-pro-seen-item">
-						    		<div class="tb-recent-thumbb">
-		                                <a href="#" class="active">
-		                                    <img class="attachment" src="https://beptot.vn/Data/ResizeImage/images/product/large_bep-dien-eurosun-eu-if268x500x500x4.png" alt="Bếp hồng ngoại đôi Eurosun EU-IF268">
-		                                </a>
-		                            </div>
-		                            <div class="title-beg">
-		                                <a href="#">Bếp hồng ngoại đôi Eurosun EU-IF268</a>
-		                            </div>
-		                            <div class="title-price-recent">6.680.000₫</div>
-						    	</div>
-						    </div>
-						    <?php endforeach; ?>
+							@if (!empty($_COOKIE['arr_id_history']))
+								@php
+								$arr_history = json_decode($_COOKIE['arr_id_history'],true);
+								@endphp
+								@if (count($arr_history) > 0)
+									@foreach (array_reverse($arr_history) as $item)
+									
+										<div class="item">
+											<div class="slide-pro-seen-item">
+												<div class="tb-recent-thumbb">
+													<a href="#" class="active">
+														<img class="attachment"
+													src="{{!empty(get_product_by_id($item)->galleries) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
+															alt="{{get_product_by_id($item)->name}}">
+													</a>
+												</div>
+												<div class="title-beg">
+													<a href="#">{{get_product_by_id($item)->name}}</a>
+												</div>
+												<div class="title-price-recent">{{!empty(get_product_by_id($item)->sale_price) ? pveser_numberformat(get_product_by_id($item)->sale_price) : pveser_numberformat(get_product_by_id($item)->price)}}</div>
+											</div> 
+										</div>
+									@endforeach
+								@endif
+							@endif
 						</div>
 	                </div>
 	            </div>
@@ -551,4 +584,73 @@
 	
 	</div>
 
+@endsection
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script>
+	$(function() {
+		$.ajax({
+			url:"{{ route('saveCookieHistory') }}",
+			method:"POST",
+			data: {
+				product_id : `{{$product->id}}`,
+				_token : `{{csrf_token()}}`,
+			},
+			success : function(data) {
+				console.log(data);
+			}
+		})
+	})
+	$(function(){
+		$('.submitcomment').on('click',function(e) {
+			e.preventDefault();
+				var formData = new FormData($('#commentForm')[0]);
+				formData.set('product_id',`{{$product->id}}`);
+				$.ajax({
+					url:"{{ route('rate_star') }}",
+					method:"POST",
+					processData: false,
+					contentType: false,
+					data: formData,
+					success:function(data){
+						if (data.errors) {
+							html = '';
+							if (typeof data.messages.vote != 'undefined') {
+								html += `<li>${data.messages.vote[0]}</li>`;			
+							};
+							if (typeof data.messages.name != 'undefined') {
+								html += `<li>${data.messages.name[0]}</li>`;
+							};
+							if (typeof data.messages.phone != 'undefined') {
+								html += `<li>${data.messages.phone[0]}</li>`;
+							};
+							if (typeof data.messages.content != 'undefined') {
+								html += `<li>${data.messages.content[0]}</li>`;
+							};
+							Swal.fire({
+							
+							icon: 'error',
+							html:
+							`<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,
+							focusConfirm: false,
+							confirmButtonText:
+							' Ok!',
+							})
+						}else{
+							Swal.fire({
+							icon: 'success',
+							title: 'Thành công',
+							text: 'Đánh giá thành công!',
+							}).then((result) => {
+								if (result.value) {
+									window.location.reload();
+								}
+							})
+							
+						}
+					}
+			})
+		})
+	})
+</script>
 @endsection

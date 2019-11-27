@@ -19,4 +19,14 @@ class Order extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function order_details(){
+        return $this->hasMany('App\Models\Order_detail','order_id','id');
+    }
+
+    public function status(){
+        return $this->hasOne('App\Models\Status_order','id','status');
+    }
+
+    
 }

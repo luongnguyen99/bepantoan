@@ -28,7 +28,7 @@
             <li class="header">MAIN NAVIGATION</li>
             
             
-
+            {{-- brands  --}}
             <li class="treeview {{activeNav('brands')}}">
                 <a href="#">
                     <i class="fa fa-align-justify"></i>
@@ -43,7 +43,7 @@
             
                 </ul>
             </li>
-            
+            {{-- products  --}}
             <li class="treeview {{activeNav('properties')}} {{activeNav('categories')}} {{activeNav('products')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
@@ -63,6 +63,23 @@
                                 class="fa fa-circle-o"></i> Danh mục sản phẩm</a></li>
                 </ul>
             </li>
+            {{-- orders --}}
+            <li class="treeview {{activeNav('orders')}} {{activeNav('status_order')}}">
+                <a href="#">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Đơn hàng  <span class="label label-primary"> {{count_order_awaiting_approval()}}</span></span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('orders')}}"><a href="{{route('admin.orders.index')}}"><i class="fa fa-circle-o"></i>
+                            Đơn hàng</a></li>
+                    <li class="{{activeNav('status_order')}}"><a href="{{route('admin.status_order.index')}}"><i
+                                class="fa fa-circle-o"></i> Trạng thái đơn hàng</a></li>
+                </ul>
+            </li>
+
             {{-- Post Category --}}
             <li class="treeview {{activeNav('post_categories')}} {{activeNav('post_categories')}}">
                 <a href="#">

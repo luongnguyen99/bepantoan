@@ -3,7 +3,7 @@
 
 {{-- page title --}}
 @section('page_title')
-Status Order
+Trạng thái đơn hàng
 @endsection
 @section('content')
 <!-- main content -->
@@ -29,11 +29,11 @@ Status Order
                     <div class="form-group">
                         <div data-repeater-list="table[content]">
                             <div data-repeater-item>
-                                <label>Order</label>
+                                <label>Trạng thái</label>
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <input type="text" name="name" class="form-control" id="exampleInputPassword4"
-                                            placeholder="Order" >
+                                            placeholder="Trạng thái" >
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@ Status Order
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    Danh Sách Order
+                    Danh sách trạng thái
                 </h3>
                
                 <div class="box-tools pull-right">
@@ -66,18 +66,18 @@ Status Order
             <div class="box-body">
                 <!--  content here -->
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped text-center" id="table-categories">
+                    <table class="table table-hover table-striped" id="table-categories">
                         <thead>
                             <tr>
-                                <th>STT</th>
-                                <th>Status</th>
-                                <th>Quản lý</th>
+                                
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($status as $key=>$row)
                             <tr>
-                                <td>{{ $key+1 }}</td>
+                                
                                 <td>{{ $row->name }}</td>
                                 <td>
                                     <a href="/admin/status_order/edit/{{ $row->id }}" class="btn btn-warning">Sửa</a>

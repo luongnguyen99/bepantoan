@@ -305,7 +305,7 @@ Sửa sản phẩm
                 </div>
                 <div style="margin-top: 40px;" class="mt-2">
                     <button type="submit" class="btn btn-success submit_data">Lưu</button>
-                    <button type="submit" class="btn btn-danger">Huỷ</button>
+                    <a href="{{route('admin.products.index')}}" class="btn btn-danger">Huỷ</a>
                 </div>
             </div>
         </form>

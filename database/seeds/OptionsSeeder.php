@@ -100,6 +100,12 @@ class OptionsSeeder extends Seeder
                 'key' => 'sidebar',
                 'value' => '',
             ],
+            [
+                'name' => 'posts_per_page',
+                'key' => 'posts_per_page',
+                'value' => '8',
+            ],
+            
         ]);
 
     }

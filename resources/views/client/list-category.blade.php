@@ -130,8 +130,13 @@
                                             </div>
                                         </div>
                                         <div class="actions-btn">
-                                            <a href="#"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+                                            <a href="{{route('product_detail',['slug' => $product->slug])}}"><i class="fa fa-eye"></i></a>
+                                            <form action="{{route('cart.addCart')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id_product" value={{$product->id}}>
+                                                <input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+                                                <a href="#" id-product="{{$product->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

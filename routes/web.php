@@ -76,6 +76,21 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('delete', 'ProductController@delete')->name('delete');
         Route::post('deleteMulti', 'ProductController@deleteMulti')->name('deleteMulti');
     });
+
+    Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
+        Route::any('data', 'OrderController@getData')->name('data');
+        Route::get('/', 'OrderController@index')->name('index');
+
+        Route::get('detail/{id}', 'OrderController@edit')->name('edit');
+        Route::post('saveEdit/{id}', 'OrderController@saveEdit')->name('saveEdit');
+
+        Route::post('delete', 'OrderController@delete')->name('delete');
+        Route::post('deleteMulti', 'OrderController@deleteMulti')->name('deleteMulti');
+    });
+
+
+
+
     //=================> Post category <===================
     Route::group(['prefix' => 'post_categories','as' => 'post_categories.'],function(){
         
@@ -190,12 +205,12 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::get('method_payment', 'OptionsController@getDelMethodPayment');
 
     });
-    Route::group(['prefix' => 'status_order','as'=>'status_order'], function () {
-        Route::get('index','StatusorderController@getindex');
-        Route::post('index','StatusorderController@postindex');
+    Route::group(['prefix' => 'status_order','as'=>'status_order.'], function () {
+        Route::get('index','StatusorderController@getindex')->name('index');
+        Route::post('index','StatusorderController@postindex')->name('saveAdd');
 
-        Route::get('edit/{id}','StatusorderController@getedit');
-        Route::post('edit/{id}','StatusorderController@postedit');
+        Route::get('edit/{id}','StatusorderController@getedit')->name('edit');;
+        Route::post('edit/{id}','StatusorderController@postedit')->name('saveEdit');;
         
         Route::get('del/{id}','StatusorderController@getdel');
     });
@@ -210,8 +225,14 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
    
     Route::get('danh-muc/{slug}/{slug2?}','ListCategoryController@category_detail')->name('category_detail');
-
+    
+    // san pham chi tiet
     Route::get('san-pham/{slug}','ProductController@detail')->name('product_detail');
+    
+    //rate star
+    Route::post('rate_star','ProductController@rate_star')->name('rate_star');
+    //saveCookie
+    Route::post('saveCookieHistory', 'ProductController@saveCookieHistory')->name('saveCookieHistory');
     
     // loadmore
     Route::post('loadmore', 'ListCategoryController@loadmore')->name('loadmore');
