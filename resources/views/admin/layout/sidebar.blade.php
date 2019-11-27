@@ -146,15 +146,17 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="{{activeNav('options')}}"><a href="{{route('admin.options.slide')}}"><i
-                                        class="fa fa-circle-o"></i> Danh sách Slide</a></li>
+                            class="fa fa-circle-o"></i> Danh sách Slide</a></li>
+                            <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer')}}"><i
+                            class="fa fa-circle-o"></i> Footer</a></li>
                         </ul>
                     </li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.logo')}}"><i
                                 class="fa fa-circle-o"></i> Logo</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.hotline')}}"><i
                         class="fa fa-circle-o"></i>Liên hệ</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer')}}"><i
-                        class="fa fa-circle-o"></i>Footer</a></li>
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer-copy')}}"><i
+                        class="fa fa-circle-o"></i>Copyright</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.payment')}}"><i
                         class="fa fa-circle-o"></i>Thanh toán</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.social_network')}}"><i
@@ -165,7 +167,9 @@
                         class="fa fa-circle-o"></i>Menu di động</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.prd-detail')}}"><i
                         class="fa fa-circle-o"></i>Chi tiết sản phẩm</a></li>
-                        
+                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.introduce')}}"><i
+                        class="fa fa-circle-o"></i>Giới thiệu</a></li>
+                           
                 </ul>
             </li>
 

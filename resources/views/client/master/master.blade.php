@@ -54,39 +54,11 @@
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
 						<div class="form-search">
-							<form>
-								<input type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+							<form method="post" action="{{ route('tim-kiem') }}">
+								@csrf
+								<input id="search" type="text" name="search" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
-								<ul class="resuiltSearch ul-menu-muiten search-suggest">
-								    <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
-								    <li class="page">Tìm trong <a href="#" target="_blank">Tủ lạnh Hafele</a></li>
-								    <li class="page">Tìm trong <a href="#" target="_blank">Tủ rượu Hafele</a></li>
-								    <li>
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                    <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                    <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+								<ul id="search_prd" class="resuiltSearch ul-menu-muiten search-suggest">
 								</ul>
 
 							</form>
@@ -190,7 +162,7 @@
 					<div class="col-xs-12 col-sm-12">
 						<div class="form-search">
 							<form>
-								<input type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+								<input  type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
 								<ul class="resuiltSearch ul-menu-muiten search-suggest">
 								    <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
@@ -278,81 +250,19 @@
 			<div class="footer-top">
 				<div class="container">
 					<div class="row">
+						
+						@if (!empty(get_option_by_key('footer')))
+						@php
+						$ft = json_decode(get_option_by_key('footer'),true);
+						@endphp
+						@foreach ($ft as $item)
 						<div class="col-md-3 col-sm-6 col-xs-12">
 							<div class="single-text res-text">
-								<div class="footer-title">
-									<div class="logo-f">
-										<a href="#">
-											<img src="client/img/logo-bepantoan.png" alt=""></a>
-									</div>
-								</div>
-								<div class="footer-text">
-									<ul>
-										<li>
-											<i class="pe-7s-call"></i>
-											<p>Mua hàng <a href="#"> 024 33 100 100</a> (7:00 - 20:00)</p>
-										</li>
-										<li>
-											<i class="pe-7s-call"></i>
-											<p>Bảo hành <a href="#"> 024 35 122 122 </a> (8:00 - 20:00)</p>
-										</li>
-										<li>
-											<i class="pe-7s-call"></i>
-											<p>Khiếu nại <a href="#"> 0912 220 883</a> (8:00 - 20:30)</p>
-										</li>
-										<li>
-											<img src="client/img/icon-dangky.png">
-										</li>
-									</ul>
-								</div>
+							{!! $item !!}
 							</div>
 						</div>
-						<div class="col-md-3 col-sm-6 col-xs-12">
-							<div class="single-text res-text">
-								<div class="footer-title">
-									<h4>Thông tin công ty</h4>
-								</div>
-								<div class="footer-menu">
-									<ul>
-										
-										<li><a href="#">Giới thiệu</a></li>
-										
-										<li><a href="#">Tuyển dụng</a></li>
-										
-										<li><a href="#">Quy chế hoạt động</a></li>
-										
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-6 col-xs-12">
-							<div class="single-text res-text">
-								<div class="footer-title">
-									<h4>Hỗ trợ khách hàng</h4>
-								</div>
-								<div class="footer-menu">
-									<ul>
-										
-										<li><a href="#">Chính Sách Thanh Toán</a></li>
-										
-										<li><a href="#">Chính sách vận chuyển</a></li>
-										
-										<li><a href="#">Chính Sách Đổi Trả</a></li>
-										
-										<li><a href="#">Chính Sách Bảo Hành</a></li>
-										
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-6 col-xs-12">
-							<div class="single-text res-text">
-								<div class="footer-title">
-									<h4>Hỗ trợ khách hàng</h4>
-								</div>
-								   <div class="fb-page" data-href="https://www.facebook.com/bepantoan.vn/" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/bepantoan.vn/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/bepantoan.vn/">Bepantoan.vn</a></blockquote></div>
-							</div>
-						</div>
+						@endforeach
+						@endif
 						
 					</div>
 				</div>
@@ -399,112 +309,59 @@
 						Hệ thống showroom Beptot.vn
 					</div>
 					<ul class="footer-address">
+						@php
+							$sw = App\Models\Showroom::all();
+						@endphp
+						@if (!empty($sw))
+						@foreach ($sw as $item)
 						<li>
 							<div class="bg">
-								<h4>Beptot.vn - Đường Láng - Đống Đa</h4>
+								<h4>{{ $item->name }}</h4>
 								<address>
-									<b>330 Đường Láng - Đống Đa - Hà Nội ( Có Chỗ Để Xe Ô Tô ) </b>
+									<b>{{ $item->address }}</b>
 								</address>
 								<div class="phone">
 									<div>
 										<label>Điện thoại cơ sở: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">0986 083 083</a></span>
+										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->hotline }}</a></span>
 									</div>
 									<div>
 										<label style="color: black !important">Hotline: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">024 33 100 100</a></span>
+										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->phone }}</a></span>
 									</div>
 								</div>
-								<img src="client/img/cn_lang.png" alt="">
+								<img src="{{ $item->img }}" alt="">
 								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-								<a href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
+								<a data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
 							</div>
 						</li>
-						<li>
-							<div class="bg">
-								<h4>Beptot.vn - Đường Láng - Đống Đa</h4>
-								<address>
-									<b>338 Nguyễn Văn Cừ - Long Biên - Hà Nội ( Đối Diện Siêu Thị Nguyễn Kim, Có Chỗ Để Xe Ô Tô )</b>
-								</address>
-								<div class="phone">
-									<div>
-										<label>Điện thoại cơ sở: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">0986 083 083</a></span>
-									</div>
-									<div>
-										<label style="color: black !important">Hotline: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">024 33 100 100</a></span>
-									</div>
-								</div>
-								<img src="client/img/cn_lang.png" alt="">
-								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-								<a href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
-							</div>
-						</li>
-						<li>
-							<div class="bg">
-								<h4>Beptot.vn - Đường Láng - Đống Đa</h4>
-								<address>
-									<b>330 Đường Láng - Đống Đa - Hà Nội ( Có Chỗ Để Xe Ô Tô ) </b>
-								</address>
-								<div class="phone">
-									<div>
-										<label>Điện thoại cơ sở: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">0986 083 083</a></span>
-									</div>
-									<div>
-										<label style="color: black !important">Hotline: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">024 33 100 100</a></span>
-									</div>
-								</div>
-								<img src="client/img/cn_lang.png" alt="">
-								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-								<a href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
-							</div>
-						</li>
-						<li>
-							<div class="bg">
-								<h4>Beptot.vn - Đường Láng - Đống Đa</h4>
-								<address>
-									<b>330 Đường Láng - Đống Đa - Hà Nội ( Có Chỗ Để Xe Ô Tô ) </b>
-								</address>
-								<div class="phone">
-									<div>
-										<label>Điện thoại cơ sở: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">0986 083 083</a></span>
-									</div>
-									<div>
-										<label style="color: black !important">Hotline: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">024 33 100 100</a></span>
-									</div>
-								</div>
-								<img src="client/img/cn_lang.png" alt="">
-								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-								<a href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
-							</div>
-						</li>
-						<li>
-							<div class="bg">
-								<h4>Beptot.vn - Đường Láng - Đống Đa</h4>
-								<address>
-									<b>330 Đường Láng - Đống Đa - Hà Nội ( Có Chỗ Để Xe Ô Tô ) </b>
-								</address>
-								<div class="phone">
-									<div>
-										<label>Điện thoại cơ sở: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">0986 083 083</a></span>
-									</div>
-									<div>
-										<label style="color: black !important">Hotline: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">024 33 100 100</a></span>
-									</div>
-								</div>
-								<img src="client/img/cn_lang.png" alt="">
-								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-								<a href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
-							</div>
-						</li>
+						@endforeach
+						@endif
 					</ul>
+					
+					@if (!empty($sw))
+					@foreach ($sw as $item)
+					<!-- Modal -->
+					<div class="modal  fade" id="exampleModalCenter{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog  modal-dialog-centered" role="document">
+						<div class="modal-content" style="border-radius:0%">
+						<div class="modal-header text-center" style="background-color:#dd1015;color:white">
+							<h5 class="modal-title" style="line-height: 10%;padding-top: 10px;" id="exampleModalLongTitle">{{ $item->name }}</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div style="max-width:100%; overflow:hidden">
+								{!! $item->embed_google_map !!}
+							</div>
+						</div>
+						
+						</div>
+					</div>
+					</div>
+					@endforeach
+					@endif
 				</div>
 			</div>
 			<div class="footer-bottom">
@@ -521,9 +378,8 @@
 				</div>
 			</div>
 		</footer>	
-	<div id="fb-root"></div>
-	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0"></script>
 	
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1"></script>
 	
 		<script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
@@ -532,6 +388,51 @@
 		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
+		<script>
+			
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$("#search").keyup(function() {
+			var key = $('#search').val();
+			
+			if(key != ''){
+				$.ajax({
+					url:"{{ route("master.search") }}",
+					method:"GET",
+					data:{key:key},
+					success:function(data){
+						var arr_prd = data.prd;
+						var arr_cate = data.cate;
+						var html = '';
+						jQuery.each(arr_cate,function(key,item){
+							html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+						});
+						jQuery.each(arr_prd,function(key,item){
+							html += '<li>'+
+							'<a href="san-pham/'+item.slug+'">'+
+								'<div class="media">'+
+									'<div class="media-left">'+
+										'<img src="'+item.image+'" class="media-object thumb">'+
+									'</div>'+
+									'<div class="media-body">'+
+										'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
+										'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+									'</div>'+
+								'</div>'+
+							'</a>'+
+							'</li>'
+						});
+						$('#search_prd').html(html);
+					}
+				});
+			}else{
+				$('#search_prd').html('')
+			}
+		});
+		</script>
 		@yield('js')
 	</body>
 	</html>

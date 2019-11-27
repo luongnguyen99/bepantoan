@@ -32,7 +32,7 @@ class PostsController extends Controller
 
         $db->views = $r->view;
         
-        $db->post_category_id = $r->parent_id;
+        $db->post_category_id = $r->id_cate;
         
         $db->save();
         return redirect('admin/posts')->with('add_success','Thêm thành công'); 
@@ -65,7 +65,10 @@ class PostsController extends Controller
         $db->views = $r->view;
         if ($r->parent_id == 0) {
             $db->post_category_id = null;
+        }else{
+            $db->post_category_id = $r->parent_id;
         }
+        
         
         $db->save();
         return redirect('admin/posts')->with('edit_success','Sửa thành công');
@@ -75,4 +78,5 @@ class PostsController extends Controller
         $db = Post::find($id)->delete();
         return redirect('admin/posts')->with('del_success','Xóa thành công');
     }
+    
 }

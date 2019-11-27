@@ -180,31 +180,10 @@ Giỏ hàng
 																	type="radio" value="2">
 																<label for="payment_method_2">Chuyển khoản</label>
 																<div class="payment_box payment_method_bacs">
-																	<p>Qúy khách vui lòng chuyển khoản vào một trong các tài khoản sau:
-																	</p>
-																	<p>( Nội dung chuyển tiền: HỌ TÊN + SỐ ĐIỆN THOẠI + MÃ SẢN PHẨM )
-																	</p>
-																	<p><b>Ngân hàng TMCP Việt Nam Thịnh Vượng - VPbank</b></p>
-																	<p><b>Thông tin các tài khoản tại Beptot.vn! </b></p>
-																	<p>
-				
-																		NGÂN HÀNG TECHCOM BANK<br>
-																		- Tên chủ TK: Nguyễn Đức Trường<br>
-																		- Số TK: 19027501510013<br>
-																		- Chi nhánh: Hà Nội<br>
-																	</p>
-																	<p>
-																		NGÂN HÀNG VIETTIN BANK<br>
-																		- Tên chủ TK: Nguyễn Đức Trường<br>
-																		- Số TK: 104000744394<br>
-																		-Chi nhánh: Hà Nội<br>
-																	</p>
-																	<p>
-																		NGÂN HÀNG VIETCOM BANK<br>
-																		-Tên chủ TK: Nguyễn Đức Trường<br>
-																		-Số TK: 0011004264765<br>
-																		-Chi nhánh: Hà Nội<br>
-																	</p>
+																	@if (!empty(get_option_by_key('method_payment')))
+																		{!! get_option_by_key('method_payment') !!}
+																	@endif
+																	
 																</div>
 															</div>
 														</div>
@@ -300,6 +279,9 @@ Giỏ hàng
 				}
 			},
 		});
+	});
+	$('#payment_method_2').click(function(){
+		$('.payment_box').css('display','block');
 	})
 </script>
 @endsection

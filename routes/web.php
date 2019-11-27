@@ -113,6 +113,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('edit/{id}', 'PostsController@postEdit');
 
         Route::get('del/{id}', 'PostsController@del');
+
     });
     //=================> Show rooms <===================
     Route::group(['prefix' => 'showroom','as' => 'showroom.'],function(){
@@ -140,11 +141,11 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('del_hotline', 'OptionsController@getDelHotline');
 
-        //=================>Footer<=============================
-        Route::get('footer', 'OptionsController@getFooter')->name('footer');
-        Route::post('footer', 'OptionsController@postFooter');
+        //=================>Copyright<=============================
+        Route::get('copyright', 'OptionsController@getCopyright')->name('footer-copy');
+        Route::post('copyright', 'OptionsController@postCopyright');
 
-        Route::get('del_footer', 'OptionsController@getDelFooter');
+        Route::get('del_copyright', 'OptionsController@getDelCopyright');
 
         //=================>Payment<=============================
         Route::get('payment', 'OptionsController@getPayment')->name('payment');
@@ -204,6 +205,13 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('method_payment', 'OptionsController@postMethodPayment')->name('method_payment');
         Route::get('method_payment', 'OptionsController@getDelMethodPayment');
 
+        //=================> Footer <=============================
+        Route::get('footer', 'OptionsController@getFooter')->name('footer');
+        Route::post('footer', 'OptionsController@postFooter')->name('add_footer');
+
+        //=================> Introduce <=============================
+        Route::get('introduce', 'OptionsController@getIntroduce')->name('introduce');
+        Route::post('introduce', 'OptionsController@postIntroduce')->name('add_introduce');
     });
     Route::group(['prefix' => 'status_order','as'=>'status_order.'], function () {
         Route::get('index','StatusorderController@getindex')->name('index');
@@ -220,6 +228,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList')->name('home_client');
+    Route::get('search', 'IndexController@getSearch')->name('master.search');
     
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
@@ -249,7 +258,12 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('cam-on',function(){
         return view('client.dathang');
     })->name('thankyou');
-
+    Route::get('abc', function(){
+        dd(Cart::destroy());
+    });
+    Route::get('/{slug}','BlogController@getData');
+    Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
+    Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {

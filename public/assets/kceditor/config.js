@@ -11,18 +11,16 @@ CKEDITOR.editorConfig = function( config ) {
     // config.filebrowserUploadUrl = './ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
     // // config.filebrowserImageUploadUrl = './ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
     // config.filebrowserFlashUploadUrl = './ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
+	http://localhost:8000/kcfinder/browse.php?opener=ckeditor&type=images&CKEditor=editor&CKEditorFuncNum=0&langCode=vi
+	
+	config.filebrowserBrowseUrl = '/bepantoan/userfiles/images';
+	config.filebrowserImageBrowseUrl = '/bepantoan/userfiles/images';
 	
 	
-	config.filebrowserBrowseUrl = '/kcfinder/browse.php?opener=ckeditor&type=files';
-    config.filebrowserImageBrowseUrl = '/kcfinder/browse.php?opener=ckeditor&type=images';
- 
-  
-    config.filebrowserFlashBrowseUrl = '/kcfinder/browse.php?opener=ckeditor&type=flash';
-    config.filebrowserUploadUrl = '/kcfinder/upload.php?opener=ckeditor&type=files';
-    config.filebrowserImageUploadUrl = '/kcfinder/upload.php?opener=ckeditor&type=images';
-    config.filebrowserFlashUploadUrl = '/kcfinder/upload.php?opener=ckeditor&type=flash';
-
-
+	config.filebrowserFlashBrowseUrl = '/bepantoan/userfiles/images';
+	config.filebrowserUploadUrl = '/bepantoan/userfiles/images';
+	config.filebrowserImageUploadUrl = '/bepantoan/userfiles/images';
+	config.filebrowserFlashUploadUrl = '/bepantoan/userfiles/images';
 		
 	
 	
