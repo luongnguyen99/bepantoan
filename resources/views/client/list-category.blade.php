@@ -36,7 +36,7 @@
                     @foreach ($brands as $item)
                         <div class="item">
                             <div class="brand-item">
-                                <a href="#" title="{{$item->name}}">
+                                <a href="{{route('brand_category',['slug' => $item->slug])}}" title="{{$item->name}}">
                                     <div class="category-card__image">
                                         <img src="{{!empty($item->image) ? $item->image : '' }}" alt="{{$item->name}}">
                                     </div>
@@ -106,7 +106,7 @@
                                         <div class="product-dsc">
                                             <h3><a href="{{route('product_detail',['slug' => $product->slug])}}">{{$product->name}}</a></h3>
                                             <div class="cate_pro_title">
-                                                <a href="#" class="prdBrand">
+                                                <a href="{{route('brand_category',['slug' => $product->brand->slug])}}" class="prdBrand">
                                                     <img alt="{{$product->brand->name}}" src="{{$product->brand->image}}"></a>
                                             </div>
                                             @if (!empty($product->gift))

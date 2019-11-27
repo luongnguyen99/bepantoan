@@ -232,9 +232,10 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
-   
+    // danh muc chi tiet
     Route::get('danh-muc/{slug}/{slug2?}','ListCategoryController@category_detail')->name('category_detail');
-    
+    // danh muc thuong hieu
+    Route::get('thuong-hieu-{slug}', 'BrandCategoryController@brand_category')->name('brand_category');
     // san pham chi tiet
     Route::get('san-pham/{slug}','ProductController@detail')->name('product_detail');
     
