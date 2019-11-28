@@ -2,7 +2,6 @@
 <html>
 
 <head>
-<<<<<<< HEAD
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,21 +17,6 @@
 	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
 
 	@yield('css')
-=======
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('client/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/font-akr.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/pe-icon-7-stroke.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/helper.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="{{asset('client/css/style.css')}}"> @yield('css')
->>>>>>> 041af20cf1a3ecdb95262fedd8779f9f22968621
 </head>
 
 <?php 
@@ -89,8 +73,12 @@
 								$menu = json_decode($menu, true);
 							?>
 
-                                    @if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
-                                    <a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : " # "  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}"><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a> @endforeach @endif @php $hotline = json_decode($hotline, true); $hotline = $hotline['phone']; @endphp
+                                    @if (isset($menu) && !empty($menu))
+                                        @foreach ( $menu as $item_menu )
+                                        <a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : " # "  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}"><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a> 
+                                        @endforeach 
+                                    @endif 
+                                    @php $hotline = json_decode($hotline, true); $hotline = $hotline['phone']; @endphp
 
                                     <a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
 								@if ($hotline)
@@ -124,10 +112,12 @@
 
                                         <ul class="mobile-support">
 
-                                            @if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
+                                            @if (isset($menu) && !empty($menu))
+                                                @foreach ( $menu as $item_menu )
 
-                                            <li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
-                                            @endforeach @endif
+                                                    <li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+                                                @endforeach 
+                                            @endif
                                             <li>
                                                 <a href="tel:{{$hotline}}">
                                                     <i class="pe-7s-call"></i> Hotline <b>{{$hotline}}</b> (24h/7)
@@ -204,14 +194,17 @@
                                     Danh mục sản phẩm <span class="caret"></span>
                                 </button>
 
-                                @php $all_cateshows = show_heder_list_cate(); @endphp @if ($all_cateshows)
-                                <ul class="dropdown-menu sub-categories-mobile" role="menu">
-                                    @foreach ( $all_cateshows as $cate_ )
-                                    <li>
-                                        <a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
-									<img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
-                                    </li>
-								</ul>
+                                @php $all_cateshows = show_heder_list_cate(); @endphp 
+                                @if ($all_cateshows)
+                                    <ul class="dropdown-menu sub-categories-mobile" role="menu">
+                                        @foreach ( $all_cateshows as $cate_ )
+                                        <li>
+                                            <a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
+                                            <img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
 
 							</form>
 						</div>
@@ -233,12 +226,12 @@
 					        <ul class="dropdown-menu sub-categories-mobile" role="menu">
 					        	@foreach ( $all_cateshows as $cate_ )
 									
-									<?php 
+								 <?php 
 									echo '<pre>';
 									print_r($cate_);
 									echo '</pre>';
 									
-									?>
+									?> 
 
 									<li>
 										<a href="#" rel=""><span>
@@ -268,19 +261,19 @@
 				<div class="container">
 					<div class="row">
 						
-						@if (!empty(get_option_by_key('footer')))
-						@php
-						$ft = json_decode(get_option_by_key('footer'),true);
-						@endphp
-						@foreach ($ft as $item)
-						<div class="col-md-3 col-sm-6 col-xs-12">
-							<div class="single-text res-text">
-							{!! $item !!}
-							</div>
-						</div>
-						@endforeach
-						@endif
-						
+                        @php
+                            $ft = json_decode(get_option_by_key('footer'),true);
+                            @endphp
+                        @if (!empty($ft))
+                            @foreach ($ft as $item)
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="single-text res-text">
+                                    {!! $item !!}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                            
 					</div>
 				</div>
 				
@@ -296,9 +289,9 @@
 										$payment = json_decode($payment,true);
 									@endphp
 									@if (!empty($payment))
-									@foreach ($payment as $item)
-									<li><a href=""><i class="{{ $item['type'] }}"></i></a></li>
-									@endforeach
+                                        @foreach ($payment as $item)
+                                        <li><a href=""><i class="{{ $item['type'] }}"></i></a></li>
+                                        @endforeach
 									@endif
 								</ul>
 							</div>
@@ -310,9 +303,9 @@
 									$social_network_j = json_decode($social_network_j,true);
 									@endphp
 									@if (!empty($social_network_j))
-									@foreach ($social_network_j as $item)
-									<li class="res-mar"><a href="#"><i class="{{ $item['type'] }}"></i></a></li>
-									@endforeach
+                                        @foreach ($social_network_j as $item)
+                                            <li class="res-mar"><a href="#"><i class="{{ $item['type'] }}"></i></a></li>
+                                        @endforeach
 									@endif
 								</ul>
 							</div>

@@ -290,7 +290,8 @@
     });
 
 </script>
-@stop
+@endsection
+@endsection
 
 
 
