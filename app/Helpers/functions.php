@@ -396,9 +396,10 @@ function show_heder_list_cate(){
 }
 
 // ============> GET CATEGORY PRODUCT NAME <===========
-function get_product_category_url( $slug_product , $slug_brand ){
-
-    // return route(  );
+function get_product_category_url( $slug_product , $slug_brand = null ){
+    return route('category_detail', array( 
+                    'slug' => $slug_product , 'slug2'=> $slug_brand
+                ));
 
 }
 

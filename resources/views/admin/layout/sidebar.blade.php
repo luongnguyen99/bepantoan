@@ -31,7 +31,7 @@
 
             <li class="treeview {{activeNav('brands')}}">
                 <a href="#">
-                    <i class="fa fa-align-justify"></i>
+                    <i class="fa fa-university"></i>
                     <span>Hãng sản xuất</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -66,7 +66,7 @@
             {{-- Post Category --}}
             <li class="treeview {{activeNav('post_categories')}} {{activeNav('post_categories')}}">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
+                    <i class="fa fa-list-ol"></i>
                     <span>Danh mục tin tức</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -80,7 +80,7 @@
             {{-- Post --}}
             <li class="treeview {{activeNav('posts')}} {{activeNav('posts')}}">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
+                    <i class="fa fa-newspaper-o"></i>
                     <span>Bài viết</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -112,16 +112,23 @@
             {{-- Show rooms --}}
             <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
+                    <i class="fa fa-cog"></i>
                     <span>Thiết lập</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    
+                    <li class="{{activeNav('options')}}">
+                        <a href="{{route('admin.options.general')}}"><i
+                        class="fa fa-circle-o"></i> Thiết lập chung</a>
+                    </li>
+
+
                     <li class="treeview {{activeNav('home-slide')}} {{activeNav('home-slide')}}">
                         <a href="#">
-                            <i class="fa fa-archive"></i>
+                            <i class="fa fa-circle-o"></i>
                             <span>Trang chủ</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>

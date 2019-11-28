@@ -28,9 +28,7 @@ Footer
                    
                     <div class="form-group">
                         <label for="name">Chi tiêt footer</label>
-                        <textarea class="form-control" name="footer" id="" cols="" rows="4">
-
-                        </textarea>
+                        <textarea class="form-control" name="footer" id="" cols="" rows="4"></textarea>
                     </div>
                
                     <div class="form-group" style="margin-top:20px">
@@ -83,9 +81,7 @@ Footer
                 <div class="table-responsive">
                     <table class="table table-hover table-striped text-center" id="table-categories">
                         <div class="form-group">
-                            <textarea class="form-control" name="" id="" rows="4">
-                                {{ $json['footer'] }}
-                            </textarea>
+                            <textarea class="form-control" name="" id="" rows="4">{{ $json['footer'] }}</textarea>
                             @if (!empty($json['footer']))
                                 <div class="text-center" style="margin-top:5px;">
                                     <a href="/admin/options/del_footer" class="btn btn-danger">Xóa</a>
