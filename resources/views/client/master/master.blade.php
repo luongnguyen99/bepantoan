@@ -38,6 +38,7 @@
 {{ $h_code }}
 <body>
 	<header>
+		
 		<div class="header-pc hidden-xs hidden-sm">
 			<div class="container">
 				<div class="row">
@@ -332,7 +333,7 @@
 									</div>
 								</div>
 								<img src="{{ $item->img }}" alt="">
-								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
+								<a href="{{ $item->link }}" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
 								<a data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
 							</div>
 						</li>
@@ -369,9 +370,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 text-center">
-							@if (isset($footer_j['footer']))
+							@if (!empty(get_option_by_key('footer_copy')))
+							@php
+								$cr = json_decode(get_option_by_key('footer_copy'),true)
+							@endphp
 							<p>
-								{{ $footer_j['footer'] }}
+								{{ $cr['footer'] }}
 							</p>
 							@endif
 						</div>

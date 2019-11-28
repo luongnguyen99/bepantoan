@@ -26,14 +26,18 @@ class PostsController extends Controller
         $db->slug = $r->slug;
         $db->short_desc = $r->short_desc;
         $db->content = $r->content;
-
-        $imgs = $r->img;
-        $db->image = $imgs[0];
-
+        
+        $imgs = $r->img_;
+        
+        $db->image = $imgs;
+        
         $db->views = $r->view;
         
-        $db->post_category_id = $r->id_cate;
-        
+        if (!empty($r->id_cate)) {
+            $db->post_category_id = $r->id_cate;
+        }else{
+            $db->post_category_id = null;
+        }
         $db->save();
         return redirect('admin/posts')->with('add_success','Thêm thành công'); 
     }
@@ -53,14 +57,14 @@ class PostsController extends Controller
         $db->short_desc = $r->short_desc;
         $db->content = $r->content;
         
-        if ($r->img[0] == null) {
-            $imgs = $r->img;
-            $imgs[0] = $db->image;
-            $db->image = $imgs[0];
+        if (empty($r->img_)) {
+            $imgs = $r->img_;
+            $imgs = $db->image;
+            $db->image = $imgs;
         }
         else{
-            $imgs = $r->img;
-            $db->image = $imgs[0];
+            $imgs = $r->img_;
+            $db->image = $imgs;
         }
         $db->views = $r->view;
         if ($r->parent_id == 0) {

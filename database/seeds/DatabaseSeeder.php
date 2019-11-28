@@ -14,7 +14,10 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 UserSeeder::class,
-                OptionsSeeder::class
+                OptionsSeeder::class,
+                Post_categorySeeder::class,
+                PostSeeder::class,
+                ShowroomSeeder::class,
             ]
         );
        

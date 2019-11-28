@@ -60,7 +60,7 @@
                             <a href="{{ $item->slug }}">
                                 <h4 class="tb-titlel">{{ $item->title }}</h4>
                             </a>
-                            <div class="tb-excerpt">{!! get_excerpt($item->content,350) !!}</div>
+                            <div class="tb-excerpt">{!! get_excerpt($item->short_desc,350) !!}</div>
                             <a class="blog7" href="{{ $item->slug }}">Xem thêm <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>

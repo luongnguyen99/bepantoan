@@ -33,7 +33,7 @@ Mạng xã hội
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <input type="text" name="type" class="form-control" id="exampleInputPassword4"
-                                            placeholder="Tên ứng dụng">
+                                            placeholder="Tên ứng dụng" required>
                                     </div>
                                 </div>
                             </div>
