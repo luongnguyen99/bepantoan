@@ -9,7 +9,7 @@
         <div class="container" style="background-image: url({{ $introduce['banner'] }});height:100px">
             <div class="col-md-12 text-center">
                 <div class="con-text">
-                    <h2 class="page-title" style="line-height:100px">{{ $introduce['title_banner'] }}</h2>
+                    <h2 class="page-title" style="line-height:100px">{{ get_excerpt($introduce['title_banner'],110) }}</h2>
                 </div>
             </div>
            
@@ -41,7 +41,7 @@
                     
                 </div>
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                    <div style="padding-top:30px" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                         <h2>{{ $introduce['orientation'] }}</h2>
                         <p>
                            {!! $introduce['content2'] !!}

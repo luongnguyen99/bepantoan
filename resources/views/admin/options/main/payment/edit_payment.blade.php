@@ -33,7 +33,7 @@ Phương thức thanh toán
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <input type="text" name="type" value="{{ $result['type'] }}" class="form-control" id="exampleInputPassword4"
-                                        placeholder="Phương thức">
+                                        placeholder="Phương thức" required>
                                 </div>
                             </div>
                         </div>

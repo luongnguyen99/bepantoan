@@ -210,7 +210,11 @@ Thiết lập footer
                 
                     for (var i = 0; i < arr_url.length; i++) {
                         
-                        var ninh = arr_url[i].replace('http://localhost/','http://localhost:8000/');
+                        var base_url = window.location.origin;
+                        let arr_url = mul[i].getUrl();
+                        var urlParts = arr_url.replace('http://', '').replace('https://', '')
+                                                    .split(/[/?#]/);
+                        var ninh = base_url +'/'+urlParts[1]+ '/'+urlParts[2]+'/'+urlParts[3];
                         CKEDITOR.instances.editor.insertHtml("<img src='"+ ninh + "'>");
                     }
                     
@@ -242,7 +246,11 @@ Thiết lập footer
                 
                     for (var i = 0; i < arr_url_bock2.length; i++) {
                         
-                        var ninh = arr_url_bock2[i].replace('http://localhost/','http://localhost:8000/');
+                        var base_url = window.location.origin;
+                        let arr_url = mul[i].getUrl();
+                        var urlParts = arr_url.replace('http://', '').replace('https://', '')
+                                                    .split(/[/?#]/);
+                        var ninh = base_url +'/'+urlParts[1]+ '/'+urlParts[2]+'/'+urlParts[3];
                         CKEDITOR.instances.editor1.insertHtml("<img src='"+ ninh + "'>");
                     }
                     
@@ -274,7 +282,11 @@ Thiết lập footer
                 
                     for (var i = 0; i < arr_url_bock3.length; i++) {
                         
-                        var ninh = arr_url_bock3[i].replace('http://localhost/','http://localhost:8000/');
+                        var base_url = window.location.origin;
+                        let arr_url = mul[i].getUrl();
+                        var urlParts = arr_url.replace('http://', '').replace('https://', '')
+                                                    .split(/[/?#]/);
+                        var ninh = base_url +'/'+urlParts[1]+ '/'+urlParts[2]+'/'+urlParts[3];
                         CKEDITOR.instances.editor2.insertHtml("<img src='"+ ninh + "'>");
                     }
                     
@@ -306,7 +318,11 @@ Thiết lập footer
                 
                     for (var i = 0; i < arr_url_bock3.length; i++) {
                         
-                        var ninh = arr_url_bock3[i].replace('http://localhost/','http://localhost:8000/');
+                        var base_url = window.location.origin;
+                        let arr_url = mul[i].getUrl();
+                        var urlParts = arr_url.replace('http://', '').replace('https://', '')
+                                                    .split(/[/?#]/);
+                        var ninh = base_url +'/'+urlParts[1]+ '/'+urlParts[2]+'/'+urlParts[3];
                         CKEDITOR.instances.editor3.insertHtml("<img src='"+ ninh + "'>");
                     }
                     
@@ -314,6 +330,6 @@ Thiết lập footer
                 });
             }
         });
-        });
+    });
 </script>
 @endsection

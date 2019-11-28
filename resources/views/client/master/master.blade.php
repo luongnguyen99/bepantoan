@@ -37,6 +37,7 @@
 {{ $h_code }}
 <body>
 	<header>
+		
 		<div class="header-pc hidden-xs hidden-sm">
 			<div class="container">
 				<div class="row">
@@ -251,22 +252,22 @@
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="paypal social-icon">
 								<ul>
-									@if ($payment != null)
+									{{-- @if (!empty($payment))
 									@foreach ($payment as $item)
 									<li><a href=""><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach
-									@endif
+									@endif --}}
 								</ul>
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="social-icon">
 								<ul class="floatright">
-									@if ($social_network_j != null)
+									{{-- @if ($social_network_j != null)
 									@foreach ($social_network_j as $item)
 									<li class="res-mar"><a href="#"><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach
-									@endif
+									@endif --}}
 								</ul>
 							</div>
 						</div>

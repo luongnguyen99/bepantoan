@@ -112,6 +112,7 @@ Bài viết
 <script src="{{ asset('kcfinder/ckfinder.js') }}"></script> --}}
 <script>
     CKEDITOR.replace('editor');
+
 </script>
 
 <script>
@@ -119,7 +120,8 @@ Bài viết
         // console.log("sss");
         // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
         var t = $(this);
-        var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest('.col-md-12')
+        var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest(
+                '.col-md-12')
             .find('#list-img').val());
 
         if (typeof (arr_url) == 'string') {
@@ -143,31 +145,30 @@ Bài viết
 
                     var list_img = '';
                     var arr_url_ = [];
-                    for (var i = mul.length - 1; i >= 0; i--) {
 
+                    for (var i = mul.length - 1; i >= 0; i--) {
                         let url_ = mul[i].getUrl();
+                        var base_url = window.location.origin;
                         var urlParts = url_.replace('http://', '').replace('https://', '')
                             .split(/[/?#]/);
-                        var domain = urlParts[0];
-                        let port = 8000;
 
-                        let new_domain = domain + ":" + port;
-
-                        let new_url_ = url_.replace(domain, new_domain);
-
-
+                        let new_url_ = base_url + '/' + urlParts[1] + '/' + urlParts[2] +
+                            '/' + urlParts[3];
 
                         list_img =
                             "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
                             new_url_ + "'></i><img alt='' src='" + new_url_ +
-                            "' class='img-cat' width='200' height='200'/></div>";
-                        $('#img_').val(new_url_);
+                            "' class='img-cat' width='200' height='200'/></div><input type='hidden' value='" +
+                            new_url_ + "' name='img_'>";
+
                     }
                     arr_url = JSON.stringify(arr_url);
 
-                    t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
+                    // t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
 
                     t.closest('.col-md-12').find('#img-cat').html(list_img);
+
+
                 });
             }
         });
@@ -248,7 +249,6 @@ Bài viết
         $("#inputSlug").val(slug);
     });
     jQuery(document).ready(function () {
-
         var arr_url = [];
         jQuery('body').on('click', '#add_img', function () {
             CKFinder.popup({
@@ -262,26 +262,27 @@ Bài viết
                         mul = Object.entries(mul);
                         mul = mul[1];
                         mul = mul[1];
-                        
 
                         for (var i = mul.length - 1; i >= 0; i--) {
-                            
                             arr_url.push(mul[i].getUrl());
-
                         }
-                       
                         for (var i = 0; i < arr_url.length; i++) {
+                            var base_url = window.location.origin;
+                            let arr_url = mul[i].getUrl();
+                            var urlParts = arr_url.replace('http://', '').replace('https://', '')
+                                                        .split(/[/?#]/);
+                            var ninh = base_url +'/'+urlParts[1]+ '/'+urlParts[2]+'/'+urlParts[3];                            
                             
-                            var ninh = arr_url[i].replace('http://localhost/','http://localhost:8000/');
-                            CKEDITOR.instances.editor.insertHtml("<img src='"+ ninh + "'>");
+                            CKEDITOR.instances.editor.insertHtml("<img src='" +
+                                ninh + "'>");
                         }
-                        
                         arr_url = [];
                     });
                 }
             });
-            });
         });
+    });
+
 </script>
 
 @endsection

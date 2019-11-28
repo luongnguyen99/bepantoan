@@ -33,8 +33,8 @@ Cửa hàng
                         <label for="name">Tên phòng</label>
                         <input class="form-control" type="text" name="name"
                             value="{{ !empty(old('name')) ? old('name') : ''}}">
-                            {{ showError($errors,'name') }}
-                            
+                        {{ showError($errors,'name') }}
+
                     </div>
                     <div class="form-group">
                         <label for="slug">Địa chỉ</label>
@@ -56,7 +56,7 @@ Cửa hàng
                         <input value="{{ (old('embed_google_map') ? old('embed_google_map') :  '' ) }}"
                             name="embed_google_map" class="form-control"">
                     </div>
-                    <div class="col-md-12" style="margin-top: 20px;margin-left:-15px;">
+                    <div class=" col-md-12" style="margin-top: 20px;margin-left:-15px;">
                         <label>Chọn ảnh bản đồ</label>
                         <div class="form-group" ninh='123'>
                             <input type="button" class="btn btn-info" id="add" name="action" value="Chọn ảnh bản đồ">
@@ -88,12 +88,13 @@ Cửa hàng
 
 @endsection
 @section('js')
-    <script>
-        jQuery('body').on('click', '#add', function () {
+<script>
+    jQuery('body').on('click', '#add', function () {
         // console.log("sss");
         // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
         var t = $(this);
-        var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest('.col-md-12')
+        var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest(
+                '.col-md-12')
             .find('#list-img').val());
 
         if (typeof (arr_url) == 'string') {
@@ -117,31 +118,30 @@ Cửa hàng
 
                     var list_img = '';
                     var arr_url_ = [];
-                    for (var i = mul.length - 1; i >= 0; i--) {
 
+                    for (var i = mul.length - 1; i >= 0; i--) {
                         let url_ = mul[i].getUrl();
+                        var base_url = window.location.origin;
                         var urlParts = url_.replace('http://', '').replace('https://', '')
                             .split(/[/?#]/);
-                        var domain = urlParts[0];
-                        let port = 8000;
 
-                        let new_domain = domain + ":" + port;
-
-                        let new_url_ = url_.replace(domain, new_domain);
-
-
+                        let new_url_ = base_url + '/' + urlParts[1] + '/' + urlParts[2] +
+                            '/' + urlParts[3];
 
                         list_img =
                             "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
                             new_url_ + "'></i><img alt='' src='" + new_url_ +
-                            "' class='img-cat' width='200' height='200'/></div>";
-                        $('#img_').val(new_url_);
+                            "' class='img-cat' width='200' height='200'/></div><input type='hidden' value='" +
+                            new_url_ + "' name='img_'>";
+
                     }
                     arr_url = JSON.stringify(arr_url);
 
-                    t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
+                    // t.closest('.col-md-12').find('#list-img').eq(0).val(arr_url);
 
                     t.closest('.col-md-12').find('#img-cat').html(list_img);
+
+
                 });
             }
         });
@@ -162,6 +162,6 @@ Cửa hàng
         var final_string = JSON.stringify(string_arr);
         $('#list-img').val(final_string);
     });
-    </script>
-@endsection
 
+</script>
+@endsection

@@ -143,16 +143,10 @@ Thiết lập trang giới thiệu
                     for (var i = mul.length - 1; i >= 0; i--) {
 
                         let url_ = mul[i].getUrl();
-                        var urlParts = url_.replace('http://', '').replace('https://', '')
-                            .split(/[/?#]/);
-                        var domain = urlParts[0];
-                        let port = 8000;
+                        var base_url = window.location.origin;
+                        var urlParts = url_.replace('http://', '').replace('https://', '').split(/[/?#]/);
 
-                        let new_domain = domain + ":" + port;
-
-                        let new_url_ = url_.replace(domain, new_domain);
-
-
+                        let new_url_ = base_url + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
 
                         list_img =
                             "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
@@ -218,16 +212,10 @@ Thiết lập trang giới thiệu
                     for (var i = mul.length - 1; i >= 0; i--) {
 
                         let url_ = mul[i].getUrl();
-                        var urlParts = url_.replace('http://', '').replace('https://', '')
-                            .split(/[/?#]/);
-                        var domain = urlParts[0];
-                        let port = 8000;
+                        var base_url = window.location.origin;
+                        var urlParts = url_.replace('http://', '').replace('https://', '').split(/[/?#]/);
 
-                        let new_domain = domain + ":" + port;
-
-                        let new_url_ = url_.replace(domain, new_domain);
-
-
+                        let new_url_ = base_url + '/' + urlParts[1] + '/' + urlParts[2] + '/' + urlParts[3];
 
                         list_img =
                             "<div class='single-img text-left'><i class='fa fa-remove delete-img-introduce' data-url='" +
