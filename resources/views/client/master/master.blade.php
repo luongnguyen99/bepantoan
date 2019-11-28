@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+<<<<<<< HEAD
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +18,21 @@
 	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
 
 	@yield('css')
+=======
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title')</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('client/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/font-akr.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/pe-icon-7-stroke.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/helper.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{asset('client/css/style.css')}}"> @yield('css')
+>>>>>>> 041af20cf1a3ecdb95262fedd8779f9f22968621
 </head>
 
 <?php 
@@ -71,130 +88,128 @@
 							<?php								
 								$menu = json_decode($menu, true);
 							?>
-							
-							@if (isset($menu) && !empty($menu))
-							@foreach ( $menu as $item_menu )
-								<a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : "#"  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}" ><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a>
-							@endforeach
-							@endif
 
+                                    @if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
+                                    <a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : " # "  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}"><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a> @endforeach @endif @php $hotline = json_decode($hotline, true); $hotline = $hotline['phone']; @endphp
 
-							@php
-								$hotline = json_decode($hotline, true);
-								$hotline = $hotline['phone'];
-							@endphp
-							
-							<a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
+                                    <a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
 								@if ($hotline)
 									{{ $hotline }}
 								@endif
 							</a>
-					    </div>
-					    <div class="quick-cart">
-							<a href="{{route('showCart')}}" target="_blank" rel="">
-							<img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
-					        </a>
-					    </div>
-					</div>
-				</div>
-			</div>
-		</div>
+                            </div>
+                            <div class="quick-cart">
+                                <a href="{{route('showCart')}}" target="_blank" rel="">
+                                    <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-		<div class="header-mobile hidden-md hidden-lg">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-3 col-sm-2">
-						<div class="menu-site">
-			                <button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
-			                <div class="menu-box">
-								<div class="bg-menu hidden-md hidden-lg"></div>
-								
-			                    <ul class="main-menu">
-			                    	<span class="logo-menu">
+            <div class="header-mobile hidden-md hidden-lg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-2">
+                            <div class="menu-site">
+                                <button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
+                                <div class="menu-box">
+                                    <div class="bg-menu hidden-md hidden-lg"></div>
+
+                                    <ul class="main-menu">
+                                        <span class="logo-menu">
 			                    		<img src="client/img/logo-bepantoan.png" alt="">
-									</span>
-									
-									@php
-										build_categories_tree();
+									</span> @php build_categories_tree(); @endphp
 
-									@endphp
+                                        <ul class="mobile-support">
 
+                                            @if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
 
-									
-									
-					                <ul class="mobile-support">
+                                            <li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+                                            @endforeach @endif
+                                            <li>
+                                                <a href="tel:{{$hotline}}">
+                                                    <i class="pe-7s-call"></i> Hotline <b>{{$hotline}}</b> (24h/7)
+                                                </a>
+                                            </li>
 
-										@if (isset($menu) && !empty($menu))
-										@foreach ( $menu as $item_menu )
-											
-											<li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
-										@endforeach
-										@endif
-								        <li>
-											<a href="tel:{{$hotline}}">
-								            	<i class="pe-7s-call"></i>
-												Hotline <b>{{$hotline}}</b> (24h/7)
-											</a> 
-										</li>
-										
+                                        </ul>
 
-    								</ul>
+                                    </ul>
 
-								</ul>
-								
+                                    <!--<button class="btn btn-hide-menu hidden-md hidden-lg"><i class="fa fa-times"></i></button> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-8">
+                            <div class="logo">
+                                <a href="#"><img src="client/img/logo-bepantoan.png" alt=""></a>
+                            </div>
 
- 			                    <!--<button class="btn btn-hide-menu hidden-md hidden-lg"><i class="fa fa-times"></i></button> -->
-			                </div>
-				        </div>
-					</div>
-					<div class="col-xs-6 col-sm-8">
-						<div class="logo">
-							<a href="#"><img src="client/img/logo-bepantoan.png" alt=""></a>
-						</div>
-						
-					</div>
+                        </div>
 
-					<div class="col-xs-3 col-sm-2">
-						<div class="quick-cart">
-					        <a href="#" target="_blank" rel="">
-					            <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
-					        </a>
-					    </div>
-					</div>
-					<div class="col-xs-12 col-sm-12">
-						<div class="form-search">
-							<form>
-								<input  type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
-								<button type="button" class="btn">Tìm kiếm</button>
-								<ul class="resuiltSearch ul-menu-muiten search-suggest">
-								    <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
-								    <li class="page">Tìm trong <a href="#" target="_blank">Tủ lạnh Hafele</a></li>
-								    <li class="page">Tìm trong <a href="#" target="_blank">Tủ rượu Hafele</a></li>
-								    <li>
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
+                        <div class="col-xs-3 col-sm-2">
+                            <div class="quick-cart">
+                                <a href="#" target="_blank" rel="">
+                                    <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-search">
+                                <form>
+                                    <input type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+                                    <button type="button" class="btn">Tìm kiếm</button>
+                                    <ul class="resuiltSearch ul-menu-muiten search-suggest">
+                                        <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
+                                        <li class="page">Tìm trong <a href="#" target="_blank">Tủ lạnh Hafele</a></li>
+                                        <li class="page">Tìm trong <a href="#" target="_blank">Tủ rượu Hafele</a></li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
+                                                        <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
+                                                    </div>
                                                 </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                    <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
+                                                        <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="btn-group-cate hidden-lg hidden-md">
+                                <button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    Danh mục sản phẩm <span class="caret"></span>
+                                </button>
+
+                                @php $all_cateshows = show_heder_list_cate(); @endphp @if ($all_cateshows)
+                                <ul class="dropdown-menu sub-categories-mobile" role="menu">
+                                    @foreach ( $all_cateshows as $cate_ )
                                     <li>
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                    <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                </div>
-                                            </div>
-                                        </a>
+                                        <a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
+									<img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
                                     </li>
 								</ul>
 

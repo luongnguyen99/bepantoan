@@ -109,7 +109,16 @@ Thiết lập footer
                             <textarea class="form-control" name="block4" id="editor3" rows="3">{{ $footer['block4'] }}</textarea>
                         </div>
                         <div class="form-group">
+<<<<<<< HEAD
                             <button type="button" class="btn btn-success" id="add_img_bock4">Upload ảnh vào nội dung</button>
+=======
+                            <textarea class="form-control" name="" id="" rows="4">{{ $json['footer'] }}</textarea>
+                            @if (!empty($json['footer']))
+                                <div class="text-center" style="margin-top:5px;">
+                                    <a href="/admin/options/del_footer" class="btn btn-danger">Xóa</a>
+                                </div>
+                            @endif
+>>>>>>> 041af20cf1a3ecdb95262fedd8779f9f22968621
                         </div>
                     <!-- end content here -->
                 </div>

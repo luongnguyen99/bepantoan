@@ -31,7 +31,7 @@
             {{-- brands  --}}
             <li class="treeview {{activeNav('brands')}}">
                 <a href="#">
-                    <i class="fa fa-align-justify"></i>
+                    <i class="fa fa-university"></i>
                     <span>Hãng sản xuất</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -120,7 +120,7 @@
             {{-- Show rooms --}}
             <li class="treeview {{activeNav('options')}}">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
+                    <i class="fa fa-cog"></i>
                     <span>Thiết lập</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -129,7 +129,7 @@
                 <ul class="treeview-menu">
                     <li class="treeview {{activeNav('options','slide')}} {{activeNav('options','footer')}}">
                         <a href="#">
-                            <i class="fa fa-archive"></i>
+                            <i class="fa fa-circle-o"></i>
                             <span>Trang chủ</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
