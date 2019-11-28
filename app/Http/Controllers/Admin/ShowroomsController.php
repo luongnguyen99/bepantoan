@@ -25,6 +25,8 @@ class ShowroomsController extends Controller
         $db->hotline = $r->hotline;
         $db->phone = $r->phone;
         $db->embed_google_map = $r->embed_google_map;
+        $imgs = $r->img;
+        $db->img = $imgs[0];
         $db->link = $r->link;
         $db->save();
         return redirect('admin/showroom')->with('add_success','Thêm mới thành công');
@@ -42,6 +44,15 @@ class ShowroomsController extends Controller
         $db->hotline = $r->hotline;
         $db->phone = $r->phone;
         $db->embed_google_map = $r->embed_google_map;
+        if ($r->img[0] == null) {
+            $imgs = $r->img;
+            $imgs[0] = $db->image;
+            $db->img = $imgs[0];
+        }
+        else{
+            $imgs = $r->img;
+            $db->img = $imgs[0];
+        }
         $db->link = $r->link;
         $db->save();
         return redirect('admin/showroom')->with('edit_success','Sửa thành công');

@@ -2,6 +2,8 @@
 use App\Models\Product;
 use App\Models\Option;
 use App\Models\Category;
+use App\Models\Order;
+
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -64,14 +66,31 @@ if (!function_exists('pveser_numberformat')) {
         return $price;
     }
 }
-// get product
-if (!function_exists('get_product_by_id')) {
-    function get_product_by_id($id)
+// get category
+if (!function_exists('get_category_by_id')) {
+    function get_category_by_id($id)
     {
         $category = Category::where(['id' => $id])->first();
         return $category;
     }
 }
+
+// get product
+if (!function_exists('get_product_by_id')) {
+    function get_product_by_id($id)
+    {
+        $product = Product::where(['id' => $id])->with('galleries')->first();
+        return $product;
+    }
+}
+
+if (!function_exists('count_order_awaiting_approval')) {
+    function count_order_awaiting_approval(){
+        $count = Order::where('status',1)->count();
+        return $count ?? 0;
+    }
+}
+
 //==============>Validate Input<=====================
 function showError($errors, $nameInput)
 {

@@ -61,8 +61,10 @@ Giỏ hàng
 												<td>{{$i}}</td>
 													<td class="product_cart">
 														@php
-															if (!empty(get_detail_products_by_id($item->id))) {
+															if (!empty(get_detail_products_by_id($item->id)->galleries[0]->image)) {
 																$image = get_detail_products_by_id($item->id)->galleries[0]->image;
+															}else{
+																$image = '';
 															}
 														@endphp
 														<img src="{{$image}}"
@@ -180,31 +182,10 @@ Giỏ hàng
 																	type="radio" value="2">
 																<label for="payment_method_2">Chuyển khoản</label>
 																<div class="payment_box payment_method_bacs">
-																	<p>Qúy khách vui lòng chuyển khoản vào một trong các tài khoản sau:
-																	</p>
-																	<p>( Nội dung chuyển tiền: HỌ TÊN + SỐ ĐIỆN THOẠI + MÃ SẢN PHẨM )
-																	</p>
-																	<p><b>Ngân hàng TMCP Việt Nam Thịnh Vượng - VPbank</b></p>
-																	<p><b>Thông tin các tài khoản tại Beptot.vn! </b></p>
-																	<p>
-				
-																		NGÂN HÀNG TECHCOM BANK<br>
-																		- Tên chủ TK: Nguyễn Đức Trường<br>
-																		- Số TK: 19027501510013<br>
-																		- Chi nhánh: Hà Nội<br>
-																	</p>
-																	<p>
-																		NGÂN HÀNG VIETTIN BANK<br>
-																		- Tên chủ TK: Nguyễn Đức Trường<br>
-																		- Số TK: 104000744394<br>
-																		-Chi nhánh: Hà Nội<br>
-																	</p>
-																	<p>
-																		NGÂN HÀNG VIETCOM BANK<br>
-																		-Tên chủ TK: Nguyễn Đức Trường<br>
-																		-Số TK: 0011004264765<br>
-																		-Chi nhánh: Hà Nội<br>
-																	</p>
+																	@if (!empty(get_option_by_key('method_payment')))
+																		{!! get_option_by_key('method_payment') !!}
+																	@endif
+																	
 																</div>
 															</div>
 														</div>
@@ -269,14 +250,22 @@ Giỏ hàng
 		data: formData,
 		beforeSend: function() {	
 			$('#btnOrder').attr('href','#');
-			$('#btnOrder').html('Đang gửi đơn hàng. Vui lòng đợi ...');
 		},
 			success:function(data){ 
-				if (data.errors) {					
-					html += `<li>${data.messages.Name[0]}</li>`;
-					html += `<li>${data.messages.Phone[0]}</li>`;
-					html += `<li>${data.messages.Email[0]}</li>`;
-					html += `<li>${data.messages.Address[0]}</li>`;
+				if (data.errors) {			
+					if (typeof data.messages.Name != 'undefined') {
+						html += `<li>${data.messages.Name[0]}</li>`;
+					};
+					if (typeof data.messages.Phone != 'undefined') {
+						html += `<li>${data.messages.Phone[0]}</li>`;
+					};
+					if (typeof data.messages.Email != 'undefined') {
+						html += `<li>${data.messages.Email[0]}</li>`;
+					};
+					if (typeof data.messages.Address != 'undefined') {
+						html += `<li>${data.messages.Address[0]}</li>`;
+					};
+					
 					Swal.fire({
 						
 						icon: 'error',
@@ -292,6 +281,9 @@ Giỏ hàng
 				}
 			},
 		});
+	});
+	$('#payment_method_2').click(function(){
+		$('.payment_box').css('display','block');
 	})
 </script>
 @endsection

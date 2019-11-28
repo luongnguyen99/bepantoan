@@ -28,7 +28,7 @@
             <li class="header">MAIN NAVIGATION</li>
             
             
-
+            {{-- brands  --}}
             <li class="treeview {{activeNav('brands')}}">
                 <a href="#">
                     <i class="fa fa-university"></i>
@@ -38,12 +38,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('brands','add')}}"><a href="{{route('admin.brands.index')}}"><i
-                                class="fa fa-circle-o"></i> Danh sách</a></li>
+                    <li class="{{activeNav('brands','add')}}"><a href="{{route('admin.brands.index')}}"><span class="glyphicon glyphicon-record"></span> Danh sách</a></li>
             
                 </ul>
             </li>
-            
+            {{-- products  --}}
             <li class="treeview {{activeNav('properties')}} {{activeNav('categories')}} {{activeNav('products')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
@@ -53,64 +52,81 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('products','index')}}"><a href="{{route('admin.products.index')}}"><i class="fa fa-circle-o"></i>
+                    <li class="{{activeNav('products','index')}}"><a href="{{route('admin.products.index')}}"><span class="glyphicon glyphicon-record"></span>
                                     Danh sách sản phẩm</a></li>
-                    <li class="{{activeNav('products','add')}}"><a href="{{route('admin.products.add')}}"><i class="fa fa-circle-o"></i>
+                    <li class="{{activeNav('products','add')}}"><a href="{{route('admin.products.add')}}"><span class="glyphicon glyphicon-record"></span>
                                             Thêm mới sản phẩm</a></li>
-                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.properties.index')}}"><i
-                                class="fa fa-circle-o"></i> Thuộc tính</a></li>
-                    <li class="{{activeNav('categories')}}"><a href="{{route('admin.categories.index')}}"><i
-                                class="fa fa-circle-o"></i> Danh mục sản phẩm</a></li>
+                    <li class="{{activeNav('properties')}}"><a href="{{route('admin.properties.index')}}"><span class="glyphicon glyphicon-record"></span> Thuộc tính</a></li>
+                    <li class="{{activeNav('categories')}}"><a href="{{route('admin.categories.index')}}"><span class="glyphicon glyphicon-record"></span> Danh mục sản phẩm</a></li>
                 </ul>
             </li>
-            {{-- Post Category --}}
-            <li class="treeview {{activeNav('post_categories')}} {{activeNav('post_categories')}}">
+            {{-- orders --}}
+            <li class="treeview {{activeNav('orders')}} {{activeNav('status_order')}}">
                 <a href="#">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Đơn hàng  <span class="label label-primary"> {{count_order_awaiting_approval()}}</span></span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('orders')}}"><a href="{{route('admin.orders.index')}}"><span class="glyphicon glyphicon-record"></span>
+                            Đơn hàng</a></li>
+                    <li class="{{activeNav('status_order')}}"><a href="{{route('admin.status_order.index')}}"><span class="glyphicon glyphicon-record"></span> Trạng thái đơn hàng</a></li>
+                </ul>
+            </li>
+
+            {{-- Post Category --}}
+            <li class="treeview {{activeNav('post_categories')}}">
+                <a href="#">
+<<<<<<< HEAD
                     <i class="fa fa-list-ol"></i>
+=======
+                    <span class="glyphicon glyphicon-copy"></span>
+>>>>>>> master
                     <span>Danh mục tin tức</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('post_categories')}}"><a href="{{route('admin.post_categories.add')}}"><i
-                                class="fa fa-circle-o"></i> Danh sách</a></li>
+                    <li class="{{activeNav('post_categories')}}"><a href="{{route('admin.post_categories.add')}}"><span class="glyphicon glyphicon-record"></span> Danh sách</a></li>
                 </ul>
             </li>
             {{-- Post --}}
-            <li class="treeview {{activeNav('posts')}} {{activeNav('posts')}}">
+            <li class="treeview {{activeNav('posts')}}">
                 <a href="#">
+<<<<<<< HEAD
                     <i class="fa fa-newspaper-o"></i>
+=======
+                    <i class="fa fa-clone"></i>
+>>>>>>> master
                     <span>Bài viết</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('posts')}}"><a href="{{route('admin.posts.index')}}"><i
-                                class="fa fa-circle-o"></i> Danh sách</a></li>
-                    <li class="{{activeNav('posts')}}"><a href="{{route('admin.posts.add')}}"><i
-                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                    <li class="{{activeNav('posts','index')}}"><a href="{{route('admin.posts.index')}}"><span class="glyphicon glyphicon-record"></span> Danh sách</a></li>
+                    <li class="{{activeNav('posts','add')}}"><a href="{{route('admin.posts.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li>
                 </ul>
             </li>
             {{-- Show rooms --}}
-            <li class="treeview {{activeNav('showroom')}} {{activeNav('showroom')}}">
+            <li class="treeview {{activeNav('showroom')}} ">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
+                    <i class="fas fa-store"></i>
                     <span>Cửa hàng</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('showroom')}}"><a href="{{route('admin.showroom.index')}}"><i
-                                class="fa fa-circle-o"></i> Danh sách</a></li>
-                    <li class="{{activeNav('showroom')}}"><a href="{{route('admin.showroom.add')}}"><i
-                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                    <li class="{{ activeNav('showroom','index') }}"><a href="{{route('admin.showroom.index')}}"><span class="glyphicon glyphicon-record"></span> Danh sách</a></li>
+                    <li class="{{ activeNav('showroom','add') }}"><a href="{{route('admin.showroom.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li>
                 </ul>
             </li>
             {{-- Show rooms --}}
-            <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
+            <li class="treeview {{activeNav('options')}}">
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span>Thiết lập</span>
@@ -119,6 +135,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+<<<<<<< HEAD
                     
                     <li class="{{activeNav('options')}}">
                         <a href="{{route('admin.options.general')}}"><i
@@ -127,6 +144,9 @@
 
 
                     <li class="treeview {{activeNav('home-slide')}} {{activeNav('home-slide')}}">
+=======
+                    <li class="treeview {{activeNav('options','slide')}} {{activeNav('options','footer')}}">
+>>>>>>> master
                         <a href="#">
                             <i class="fa fa-circle-o"></i>
                             <span>Trang chủ</span>
@@ -135,27 +155,23 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{{activeNav('options')}}"><a href="{{route('admin.options.slide')}}"><i
-                                        class="fa fa-circle-o"></i> Danh sách Slide</a></li>
+                            <li class="{{activeNav('options','slide')}}"><a href="{{route('admin.options.slide')}}"><span class="glyphicon glyphicon-record"></span> Danh sách Slide</a></li>
+                            <li class="{{activeNav('options','footer')}}"><a href="{{route('admin.options.footer')}}"><span class="glyphicon glyphicon-record"></span>
+                                Footer</a></li>
+                            <li class="{{activeNav('options','choose_category_show_home')}}"><a href="{{route('admin.options.choose_category_show_home')}}"><span class="glyphicon glyphicon-record"></span> Chọn danh mục nổi bật</a></li>
+                            
                         </ul>
                     </li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.logo')}}"><i
-                                class="fa fa-circle-o"></i> Logo</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.hotline')}}"><i
-                        class="fa fa-circle-o"></i>Liên hệ</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer')}}"><i
-                        class="fa fa-circle-o"></i>Footer</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.payment')}}"><i
-                        class="fa fa-circle-o"></i>Thanh toán</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.social_network')}}"><i
-                        class="fa fa-circle-o"></i>Mạng xã hội</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.menu')}}"><i
-                        class="fa fa-circle-o"></i>Menu</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.menu-phone')}}"><i
-                        class="fa fa-circle-o"></i>Menu di động</a></li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.prd-detail')}}"><i
-                        class="fa fa-circle-o"></i>Chi tiết sản phẩm</a></li>
-                        
+                    <li class="{{activeNav('options','logo')}}"><a href="{{route('admin.options.logo')}}"><span class="glyphicon glyphicon-record"></span> Logo</a></li>
+                    <li class="{{activeNav('options','hotline')}}"><a href="{{route('admin.options.hotline')}}"><span class="glyphicon glyphicon-record"></span>Liên hệ</a></li>
+                    <li class="{{activeNav('options','footer-copy')}}"><a href="{{route('admin.options.footer-copy')}}"><span class="glyphicon glyphicon-record"></span>Copyright</a></li>
+                    <li class="{{activeNav('options','payment')}}"><a href="{{route('admin.options.payment')}}"><span class="glyphicon glyphicon-record"></span>Thanh toán</a></li>
+                    <li class="{{activeNav('options','social_network')}}"><a href="{{route('admin.options.social_network')}}"><span class="glyphicon glyphicon-record"></span>Mạng xã hội</a></li>
+                    <li class="{{activeNav('options','menu')}}"><a href="{{route('admin.options.menu')}}"><span class="glyphicon glyphicon-record"></span>Menu</a></li>
+                    <li class="{{activeNav('options','menu-phone')}}"><a href="{{route('admin.options.menu-phone')}}"><span class="glyphicon glyphicon-record"></span>Menu di động</a></li>
+                    <li class="{{activeNav('options','prd-detail')}}"><a href="{{route('admin.options.prd-detail')}}"><span class="glyphicon glyphicon-record"></span>Chi tiết sản phẩm</a></li>
+                    <li class="{{activeNav('options','introduce')}}"><a href="{{route('admin.options.introduce')}}"><span class="glyphicon glyphicon-record"></span>Giới thiệu</a></li>
+                           
                 </ul>
             </li>
 

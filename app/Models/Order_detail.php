@@ -10,6 +10,7 @@ class Order_detail extends Model
     protected $fillable = [
         'product_id',
         'amount',
+        'qty',
         'order_id',
         'created_at',
         'updated_at'

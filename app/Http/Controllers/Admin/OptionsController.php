@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Option;
 class OptionsController extends Controller
 {
@@ -32,18 +33,27 @@ class OptionsController extends Controller
     {
         $db = Option::where('key','hotline')->first();
         $json = json_decode($db->value,true);
-        
+       
         return view('admin.options.header.hotline.hotline',compact('json'));
     }
     public function postHotline(Request $r)
     {
+        $r->validate([
+            'phone' => 'numeric'
+        ],
+        [
+            'phone.numeric' => 'Chỉ được nhập kiểu số'
+        ]);
         $arr = [];
-        
-        $arr =['phone'=>$r->phone];
+        $request['phone'] = $r->phone;
+        if (!empty($r->content)) {
+            $request['content'] = $r->content;
+        }else{
+            $request['content'] = null;
+        }
        
-        $json = json_encode($arr);
         $db = Option::where('key','hotline')->first();
-        $db->value = $json;
+        $db->value = json_encode($request);
         $db->save();
         return redirect()->back()->with('add_success','Thêm liên hệ thành công');
     }
@@ -56,31 +66,31 @@ class OptionsController extends Controller
         return redirect('admin/options/hotline')->with('del_success','Xóa liên hệ thành công');
     }
     //==========> FOOTER <=====================
-    public function getFooter()
+    public function getCopyright()
     {
         $db = Option::where('key','footer')->first();
         $json = json_decode($db->value,true);
         
-        return view('admin.options.footer.footer',compact('json'));
+        return view('admin.options.footer.footer-copy',compact('json'));
     }
-    public function postFooter(Request $r)
+    public function postCopyright(Request $r)
     {
         $arr = [];
         
         $arr =['footer'=>$r->footer];
        
         $json = json_encode($arr);
-        $db = Option::where('key','footer')->first();
+        $db = Option::where('key','footer_copy')->first();
         $db->value = $json;
         $db->save();
-        return redirect()->back()->with('add_success','Thêm footer thành công');
+        return redirect()->back()->with('add_success','Thêm Copyright thành công');
     }
-    public function getDelFooter()
+    public function getDelCopyright()
     {
-        $db = Option::where('key','footer')->first();
+        $db = Option::where('key','footer_copy')->first();
         $db->value = null;
         $db->save();
-        return redirect('admin/options/footer')->with('del_success','Xóa footer thành công');
+        return redirect()->back()->with('del_success','Xóa Copyright thành công');
     }
     //==========> PAYMENT <=====================
     public function getPayment()
@@ -521,8 +531,7 @@ class OptionsController extends Controller
         $sidebar = json_decode($sidebar_m->value,true);
 
         $payment_m = Option::where('key', '=', 'method_payment')->first();
-        $payment = json_decode($payment_m->value,true);
-       
+        $payment = $payment_m->value;
         return view('admin.options.main.product_detail.index',compact('sale','switchboard','sidebar','payment'));
     }
     public function postSale(Request $r)
@@ -549,12 +558,17 @@ class OptionsController extends Controller
     {
         $r->validate([
             'phone'=>'numeric',
+            'content_switchboard' => 'required'
         ],
         [
-            'phone.numeric'=>'Chỉ được nhập số'
+            'phone.numeric'=>'Chỉ được nhập số',
+            'content_switchboard.required'=>'Nội dung không được bỏ trống'
         ]);
         $switchboard = Option::where('key', '=', 'switchboard')->first();
-        $switchboard->value = $r->phone;
+        $request['phone'] = $r->phone;
+        $request['content'] = $r->content_switchboard;
+        
+        $switchboard->value = json_encode($request);
         $switchboard->save();
         return redirect()->back()->with('switchboard_success');
     }
@@ -605,41 +619,69 @@ class OptionsController extends Controller
     }
     public function postMethodPayment(Request $r)
     {
-        $arr = $r->all();
         $payment = Option::where('key', '=', 'method_payment')->first();
+        $payment->value = $r->content;
+        $payment->save();
+        return redirect()->back()->with('payment_success');
+    }
+    public function getFooter()
+    {
+        $footer_m = Option::where('key', '=', 'footer')->first();
+        $footer = json_decode($footer_m->value,true);
+        return view('admin.options.footer.footer',compact('footer'));
+    }
+    public function postFooter(Request $r)
+    {
+        $block['block1'] = $r->block1;
+        $block['block2'] = $r->block2;
+        $block['block3'] = $r->block3;
+        $block['block4'] = $r->block4;
+
+        $footer = Option::where('key', '=', 'footer')->first();
+        $footer->value = json_encode($block);
+        $footer->save();
+        return redirect()->back()->with('footer_success');
+    }
+    public function getIntroduce()
+    {
+        $introduce_m = Option::where('key', '=', 'introduce')->first();
+        $introduce = json_decode($introduce_m->value,true);
+        
+        return view('admin.options.main.introduce.index',compact('introduce'));
+    }
+    public function postIntroduce(Request $r)
+    {
+        $r->validate([
+            'banner'=>'required',
+            'title_banner'=>'required',
+            'img_introduce'=>'required',
+            'content'=>'required',
+        ],
+        [
+            'banner.required'=>'Banner không được bỏ trống',
+            'title_banner.required'=>'Tiêu dề banner không được bỏ trống',
+            'img_introduce.required'=>'Ảnh nội dung không được bỏ trống',
+            'content.required'=>'Nội dung không được bỏ trống'
+        ]);
+        $introduce = Option::where('key', '=', 'introduce')->first();
+        $req['banner'] = $r->banner;
+        $req['title_banner'] = $r->title_banner;
+        $req['img_introduce'] = $r->img_introduce;
+        $req['content'] = $r->content;
+        $req['orientation'] = $r->orientation;
+        $req['content2'] = $r->content2;
+        
+        $introduce->value = json_encode($req);
        
-        $data_old = [];
-        $data_new = [];
-        if(!empty($arr['name_payment']) || !empty($arr['content_payment'])){
-            foreach ($arr['name_payment'] as $key=>$text) {
-                foreach ($arr['content_payment'] as $icon) {
-                    $data_new[$key]['name_payment'] = $text;
-                    $data_new[$key]['content_payment'] = $icon;
-                }
-            }
-            if(!empty($arr['table']['content'])){
-                $merge_arr =  array_merge($data_new,$arr['table']['content']);
-                $payment->value = json_encode($merge_arr);
-                $payment->save();
-                return redirect()->back()->with('payment_success');
-            }
-            else{
-                $payment->value = json_encode($data_new);
-                $payment->save();
-                return redirect()->back()->with('payment_success');
-            }
-            
-        }else{
-            if(!empty($arr['table']['content'])){
-                $payment->value = json_encode($arr['table']['content']);
-                $payment->save();
-                return redirect()->back()->with('payment_success');
-            }
-            else{
-                $payment->value = null;
-                $payment->save();
-                return redirect()->back()->with('payment_success');
-            }
-        }
+        $introduce->save();
+        return redirect()->back()->with('success');
+    }
+
+    public function choose_category_show_home(Request $request){
+        if ($request->isMethod('post')) {
+            Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->categories)]);
+        };
+        $categories = Category::all();
+        return view('admin.options.home.choose_category_show_home',compact('categories'));
     }
 }

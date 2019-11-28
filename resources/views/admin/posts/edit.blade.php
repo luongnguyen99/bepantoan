@@ -52,6 +52,9 @@ Bài viết
                                 {{ $db->content }}
                         </textarea>
                     </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" id="add_img">Upload ảnh vào nội dung</button>
+                    </div>
                        
                     <div class="col-md-12" style="margin-top: 20px;margin-left:-15px;">
                         <label>Chọn ảnh đại diện</label>
@@ -230,6 +233,41 @@ Bài viết
 			slug = '@' + slug + '@';
 			slug = slug.replace(/\@\-|\-\@|\@/gi, '');
 			$("#inputSlug").val(slug);
-		});
+        });
+        jQuery(document).ready(function () {
+
+        var arr_url = [];
+        jQuery('body').on('click', '#add_img', function () {
+            CKFinder.popup({
+                chooseFiles: true,
+                resourceType: "Images",
+                onInit: function (finder) {
+                    finder.on('files:choose', function (evt) {
+                        var file = evt.data.files.first();
+                        var mul = evt.data.files;
+
+                        mul = Object.entries(mul);
+                        mul = mul[1];
+                        mul = mul[1];
+                        
+
+                        for (var i = mul.length - 1; i >= 0; i--) {
+                            
+                            arr_url.push(mul[i].getUrl());
+
+                        }
+                       
+                        for (var i = 0; i < arr_url.length; i++) {
+                            
+                            var ninh = arr_url[i].replace('http://localhost/','http://localhost:8000/');
+                            CKEDITOR.instances.editor1.insertHtml("<img src='"+ ninh + "'>");
+                        }
+                        
+                        arr_url = [];
+                    });
+                }
+            });
+        });
+    });
     </script>
 @endsection

@@ -25,14 +25,21 @@ Liên hệ
                 <!--  content here -->
                 <form id=create_category method="post">
                   @csrf
-                   
+                    <div class="form-group">
+                        <label for="content">Nội dung</label>
+                        <input type="text" class="form-control" placeholder="Nội dung liên hệ có thể trống" name="content" value="<?php if(isset($json['content'])){echo $json['content']; } ?>">
+                    </div>
                     <div class="form-group">
                         <label for="name">Số điện thoại</label>
                         <input  class="form-control" type="text" name="phone"
-                            value="">
+                            value="<?php if(isset($json['phone'])){echo $json['phone']; } ?>" placeholder="Số điện thoại">
                         <div class="text-danger error_name" id="error_name"></div>
                     </div>
-               
+                    @if($errors->has('phone'))
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{ $errors->first('phone') }}</strong>
+                    </div>
+                    @endif
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
                     </div>
@@ -83,6 +90,7 @@ Liên hệ
                 <div class="table-responsive">
                     <table class="table table-hover table-striped text-center" id="table-categories">
                         @if (!empty($json['phone']))
+                        <p>Nội dung: {{ $json['content'] }}</p>
                         <p>Liên hệ: <span style="color:red;margin-right:10px;">{{ $json['phone'] }}</span>
                             <a href="/admin/options/del_hotline" class="btn btn-danger">Xóa</a>
                         </p>
