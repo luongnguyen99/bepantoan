@@ -248,14 +248,22 @@ Giỏ hàng
 		data: formData,
 		beforeSend: function() {	
 			$('#btnOrder').attr('href','#');
-			$('#btnOrder').html('Đang gửi đơn hàng. Vui lòng đợi ...');
 		},
 			success:function(data){ 
-				if (data.errors) {					
-					html += `<li>${data.messages.Name[0]}</li>`;
-					html += `<li>${data.messages.Phone[0]}</li>`;
-					html += `<li>${data.messages.Email[0]}</li>`;
-					html += `<li>${data.messages.Address[0]}</li>`;
+				if (data.errors) {			
+					if (typeof data.messages.Name != 'undefined') {
+						html += `<li>${data.messages.Name[0]}</li>`;
+					};
+					if (typeof data.messages.Phone != 'undefined') {
+						html += `<li>${data.messages.Phone[0]}</li>`;
+					};
+					if (typeof data.messages.Email != 'undefined') {
+						html += `<li>${data.messages.Email[0]}</li>`;
+					};
+					if (typeof data.messages.Address != 'undefined') {
+						html += `<li>${data.messages.Address[0]}</li>`;
+					};
+					
 					Swal.fire({
 						
 						icon: 'error',

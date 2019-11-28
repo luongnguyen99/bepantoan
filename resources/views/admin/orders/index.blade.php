@@ -3,14 +3,14 @@
 
 {{-- page title --}}
 @section('page_title')
-Thuộc tính
+Đơn hàng
 @endsection
 
 
 {{-- style --}}
 @section('style')
 <style>
-    td:hover .div-action {
+    tr:hover .div-action {
         animation-delay: 2s;
         /* display: block; */
 
@@ -67,48 +67,12 @@ Thuộc tính
 
 <!-- main content -->
 <div class="row">
-    <div class="col-sm-4">
-        <div class="box box-success">
-            <div class="box-header">
-                <h3 class="box-title">
-                    Thêm thuộc tính mới
-                </h3>
 
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title=""
-                        data-original-title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-            <div class="box-body">
-                <!--  content here -->
-                <form id=create_>
-                    {{-- {{@csrf_field()}} --}}
-                    <div class="form-group">
-                        <label for="name">Tên thuộc tính</label>
-                        <input class="form-control" type="text" name="name" id="name"
-                            value="{{ !empty(old('name')) ? old('name') : ''}}">
-                        <div class="text-danger error_name" id="error_name"></div>
-                    </div>
-                   
-                    
-                    <div class="form-group">
-                        <button class=" btn btn-success" type="submit">Lưu</button>
-                    </div>
-                </form>
-
-
-
-                <!-- end content here -->
-            </div>
-        </div>
-    </div>
-    {{-- /////////////////// --}}
-    <div class="col-sm-8">
+    <div class="col-sm-12">
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    Danh sách thuộc tính
+                    Danh sách sản phẩm
                 </h3>
 
                 <div class="box-tools pull-right">
@@ -141,43 +105,23 @@ Thuộc tính
 
 <!----- javascript here -------->
 @section('js')
+
 <script>
-    $('body').on('click', '#choose_image', function(){
-        var choose = $(this);
-        CKFinder.popup( {
-            chooseFiles: true,
-            width: 800,
-            height: 600,
-            onInit: function( finder ) {
-                finder.on( 'files:choose', function( evt ) {
-                    var file = evt.data.files.first();
-                    
-                    var file_name = file.getUrl();
-                    $('#thumbnail').val(file_name);
-
-                    $('#this-img').show();
-                    $('img#this-img').attr('src',file_name);
-                } );
-            }
-        } );
-
-    })
+    
     
     var table;
     $(function () {
         
-
         var table = $('#datatable').DataTable({
             serverSide: true,
             processing: true,
             responsive: true,
             stateSave: true,
             "ordering": false,
-            ajax: "{{ route('admin.properties.data') }}",
+            ajax: "{{ route('admin.orders.data') }}",
             // order: [
             //     [0, 'desc']
             // ],
-            
             lengthMenu: [20, 30, 50, 100],
             iDisplayLength: 20,
            
@@ -186,35 +130,52 @@ Thuộc tính
                     data: 'id',
                     title: `<input id="checkAll" value="all" class="checkAll" type="checkbox" name="checkAll">`,
                     render : function (data) {
+                        // console.log(data);
                         return `<input type="checkbox" class="checkbox" value="${data}" name="checkbox">`
-                    }
-                },
-                {data: null,title :'Tên thuộc tính',name : 'name', render: function ( data, type, row ) {
-                    // console.log(data);
-                    let step = '';   
-                    return `
-                    <div>${step + data.name}</div>
-                    <div class="div-action"><a class="btn-edit"
-                        href="{{ url('admin/properties/edit/') }}/${data.id}">Sửa</a>
-                        | <a class="btn-remove" data-id ="${data.id}"  href="javascript:;">Xoá</a>
-                        | <a href="{{url('admin/properties/${data.id}')}}">Thêm giá trị</a></div>
-                    `;
                     }
                 },
                 {
                     data: null,
-                    title: 'Giá trị',
-                    render : function (data) {
-                    var str = '';
-                    dataEach = data.property_values;
-                    for (let i = 0; i < dataEach.length; i++) {
-                        str += `<span class="label label-primary" style="margin-right:5px;font-size: 11px"><a style="color:white" href="{{url('admin/properties/edit_value')}}/${dataEach[i].id}"> ${dataEach[i].name} </a></span>`; 
-                    }
-                    return `${str}`
+                    title: "Mã số đơn hàng",
+                    render : function (data, type, row){
+                        return `
+                        <div># ${data.id}</div>
+                        <div class="div-action"><a class="btn-edit" href="{{ url('admin/orders/detail/') }}/${data.id}">Chi tiết</a>
+                            | <a class="btn-remove" data-id="${data.id}" href="javascript:;">Xoá</a></div>
+                        `;
                     }
                 },
-                
-                
+                {data: null,title :'Tên khách hàng',name : 'name_guest', render: function ( data, type, row ) {
+                    let step = '';            
+                    return `
+                    <div>${step + data.name_guest}</div>
+                    `;
+                    }
+                },
+                {
+                    data: 'total',
+                    title: "Tổng tiền",
+                    render: function(data){
+                        total = data.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                        total = total.replace('.00', "đ");
+
+                        return `${total}đ`;
+                    }
+                },
+                {
+                    data: null,
+                    title: "Trạng thái",
+                    autoWidth: true,
+                    render : function (data) {
+                        return data.status.name;
+                    }
+                },
+                {
+                    data: 'created_at',
+                    title: "Ngày đặt hàng",
+                    autoWidth: true,
+                    
+                },
 
             ],
             "language": {
@@ -239,42 +200,6 @@ Thuộc tính
 
         })
 
-    $('body').on('submit','#create_',function(e) {
-        e.preventDefault();
-        var form = $(this);
-        let dataForm = new FormData(form[0]);
-        dataForm.set('_token', '{{csrf_token()}}');
-        
-        $.ajax({
-            url: "{{route('admin.properties.saveAdd')}}",
-            // url: window.location.href,
-            method: 'post',
-            processData: false,
-            contentType: false,
-            data: dataForm,
-            success: function (result) {},
-            }).done(
-                result => {
-                    var msg = result.messages;                   
-                    if (result.err) {
-                        var msg = result.messages;            
-                        typeof msg.name != 'undefined' ? form.find('.error_name').html(msg.name[0]) : form
-                            .find('.error_name').html('');
-                        
-                        
-                    } else {
-                        
-                        form.find('.error_name').html('');
-                        swal("Deleted!",
-                                "Thêm thành công.",
-                                "success").then(function () {
-                                $('#datatable').DataTable().ajax.reload();
-                            })
-                        };
-                        form.find('input[name=name]').val('');
-                    
-            });
-        });
     });
     
     $(function() {
@@ -297,7 +222,7 @@ Thuộc tính
             e.preventDefault();
             swal({
                 title: "Chắc chắn xóa?",
-                text: "Danh mục bị xóa. Sẽ không thể khôi phục!",
+                text: "Đơn hàng bị xóa. Sẽ không thể khôi phục!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -306,7 +231,7 @@ Thuộc tính
                 if (willDelete) {
                     id = $(this).attr('data-id');
                              $.ajax({
-                                url: `{{route('admin.properties.delete')}}`,
+                                url: `{{route('admin.orders.delete')}}`,
                                 method: 'POST',
                                 data: {
                                     _token: '{{csrf_token()}}',
@@ -315,11 +240,11 @@ Thuộc tính
                             }).done(result => {
                                 
                                 if (result.err == false) {
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function () {
                                         $('#datatable').DataTable().ajax.reload();
-                                })
+                                });
                             }    
                     });
                 };
@@ -346,15 +271,15 @@ $(function() {
                     if (data.length != 0) {
                         swal({
                                 title: "Chắc chắn xóa?",
-                                text: "Danh mục bị xóa. Sẽ không thể khôi phục!",
+                                text: "Đơn hàng bị xóa. Sẽ không thể khôi phục!",
                                 icon: "warning",
                                 buttons: true,
                                 dangerMode: true,
                             })
                             .then((willDelete) => {
                                 if (willDelete) {
-                                    ajaxFunc("{{route('admin.properties.deleteMulti')}}", formData);
-                                    swal("Deleted!",
+                                    ajaxFunc("{{route('admin.orders.deleteMulti')}}", formData);
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function() {
                                         $('#datatable').DataTable().ajax.reload();
@@ -362,7 +287,7 @@ $(function() {
                                 };
                             })
                 } else {
-                    alert('Vui lòng chọn danh mục!')
+                    alert('Vui lòng chọn đơn hàng!')
                 }
             }
         }

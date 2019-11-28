@@ -13,6 +13,6 @@ class Brand extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Models\Category', 'brands_categories');
+        return $this->belongsToMany('App\Models\Product', 'brands_categories');
     }
 }

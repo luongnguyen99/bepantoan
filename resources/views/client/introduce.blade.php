@@ -9,7 +9,7 @@
         <div class="container" style="background-image: url({{ $introduce['banner'] }});height:100px">
             <div class="col-md-12 text-center">
                 <div class="con-text">
-                    <h2 class="page-title" style="line-height:100px">{{ get_excerpt($introduce['title_banner'],110) }}</h2>
+                    <h2 class="page-title" style="line-height:100px;color:white">{{ get_excerpt($introduce['title_banner'],110) }}</h2>
                 </div>
             </div>
            

@@ -67,7 +67,7 @@ class CategoryController extends Controller
         }else{
             $data = [
                 'name' => $request->name,
-                'slug' => $request->slug,
+                'slug' => to_slug($request->slug),
                 'parent_id' => $request->parent_id,
             ];
             
@@ -115,7 +115,7 @@ class CategoryController extends Controller
         } else {
             $data = [
                 'name' => trim($request->name),
-                'slug' => trim($request->slug),
+                'slug' => to_slug(trim($request->slug)),
                 'parent_id' => $request->parent_id,
             ];
             if (!empty($request->image)) {

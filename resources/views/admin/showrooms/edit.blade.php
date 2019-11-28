@@ -61,6 +61,7 @@ Cửa hàng
                         <div class="form-group" ninh='123'>
                             <input type="button" class="btn btn-info" id="add" name="action" value="Chọn ảnh bản đồ">
                             <img id="img_old" class="" src="{{ $item->img }}" width="60" height="40" alt="">
+                            <input id="img_old1" type="hidden" name="img_old" value="{{ $item->img }}">
                             <input id="img_" type="hidden" name="img[]" value="">
                             <input type="hidden" name="list_img" id="list-img"
                                 value='<?php echo isset($_POST['list_img']) ? $_POST['list_img'] : '' ?>'>
@@ -92,6 +93,8 @@ Cửa hàng
     jQuery('body').on('click', '#add', function () {
         // console.log("sss");
         // var arr_url =($('#list-img').val()=='')?[]:($('#list-img').val());
+        $('#img_old').remove();
+        $('#img_old1').remove();
         var t = $(this);
         var arr_url = (t.closest('.col-md-12').find('#list-img').val() == '') ? [] : (t.closest(
                 '.col-md-12')

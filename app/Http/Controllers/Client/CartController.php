@@ -102,6 +102,7 @@ class CartController extends Controller
                     'product_id' => $value->id,
                     'amount' => ($value->qty*$value->price),
                     'order_id' => $insertOrder->id,
+                    'qty' => $value->qty,
                 ]);
             }
             $id_order = $insertOrder->id;

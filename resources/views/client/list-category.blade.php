@@ -2,26 +2,25 @@
 @section('title','Sản phẩm')
 @section('content')
 <div class="home">
-    <div class="wrap-category">
+    <div class="product">
+    <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
         <div class="container">
-            @if (count($categories) > 0 && !empty($categories))
-                <div class="owl-carousel owl-theme slide-pro-ctg">
+            @if (!empty($categories))
+            <div class="arrows-category">
+                <div class="menu-cate">
                     @foreach ($categories as $item)
-                        <div class="item">
-                            <div class="ctg-pro-item">
-                                <a href="#">
-                                    <div class="category-card__image">
-                                    <img src="{{!empty($item->image) ? $item->image : ''}}" alt="{{!empty($item->name) ? $item->name : ''}}">
-                                    </div>
-                                    <div class="category-card__name "><strong>{{!empty($item->name) ? $item->name : ''}}</strong></div>
-                                </a>
+                    <div class="ctg-pro-item">
+                        <a href="{{route('category_detail',['slug' => $item->slug])}}">
+                            <div class="category-card__image">
+                                <img src="{{$item->image}}" alt="{{$item->name}}">
                             </div>
-                        </div>
-                        @endforeach
+                            <div class="category-card__name "><strong>{{$item->name}}</strong></div>
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
+            </div>
             @endif
-            
-
         </div>
     </div>
     <div class="wrap-brand">
@@ -37,7 +36,7 @@
                     @foreach ($brands as $item)
                         <div class="item">
                             <div class="brand-item">
-                                <a href="#" title="{{$item->name}}">
+                                <a href="{{route('brand_category',['slug' => $item->slug])}}" title="{{$item->name}}">
                                     <div class="category-card__image">
                                         <img src="{{!empty($item->image) ? $item->image : '' }}" alt="{{$item->name}}">
                                     </div>
@@ -50,7 +49,7 @@
            
         </div>
     </div>
-
+    </div>
     @if (count($categories) > 0 && !empty($categories))
         @foreach ($categories as $item)
             <div class="single-products">
@@ -107,7 +106,7 @@
                                         <div class="product-dsc">
                                             <h3><a href="{{route('product_detail',['slug' => $product->slug])}}">{{$product->name}}</a></h3>
                                             <div class="cate_pro_title">
-                                                <a href="#" class="prdBrand">
+                                                <a href="{{route('brand_category',['slug' => $product->brand->slug])}}" class="prdBrand">
                                                     <img alt="{{$product->brand->name}}" src="{{$product->brand->image}}"></a>
                                             </div>
                                             @if (!empty($product->gift))
@@ -131,8 +130,13 @@
                                             </div>
                                         </div>
                                         <div class="actions-btn">
-                                            <a href="#"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+                                            <a href="{{route('product_detail',['slug' => $product->slug])}}"><i class="fa fa-eye"></i></a>
+                                            <form action="{{route('cart.addCart')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="id_product" value={{$product->id}}>
+                                                <input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+                                                <a href="#" id-product="{{$product->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

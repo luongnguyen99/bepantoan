@@ -2,6 +2,8 @@
 use App\Models\Product;
 use App\Models\Option;
 use App\Models\Category;
+use App\Models\Order;
+
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
     {
@@ -65,13 +67,30 @@ if (!function_exists('pveser_numberformat')) {
     }
 }
 // get category
-if (!function_exists('get_product_by_id')) {
-    function get_product_by_id($id)
+if (!function_exists('get_category_by_id')) {
+    function get_category_by_id($id)
     {
-        $category = Category::where('id',$id)->first();
+        $category = Category::where(['id' => $id])->first();
         return $category;
     }
 }
+
+// get product
+if (!function_exists('get_product_by_id')) {
+    function get_product_by_id($id)
+    {
+        $product = Product::where(['id' => $id])->with('galleries')->first();
+        return $product;
+    }
+}
+
+if (!function_exists('count_order_awaiting_approval')) {
+    function count_order_awaiting_approval(){
+        $count = Order::where('status',1)->count();
+        return $count ?? 0;
+    }
+}
+
 //==============>Validate Input<=====================
 function showError($errors, $nameInput)
 {
@@ -170,60 +189,163 @@ function make_tree($dataArr , $id = 0 ) {
 }
 
 
-function list_tree( $dataArr , $id = 0){
-    $data_result = array();
-    foreach($dataArr as $key => $data){
-        //  break if parent == 0
-        // echo '<li class="ng-scope  drop-icon re-icon">';
-        if($data['parent'] == $id){
-            $map_data = make_tree($dataArr , $data['id']);
+function list_tree( $dataArr , $parent = 0){
+    $result_data = array();
+    foreach ($dataArr as $key => $value) {
+        
+        // if($value['id'] = $id){
 
-            if( empty($map_data) ){
+            $check_last = check_last_child( $dataArr , $value['id']);
 
-                // not have child
-
-                echo '<pre>';
-                print_r('het con');
-                echo '</pre>';
-
-            }else{
-                echo '<pre>';
-                print_r('co con');
-                echo '</pre>';
-                foreach( $map_data as $item ){
-                    list_tree($dataArr , $item['id'] );            
+            if( $check_last ){
+                //  is last child
+                if($value['parent'] != 0){
+                    echo '  <li class="ng-scope ng-has-child'. $value['id'] .'"><a href="#">'. $value['name'] .'</a> </li>';
+                    break;
+                }else{
+                    ?>
+                        <li class="ng-scope  drop-icon re-icon">
+                            <a href="#"><span>
+                                <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
+                            </a>
+                        </li>
+                    <?php
+                    
+    
                 }
-                
 
+                unset( $dataArr[$key] );
+    
+                
+    
+            }else{
+                //  find child
+                ?>
+                    <li class="ng-scope  drop-icon re-icon menu-item-has-children">
+                        <a href="#"><span>
+                            <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
+                        </a>
+                        <ul class="sub-menu">
+    
+                            <?php 
+                                // list_tree( $dataArr , $value['id'] ); 
+                            ?>
+    
+    
+                        </ul>
+    
+                    </li>
+                <?php
+    
+    
+    
             }
 
-            // $data_result[] = $map_data;
 
-            // if(isset($map_data) && !empty($map_data)){
+        // }else{
+        //     break;
+        // }
 
-            //     foreach( $map_data as $item ){
-                    
-            //         list_tree($dataArr , $item['id'] );    
-                
-            //     }
-                
 
-            // }
 
-            // // unset($dataArr[$key]);
-            // // $map_data[] = $data;
-            // // $child = make_tree($map_data , $data['id']);
 
+
+
+    }
     
+}
+
+
+function find_parent( $dataArr , $id ){
+    $result = array();
+    foreach ($dataArr as $key => $value) {
+        if( $value['parent'] == $id ){
+            $result[] = $value;
+        }
+    }
+
+    return $result;
+
+}
+
+function list_tree_2( $dataArr , $id ){
+
+    foreach ($dataArr as $key => $value) {  
+        
+        if( $value['id'] == $id ){
+
+            if($value['parent'] != 0){
+                echo '  <li class="ng-scope ng-has-child'. $value['id'] .'"><a href="#">'. $value['name'] .'</a> </li>';
+            }else{
+                ?>
+                    <li class="ng-scope  drop-icon re-icon">
+                        <a href="#"><span>
+                            <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
+                        </a>
+                    </li>
+                <?php
+            }
         }
 
-        // echo '</li>';
     }
-    // echo '<pre>';
-    // print_r($data_result);
-    // echo '</pre>';
-    // return $map_data;
+    
 }
+
+
+
+function show_main_cate( $dataArr ){
+    foreach ($dataArr as $value) {
+        
+        if( check_last_child(  $dataArr , $value['id'] ) && $value['parent'] == 0 ){
+
+
+            ?>
+                <li class="ng-scope  drop-icon re-icon">
+                    <a href="#"><span>
+                        <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
+                    </a>
+                </li>
+            <?php
+
+
+
+        }else{
+
+            $parentArr = find_parent( $dataArr , $value['id']);
+            // echo '<pre>';
+            // print_r("================");
+            // echo '</pre>';
+
+            // // echo '<pre>';
+            // // print_r($value[]);
+            // // echo '</pre>';
+            // echo '<pre>';
+            // print_r($parentArr);
+            // echo '</pre>';
+
+        }
+
+    }
+
+
+}
+
+function check_last_child($dataArr , $id){
+    $check = true;
+    foreach ($dataArr as $key => $value) {
+        
+        if( $value['parent'] == $id  ){
+            $check = false;
+
+            break;
+        }
+    }
+    return $check;
+}
+
+
+
+
 
 
 
@@ -242,49 +364,29 @@ function build_categories_tree(){
         }
 
         
+        // test check last child 
+
+    
+        show_main_cate($dataArr);
 
         $parents = make_tree($dataArr , 0);
 
-        
-
         if(isset($dataArr) && !empty($dataArr)){
            
-            foreach ($dataArr as $item) {
-                $get_tree = make_tree($dataArr , $item['id'] );
-                if($item['parent'] == 0){
-                    //  is root parent
-                    ?>
-                        <li class="ng-scope  drop-icon re-icon menu-item-has-children">
-                            <a href="#"><span>
-                                <img src="<?php echo $item['image'] ?>" alt="<?php echo $item['name'] ?>"></span><?php echo  $item['name']?>
-                            </a>
+            // // foreach ($dataArr as $item) {
+               
+            //     list_tree_2( $dataArr , 0); 
 
-                            <?php  
+            // // }
 
-                                if(isset($get_tree) && !empty($get_tree)){
-                                    echo '<ul class="sub-menu">';
-                                    foreach ($get_tree as $sub_tree) {
-                                        list_tree($dataArr , $sub_tree['id']);
-                                        echo '  <li class="ng-scope ng-has-child'. $sub_tree['id'] .'"><a href="#">'. $sub_tree['name'] .'</a> </li>';
-                                    }
-                                    echo '</ul>';
-                                }
-
-                            ?>
-
-                        </li>
-                    <?php
-
-                }
-
-            }
-
-
-
+            
+            
 
         }else{
             return false;
         }
+
+
 
 
 
@@ -296,6 +398,28 @@ function build_categories_tree(){
 
 }
 
+
+// make header category  product
+
+function show_heder_list_cate(){
+    try {
+        $all_cate = Category::where('parent_id',0)->get()->toarray();
+        if(isset($all_cate) && !empty($all_cate)){
+            return $all_cate;
+        }else{
+            return flase;
+        }
+    } catch (\Throwable $th) {
+        return false;
+    }
+}
+
+// ============> GET CATEGORY PRODUCT NAME <===========
+function get_product_category_url( $slug_product , $slug_brand ){
+
+    // return route(  );
+
+}
 
 
 

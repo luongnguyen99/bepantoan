@@ -151,7 +151,7 @@ Bài viết
                             new_url_ + "'></i><img alt='' src='" + new_url_ +
                             "' class='img-cat' width='200' height='200'/></div><input type='hidden' value='" +
                             new_url_ + "' name='img_'>";
-
+                        $('#img_').html(list_img);
                     }
                     arr_url = JSON.stringify(arr_url);
 

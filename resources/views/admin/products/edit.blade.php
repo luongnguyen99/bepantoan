@@ -201,7 +201,7 @@ Sửa sản phẩm
                                     <div class="text-margin" style="font-size: 16px;">{{$item['name']}}</div>
                                     @if (count($item['property_values']) > 0)
                                         @foreach ($item['property_values'] as $item2)
-                                            <input type="radio" {{$product->property_values[$key]->id == $item2['id'] ? 'checked' : '' }} name="value_property[{{$item2['slug']}}]" id="{{$item2['id']}}" value="{{$item2['id']}}">
+                                            <input type="radio" {{!empty($product->property_values[$key]->id) && $product->property_values[$key]->id == $item2['id'] ? 'checked' : '' }} name="value_property[{{$item['slug']}}]" id="{{$item2['id']}}" value="{{$item2['id']}}">
                                             <label style="margin-right: 10px;" for="{{$item2['slug']}}">{{$item2['name']}}</label>
                                         @endforeach
                                     @endif
@@ -305,7 +305,7 @@ Sửa sản phẩm
                 </div>
                 <div style="margin-top: 40px;" class="mt-2">
                     <button type="submit" class="btn btn-success submit_data">Lưu</button>
-                    <button type="submit" class="btn btn-danger">Huỷ</button>
+                    <a href="{{route('admin.products.index')}}" class="btn btn-danger">Huỷ</a>
                 </div>
             </div>
         </form>

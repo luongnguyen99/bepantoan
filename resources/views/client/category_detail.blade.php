@@ -1,33 +1,51 @@
 @extends('client.master.master')
-@section('title','Sản phẩm')
+@section('title')
+{{$category->name}}
+{{!empty($brand) ? $brand->name : ''}}
+@endsection
+@section('css')
+	<style>
+	input[type="radio"] {
+	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
+	-ms-appearance: checkbox; /* not currently supported */
+	-o-appearance: checkbox; /* not currently supported */
+	}
+	</style>
+@endsection
 @section('content')
 <div class="home">
-	{{dd($category)}}
 	<div class="product">
 		<div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
 		    <div class="container">
-		        <div class="arrows-category">
-		            <div class="menu-cate">
-		            	<?php foreach(range(1, 12) as $number ): ?>
-		                <div class="ctg-pro-item">
-		                    <a href="#">
-		                        <div class="category-card__image">
-		                            <img src="img/bep_tux300x300x4.png" alt="Bếp từ">
-		                        </div>
-		                        <div class="category-card__name "><strong>Bếp từ</strong></div>
-		                    </a>
-		                </div>
-		                <?php endforeach; ?>
-		            </div>
-		        </div>
+				@if (!empty($categories))
+					<div class="arrows-category">
+						<div class="menu-cate">
+							@foreach ($categories as $item)
+								<div class="ctg-pro-item">
+									<a href="{{route('category_detail',['slug' => $item->slug])}}">
+										<div class="category-card__image">
+											<img src="{{$item->image}}" alt="{{$item->name}}">
+										</div>
+										<div class="category-card__name "><strong>{{$item->name}}</strong></div>
+									</a>
+								</div>
+							@endforeach		
+						</div>
+					</div>
+				@endif
 		    </div>
 		</div>
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="#">beptot.vn</a></li>
-				    <li><a href="#">Bếp gas</a></li>
-				    <li>Bếp gas Teka</li>
+					<li><a href="">beptot.vn</a></li>
+					@if ($category)
+				    	<li><a href="{{route('category_detail',['slug' => $category->slug])}}">{{$category->name}}</a></li>		
+					@endif
+					@if (!empty($brand))
+				    	<li><a href="{{route('category_detail',['slug' => $category->slug,'slug2' => $brand->slug])}}">{{$category->name}} {{!empty($brand) ? $brand->name : ''}}</a></li>	
+					@endif
 				</ul>
 			</div>
 		</div>
@@ -36,332 +54,171 @@
 				<div class="pro-bg">
 					<div class="row">
 						<div class="col-md-3 col-xs-12 col-sm-12">
-							<div class="sidebar-left">
-								<div class="box-filter">
-									<h3>Phân loại</h3>
-									<ul class="listform_filter fil-block">
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox">
-								                <label>Bếp từ</label>
-								            </div>
-								        </li>
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" checked="checked">
-								                <label>Bếp điện từ</label>
-								            </div>
-								        </li>
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox">
-								                <label>Bếp điện</label>
-								            </div>
-								        </li>
-								        
-								    </ul>
+							<form id="form_filter" method="GET" action="">
+								<div class="sidebar-left">
+									@if (!empty($brands))
+										<div class="box-filter">
+											<h3>HÃNG SẢN XUẤT</h3>
+											<ul class="listform_filter filterBrand">
+												@foreach ($brands as $item)
+													<li>
+														<div class="radio">
+														<input type="radio" name="hang-san-xuat" {{!empty($_GET['hang-san-xuat']) && $_GET['hang-san-xuat'] == $item->id  ? 'checked' : ''}} value="{{$item->id}}" id="brand_{{$item->id}}">
+															<label for="brand_{{$item->id}}">
+																<img src="{{$item->image}}" class="icImgBrand" alt="{{$item->name}}">
+															</label>
+														</div>
+													</li>
+												@endforeach
+											</ul>
+										</div>
+									@endif
+									<div class="box-filter">
+										<h3>Mức giá</h3>
+										<ul class="listform_filter right-property">
+											<li>
+												<div class="radio">
+													<input type="radio" name="muc-gia" id="muc-gia102" {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '3000000-5000000'  ? 'checked' : ''}} value="3000000-5000000">
+													<label for="muc-gia102"> 3 triệu - 5 triệu</label>
+												</div>
+											</li>
+											
+											<li>
+												<div class="radio">
+													<input type="radio" name="muc-gia" id="muc-gia103" {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '5000000-10000000'  ? 'checked' : ''}} value="5000000-10000000">
+													<label for="muc-gia103"> 5 triệu - 10 triệu</label>
+												</div>
+											</li>
+											
+											<li>
+												<div class="radio">
+													<input type="radio" name="muc-gia" id="muc-gia104" {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '10000000-15000000'  ? 'checked' : ''}} value="10000000-15000000">
+													<label for="muc-gia104"> 10 triệu - 15 triệu</label>
+												</div>
+											</li>
+											
+											<li>
+												<div class="radio">
+													<input type="radio" name="muc-gia" id="muc-gia105" {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '15000000-max'  ? 'checked' : ''}} value="15000000-max">
+													<label for="muc-gia105">Trên 15 triệu</label>
+												</div>
+											</li>
+											
+											<li>
+												<div class="radio">
+													<input type="radio" name="muc-gia" id="muc-gia490" {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == 'min-3000000'  ? 'checked' : ''}} value="min-3000000">
+													<label for="muc-gia490">Dưới 3 triệu</label>
+												</div>
+											</li>
+											
+										</ul>
+									</div>
+									@if (!empty($category))
+										@if (count($category->properties) > 0)
+										@foreach ($category->properties as $property)
+											<div class="box-filter">
+												<h3>{{$property->name}}</h3>
+												<ul class="listform_filter right-property">
+													@if (count($property->property_values) > 0)
+														@foreach ($property->property_values as $property_value)
+															<li>
+																<div class="radio">
+																<input type="radio" {{!empty($_GET[$property->slug]) && $_GET[$property->slug] == $property_value->id  ? 'checked' : ''}} name="{{$property->slug}}" value="{{$property_value->id}}" id="{{$property->slug.$property_value->id}}">
+																	<label for="{{$property->slug.$property_value->id}}">{{$property_value->name}}</label>
+																</div>
+															</li>
+														@endforeach
+													@endif	
+												</ul>
+											</div>
+										@endforeach
+										@endif
+									@endif				
 								</div>
-								<div class="box-filter">
-								    <h3>HÃNG SẢN XUẤT</h3>
-								    <ul class="listform_filter filterBrand">
-								    	<?php foreach(range(1, 10) as $number ): ?>
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox">
-								                <label>
-								                    <img src="img/eurosun(1).jpg" class="icImgBrand" alt="">
-								                </label>
-								            </div>
-								        </li> 
-								        <?php endforeach; ?>
-								    </ul>
-								</div>
-								<div class="box-filter">
-								    <h3>Mức giá</h3>
-								    <ul class="listform_filter right-property">
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="muc-gia" id="muc-gia102">
-								                <label for="muc-gia102"> 3 triệu - 5 triệu</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="muc-gia" id="muc-gia103">
-								                <label for="muc-gia103"> 5 triệu - 10 triệu</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="muc-gia" id="muc-gia104" >
-								                <label for="muc-gia104"> 10 triệu - 15 triệu</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="muc-gia" id="muc-gia105" >
-								                <label for="muc-gia105">Trên 15 triệu</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="muc-gia" id="muc-gia490">
-								                <label for="muc-gia490">Dưới 3 triệu</label>
-								            </div>
-								        </li>
-								        
-								    </ul>
-								</div>
-								<div class="box-filter">
-								    <h3>Xuất xứ</h3>
-								    <ul class="listform_filter right-property">
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu75" >
-								                <label for="xuat-xu75">Germany</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu76">
-								                <label for="xuat-xu76">Spain</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu77">
-								                <label for="xuat-xu77">Italy</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu78">
-								                <label for="xuat-xu78">China (PRC)</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu79">
-								                <label for="xuat-xu79">Poland</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu80">
-								                <label for="xuat-xu80">France</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu459" >
-								                <label for="xuat-xu459">Turkey</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu465">
-								                <label for="xuat-xu465">Malaysia</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu466">
-								                <label for="xuat-xu466">Thailand</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu467">
-								                <label for="xuat-xu467">Việt Nam</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="xuat-xu" id="xuat-xu606">
-								                <label for="xuat-xu606">EU</label>
-								            </div>
-								        </li>
-								        
-								    </ul>
-								</div>
-								<div class="box-filter">
-								    <h3>Số bếp nấu</h3>
-								    <ul class="listform_filter right-property">
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau113">
-								                <label for="so-bep-nau113">1 bếp</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau99">
-								                <label for="so-bep-nau99">2 bếp</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau100">
-								                <label for="so-bep-nau100">3 bếp</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau101">
-								                <label for="so-bep-nau101">4 bếp</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau112">
-								                <label for="so-bep-nau112">5 bếp</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau709">
-								                <label for="so-bep-nau709">6 Bếp</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="so-bep-nau" id="so-bep-nau515">
-								                <label for="so-bep-nau515">Bếp đa điểm</label>
-								            </div>
-								        </li>
-								        
-								    </ul>
-								</div>
-								<div class="box-filter">
-								    <h3>Mặt kính</h3>
-								    <ul class="listform_filter right-property">
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh443" >
-								                <label for="mat-kinh443">Schott Ceran</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh444">
-								                <label for="mat-kinh444">Eurokera</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh445">
-								                <label for="mat-kinh445">Kanger</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh446">
-								                <label for="mat-kinh446">Nippon -NEG</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh447">
-								                <label for="mat-kinh447">Ceramic</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh706">
-								                <label for="mat-kinh706">Crystal</label>
-								            </div>
-								        </li>
-								        
-								        <li>
-								            <div class="checkbox">
-								                <input type="checkbox" name="mat-kinh" id="mat-kinh637">
-								                <label for="mat-kinh637">Thép không gỉ</label>
-								            </div>
-								        </li>
-								        
-								    </ul>
-								</div>
-							</div>
-							
+							</form>
 						</div>
 						<div class="col-md-9 col-xs-12 col-sm-12">
 							<div class="single-products">
-								<div class="hd-card-body">
-									<h1><a href="#" class="fs-hotit" title="Bếp gas Teka">Bếp gas Teka</a></h1>
-					            	<div class="row product-fs">
-					            		<?php foreach(range(1, 8) as $number ): ?>
-					            		<div class="col-md-3 col-xs-6 col-sm-6">
-					            			<div class="product-item">
-					                            <div class="product-img">
-					                                
-					                                <div class="pro-badge">
-					                                    <span>-24%</span>
-					                                </div>
-					                                
-					                                <div class="img-responsive">
-					                                    <a href="#">
-					                                        <img src="img/bep-tu-bosch-pij651bb2ex500x500x4.jpg" alt="Product Title">
-					                                    </a>
-					                                </div>
-					                            </div>
-					                            <div class="product-dsc">
-					                                <h3><a href="#">Bếp từ Bosch PIJ651BB2E</a></h3>
-					                                <div class="cate_pro_title">
-					                                    <a href="#" class="prdBrand">
-					                                        <img alt="Bosch" src="img/logobosch.jpg"></a>
-					                                </div>
-					                                <div class="gift-sale">
-					                                    
-					                                    <strong>Quà tặng: Bộ nồi từ Fivestar 5 chiếc </strong>
-					                                    
-					                                </div>
-					                                <div class="cate_pro_bot">
-					                                    
-					                                    <label>14.950.000₫</label>
-					                                    
-					                                    <span>19.900.000₫</span>
-					                                    
-					                                </div>
-					                            </div>
-					                            <div class="actions-btn">
-					                                <a href="#"><i class="fa fa-eye"></i></a>
-					                                <a href="#" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
-					                            </div>
-					                        </div>
-					            		</div>
-					            		<?php endforeach; ?>
-					            	</div>
-					            	<div class="lms-pagination pagination">
-					                    <a href="#" class="next">Xem thêm <i class="fa fa-angle-right"></i></a>
-					                </div>
-					            </div>
+								@if (!empty($products))
+									<div class="hd-card-body">
+										<h1><a href="#" class="fs-hotit"
+												title="{{$category->name}} {{!empty($brand) ? $brand->name : ''}}">{{$category->name}}
+												{{!empty($brand) ? $brand->name : ''}}</a></h1>
+										<div class="row product-fs">
+											@php
+												$i = 1;
+											@endphp
+											@foreach ($products as $product)
+												<div class="col-md-3 col-xs-6 col-sm-6" style={{$i % 5 == 0 ? 'clear:both' : ''}}>
+													<div class="product-item">
+														<div class="product-img">
+															@php
+															if (!empty($product->sale_price)) {
+																$percent_sale = (($product->sale_price / $product->price)*100);
+																
+																$percent_sale2 = FLOOR(100 - $percent_sale);
+																};
+															@endphp
+															@if (!empty($product->sale_price))
+																<div class="pro-badge">
+																	<span>-{{$percent_sale2}}%</span>
+																</div>
+															@endif
+												
+															<div class="img-responsive">
+																<a href="{{route('product_detail',['slug' => $product->slug])}}">
+																	@if (count($product->galleries) > 0 && !empty($product->galleries))
+																		<img src="{{$product->galleries[0]->image}}" alt="{{$product->name}}">
+																	@endif
+																</a>
+															</div>
+														</div>
+														<div class="product-dsc">
+															<h3><a href="{{route('product_detail',['slug' => $product->slug])}}">{{$product->name}}</a></h3>
+															<div class="cate_pro_title">
+																<a href="{{route('brand_category',['slug' => $product->brand->slug])}}" class="prdBrand">
+																	<img alt="{{$product->brand->name}}" src="{{$product->brand->image}}"></a>
+															</div>
+															@if (!empty($product->gift))
+															@php
+															$arr_gift = json_decode($product->gift,true);
+															@endphp
+															@foreach ($arr_gift as $gift)
+																<div class="gift-sale">
+																	<strong>{{$gift['value']}}</strong>
+																</div>	
+															@endforeach
+															@endif
+															<div class="cate_pro_bot">
+																@if (!empty($product->sale_price))
+																	<label>{{pveser_numberformat($product->sale_price)}}</label>
+																	<span>{{pveser_numberformat($product->price)}}</span>
+																@else
+																	<label>{{pveser_numberformat($product->price)}}</label>
+																@endif
+															</div>
+														</div>
+														<div class="actions-btn">
+															<a href="{{route('product_detail',['slug' => $product->slug])}}"><i class="fa fa-eye"></i></a>
+															<form action="{{route('cart.addCart')}}" method="POST">
+																@csrf
+																<input type="hidden" name="id_product" value={{$product->id}}>
+																<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+																<a href="#" id-product="{{$product->id}}" class="buy_now"><i class="fa fa-shopping-basket"></i></a>
+															</form>
+														</div>
+													</div>
+												</div>
+												@php
+													$i++;
+												@endphp
+											@endforeach
+										</div>
+										<div class="lms-pagination pagination" total-post-current="{{get_option_by_key('posts_per_page')}}">
+											<a style="cursor:pointer" class="next">Xem thêm <i class="fa fa-angle-right"></i></a>
+										</div>
+									</div>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -369,5 +226,40 @@
 			</div>
 		</div>
 	</div>
-
+@endsection
+@section('js')
+	<script>
+		var form_filter = $('#form_filter').find('input[type=radio]');
+		$(document).on('change',form_filter,function() {
+			$('#form_filter').submit();
+		})
+	</script>
+	
+	<script>
+		$('.lms-pagination.pagination').on('click',function() {
+			total_post_current = $(this).attr('total-post-current');
+			posts_per_page = `{{get_option_by_key('posts_per_page')}}`;
+			$.ajax({
+				url : `{{url('loadmore')}}`,
+				method : 'POST',
+				data : {
+					_token : `{{csrf_token()}}`,
+					total_post_current : total_post_current,
+					category_id : `{{$category->id}}`,
+					brand_id : `{{!empty($brand) ? $brand->id : null}}`,
+					arr_get: `<?php echo !empty($_GET) ? json_encode($_GET) : '' ?> `,
+				},
+				success:function(data){ 
+					new_posts_current = Number(total_post_current) + Number(posts_per_page);
+					$('.row.product-fs').find('div.col-md-3.col-xs-6.col-sm-6').last().after(data);
+					$('.lms-pagination.pagination').attr('total-post-current',new_posts_current);
+					
+					if (data.length == 0) {
+						$('.lms-pagination.pagination').remove();
+					}
+				}
+			})
+		});
+	</script>
+		
 @endsection

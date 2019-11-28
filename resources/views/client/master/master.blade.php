@@ -91,7 +91,7 @@
 					    </div>
 					    <div class="quick-cart">
 							<a href="{{route('showCart')}}" target="_blank" rel="">
-							<img alt="BẾP TỐT" src="client/img/cart_bg.png"><span class="num">{{Cart::count()}}</span>
+							<img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
 					        </a>
 					    </div>
 					</div>
@@ -125,7 +125,8 @@
 
 										@if (isset($menu) && !empty($menu))
 										@foreach ( $menu as $item_menu )
-											<li><i class="pe-7s-news-paper"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+											
+											<li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
 										@endforeach
 										@endif
 								        <li>
@@ -155,7 +156,7 @@
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 					        <a href="#" target="_blank" rel="">
-					            <img alt="BẾP TỐT" src="client/img/cart_bg.png"><span class="num">0</span>
+					            <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
 					        </a>
 					    </div>
 					</div>
@@ -200,21 +201,43 @@
 						</div>
 						
 					</div>
+
+
 					<div class="col-xs-12 col-sm-12">
 						<div class="btn-group-cate hidden-lg hidden-md">
 					        <button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 					            Danh mục sản phẩm <span class="caret"></span>
-					        </button>
+							</button>
+							
+							@php
+								$all_cateshows = show_heder_list_cate();
+							@endphp
+
+							@if ($all_cateshows)
 					        <ul class="dropdown-menu sub-categories-mobile" role="menu">
-					        	<?php foreach(range(1, 8) as $number ): ?>
-					            <li>
-					            	<a href="#" rel=""><span>
-					                <img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ</a> 
-					            </li>
-					            <?php endforeach; ?>
-					        </ul>
+					        	@foreach ( $all_cateshows as $cate_ )
+									
+									<?php 
+									echo '<pre>';
+									print_r($cate_);
+									echo '</pre>';
+									
+									?>
+
+									<li>
+										<a href="#" rel=""><span>
+										<img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ</a> 
+									</li>
+
+								@endforeach
+					            
+							</ul>
+							@endif
 					    </div>
 					</div>
+
+
+
 				</div>
 				
 			</div>
@@ -252,22 +275,29 @@
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="paypal social-icon">
 								<ul>
-									{{-- @if (!empty($payment))
+									
+									@php
+										$payment = json_decode($payment,true);
+									@endphp
+									@if (!empty($payment))
 									@foreach ($payment as $item)
 									<li><a href=""><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach
-									@endif --}}
+									@endif
 								</ul>
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="social-icon">
 								<ul class="floatright">
-									{{-- @if ($social_network_j != null)
+									@php
+									$social_network_j = json_decode($social_network_j,true);
+									@endphp
+									@if (!empty($social_network_j))
 									@foreach ($social_network_j as $item)
 									<li class="res-mar"><a href="#"><i class="{{ $item['type'] }}"></i></a></li>
 									@endforeach
-									@endif --}}
+									@endif
 								</ul>
 							</div>
 						</div>
@@ -302,7 +332,7 @@
 									</div>
 								</div>
 								<img src="{{ $item->img }}" alt="">
-								<a href="#" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
+								<a href="{{ $item->link }}" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
 								<a data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
 							</div>
 						</li>
@@ -339,9 +369,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-12 text-center">
-							@if (isset($footer_j['footer']))
+							@if (!empty(get_option_by_key('footer_copy')))
+							@php
+								$cr = json_decode(get_option_by_key('footer_copy'),true)
+							@endphp
 							<p>
-								{{ $footer_j['footer'] }}
+								{{ $cr['footer'] }}
 							</p>
 							@endif
 						</div>

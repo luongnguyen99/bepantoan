@@ -100,7 +100,7 @@ Sửa danh mục
                     <div class="form-group">
                         <label for="slug">Đường dẫn</label>
                         <input class="form-control" type="text" name="slug" id="slug"
-                            value="{{ !empty(old('slug')) ? old('slug') : $category->name}}">
+                            value="{{ !empty(old('slug')) ? old('slug') : $category->slug}}">
                         @error('slug')
                         <span style="color:red">{{$message}}</span>
                         @enderror
