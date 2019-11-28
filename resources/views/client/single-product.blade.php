@@ -550,7 +550,7 @@
 												<div class="tb-recent-thumbb">
 													<a href="#" class="active">
 														<img class="attachment"
-													src="{{!empty(get_product_by_id($item)->galleries) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
+													src="{{!empty(get_product_by_id($item)->galleries[0]) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
 															alt="{{get_product_by_id($item)->name}}">
 													</a>
 												</div>

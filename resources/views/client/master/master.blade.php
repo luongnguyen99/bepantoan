@@ -390,63 +390,65 @@
 					</div>
 				</div>
 			</div>
-		</footer>	
+	</footer>	
 	
-	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1"></script>
-	
-		<script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
-		<script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('client/js/jquery-scrolltofixed-min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
-		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
-		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
-		
-		<script>
-			
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-		$("#search").keyup(function() {
-			var key = $('#search').val();
-			
-			if(key != ''){
-				$.ajax({
-					url:"{{ route("master.search") }}",
-					method:"GET",
-					data:{key:key},
-					success:function(data){
-						var arr_prd = data.prd;
-						var arr_cate = data.cate;
-						var html = '';
-						jQuery.each(arr_cate,function(key,item){
-							html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
-						});
-						jQuery.each(arr_prd,function(key,item){
-							html += '<li>'+
-							'<a href="san-pham/'+item.slug+'">'+
-								'<div class="media">'+
-									'<div class="media-left">'+
-										'<img src="'+item.image+'" class="media-object thumb">'+
-									'</div>'+
-									'<div class="media-body">'+
-										'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
-										'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
-									'</div>'+
-								'</div>'+
-							'</a>'+
-							'</li>'
-						});
-						$('#search_prd').html(html);
-					}
-				});
-			}else{
-				$('#search_prd').html('')
-			}
-		});
-		</script>
-		@yield('js')
-	</body>
+	    
+    </body>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1">
+    </script>
+    
+    <script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
+    <script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('client/js/jquery-scrolltofixed-min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
+    <script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
+    
+    <script>
+        $.ajaxSetup({
+    			headers: {
+    				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    			}
+    		});
+    		$("#search").keyup(function() {
+    			var key = $('#search').val();
+    			
+    			if(key != ''){
+    				$.ajax({
+    					url:"{{ route("master.search") }}",
+    					method:"GET",
+    					data:{key:key},
+    					success:function(data){
+    						var arr_prd = data.prd;
+    						var arr_cate = data.cate;
+    						var html = '';
+    						jQuery.each(arr_cate,function(key,item){
+    							html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+    						});
+    						jQuery.each(arr_prd,function(key,item){
+    							html += '<li>'+
+    							'<a href="san-pham/'+item.slug+'">'+
+    								'<div class="media">'+
+    									'<div class="media-left">'+
+    										'<img src="'+item.image+'" class="media-object thumb">'+
+    									'</div>'+
+    									'<div class="media-body">'+
+    										'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
+    										'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+    									'</div>'+
+    								'</div>'+
+    							'</a>'+
+    							'</li>'
+    						});
+    						$('#search_prd').html(html);
+    					}
+    				});
+    			}else{
+    				$('#search_prd').html('')
+    			}
+    		});
+    </script>
+    @yield('js')
 	</html>
