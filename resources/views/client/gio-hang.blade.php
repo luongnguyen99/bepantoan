@@ -61,8 +61,10 @@ Giỏ hàng
 												<td>{{$i}}</td>
 													<td class="product_cart">
 														@php
-															if (!empty(get_detail_products_by_id($item->id))) {
+															if (!empty(get_detail_products_by_id($item->id)->galleries[0]->image)) {
 																$image = get_detail_products_by_id($item->id)->galleries[0]->image;
+															}else{
+																$image = '';
 															}
 														@endphp
 														<img src="{{$image}}"

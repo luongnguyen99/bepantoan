@@ -149,7 +149,7 @@ Bài viết
                         var urlParts = url_.replace('http://', '').replace('https://', '')
                             .split(/[/?#]/);
                         var domain = urlParts[0];
-                        let port = 8000;
+                        let port = ;
 
                         let new_domain = domain + ":" + port;
 
@@ -272,7 +272,7 @@ Bài viết
                        
                         for (var i = 0; i < arr_url.length; i++) {
                             
-                            var ninh = arr_url[i].replace('http://localhost/','http://localhost:8000/');
+                            var ninh = arr_url[i].replace('http://localhost/','http://localhost/');
                             CKEDITOR.instances.editor.insertHtml("<img src='"+ ninh + "'>");
                         }
                         

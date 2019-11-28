@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Option;
 class OptionsController extends Controller
 {
@@ -674,5 +675,13 @@ class OptionsController extends Controller
        
         $introduce->save();
         return redirect()->back()->with('success');
+    }
+
+    public function choose_category_show_home(Request $request){
+        if ($request->isMethod('post')) {
+            Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->categories)]);
+        };
+        $categories = Category::all();
+        return view('admin.options.home.choose_category_show_home',compact('categories'));
     }
 }

@@ -32,7 +32,8 @@
 
     <link rel="stylesheet" href="{{asset('admin0/css/app.css')}}">
     {{-- css here --}}
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+            integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
     @yield('style')
     <style>
      tr:hover .div-action {
@@ -98,7 +99,7 @@
     <script src="{{asset('admin0/js/main.js')}}"></script>
     <!-- CK Editor -->
     <script src="{{asset('admin0/bower_components/ckeditor/ckeditor.js')}}"></script>
-    
+    <script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/ckfinder/ckfinder.js')}}"></script>
     <script>
         CKFinder.config( { connectorPath: '/ckfinder/connector' } );

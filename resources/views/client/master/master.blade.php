@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
+
 	@yield('css')
 </head>
 
@@ -54,9 +55,9 @@
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
 						<div class="form-search">
-							<form method="post" action="{{ route('tim-kiem') }}">
-								@csrf
-								<input id="search" type="text" name="search" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+							<form method="get" action="{{route('searchEnter')}}">
+								{{-- @csrf --}}
+								<input id="search" type="text" name="search" class="form-control" autocomplete="off" placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
 								<ul id="search_prd" class="resuiltSearch ul-menu-muiten search-suggest">
 								</ul>
@@ -388,6 +389,7 @@
 		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
+		
 		<script>
 			
 		$.ajaxSetup({

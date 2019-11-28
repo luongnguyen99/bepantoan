@@ -212,6 +212,10 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         //=================> Introduce <=============================
         Route::get('introduce', 'OptionsController@getIntroduce')->name('introduce');
         Route::post('introduce', 'OptionsController@postIntroduce')->name('add_introduce');
+
+        // Chọn danh mục hiển thị trang chủ
+        Route::any('choose_category_show_home', 'OptionsController@choose_category_show_home')->name('choose_category_show_home');
+
     });
     Route::group(['prefix' => 'status_order','as'=>'status_order.'], function () {
         Route::get('index','StatusorderController@getindex')->name('index');
@@ -229,7 +233,11 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList')->name('home_client');
     Route::get('search', 'IndexController@getSearch')->name('master.search');
-    
+    // Route::any('tim-kiem', 'IndexController@searchBtn')->name('tim-kiem');
+    //
+
+    // tim kiem
+    Route::get('tim-kiem','IndexController@searchEnter')->name('searchEnter');
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
     // danh muc chi tiet
@@ -264,7 +272,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     });
     Route::get('/{slug}','BlogController@getData');
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
-    Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
+
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {

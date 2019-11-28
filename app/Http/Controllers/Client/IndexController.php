@@ -4,13 +4,41 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\{Product,Category,Gallery};
+use App\Models\{Product,Category,Gallery,Post};
 use DB;
 class IndexController extends Controller
 {
     public function getList()
     {
-        return view('client.home.index');
+        $categories_show_home = json_decode(get_option_by_key('categories_show_home'), true);
+
+        $where = 'where ';
+        if (!empty($categories_show_home) && count($categories_show_home) > 0) {
+            foreach ($categories_show_home as $key => $value) {
+                $where .= ' categories.id = '.$value;
+                if ($key+1 < count($categories_show_home)) {
+                    $where .= ' or '; 
+                }
+            }
+
+            $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
+            GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
+            from `categories`
+            inner join `products` on `categories`.`id` = `products`.`category_id`
+            inner join `brands` on `brands`.`id` = `products`.`brand_id` $where
+            group by `categories`.`id`");
+        }else{
+            $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
+            GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
+            from `categories`
+            inner join `products` on `categories`.`id` = `products`.`category_id`
+            inner join `brands` on `brands`.`id` = `products`.`brand_id`
+            group by `categories`.`id`
+            ORDER BY RAND() LIMIT 4 ");
+        };
+        // $posts = Post::
+        $allCategory = Category::all();
+        return view('client.home.index',compact('categories', 'allCategory'));
     }
     public function getSearch(Request $r)
     {
@@ -28,8 +56,14 @@ class IndexController extends Controller
     }
     public function searchBtn(Request $r)
     {
+        // dd('aa');
         $db = Product::where('name','like','%'.$r->search.'%')->get(); 
         
         return view('client.search',compact('db'));
+    }
+
+    public function searchEnter(Request $request){
+        $products = Product::where('name', 'like', '%' . $request->search . '%')->paginate(15);
+        return view('client.search', compact('products'));
     }
 }

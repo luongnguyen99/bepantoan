@@ -105,6 +105,11 @@ class OptionsSeeder extends Seeder
                 'key' => 'posts_per_page',
                 'value' => '8',
             ],
+            [
+                'name' => 'categories_show_home',
+                'key' => 'categories_show_home',
+                'value' => '',
+            ],
             
         ]);
 
