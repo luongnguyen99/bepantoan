@@ -12,6 +12,8 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{asset('admin0/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{asset('admin0/bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{asset('admin0/bower_components/Ionicons/css/ionicons.min.css')}}">
@@ -25,17 +27,19 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('admin0/dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('admin0/dist/css/skins/_all-skins.min.css')}}">
-
+        
     <link rel="stylesheet" href="{{asset('admin0/css/app.css')}}">
-    {{-- css here --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
-            integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
     @yield('style')
+    <link rel="stylesheet" href="{{asset('admin0/dist/css/AdminLTE.min.css')}}">
+    {{-- css here --}}
+    
     <style>
+    .glyphicon {
+        font-size: small;
+    }
      tr:hover .div-action {
         animation-delay: 2s;
         /* display: block; */

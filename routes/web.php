@@ -215,6 +215,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         // Chọn danh mục hiển thị trang chủ
         Route::any('choose_category_show_home', 'OptionsController@choose_category_show_home')->name('choose_category_show_home');
+        // Email admin
+        Route::any('email_admin', 'OptionsController@email_admin')->name('email_admin');
 
     });
     Route::group(['prefix' => 'status_order','as'=>'status_order.'], function () {
@@ -269,11 +271,15 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('abc', function(){
         dd(Cart::destroy());
     });
+    Route::get('hoa-debug',function(){
+        return view('client.hoa_debug');
+    });
     
     Route::get('/{slug}.html','ProductController@detail')->name('product_detail');
     Route::get('{slug}','BlogController@getData');
 
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
+
 
 });
 //=============> Composer layouts <================

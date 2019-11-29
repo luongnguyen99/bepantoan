@@ -681,8 +681,17 @@ class OptionsController extends Controller
     public function choose_category_show_home(Request $request){
         if ($request->isMethod('post')) {
             Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->categories)]);
+            return redirect()->back()->with('success', 'Cập nhập thành công');
         };
         $categories = Category::all();
         return view('admin.options.home.choose_category_show_home',compact('categories'));
+    }
+
+    public function email_admin(Request $request){
+        if ($request->isMethod('post')) {
+            Option::where('key', '=', 'email_admin')->update(['value' => $request->email]);
+            return redirect()->back()->with('success', 'Cập nhập email thành công');
+        };
+        return view('admin.options.main.email_admin');
     }
 }

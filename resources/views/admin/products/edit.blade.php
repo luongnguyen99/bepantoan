@@ -224,10 +224,23 @@ Sửa sản phẩm
                                     foreach ($gift as $key => $value) {
                                     // dd($key);
                                     $gift_html .= '<div class="row" style="display: flex;align-items: flex-start;">
-                                        <div class="col-sm-10">
-                                            <input type="text" name="gift['.$key.'][value]" value="'.$value->value.'" placeholder="Ưu đãi"
-                                                class="form-control" />
+                                        <div class="col-sm-6">
+                                            <input type="text" name="gift['.$key.'][value]" value="'.$value->value.'" placeholder="Ưu đãi" class="form-control" />
                                             <span class="errors error_gift_'.$key.'_value" style="color:red"></span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="gift['.$key.'][link]" value="'.$value->link.'" placeholder="Link" class="form-control" />
+                                            <span class="errors error_gift_'.$key.'_link" style="color:red"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" style="display: flex;align-items: flex-start;text-align: right;">
+                                        <div class="col-sm-8">
+                                            <input type="text" readonly name="gift['.$key.'][image]" value="'.$value->image.'" placeholder="Ảnh sản phẩm" class="form-control" />
+                                            <span class="errors error_gift_'.$key.'_image" style="color:red"></span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a class="btn btn-primary choose_image_gift">Chọn ảnh</a>
                                         </div>
                                         <div class="col-sm-2">
                                             <a data-repeater-delete class="btn btn-danger remove_repeater"><i class="fa fa-minus"></i></a>
@@ -327,6 +340,23 @@ Sửa sản phẩm
 @section('js')
 
 <script>
+    $('body').on('click', '.choose_image_gift', function(){
+        var choose = $(this);
+        CKFinder.popup( {
+            chooseFiles: true,
+            width: 800,
+            height: 600,
+            onInit: function( finder ) {
+                finder.on( 'files:choose', function( evt ) {
+                    var file = evt.data.files.last();
+                    var file_name = file.getUrl();
+                    $(choose).parents('div.row').find('div.col-sm-8').find('input').val(file_name);
+                } );
+            }
+        } );
+
+    })
+
     jQuery('body').on('click', '.choose_gallery', function () {
         CKFinder.popup({
             chooseFiles: true,
@@ -349,6 +379,7 @@ Sửa sản phẩm
 
     $(document).on('click','.remove_repeater',function(){
         if(confirm('Chắc chắn xóa')){
+            $(this).parents('div.row').prev().remove();
             $(this).parents('div.row').remove();
         }
     });
@@ -358,9 +389,23 @@ Sửa sản phẩm
     $(document).on('click','.add_repeater0',function () {
         $('.gift_div').append(`
         <div class="row" style="display: flex;align-items: flex-start;">
-            <div class="col-sm-10">
+            <div class="col-sm-6">
                 <input type="text" name="gift[${k}][value]" value="" placeholder="Ưu đãi" class="form-control" />
                 <span class="errors error_gift_${k}_value" style="color:red"></span>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="gift[${k}][link]" value="#" placeholder="Link" class="form-control" />
+                <span class="errors error_gift_${k}_link" style="color:red"></span>
+            </div>
+        </div>
+        
+        <div class="row" style="display: flex;align-items: flex-start;text-align: right;">
+            <div class="col-sm-8">
+                <input type="text" readonly name="gift[${k}][image]" value="" placeholder="Ảnh sản phẩm" class="form-control" />
+                <span class="errors error_gift_${k}_image" style="color:red"></span>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-primary choose_image_gift">Chọn ảnh</a>
             </div>
             <div class="col-sm-2">
                 <a data-repeater-delete class="btn btn-danger remove_repeater"><i class="fa fa-minus"></i></a>

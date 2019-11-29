@@ -82,7 +82,7 @@ class ProductController extends Controller
                 200
             );
         }else{
-            
+                // dd($request->all());
                 $data = [
                 'name' => $request->name,
                 'slug' => to_slug($request->slug),
