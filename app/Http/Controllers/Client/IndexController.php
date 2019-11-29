@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\{Product,Category,Gallery,Post};
+use App\Models\{Product,Category,Gallery,Post, Post_category};
 use DB;
 class IndexController extends Controller
 {
@@ -38,7 +38,14 @@ class IndexController extends Controller
         };
         // $posts = Post::
         $allCategory = Category::all();
-        return view('client.home.index',compact('categories', 'allCategory'));
+        $category_advisory = Post_category::where('id',1)->with(['posts' => function($query){
+             $query->orderBy('id', 'desc')->limit(10);
+        }])->first();
+        $category_news = Post_category::where('id',3)->with(['posts' => function($query){
+            $query->orderBy('id', 'desc')->limit(4); 
+        }])->first();
+        $category_sale = Post::where('post_category_id',2)->orderBy('id', 'desc')->limit(1)->first();
+        return view('client.home.index',compact('categories', 'allCategory','category_advisory', 'category_news', 'category_sale'));
     }
     public function getSearch(Request $r)
     {

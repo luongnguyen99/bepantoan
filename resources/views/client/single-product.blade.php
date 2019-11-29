@@ -548,14 +548,14 @@
 										<div class="item">
 											<div class="slide-pro-seen-item">
 												<div class="tb-recent-thumbb">
-													<a href="#" class="active">
+													<a href="{{route('product_detail',['slug' => get_product_by_id($item)->slug])}}" class="active">
 														<img class="attachment"
 													src="{{!empty(get_product_by_id($item)->galleries[0]) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
 															alt="{{get_product_by_id($item)->name}}">
 													</a>
 												</div>
 												<div class="title-beg">
-													<a href="#">{{get_product_by_id($item)->name}}</a>
+													<a href="{{ route('product_detail',['slug' => get_product_by_id($item)->slug]) }}">{{get_product_by_id($item)->name}}</a>
 												</div>
 												<div class="title-price-recent">{{!empty(get_product_by_id($item)->sale_price) ? pveser_numberformat(get_product_by_id($item)->sale_price) : pveser_numberformat(get_product_by_id($item)->price)}}</div>
 											</div> 

@@ -22,6 +22,7 @@ class ListCategoryController extends Controller
 
     public function category_detail($slug, $slug2 = '')
     {
+        
         $categories = Category::all();
         $category = Category::where('slug', $slug)->with('properties')->first();
         $category->properties->load('property_values');
