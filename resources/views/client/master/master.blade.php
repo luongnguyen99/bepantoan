@@ -107,8 +107,43 @@
 
                                     <ul class="main-menu">
                                         <span class="logo-menu">
-			                    		<img src="client/img/logo-bepantoan.png" alt="">
-									</span> @php build_categories_tree(); @endphp
+											<a href="<?php echo URL::to('/'); ?>">
+												@if($logo != null)
+													<img src="{{ $logo }}" alt="{{ $name_site }}">
+												@else
+													<h1 class="text-logo-header"> {{$name_site}} </h1>
+												@endif
+											</a>
+										</span> 
+										@php $dataset = build_categories_tree(); @endphp
+
+										@if ($dataset)
+											
+											@foreach ( $dataset  as $key => $tree )
+												@php
+													$cate_product = get_category_by_id($key)->toarray();
+												@endphp
+												<li class="ng-scope  drop-icon <?php echo ( isset($tree) && !empty($tree)  ) ? 're-icon menu-item-has-children' : false ?>">
+													<a href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
+														<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
+													</a>
+													@if ( isset($tree) && !empty($tree) )
+														<ul class="sub-menu">
+															@foreach ($tree as $item)
+															@php
+																$cate_product_child = get_category_by_id($item)->toarray();
+															@endphp	
+																<li class="ng-scope ng-has-child1"><a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a> </li>
+															@endforeach
+															
+
+														</ul>	
+													@endif
+													
+												</li>
+											@endforeach
+
+										@endif
 
                                         <ul class="mobile-support">
 
@@ -151,40 +186,27 @@
 
 					<div class="col-xs-12 col-sm-12">
 						<div class="btn-group-cate hidden-lg hidden-md">
-					        <button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-					            Danh mục sản phẩm <span class="caret"></span>
+							<button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+								Danh mục sản phẩm <span class="caret"></span>
 							</button>
-							
-							@php
-								$all_cateshows = show_heder_list_cate();
-							@endphp
-
+					
+							@php $all_cateshows = show_heder_list_cate(); @endphp
 							@if ($all_cateshows)
-					        <ul class="dropdown-menu sub-categories-mobile" role="menu">
-					        	@foreach ( $all_cateshows as $cate_ )
-									
-								 <?php 
-									echo '<pre>';
-									print_r($cate_);
-									echo '</pre>';
-									
-									?> 
-
-									<li>
-										<a href="#" rel=""><span>
-										<img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ</a> 
-									</li>
-
+							<ul class="dropdown-menu sub-categories-mobile" role="menu">
+								@foreach ( $all_cateshows as $cate_ )
+								<li>
+									<a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
+											<img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
+								</li>
 								@endforeach
-					            
 							</ul>
 							@endif
-					    </div>
+							{{-- 
+												</form> --}}
+						</div>
+						
+					
 					</div>
-
-
-
-				</div>
 				
 			</div>
 		</div> <!-- menu mobile  -->
@@ -327,70 +349,6 @@
 					</div>
 				</div>
 			</div>
-<<<<<<< HEAD
-	</footer>	
-	 
-	    
-    </body>
-    <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1">
-    </script>
-    
-    <script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
-    <script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('client/js/jquery-scrolltofixed-min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
-    <script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
-    
-    <script>
-        $.ajaxSetup({
-    			headers: {
-    				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    			}
-    		});
-    		$("#search").keyup(function() {
-    			var key = $('#search').val();
-    			
-    			if(key != ''){
-    				$.ajax({
-    					url:"{{ route("master.search") }}",
-    					method:"GET",
-    					data:{key:key},
-    					success:function(data){
-    						var arr_prd = data.prd;
-    						var arr_cate = data.cate;
-    						var html = '';
-    						jQuery.each(arr_cate,function(key,item){
-    							html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
-    						});
-    						jQuery.each(arr_prd,function(key,item){
-    							html += '<li>'+
-    							'<a href="san-pham/'+item.slug+'">'+
-    								'<div class="media">'+
-    									'<div class="media-left">'+
-    										'<img src="'+item.image+'" class="media-object thumb">'+
-    									'</div>'+
-    									'<div class="media-body">'+
-    										'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
-    										'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
-    									'</div>'+
-    								'</div>'+
-    							'</a>'+
-    							'</li>'
-    						});
-    						$('#search_prd').html(html);
-    					}
-    				});
-    			}else{
-    				$('#search_prd').html('')
-    			}
-    		});
-    </script>
-    @yield('js')
-	</html>
-=======
 		</footer>	
 	
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1"></script>
@@ -441,6 +399,13 @@
 								'</li>'
 							});
 							$('#search_prd').html(html);
+							var tick = $('body').not('#search_prd');
+							$("body").on( 'click' , $(tick) , function (e) {
+							// e.preventDefault();
+							$('#search_prd').hide();
+							$('#search_prd').html('');
+							$('#search').val('');
+							})
 						}else{
 							$('#search_prd').html('Không có kết quả nào phù hợp');
 						}
@@ -495,4 +460,3 @@
 		@yield('js')
 	</body>
 	</html>
->>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07
