@@ -163,173 +163,6 @@ function get_option_by_key($key){
 }
 
 // ================> Build Tree category <=================== //
-
-function make_tree($dataArr , $id = 0 ) {
-    $map_data = array();
-    foreach($dataArr as $key => $data){
-        //  break if parent == 0
-        // echo '<li class="ng-scope  drop-icon re-icon">';
-        if($data['parent'] == $id){
-            
-            unset($dataArr[$key]);
-            $map_data[] = $data;
-            $child = make_tree($map_data , $data['id']);
-
-            $map_data = array_merge( $map_data , $child );
-
-        }
-
-        // echo '</li>';
-
-
-    }
-
-    return $map_data;
-
-}
-
-
-function list_tree( $dataArr , $parent = 0){
-    $result_data = array();
-    foreach ($dataArr as $key => $value) {
-        
-        // if($value['id'] = $id){
-
-            $check_last = check_last_child( $dataArr , $value['id']);
-
-            if( $check_last ){
-                //  is last child
-                if($value['parent'] != 0){
-                    echo '  <li class="ng-scope ng-has-child'. $value['id'] .'"><a href="#">'. $value['name'] .'</a> </li>';
-                    break;
-                }else{
-                    ?>
-                        <li class="ng-scope  drop-icon re-icon">
-                            <a href="#"><span>
-                                <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
-                            </a>
-                        </li>
-                    <?php
-                    
-    
-                }
-
-                unset( $dataArr[$key] );
-    
-                
-    
-            }else{
-                //  find child
-                ?>
-                    <li class="ng-scope  drop-icon re-icon menu-item-has-children">
-                        <a href="#"><span>
-                            <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
-                        </a>
-                        <ul class="sub-menu">
-    
-                            <?php 
-                                // list_tree( $dataArr , $value['id'] ); 
-                            ?>
-    
-    
-                        </ul>
-    
-                    </li>
-                <?php
-    
-    
-    
-            }
-
-
-        // }else{
-        //     break;
-        // }
-
-
-
-
-
-
-    }
-    
-}
-
-
-function find_parent( $dataArr , $id ){
-    $result = array();
-    foreach ($dataArr as $key => $value) {
-        if( $value['parent'] == $id ){
-            $result[] = $value;
-        }
-    }
-
-    return $result;
-
-}
-
-function list_tree_2( $dataArr , $id ){
-
-    foreach ($dataArr as $key => $value) {  
-        
-        if( $value['id'] == $id ){
-
-            if($value['parent'] != 0){
-                echo '  <li class="ng-scope ng-has-child'. $value['id'] .'"><a href="#">'. $value['name'] .'</a> </li>';
-            }else{
-                ?>
-                    <li class="ng-scope  drop-icon re-icon">
-                        <a href="#"><span>
-                            <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
-                        </a>
-                    </li>
-                <?php
-            }
-        }
-
-    }
-    
-}
-
-
-
-function show_main_cate( $dataArr ){
-    foreach ($dataArr as $value) {
-        
-        if( check_last_child(  $dataArr , $value['id'] ) && $value['parent'] == 0 ){
-
-
-            ?>
-                <li class="ng-scope  drop-icon re-icon">
-                    <a href="#"><span>
-                        <img src="<?php echo $value['image'] ?>" alt="<?php echo $value['name'] ?>"></span><?php echo  $value['name']?>
-                    </a>
-                </li>
-            <?php
-
-
-
-        }else{
-
-            $parentArr = find_parent( $dataArr , $value['id']);
-            // echo '<pre>';
-            // print_r("================");
-            // echo '</pre>';
-
-            // // echo '<pre>';
-            // // print_r($value[]);
-            // // echo '</pre>';
-            // echo '<pre>';
-            // print_r($parentArr);
-            // echo '</pre>';
-
-        }
-
-    }
-
-
-}
-
 function check_last_child($dataArr , $id){
     $check = true;
     foreach ($dataArr as $key => $value) {
@@ -343,15 +176,8 @@ function check_last_child($dataArr , $id){
     return $check;
 }
 
-
-
-
-
-
-
 function build_categories_tree(){
     try {
-        echo "sss";
         $categories = Category::all();
         $dataArr = array();
         foreach ($categories as $key => $value) {
@@ -362,40 +188,32 @@ function build_categories_tree(){
                 'parent' => $value->parent_id,
             );
         }
-
-        
-        // test check last child 
-
-    
-        show_main_cate($dataArr);
-
-        $parents = make_tree($dataArr , 0);
-
-        if(isset($dataArr) && !empty($dataArr)){
-           
-            // // foreach ($dataArr as $item) {
-               
-            //     list_tree_2( $dataArr , 0); 
-
-            // // }
-
-            
-            
-
-        }else{
-            return false;
-        }
-
-
-
-
-
+        $dataset = group_list_tree($dataArr);
+        return $dataset;
     } catch (\Throwable $th) {
         return false;
     }
-    
+}
+function group_list_tree( $dataArr){
 
-
+    $dataResult = array();
+    foreach ($dataArr as $key => $value) {
+        if( $value['parent'] == 0 ){
+            $dataResult[$value['id']] = array();
+            unset($dataArr[$key]);
+        }else{
+            if( isset($dataResult[$value['parent']])  ){
+                $dataResult[$value['parent']][] = $value['id']; 
+            }else{
+                foreach ($dataResult as $loop => $item) {
+                    if(in_array( $value['parent'] ,  $item )){
+                        $dataResult[$loop][] = $value['id'];
+                    }
+                }
+            }
+        }
+    }
+    return $dataResult;
 }
 
 
@@ -416,10 +234,7 @@ function show_heder_list_cate(){
 
 // ============> GET CATEGORY PRODUCT NAME <===========
 function get_product_category_url( $slug_product , $slug_brand = null ){
-    return route('category_detail', array( 
-                    'slug' => $slug_product , 'slug2'=> $slug_brand
-                ));
-
+    return route('category_detail', array( 'slug' => $slug_product , 'slug2'=> $slug_brand ));
 }
 
 

@@ -107,8 +107,43 @@
 
                                     <ul class="main-menu">
                                         <span class="logo-menu">
-			                    		<img src="client/img/logo-bepantoan.png" alt="">
-									</span> @php build_categories_tree(); @endphp
+											<a href="<?php echo URL::to('/'); ?>">
+												@if($logo != null)
+													<img src="{{ $logo }}" alt="{{ $name_site }}">
+												@else
+													<h1 class="text-logo-header"> {{$name_site}} </h1>
+												@endif
+											</a>
+										</span> 
+										@php $dataset = build_categories_tree(); @endphp
+
+										@if ($dataset)
+											
+											@foreach ( $dataset  as $key => $tree )
+												@php
+													$cate_product = get_category_by_id($key)->toarray();
+												@endphp
+												<li class="ng-scope  drop-icon <?php echo ( isset($tree) && !empty($tree)  ) ? 're-icon menu-item-has-children' : false ?>">
+													<a href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
+														<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
+													</a>
+													@if ( isset($tree) && !empty($tree) )
+														<ul class="sub-menu">
+															@foreach ($tree as $item)
+															@php
+																$cate_product_child = get_category_by_id($item)->toarray();
+															@endphp	
+																<li class="ng-scope ng-has-child1"><a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a> </li>
+															@endforeach
+															
+
+														</ul>	
+													@endif
+													
+												</li>
+											@endforeach
+
+										@endif
 
                                         <ul class="mobile-support">
 
@@ -205,48 +240,11 @@
                                         @endforeach
                                     </ul>
                                 @endif
-
-							</form>
-						</div>
-						
-					</div>
-
-
-					<div class="col-xs-12 col-sm-12">
-						<div class="btn-group-cate hidden-lg hidden-md">
-					        <button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-					            Danh mục sản phẩm <span class="caret"></span>
-							</button>
+{{-- 
+							</form> --}}
+							</div>
 							
-							@php
-								$all_cateshows = show_heder_list_cate();
-							@endphp
-
-							@if ($all_cateshows)
-					        <ul class="dropdown-menu sub-categories-mobile" role="menu">
-					        	@foreach ( $all_cateshows as $cate_ )
-									
-								 <?php 
-									echo '<pre>';
-									print_r($cate_);
-									echo '</pre>';
-									
-									?> 
-
-									<li>
-										<a href="#" rel=""><span>
-										<img src="https://beptot.vn/Data/ResizeImage/files/page/bep_tux100x100x4.png" alt="Bếp từ"></span>Bếp từ</a> 
-									</li>
-
-								@endforeach
-					            
-							</ul>
-							@endif
-					    </div>
-					</div>
-
-
-
+						</div>
 				</div>
 				
 			</div>
