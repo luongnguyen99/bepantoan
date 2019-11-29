@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
                 PostSeeder::class,
                 ShowroomSeeder::class,
                 BrandsTableSeed::class,
+                Branch_phuthuyxam_seed::class,
                 PropertiesTableSeed::class,
                 Property_valuesTableSeed::class,
                 CategoriesTableSeed::class,
