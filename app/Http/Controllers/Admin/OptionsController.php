@@ -628,6 +628,7 @@ class OptionsController extends Controller
     {
         $footer_m = Option::where('key', '=', 'footer')->first();
         $footer = json_decode($footer_m->value,true);
+        
         return view('admin.options.footer.footer',compact('footer'));
     }
     public function postFooter(Request $r)

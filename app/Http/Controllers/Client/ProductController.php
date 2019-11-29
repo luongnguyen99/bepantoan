@@ -14,6 +14,9 @@ class ProductController extends Controller
 {
     public function detail($slug){
         $product = Product::where('slug',$slug)->with('galleries')->first();
+        if (empty($product)) {
+            abort(404);
+        }
         $categories = Category::limit(12)->get();
         $productsRandom = Product::inRandomOrder()->with('galleries', 'brand')->limit(5)->get();
         $showrooms = Showroom::all();

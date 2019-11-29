@@ -11,7 +11,7 @@ Giỏ hàng
 						@if (count($categories) > 0)
 							@foreach ($categories as $category)
 							<div class="ctg-pro-item">
-								<a href="#">
+								<a href="{{route('category_detail',['slug' => $category->slug])}}">
 									<div class="category-card__image">
 										<img src="{{$category->image}}" alt="{{$category->name}}">
 									</div>
@@ -27,7 +27,7 @@ Giỏ hàng
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="#">beptot.vn</a></li>
+				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
 				    <li>Giỏ hàng</li>
 				</ul>
 			</div>

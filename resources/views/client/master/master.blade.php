@@ -88,7 +88,7 @@
                             </div>
                             <div class="quick-cart">
                                 <a href="{{route('showCart')}}" target="_blank" rel="">
-                                    <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
+                                    <img alt="Giỏ hàng" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
                                 </a>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
                         <div class="col-xs-3 col-sm-2">
                             <div class="quick-cart">
                                 <a href="#" target="_blank" rel="">
-                                    <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
+                                    <img alt="Giỏ hàng" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
                                 </a>
                             </div>
                         </div>
@@ -351,8 +351,8 @@
 					
 					@if (!empty($sw))
 					@foreach ($sw as $item)
-					<!-- Modal -->
-					<div class="modal  fade" id="exampleModalCenter{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					
+					<div class="modal fade" id="exampleModalCenter{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 					<div class="modal-dialog  modal-dialog-centered" role="document">
 						<div class="modal-content" style="border-radius:0%">
 						<div class="modal-header text-center" style="background-color:#dd1015;color:white">
@@ -363,7 +363,7 @@
 						</div>
 						<div class="modal-body">
 							<div style="max-width:100%; overflow:hidden">
-								{!! $item->embed_google_map !!}
+								<?php echo $item->embed_google_map ?>
 							</div>
 						</div>
 						
@@ -391,9 +391,8 @@
 				</div>
 			</div>
 	</footer>	
-	
-        
-    
+	 
+	    
     </body>
     <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1">
