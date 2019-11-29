@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,7 +35,11 @@ class BlogController extends Controller
                     $db_detail = Post::where('slug',$slug)->first();
                     if($db_detail){
                         $id_cate =$db_detail->post_category_id;
+<<<<<<< HEAD
                         $post_other = Post::where('posts.post_category_id',$id_cate)->join('post_categories','post_categories.id','=','posts.post_category_id')
+=======
+                        $post_other = Post::where('post_category_id',$id_cate)->join('post_categories','post_categories.id','=','Posts.post_category_id')
+>>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07
                         ->select('posts.id','posts.title','posts.slug','posts.short_desc','posts.content','posts.image','posts.views','posts.post_category_id','posts.created_at')
                         ->take(10)->get();
                         $title = $db_detail->title;

@@ -128,83 +128,20 @@
 
                                     </ul>
 
-                                    <!--<button class="btn btn-hide-menu hidden-md hidden-lg"><i class="fa fa-times"></i></button> -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-6 col-sm-8">
-                            <div class="logo">
-                                <a href="#"><img src="client/img/logo-bepantoan.png" alt=""></a>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-3 col-sm-2">
-                            <div class="quick-cart">
-                                <a href="#" target="_blank" rel="">
-                                    <img alt="Giỏ hàng" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="form-search">
-                                <form>
-                                    <input type="text" name="" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
-                                    <button type="button" class="btn">Tìm kiếm</button>
-                                    <ul class="resuiltSearch ul-menu-muiten search-suggest">
-                                        <li class="page">Tìm trong <a href="#" target="_blank">Lò nướng Hafele</a></li>
-                                        <li class="page">Tìm trong <a href="#" target="_blank">Tủ lạnh Hafele</a></li>
-                                        <li class="page">Tìm trong <a href="#" target="_blank">Tủ rượu Hafele</a></li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                        <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <img src="https://beptot.vn/Data/ResizeImage/images/7636_bep_gas_am_eurosun_eu_ga287x100x100x4.jpg" class="media-object thumb">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h4 class="media-heading name-prd">Bếp Gas Âm Eurosun EU-GA287</h4>
-                                                        <p class="pri-item ss-name">2,760,000<sup>₫</sup></p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-
-                                </form>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="btn-group-cate hidden-lg hidden-md">
-                                <button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                    Danh mục sản phẩm <span class="caret"></span>
-                                </button>
-
-                                @php $all_cateshows = show_heder_list_cate(); @endphp 
-                                @if ($all_cateshows)
-                                    <ul class="dropdown-menu sub-categories-mobile" role="menu">
-                                        @foreach ( $all_cateshows as $cate_ )
-                                        <li>
-                                            <a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
-                                            <img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
+					<div class="col-xs-3 col-sm-2">
+						<div class="quick-cart">
+					        <a href="#" target="_blank" rel="">
+					            <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
+					        </a>
+					    </div>
+					</div>
+					<div class="col-xs-12 col-sm-12">
+						<div class="form-search" >
+							<form method="post">
+								<input id="search_m" type="text" name="search" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+								<button type="button" class="btn">Tìm kiếm</button>
+								<ul id="search_prd_m" class="resuiltSearch ul-menu-muiten search-suggest">
+								</ul>
 
 							</form>
 						</div>
@@ -390,6 +327,7 @@
 					</div>
 				</div>
 			</div>
+<<<<<<< HEAD
 	</footer>	
 	 
 	    
@@ -452,3 +390,109 @@
     </script>
     @yield('js')
 	</html>
+=======
+		</footer>	
+	
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1"></script>
+	
+		<script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/jquery-scrolltofixed-min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
+		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
+		<script>
+			
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$("#search").keyup(function() {
+			var key = $('#search').val();
+			
+			if(key != ''){
+				$.ajax({
+					url:"{{ route("master.search") }}",
+					method:"GET",
+					data:{key:key},
+					success:function(data){
+						if(data.prd.length != 0 || data.cate.length != 0){
+							var arr_prd = data.prd;
+							var arr_cate = data.cate;
+							var html = '';
+							jQuery.each(arr_cate,function(key,item){
+								html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+							});
+							jQuery.each(arr_prd,function(key,item){
+								html += '<li>'+
+								'<a href="san-pham/'+item.slug+'">'+
+									'<div class="media">'+
+										'<div class="media-left">'+
+											'<img src="'+item.image+'" class="media-object thumb">'+
+										'</div>'+
+										'<div class="media-body">'+
+											'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
+											'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+										'</div>'+
+									'</div>'+
+								'</a>'+
+								'</li>'
+							});
+							$('#search_prd').html(html);
+						}else{
+							$('#search_prd').html('Không có kết quả nào phù hợp');
+						}
+					}
+				});
+			}else{
+				$('#search_prd').html('');
+			}
+		});
+		$("#search_m").keyup(function() {
+			var key = $('#search_m').val();
+			
+			if(key != ''){
+				$.ajax({
+					url:"{{ route("master.search_m") }}",
+					method:"GET",
+					data:{key:key},
+					success:function(data){
+						if(data.prd.length != 0 || data.cate.length != 0){
+							var arr_prd = data.prd;
+							var arr_cate = data.cate;
+							var html = '';
+							jQuery.each(arr_cate,function(key,item){
+								html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+							});
+							jQuery.each(arr_prd,function(key,item){
+								html += '<li>'+
+								'<a href="san-pham/'+item.slug+'">'+
+									'<div class="media">'+
+										'<div class="media-left">'+
+											'<img src="'+item.image+'" class="media-object thumb">'+
+										'</div>'+
+										'<div class="media-body">'+
+											'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
+											'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+										'</div>'+
+									'</div>'+
+								'</a>'+
+								'</li>'
+							});
+							$('#search_prd_m').html(html);
+						}else{
+							$('#search_prd_m').html('Không có kết quả nào phù hợp');
+						}
+					}
+				});
+			}else{
+				$('#search_prd_m').html('');
+			}
+		});
+		</script>
+		@yield('js')
+	</body>
+	</html>
+>>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07

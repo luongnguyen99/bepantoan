@@ -23,7 +23,7 @@
 		</div> <!-- end slide --> 
 
 		
-		@if (!empty($category_sale))
+		z@if (!empty($category_sale))
 			<div class="notice-title">
 				<div class="container">
 					<ul>
@@ -213,29 +213,32 @@
 		        </div>
 		        <div class="re-blog">
 		            <div class="row">
-		                @foreach ($category_news->posts as $item)
-							<div class="col-md-3 col-sm-6 col-xs-12">
-								<div class="blog-container-inner">
-									<div class="post-thumb">
-										<a href="#">
-											<img class="attachment-blog-list wp-post-image" alt="blog-2"
-												src="client/img/bep-tu-bosch-pxv975dc1e-depx500x500x4.jpg"></a>
-									</div>
-									<div class="visual-inner">
-										<h2 class="blog-title">
-											<a href="#">{{$item->title}}</a>
-										</h2>
-										<div class="blog-meta">
-											<span class="published">
-												<i class="fa fa-clock-o"></i>
-												{{$item->created_at}}
-											</span>
-										</div>
-										<div class="blog-content-home">{{$item->short_desc}}</div>
-									</div>
-								</div>
-							</div>
-						@endforeach
+						@if (!empty($highlights_post))
+						@foreach ($highlights_post as $item)
+							
+		                <div class="col-md-3 col-sm-6 col-xs-12">
+		                    <div class="blog-container-inner">
+		                        <div class="post-thumb">
+		                            <a href="{{ $item->slug }}">
+		                                <img class="attachment-blog-list wp-post-image" alt="blog-2" src="{{ $item->image }}"></a>
+		                        </div>
+		                        <div class="visual-inner">
+		                            <h2 class="blog-title">
+		                                <a href="{{ $item->slug }}">{{ $item->title }}</a>
+		                            </h2>
+		                            <div class="blog-meta">
+		                                <span class="published">
+		                                    <i class="fa fa-clock-o"></i>
+		                                    {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}
+		                                </span>
+		                            </div>
+		                            <div class="blog-content-home">{{ $item->short_desc }}</div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <!-- single blog item end -->
+		                @endforeach
+						@endif
 		            </div>
 		        </div>
 		    </div>

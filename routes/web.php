@@ -228,6 +228,19 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         
         Route::get('del/{id}','StatusorderController@getdel');
     });
+    //=================> Pages <===================
+    Route::group(['prefix' => 'page','as' => 'page.'],function(){
+        Route::get('', 'PageController@getList')->name('index');
+
+        Route::get('add', 'PageController@getAdd')->name('add');
+        Route::post('add', 'PageController@postAdd');
+
+        Route::get('edit/{id}', 'PageController@getEdit');
+        Route::post('edit/{id}', 'PageController@postEdit');
+
+        Route::get('del/{id}', 'PageController@del');
+
+    });
 });
 
 /* ---------Client----------  */
@@ -235,11 +248,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList')->name('home_client');
     Route::get('search', 'IndexController@getSearch')->name('master.search');
-    // Route::any('tim-kiem', 'IndexController@searchBtn')->name('tim-kiem');
-    //
-
-    // tim kiem
-    Route::get('tim-kiem','IndexController@searchEnter')->name('searchEnter');
+    Route::get('search_m', 'IndexController@getSearchMobile')->name('master.search_m');
     // danh muc san pham 
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
     // danh muc chi tiet
@@ -279,8 +288,8 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('{slug}','BlogController@getData');
 
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
-
-
+    Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
+    Route::get('page/{slug}','IndexController@getPage')->name('page');
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {

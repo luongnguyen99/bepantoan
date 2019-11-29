@@ -28,8 +28,8 @@
     <div class="page-bread">
         <div class="container">
             <ul>
-                <li><a href="#">beptot.vn</a></li>
-                <li>Tin tức</li>
+                <li><a href="/">beptot.vn</a></li>
+                <li>{{ $title }}</li>
             </ul>
         </div>
     </div>
@@ -96,10 +96,10 @@
                         <ul class="list-item-news">
                             @if (!empty($post_other))
 							@foreach ($post_other as $item)
-							
+							@if ($item->slug != $db_detail->slug)
                             <li>
                                 <div class="img-news">
-                                    <a href="#" title="{HỎI ĐÁP} Bếp từ chefs eh-dih888 có tốt không">
+                                    <a href="{{ $item->slug }}" title="{HỎI ĐÁP} Bếp từ chefs eh-dih888 có tốt không">
                                         <img src="{{ $item->image }}" alt="{{ $item->title }}">
                                     </a>
                                 </div>
@@ -113,6 +113,7 @@
                                     @endif
                                 </div>
                             </li>
+                            @endif
                             @endforeach
                             @endif
                         </ul>
