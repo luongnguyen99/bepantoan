@@ -351,7 +351,7 @@ function check_last_child($dataArr , $id){
 
 function build_categories_tree(){
     try {
-        
+        echo "sss";
         $categories = Category::all();
         $dataArr = array();
         foreach ($categories as $key => $value) {
