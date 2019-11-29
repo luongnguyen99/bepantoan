@@ -126,7 +126,23 @@
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                 </ul>
             </li>
-            {{-- Show rooms --}}
+            {{-- Page --}}
+            <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Tùy chỉnh trang</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('page')}}"><a href="{{route('admin.page.index')}}"><i
+                                class="fa fa-circle-o"></i> Danh sách</a></li>
+                    <li class="{{activeNav('page')}}"><a href="{{route('admin.page.add')}}"><i
+                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                </ul>
+            </li>
+            {{-- Option --}}
             <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
                 <a href="#">
                     <i class="fa fa-archive"></i>
@@ -149,10 +165,10 @@
                             class="fa fa-circle-o"></i> Danh sách Slide</a></li>
                             <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer')}}"><i
                             class="fa fa-circle-o"></i> Footer</a></li>
+                            <li class="{{activeNav('options')}}"><a href="{{route('admin.options.logo')}}"><i
+                                class="fa fa-circle-o"></i> Logo</a></li>
                         </ul>
                     </li>
-                    <li class="{{activeNav('options')}}"><a href="{{route('admin.options.logo')}}"><i
-                                class="fa fa-circle-o"></i> Logo</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.hotline')}}"><i
                         class="fa fa-circle-o"></i>Liên hệ</a></li>
                     <li class="{{activeNav('options')}}"><a href="{{route('admin.options.footer-copy')}}"><i

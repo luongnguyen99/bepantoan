@@ -667,11 +667,24 @@ class OptionsController extends Controller
         $req['title_banner'] = $r->title_banner;
         $req['img_introduce'] = $r->img_introduce;
         $req['content'] = $r->content;
-        $req['orientation'] = $r->orientation;
-        $req['content2'] = $r->content2;
+        $req['title_rep'] = $r->title_rep;
         
-        $introduce->value = json_encode($req);
+        if(empty($r->content2_old)){
+            $req['table'] = $r->table;
+        }else{
+            foreach ($r->content2_old as $key => $value) {
+                $arr_old[$key]['content2'] = $value;
+            }
+            if (!empty($r->table['content'])) {
+                $arr_new = array_merge($arr_old,$r->table['content']);
+                $req['table']['content'] = $arr_new; 
+            }else{
+                $req['table']['content'] = $arr_old;
+            }
+            
+        }
        
+        $introduce->value = json_encode($req);
         $introduce->save();
         return redirect()->back()->with('success');
     }

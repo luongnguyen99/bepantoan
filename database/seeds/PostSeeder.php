@@ -100,6 +100,7 @@ class PostSeeder extends Seeder
                 'views'=>'0',
                 'post_category_id'=>'1',
             ],
+            
             [
                 'title' => 'Chương trình Khuyến mại COMBO BẾP TỪ + MÁY HÚT MÙI + CHẬU + VÒI NÓNG LẠNH',
                 'slug' => 'chuong-trinh-khuyen-mai-combo-bep-tu-may-hut-mui-chau-voi-nong-lanh',

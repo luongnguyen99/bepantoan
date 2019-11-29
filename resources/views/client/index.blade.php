@@ -311,7 +311,6 @@
 		                </div>
 		                <!-- single blog item end -->
 						<?php endforeach; ?>
-		                
 		            </div>
 		        </div>
 		    </div>

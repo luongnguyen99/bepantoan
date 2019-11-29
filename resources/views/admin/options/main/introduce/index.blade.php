@@ -81,20 +81,56 @@ Thiết lập trang giới thiệu
                     </div>
                     <div class="form-group">
                         <label>Thêm nội dung</label>
-                        <textarea class="form-control" name="content" id="content" cols="30" rows="4">@if (!empty($introduce['content'])){{ $introduce['content'] }}@endif</textarea>
+                        <textarea class="form-control" name="content" id="content">@if (!empty($introduce['content'])){{ $introduce['content'] }}@endif</textarea>
                         @if($errors->has('content'))
                         <div class="alert alert-danger" role="alert">
                          <strong>{{ $errors->first('content') }}</strong>
                         </div>
                         @endif
                     </div>
+                    
                     <div class="form-group">
-                        <label for="">Thêm mô tả bên dưới</label>
-                        <input type="text" name="orientation" class="form-control" id="exampleInputPassword4" value="@if (!empty($introduce['orientation'])){{ $introduce['orientation'] }}@endif"
-                                    placeholder="Tiêu đề">
-                                    <br>
-                        <textarea class="form-control" name="content2" id="content2" placeholder="Nội dung" cols="30" rows="10">@if (!empty($introduce['content2'])){{ $introduce['content2'] }}@endif</textarea>
+                        
+                        <div class="form-group">
+                            <label for="">Tiêu đề</label>
+                            <input class="form-control" type="text" name="title_rep" value="{{ $introduce['title_rep'] }}" placeholder="Tiêu đề">
+                        </div>
+                        
+                        @if (!empty($introduce['table']['content']))
+                        @foreach ($introduce['table']['content'] as $item)
+                            <div class="del_form">
+                                <label>Thêm mô tả bên dưới</label>
+                                <div class="row">
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" name="content2_old[]" value="{{ $item['content2'] }}" class="form-control" id="exampleInputPassword4"
+                                            placeholder="Phương thức" required>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 click_form">
+                                        <p class="btn btn-danger">x</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        @endif
+                        
+                        <div data-repeater-list="table[content]">
+                            <div data-repeater-item class="repeat remove_form_new">
+                                <label>Thêm mô tả bên dưới</label>
+                                <div class="row">
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <input type="text" name="content2" class="form-control" id="exampleInputPassword4"
+                                            placeholder="Phương thức" required>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 del_form_new">
+                                        <p class="btn btn-danger">x</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input style="margin-top:10px;" data-repeater-create type="button" class="btn btn-info"
+                            value="Thêm" />
                     </div>
+
                     <div>
                         <input type="submit" class="btn btn-success" value="Lưu">
                     </div>
@@ -109,7 +145,7 @@ Thiết lập trang giới thiệu
 @endsection
 @section('js')
 <script>CKEDITOR.replace('content'); </script>
-<script>CKEDITOR.replace('content2'); </script>
+<script src="{{ asset('assets/js/jquery.repeater.js') }}"></script>
 <script>
     jQuery('body').on('click', '#add', function () {
         $('#img_banner').remove();
@@ -248,5 +284,80 @@ Thiết lập trang giới thiệu
         var final_string = JSON.stringify(string_arr);
         $('#list-img').val(final_string);
     });
+    $(document).ready(function () {
+        'use strict';
+
+        $('.repeater').repeater({
+            defaultValues: {
+                'textarea-input': 'foo',
+                'text-input': 'bar',
+                'select-input': 'B',
+                'checkbox-input': ['A', 'B'],
+                'radio-input': 'B'
+            },
+            show: function () {
+                $(this).slideDown();
+            },
+            hide: function (deleteElement) {
+                if (confirm('Are you sure you want to delete this element?')) {
+                    $(this).slideUp(deleteElement);
+                }
+            },
+            ready: function (setIndexes) {
+
+            }
+        });
+
+        window.outerRepeater = $('.outer-repeater').repeater({
+            isFirstItemUndeletable: true,
+            defaultValues: {
+                'text-input': 'outer-default'
+            },
+            show: function () {
+                console.log('outer show');
+                $(this).slideDown();
+            },
+            hide: function (deleteElement) {
+                console.log('outer delete');
+                $(this).slideUp(deleteElement);
+            },
+            repeaters: [{
+                isFirstItemUndeletable: true,
+                selector: '.inner-repeater',
+                defaultValues: {
+                    'inner-text-input': 'inner-default'
+                },
+                show: function () {
+                    console.log('inner show');
+                    $(this).slideDown();
+                },
+                hide: function (deleteElement) {
+                    console.log('inner delete');
+                    $(this).slideUp(deleteElement);
+                }
+            }]
+        });
+        jQuery(".edit-menu").click(function (e) {
+            e.preventDefault();
+            jQuery(this).parent().parent().addClass("editing");
+            var name = jQuery(this).parent().parent().data("name"),
+                link = jQuery(this).parent().parent().data("link");
+            jQuery("#modal-menu .edit-name").val(name);
+            jQuery("#modal-menu .edit-link").val(link);
+            $('#modal-menu').modal('show');
+        });
+        $('.repeat').remove();
+    });
+    
+    
+    $('body').on('click','.click_form',function(){
+        var del = $(this).parents('.del_form');
+        $(del).remove();
+    });
+    
+    $('body').on('click','.del_form_new',function(){
+        var del = $(this).parents('.remove_form_new');
+        $(del).remove();
+    })
 </script>
 @endsection

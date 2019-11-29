@@ -299,30 +299,32 @@
 		        </div>
 		        <div class="re-blog">
 		            <div class="row">
-		                <?php foreach(range(1, 4) as $number ): ?>
+						@if (!empty($highlights_post))
+						@foreach ($highlights_post as $item)
+							
 		                <div class="col-md-3 col-sm-6 col-xs-12">
 		                    <div class="blog-container-inner">
 		                        <div class="post-thumb">
-		                            <a href="#">
-		                                <img class="attachment-blog-list wp-post-image" alt="blog-2" src="client/img/bep-tu-bosch-pxv975dc1e-depx500x500x4.jpg"></a>
+		                            <a href="{{ $item->slug }}">
+		                                <img class="attachment-blog-list wp-post-image" alt="blog-2" src="{{ $item->image }}"></a>
 		                        </div>
 		                        <div class="visual-inner">
 		                            <h2 class="blog-title">
-		                                <a href="#">Dưới góc nhìn của chuyên gia – bếp từ Bosch có tốt không?</a>
+		                                <a href="{{ $item->slug }}">{{ $item->title }}</a>
 		                            </h2>
 		                            <div class="blog-meta">
 		                                <span class="published">
 		                                    <i class="fa fa-clock-o"></i>
-		                                    06/11/2019 10:38:09 SA
+		                                    {{ Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}
 		                                </span>
 		                            </div>
-		                            <div class="blog-content-home">Bếp từ bosch thiết kế hiện đại, sang trọng, chất lượng sản phẩm với nhiều tính năng ưu việt đem lại cho người dùng nhiều trải nghiệm thú vị. Liên hệ bếp tốt theo số: 0986.083.083 để tìm hiểu thêm sản phẩm.</div>
+		                            <div class="blog-content-home">{{ $item->short_desc }}</div>
 		                        </div>
 		                    </div>
 		                </div>
 		                <!-- single blog item end -->
-						<?php endforeach; ?>
-		                
+		                @endforeach
+						@endif
 		            </div>
 		        </div>
 		    </div>
