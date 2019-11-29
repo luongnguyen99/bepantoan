@@ -31,11 +31,10 @@ Thiết lập footer
                 <div class="box-body">
                     <!--  content here -->
                     <div class="form-group">
-                        <textarea class="form-control" name="block1" id="editor" rows="3">{{ $footer['block1'] }}</textarea>
+                        {{-- {{ $footer['block1'] }} --}}
+                        <textarea class="form-control" name="block1" id="editor" rows="3"><?php  echo $footer['block1']  ?></textarea>
                     </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success" id="add_img">Upload ảnh vào nội dung</button>
-                    </div>
+                    
                     <!-- end content here -->
                 </div>
             </div>
@@ -55,11 +54,10 @@ Thiết lập footer
                 <div class="box-body">
                     <!--  content here -->
                         <div class="form-group">
-                            <textarea class="form-control" name="block2" id="editor1" rows="3">{{ $footer['block2'] }}</textarea>
+                            {{-- {{ $footer['block2'] }} --}}
+                            <textarea class="form-control" name="block2" id="editor1" rows="3"><?php  echo $footer['block2']  ?></textarea>
                         </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-success" id="add_img_bock2">Upload ảnh vào nội dung</button>
-                        </div>
+                        
                     <!-- end content here -->
                 </div>
                 
@@ -81,11 +79,10 @@ Thiết lập footer
                 <div class="box-body">
                     <!--  content here -->
                         <div class="form-group">
-                            <textarea class="form-control" name="block3" id="editor2" rows="3">{{ $footer['block3'] }}</textarea>
+                            {{-- {{ $footer['block3'] }} --}}
+                            <textarea class="form-control" name="block3" id="editor2" rows="3"><?php  echo $footer['block3']  ?></textarea>
                         </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-success" id="add_img_bock3">Upload ảnh vào nội dung</button>
-                        </div>
+                        
                     <!-- end content here -->
                 </div>
             </div>
@@ -106,20 +103,19 @@ Thiết lập footer
                     <!--  content here -->
                         <div class="form-group">
                             <label for="name">Nội dung</label>
-                            <textarea class="form-control" name="block4" id="editor3" rows="3">{{ $footer['block4'] }}</textarea>
+                            {{-- {{ }} --}}
+                            <textarea class="form-control" name="block4" id="editor3" rows="3"><?php  echo $footer['block4']  ?></textarea>
                         </div>
-                        <div class="form-group">
-<<<<<<< HEAD
-                            <button type="button" class="btn btn-success" id="add_img_bock4">Upload ảnh vào nội dung</button>
-=======
-                            <textarea class="form-control" name="" id="" rows="4">{{ $json['footer'] }}</textarea>
+                        
+                        {{-- <div class="form-group">
+                            
+                            <textarea class="form-control" name="" id="" rows="4">asdsa</textarea>
                             @if (!empty($json['footer']))
                                 <div class="text-center" style="margin-top:5px;">
                                     <a href="/admin/options/del_footer" class="btn btn-danger">Xóa</a>
                                 </div>
                             @endif
->>>>>>> 041af20cf1a3ecdb95262fedd8779f9f22968621
-                        </div>
+                        </div> --}}
                     <!-- end content here -->
                 </div>
             </div>

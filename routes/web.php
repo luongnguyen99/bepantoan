@@ -245,7 +245,6 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     // danh muc thuong hieu
     Route::get('thuong-hieu-{slug}', 'BrandCategoryController@brand_category')->name('brand_category');
     // san pham chi tiet
-    Route::get('san-pham/{slug}','ProductController@detail')->name('product_detail');
     
     //rate star
     Route::post('rate_star','ProductController@rate_star')->name('rate_star');
@@ -254,7 +253,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     
     // loadmore
     Route::post('loadmore', 'ListCategoryController@loadmore')->name('loadmore');
-
+    
     Route::group(['prefix' => 'cart','as' => 'cart.'], function () {
         Route::post('addCart','CartController@addCart')->name('addCart');
         Route::post('removeCart/{id}','CartController@removeCart')->name('removeCart');
@@ -270,7 +269,10 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('abc', function(){
         dd(Cart::destroy());
     });
-    Route::get('/{slug}','BlogController@getData');
+    
+    Route::get('/{slug}.html','ProductController@detail')->name('product_detail');
+    Route::get('{slug}','BlogController@getData');
+
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
 
 });

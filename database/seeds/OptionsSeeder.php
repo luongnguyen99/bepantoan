@@ -16,7 +16,7 @@ class OptionsSeeder extends Seeder
             [
                 'name' => 'logo',
                 'key' => 'logo',
-                'value' => 'http://luongnd2286.xyz/userfiles/images/logo-bepantoan.png',
+                'value' => url('/').'/userfiles/images/logo-bepantoan.png',
             ],
             [
                 'name' => 'footer',
@@ -63,7 +63,7 @@ class OptionsSeeder extends Seeder
             [
                 'name' => 'slide',
                 'key' => 'slide',
-                'value' => '',
+                'value' => '[[{"type":null,"img_":"http:\/\/luongnd2286.xyz\/userfiles\/images\/dmestik.jpg"},{"type":null,"img_":"http:\/\/luongnd2286.xyz\/userfiles\/images\/bosch(1).jpg"},{"type":null,"img_":"http:\/\/luongnd2286.xyz\/userfiles\/images\/CHEFS.jpg"},{"type":null,"img_":"http:\/\/luongnd2286.xyz\/userfiles\/images\/dmestik.jpg"},{"type":null,"img_":"http:\/\/luongnd2286.xyz\/userfiles\/images\/bosch(1).jpg"},{"type":null,"img_":"http:\/\/luongnd2286.xyz\/userfiles\/images\/CHEFS.jpg"}]]',
             ],
             [
                 'name' => 'email_admin',

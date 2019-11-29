@@ -51,8 +51,8 @@ Slide
                                             <a type="button" class="btn btn-info add" name="action" value="">Chọn
                                                 ảnh</a>
                                         </div>
-                                        <div class="text-left img_old" style="margin-left:20px;margin-top:20px;">
-                                            <img src="{{ $db_edit['img_'] }}" width="200" height="150" alt="">
+                                        <div class="text-left img_old" style="margin-top:7%;margin-left:1%;">
+                                            <img src="{{ $db_edit['img_'] }}" width="500" height="auto" alt="">
                                             <input type="hidden" name="old_img" value="{{ $db_edit['img_'] }}">
                                         </div>
                                         <div class="col-sm-12 text-center" id="img-cat"></div>

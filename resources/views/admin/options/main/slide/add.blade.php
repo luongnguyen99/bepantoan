@@ -257,9 +257,9 @@ Slide
                             let new_url_ = base_url +'/'+ urlParts[1] +'/'+ urlParts[2] +'/'+ urlParts[3] ;
 
                             list_img =
-                                "<div class='single-img text-left'><i class='fa fa-remove delete-img' data-url='" +
+                                "<div class='single-img text-left' style='margin-top:7%;margin-left:1%'><i class='fa fa-remove delete-img' data-url='" +
                                 new_url_ + "'></i><img alt='' src='" + new_url_ +
-                                "' class='img-cat' width='200' height='200'/></div><input type='hidden' value='" +
+                                "' class='img-cat' width='500' height='auto'/></div><input type='hidden' value='" +
                                 new_url_ + "' name='img_'>";
 
                         }

@@ -2,40 +2,39 @@
 @section('title','Trang chủ')
 @section('content')
 <div class="home">
-
+		@php
+			$slides = get_option_by_key('slide');
+		@endphp
 		<div class="owl-carousel owl-theme slide-home">
-		    <div class="item">
-				
-				<a href="#">
-		    		<img src="client/img/bosch(1).jpg" alt="">
-				</a>
-				
-		    </div>
-		    <div class="item">
-		    	<a href="#">
-		    		<img src="client/img/dmestik.jpg" alt="">
-		    	</a>
-		    </div>
-		    <div class="item">
-		    	<a href="#">
-		    		<img src="client/img/CHEFS.jpg" alt="">
-		    	</a>
-		    </div>
+			@if (!empty($slides))
+				@php
+					$slides = json_decode(get_option_by_key('slide'),true);
+					
+				@endphp
+			
+			@foreach ($slides[0] as $item)
+				<div class="item">
+					<a href="{{!empty($item['type']) ? $item['type'] : '#'}}">
+						<img src="{{$item['img_']}}" alt="">
+					</a>
+				</div>
+				@endforeach    
+			@endif
 		</div> <!-- end slide --> 
 
-
 		
-		<div class="notice-title">
-			<div class="container">
-				<ul>
-		            <li>
-		                <i class="fa fa-volume-up"></i>Thông tin khuyến mãi:<a href="#" target="_blank"> Siêu khuyến mại chiết khẩu 30% - Vui đón Tân Gia.</a>
-		            </li>
-		        </ul>
-		        <span><a href="#" target="_blank" class="link-update">Xem thêm </a><i class="pe-7s-right-arrow"></i></span>
-			</div>
-		</div>
-
+		@if (!empty($category_sale))
+			<div class="notice-title">
+				<div class="container">
+					<ul>
+						<li>
+							<i class="fa fa-volume-up"></i>Thông tin khuyến mãi:<a href="#" target="_blank"> {{$category_sale->title}}.</a>
+						</li>
+					</ul>
+					<span><a href="#" target="_blank" class="link-update">Xem thêm </a><i class="pe-7s-right-arrow"></i></span>
+				</div>
+			</div>			
+		@endif
 
 		@if (!empty($allCategory) && count($allCategory))
 			<div class="wrap-category">
@@ -175,88 +174,70 @@
 		@endforeach
 		@endif
 		
-		<div class="tips-wrap">
-			<div class="container">
-				<div class="section-title">
-	                <h3>Góc tư vấn</h3>
-	                <div class="uploader-more hidden-xs">
-	                    <a href="#">Xem thêm<i class="fa fa-angle-right"></i></a>
-	                </div>
-	            </div>
-	            <div class="hd-card-body">
-                    <ul class="tips-faq">
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">Điểm danh các mẫu bếp từ dưới 10 triệu được “săn đón” nhất hiện nay</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">Tổng hợp một số mẫu bếp từ dưới 5 triệu giá rẻ, chất lượng tốt</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">Nên mua bếp gas ở đâu tại Hà Nội uy tín, chất lượng?</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">Lắp đặt bếp từ ở đâu uy tín nhất tại Hà Nội ?</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">Dịch vụ lắp đặt bếp gas công nghiệp, bếp gas nhà hàng khách sạn siêu chất lượng</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">Dịch vụ lắp đặt bếp gas âm uy tín, an toàn số 1 tại Hà Nội</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">BẾP TỪ BOSCH BÁO LỖI VÀ CÁCH XỬ LÝ ĐƠN GIẢN, NHANH CHÓNG</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">BẾP TỪ ĐÔI LOẠI NÀO TỐT - NÊN MUA BẾP TỪ ĐÔI HÃNG NÀO</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">MUA BẾP TỪ ÂM LOẠI NÀO TỐT - BẾP TỪ ÂM HÃNG NÀO TỐT</a>
-                        </li>
-                        <li class="item">
-                            <a href="#" target="_blank" class="ellipsis">CÓ NÊN DÙNG BẾP 1 TỪ 1 HỒNG NGOẠI BOSCH KHÔNG?</a>
-                        </li>
-                    </ul>
-	            </div>
+		@if (!empty($category_advisory) && !empty($category_advisory->posts) && count($category_advisory->posts) > 0)
+			<div class="tips-wrap">
+				<div class="container">
+					<div class="section-title">
+						<h3>{{$category_advisory->name}}</h3>
+						<div class="uploader-more hidden-xs">
+							<a href="#">Xem thêm<i class="fa fa-angle-right"></i></a>
+						</div>
+					</div>
+					
+					<div class="hd-card-body">
+						<ul class="tips-faq">
+							@foreach ($category_advisory->posts as $item)
+							
+								<li class="item">
+									<a href="#" target="_blank" class="ellipsis">{{$item->title}}</a>
+								</li>
+							@endforeach
+						</ul>
+					</div>
+					
+				</div>
 			</div>
-		</div>
+		@endif
+		@if (!empty($category_news) && !empty($category_news->posts) && count($category_news->posts) > 0)
 		<div class="blog section-news">
 		    <div class="container">
 		        <div class="row">
 		            <div class="col-xs-12">
 		                <div class="section-title">
-		                    <h3>Tin tức</h3>
+		                    <h3>{{$category_news->name}}</h3>
 		                </div>
 		            </div>
 		        </div>
 		        <div class="re-blog">
 		            <div class="row">
-		                <?php foreach(range(1, 4) as $number ): ?>
-		                <div class="col-md-3 col-sm-6 col-xs-12">
-		                    <div class="blog-container-inner">
-		                        <div class="post-thumb">
-		                            <a href="#">
-		                                <img class="attachment-blog-list wp-post-image" alt="blog-2" src="client/img/bep-tu-bosch-pxv975dc1e-depx500x500x4.jpg"></a>
-		                        </div>
-		                        <div class="visual-inner">
-		                            <h2 class="blog-title">
-		                                <a href="#">Dưới góc nhìn của chuyên gia – bếp từ Bosch có tốt không?</a>
-		                            </h2>
-		                            <div class="blog-meta">
-		                                <span class="published">
-		                                    <i class="fa fa-clock-o"></i>
-		                                    06/11/2019 10:38:09 SA
-		                                </span>
-		                            </div>
-		                            <div class="blog-content-home">Bếp từ bosch thiết kế hiện đại, sang trọng, chất lượng sản phẩm với nhiều tính năng ưu việt đem lại cho người dùng nhiều trải nghiệm thú vị. Liên hệ bếp tốt theo số: 0986.083.083 để tìm hiểu thêm sản phẩm.</div>
-		                        </div>
-		                    </div>
-		                </div>
-		                <!-- single blog item end -->
-						<?php endforeach; ?>
-		                
+		                @foreach ($category_news->posts as $item)
+							<div class="col-md-3 col-sm-6 col-xs-12">
+								<div class="blog-container-inner">
+									<div class="post-thumb">
+										<a href="#">
+											<img class="attachment-blog-list wp-post-image" alt="blog-2"
+												src="client/img/bep-tu-bosch-pxv975dc1e-depx500x500x4.jpg"></a>
+									</div>
+									<div class="visual-inner">
+										<h2 class="blog-title">
+											<a href="#">{{$item->title}}</a>
+										</h2>
+										<div class="blog-meta">
+											<span class="published">
+												<i class="fa fa-clock-o"></i>
+												{{$item->created_at}}
+											</span>
+										</div>
+										<div class="blog-content-home">{{$item->short_desc}}</div>
+									</div>
+								</div>
+							</div>
+						@endforeach
 		            </div>
 		        </div>
 		    </div>
+		</div>
+		@endif
 		</div>
 	</div>
 @endsection
