@@ -41,28 +41,30 @@
 				<div class="container">
 					<div class="owl-carousel owl-theme slide-pro-ctg">
 						@foreach ($allCategory as $key => $item)
-							<div class="item">
-								@if ($key % 2 == 0)
-									<div class="ctg-pro-item">
-										<a href="{{route('category_detail',['slug' => $item->slug])}}">
-											<div class="category-card__image">
-												<img src="{{!empty($item->image) ? $item->image : ''}}" alt="{{$item->name}}">
-											</div>
-											<div class="category-card__name "><strong>{{$item->name}}</strong></div>
-										</a>
-									</div>
-								@else 
-									<div class="ctg-pro-item">
-										<a href="{{route('category_detail',['slug' => $item->slug])}}">
-											<div class="category-card__image">
-												<img src="{{!empty($item->image) ? $item->image : ''}}" alt="{{$item->name}}">
-											</div>
-											<div class="category-card__name "><strong>{{$item->name}}</strong></div>
-										</a>
-									</div>
-								@endif
-								
-							</div>
+							@if ($key % 2 == 0)
+								<div class="item">
+									
+										<div class="ctg-pro-item">
+											<a href="{{route('category_detail',['slug' => $allCategory[$key]->slug])}}">
+												<div class="category-card__image">
+													<img src="{{!empty($allCategory[$key]->image) ? $allCategory[$key]->image : ''}}" alt="{{$allCategory[$key]->name}}">
+												</div>
+												<div class="category-card__name "><strong>{{$allCategory[$key]->name}}</strong></div>
+											</a>
+										</div>
+
+										@if (isset($allCategory[$key + 1]) && !empty($allCategory[$key + 1]) )
+											<div class="ctg-pro-item">
+												<a href="{{route('category_detail',['slug' => $allCategory[$key + 1]->slug])}}">
+													<div class="category-card__image">
+														<img src="{{!empty($allCategory[$key + 1]->image) ? $allCategory[$key + 1]->image : ''}}" alt="{{$allCategory[$key + 1]->name}}">
+													</div>
+													<div class="category-card__name "><strong>{{$allCategory[$key + 1]->name}}</strong></div>
+												</a>
+											</div>	
+										@endif			
+								</div>
+							@endif
 						@endforeach
 					</div>
 				</div>

@@ -440,7 +440,14 @@
     							'</a>'+
     							'</li>'
     						});
-    						$('#search_prd').html(html);
+							$('#search_prd').html(html);
+							var tick = $('body').not('#search_prd');
+							$("body").on( 'click' , $(tick)  , function (e) {
+								// e.preventDefault();
+								$('#search_prd').hide();
+								$('#search_prd').html('');
+								$('#search').val('');
+							})
     					}
     				});
     			}else{
