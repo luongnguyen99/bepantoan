@@ -127,9 +127,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="treeview {{activeNav('options','slide')}} {{activeNav('options','footer')}}">
+                    <li class="treeview {{activeNav('options','slide')}} {{activeNav('options','footer')}} {{activeNav('options','choose_category_show_home')}}">
                         <a href="#">
-                            <i class="fa fa-circle-o"></i>
+                            <span class="glyphicon glyphicon-record"></span>
                             <span>Trang chủ</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
@@ -145,6 +145,8 @@
                     </li>
                     <li class="{{activeNav('options','logo')}}"><a href="{{route('admin.options.logo')}}"><span class="glyphicon glyphicon-record"></span> Logo</a></li>
                     <li class="{{activeNav('options','hotline')}}"><a href="{{route('admin.options.hotline')}}"><span class="glyphicon glyphicon-record"></span>Liên hệ</a></li>
+                    <li class="{{activeNav('options','email_admin')}}"><a href="{{route('admin.options.email_admin')}}"><span
+                                class="glyphicon glyphicon-record"></span>Email quản trị viên</a></li>
                     <li class="{{activeNav('options','footer-copy')}}"><a href="{{route('admin.options.footer-copy')}}"><span class="glyphicon glyphicon-record"></span>Copyright</a></li>
                     <li class="{{activeNav('options','payment')}}"><a href="{{route('admin.options.payment')}}"><span class="glyphicon glyphicon-record"></span>Thanh toán</a></li>
                     <li class="{{activeNav('options','social_network')}}"><a href="{{route('admin.options.social_network')}}"><span class="glyphicon glyphicon-record"></span>Mạng xã hội</a></li>

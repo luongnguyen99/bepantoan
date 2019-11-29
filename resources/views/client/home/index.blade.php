@@ -39,6 +39,9 @@
 		@if (!empty($allCategory) && count($allCategory))
 			<div class="wrap-category">
 				<div class="container">
+					<div class="section-title">
+			            <h3>Danh mục sản phẩm</h3>
+			        </div>
 					<div class="owl-carousel owl-theme slide-pro-ctg">
 						@foreach ($allCategory as $key => $item)
 							<div class="item">

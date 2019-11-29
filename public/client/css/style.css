@@ -800,7 +800,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     z-index: 1;
 }
-.actions-btn > a, .tooltip > .tooltip-inner, .single-blog .actions-btn > span, .top-action-btn a {
+.actions-btn > a, .tooltip > .tooltip-inner, .single-blog .actions-btn > span, .top-action-btn a,.actions-btn form a.buy_now {
     background: #fff none repeat scroll 0 0;
     color: #333;
     display: block;
@@ -815,7 +815,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     transition: unset;
 }
-.actions-btn > a {
+.actions-btn > a,.actions-btn form {
     display: inline-block;
     float: none;
     opacity: 0;
@@ -825,7 +825,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: 6px;
     line-height: 35px;
 }
-.actions-btn a {
+.actions-btn a,.actions-btn form {
     transition: all .4s ease 0s;
 }
 .product-img a:before, .banner-box a:before, .post-thumb a:before, .re-img a:before {
@@ -848,7 +848,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: .3;
     visibility: visible;
 }
-.product-item:hover .actions-btn > a {
+.product-item:hover .actions-btn > a ,.product-item:hover .actions-btn form{
     margin-left: 0;
     opacity: 1;
     transform: perspective(600px) rotateX(0deg)!important;
@@ -1147,6 +1147,9 @@ ul.listform_filter {
     overflow: hidden;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
+}
+.pro-content-top>.row{
+	padding-bottom: 15px;
 }
 .productdecor-details h1 {
     font-size: 22px;
@@ -2390,4 +2393,21 @@ ul.listform_filter {
 	.list-item-news li .text-news{
 		width: 100%;
 	}
+	.ctg-pro-item .category-card__name{
+		font-size: 12px;
+	}
+}
+.wrap-category .section-title h3{
+	color: #f40000;
+}
+.call-form-hide{
+	display: none;
+}
+.box_support .product-call-requests form.show-form-call input{
+	margin-bottom: 10px;
+
+}
+.box_support .product-call-requests form.show-form-call button{
+	position: static;
+	border-radius: 0;
 }

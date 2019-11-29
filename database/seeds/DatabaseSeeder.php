@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
                 GalleriesTableSeed::class,
                 Products_property_valuesTableSeed::class,
                 Status_orderTableSeed::class,
-
             ]
         );
        

@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 	    dots:false,
 	    responsive:{
 	        0:{
-	            items:2
+	            items:3
 	        },
 	        600:{
 	            items:3
@@ -61,7 +61,11 @@ jQuery(document).ready(function() {
       
   });
 
-  
+  jQuery('.product-call-requests>form').click(function() {
+    jQuery(this).addClass('show-form-call');
+    jQuery(this).children('.call-form-hide').show();
+    /* Act on the event */
+  });
 
   jQuery('.col_product_view .col-md-8 .show-more>a').click(function(e) {
     e.preventDefault();
