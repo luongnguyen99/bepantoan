@@ -71,7 +71,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.13
             </div>
-            <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+            <strong>Copyright &copy; 2019-2020 <a href="https://adminlte.io">Bếp An Toàn</a>.</strong> All rights
             reserved.
         </footer>
 
@@ -104,7 +104,7 @@
     <!-- CK Editor -->
     <script src="{{asset('admin0/bower_components/ckeditor/ckeditor.js')}}"></script>
     <script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/ckfinder/ckfinder.js')}}"></script>
+    {{-- <script type="text/javascript" src="{{asset('js/ckfinder/ckfinder.js')}}"></script> --}}
     <script>
         CKFinder.config( { connectorPath: '/ckfinder/connector' } );
     </script>

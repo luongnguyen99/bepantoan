@@ -49,7 +49,7 @@ Cửa hàng
                     </div>
                     <div class=" form-group">
                         <label for="image">Số điện thoại</label>
-                        <input value="{{ (old('phone') ? old('phone') :  '' ) }}" name="phone" class="form-control"">
+                        <input type="number" value="{{ (old('phone') ? old('phone') :  '' ) }}" name="phone" class="form-control"">
                     </div>
                     <div class=" form-group">
                         <label for="image">Nhúng bản đồ</label>

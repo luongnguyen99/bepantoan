@@ -117,7 +117,10 @@
                     <li class="{{ activeNav('showroom','add') }}"><a href="{{route('admin.showroom.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li>
                 </ul>
             </li>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 065f9f241b2fb0acf052b49cde540b5d463c987b
             {{-- Page --}}
             <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
                 <a href="#">
@@ -152,7 +155,10 @@
             </li>
             {{-- Option --}}
             <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 065f9f241b2fb0acf052b49cde540b5d463c987b
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span>Thiết lập</span>

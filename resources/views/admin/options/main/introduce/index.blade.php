@@ -133,6 +133,7 @@ Thiết lập trang giới thiệu
 
                     <div>
                         <input type="submit" class="btn btn-success" value="Lưu">
+                        <a href="/tin-tuc/gioi-thieu" target="blank" class="btn btn-success">Xem</a>
                     </div>
                 </form>
                 <!-- end content here -->

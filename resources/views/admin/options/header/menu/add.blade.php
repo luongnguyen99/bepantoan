@@ -48,6 +48,7 @@
                                 <input type="submit" class="btn btn-primary waves-effect waves-light" name="add_menu"
                                     value="Thêm mới">
                                 <a class="support_click btn btn-success" href="#modal-menu">Hướng dẫn nhập</a>
+                                <a href="/" target="blank" class="btn btn-success">Xem</a>
                             </div>
                         </form>
                     <!-- end content here -->

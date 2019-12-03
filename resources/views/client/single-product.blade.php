@@ -60,28 +60,30 @@
 										@endif
 									</div>
 								</div>
+								
+								@if (!empty($product->gift))
 								<div class="box-qua">
-		                            <span class="icon-qua">
-		                                <img src="{{asset('client/img/icon-qua2.png')}}" alt="">
+									<span class="icon-qua">
+										<img src="{{asset('client/img/icon-qua2.png')}}" alt="">
 									</span>
-									@if (!empty($product->gift))
-										@php
-										$gift_arr = json_decode($product->gift,true);
-										
-										@endphp
-										<ul class="ul-b list-qua">
-											
-											@foreach ($gift_arr as $gift)
-											
-											<li>
-											<a href="{{$gift['link']}}"> <span><img style="width: 60px;" src="{{$gift['image']}}"></span><span><strong class="red">{{$gift['value']}}</strong></span></a>
-											</li>
-											@endforeach
-											
-										</ul>
-									@endif
+									@php
+									$gift_arr = json_decode($product->gift,true);
 									
-		                        </div>
+									@endphp
+									<ul class="ul-b list-qua">
+										
+										@foreach ($gift_arr as $gift)
+										
+										<li>
+										<a href="{{!empty($gift['link']) ? $gift['link'] : ''}}"> <span><img style="width: 60px;" src="{{!empty($gift['image']) ? $gift['image'] : ''}}"></span><span><strong class="red">{{$gift['value']}}</strong></span></a>
+										</li>
+										@endforeach
+										
+									</ul>
+								</div>
+								@endif
+									
+		                        
 							</div>
 							<div class="col-md-4 col-xs-12 col-sm-12">
 								<div class="productdecor-details">
@@ -112,10 +114,14 @@
 										@php echo !empty($product->description) ? $product->description : 'Chưa cập nhập' @endphp
                                     </div>
                                     <div class="productdecor-price">
+										
                                         <strong class="price">
-											@if (!empty($product->sale_price) )
+											
+											@if (!empty($product->sale_price) && $product->price != 0)
 												<del><span>{{pveser_numberformat($product->price)}}</span></del>
 												<span>{{pveser_numberformat($product->sale_price)}}</span>
+											@else
+												<span>{{pveser_numberformat($product->price)}}</span>
 											@endif
                                         </strong>
                                     </div>
@@ -179,7 +185,7 @@
 							</div>
 							<div class="col-md-3 col-xs-12 col-sm-12">
 								<div class="why-buy hidden-xs">
-		                            <label>Tại sao mua hàng tại Bếp tốt ?</label>
+		                            <label>Tại sao mua hàng tại BEPANTOAN.VN ?</label>
 		                        </div>
 		                        <div class="wsupport-s">
 									@if (!empty(get_option_by_key('sidebar')))

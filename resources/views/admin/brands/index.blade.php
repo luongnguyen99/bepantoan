@@ -218,7 +218,9 @@ Hãng sản xuất
                     let step = '';            
                     return `
                     <div>${step + data.name}</div>
-                    <div class="div-action"><a class="btn-edit"
+                    <div class="div-action">
+                    <a href="{{url('thuong-hieu')}}-${data.slug}">Chi tiết</a> |
+                    <a class="btn-edit"
                         href="{{ url('admin/brands/edit/') }}/${data.id}">Sửa</a>
                         | <a class="btn-remove" data-id ="${data.id}"  href="javascript:;">Xoá</a></div>
                     `;

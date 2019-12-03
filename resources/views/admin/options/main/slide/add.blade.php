@@ -66,6 +66,7 @@ Slide
 
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
+                        <a href="/" target="blank" class="btn btn-success">Xem</a>
 
                     </div>
                 </form>

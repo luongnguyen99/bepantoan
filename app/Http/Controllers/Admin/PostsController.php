@@ -10,7 +10,7 @@ class PostsController extends Controller
 {
     public function getList()
     {   
-        $db = Post::all();
+        $db = Post::orderby('id','desc')->get();
         return view('admin.posts.index',compact('db'));
     }
     public function getAdd()
@@ -30,8 +30,27 @@ class PostsController extends Controller
         $imgs = $r->img_;
         
         $db->image = $imgs;
+
+        // echo '<pre>';
+        // print_r($r->views);
+        // echo '</pre>';
+
+        // die();
         
-        $db->views = $r->view;
+        if($r->views){
+            $db->views = $r->view;
+        }else{
+            $db->views = 0;
+        }
+
+        // die();
+
+        // if(isset($r->view) && !empty($r->view) && $r->views != null){
+        //     $db->views = $r->view;
+        // }else{
+        //     $db->views = 1;
+        // }
+        // $db->views = $r->view;
         
         if (!empty($r->id_cate)) {
             $db->post_category_id = $r->id_cate;
@@ -48,7 +67,7 @@ class PostsController extends Controller
         
         return view('admin.posts.edit',compact(['db','post_cate']));
     }
-    public function postEdit(PostsRequest $r,$id)
+    public function postEdit(Request $r,$id)
     {
         
         $db = Post::find($id);

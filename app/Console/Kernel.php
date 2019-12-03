@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\CronjobCrawler',
+        'App\Console\Commands\CronjobCrawlerDesc',
     ];
 
     /**
@@ -24,6 +25,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail')->everyMinute();
+        $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail_order_desc')->everyMinute();
+        // $schedule->command('demo:cron')->cron('5 * * * *');
+        // $schedule->command('cronjob:desc')->cron('5 * * * *');
+        // $schedule->command('demo:cron')->everyFiveMinutes();
         // $schedule->command('inspire')
         //          ->hourly();
     }
@@ -36,7 +42,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }

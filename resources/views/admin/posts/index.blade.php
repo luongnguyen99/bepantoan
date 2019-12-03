@@ -75,8 +75,7 @@ Bài viết
                             <th>Ảnh đại diện</th>
                             <th>Số lượng truy cập</th>
                             <th>Tên danh mục</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
+                            <th>Ngày đăng bài</th>
                             <th>Quản lý</th>
                         </tr>
                     </thead>
@@ -84,7 +83,7 @@ Bài viết
                         @foreach ($db as $key=>$item)
                         <tr>
                             <td>{{ $key+1 }}</td>
-                            <td>{{ $item->title }}</td>
+                            <td>{{ get_excerpt($item->title,40) }}</td>
                             <td class="text-center">
                                 <img style="border-radius:100%;" src="{{ $item->image }}" width="35px" height="35px"
                                     alt="">
@@ -100,18 +99,14 @@ Bài viết
                             @else
                             <td></td>
                             @endif
-
-                            @if ($item->updated_at != null)
-                                <td>{{ Carbon\Carbon::parse($item->updated_at)->format('d-m-Y') }}</td>
-                                @else
-                                <td></td>
-                                @endif
-                                <td>
-                                    <a href="/admin/posts/edit/{{ $item->id }}" type="button"
-                                        class="btn btn-warning">Sửa</a>
-                                    <a href="/admin/posts/del/{{ $item->id }}" type="button"
-                                        class="btn btn-danger">Xóa</a>
-                                </td>
+                            <td>
+                                <a target="blank" href="/{{ $item->slug }}" type="button"
+                                    class="btn btn-success">Xem</a>
+                                <a href="/admin/posts/edit/{{ $item->id }}" type="button"
+                                    class="btn btn-warning">Sửa</a>
+                                <a href="/admin/posts/del/{{ $item->id }}" type="button"
+                                    class="btn btn-danger">Xóa</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

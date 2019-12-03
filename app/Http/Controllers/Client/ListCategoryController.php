@@ -31,7 +31,7 @@ class ListCategoryController extends Controller
         } else {
             $condition = [
                 ['category_id', '=', $category->id],
-                ['status', '=', 1]
+                ['status', '=', '1']
             ];
             // Nếu có $_GET 
             if (!empty($_GET)) {
@@ -57,6 +57,7 @@ class ListCategoryController extends Controller
                 }
 
                 if (empty($slug2)) {
+                    
                     if (!empty($arrayExceptKey) && count($arrayExceptKey) > 0) {
                         $filterValue = '';
                         foreach ($arrayExceptKey as $key => $value) {
@@ -67,7 +68,7 @@ class ListCategoryController extends Controller
                         }
 
                         $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                            ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                            ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                             ->where($condition)
                             ->with('galleries', 'brand')
                             ->groupBy('products.id')
@@ -76,7 +77,7 @@ class ListCategoryController extends Controller
                             ->limit(get_option_by_key('posts_per_page'))->get();
                     } else {
                         $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                            ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                            ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                             ->where($condition)
                             ->with('galleries', 'brand')
                             ->groupBy('products.id')
@@ -88,6 +89,7 @@ class ListCategoryController extends Controller
                     $brand = null;
                     return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
                 } else {
+                    
                     $brand = Brand::where('slug', $slug2)->first();
                     array_push($condition, ['brand_id', '=', $brand->id]);
                     if (!empty($arrayExceptKey) && count($arrayExceptKey) > 0) {
@@ -100,7 +102,7 @@ class ListCategoryController extends Controller
                         }
 
                         $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                            ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                            ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                             ->where($condition)
                             ->with('galleries', 'brand')
                             ->groupBy('products.id')
@@ -109,7 +111,7 @@ class ListCategoryController extends Controller
                             ->limit(get_option_by_key('posts_per_page'))->get();
                     } else {
                         $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                            ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                            ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                             ->where($condition)
                             ->with('galleries', 'brand')
                             ->groupBy('products.id')
@@ -123,14 +125,19 @@ class ListCategoryController extends Controller
                 }
             } else {
                 if (empty($slug2)) {
-                    $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                        ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                    
+                    $products = Product::select(
+                        DB::raw('products.*'),
+                        DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id')
+                        )
+                        ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
                         ->orderBy('created_at', 'desc')
                         ->limit(get_option_by_key('posts_per_page'))->get();
 
+                    // dd($products);
                     $brands = Brand::all();
                     $brand = null;
                     return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
@@ -138,7 +145,7 @@ class ListCategoryController extends Controller
                     $brand = Brand::where('slug', $slug2)->first();
                     array_push($condition, ['brand_id', '=', $brand->id]);
                     $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                        ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                        ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
@@ -163,7 +170,7 @@ class ListCategoryController extends Controller
             // ko co brand_id
             if (empty($request->brand_id)) {
                 $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                    ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                    ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                     ->where($condition)
                     ->with('galleries', 'brand')
                     ->groupBy('products.id')
@@ -175,7 +182,7 @@ class ListCategoryController extends Controller
             } else {
                 array_push($condition, ['brand_id', '=', $request->brand_id]);
                 $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                    ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                    ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                     ->where($condition)
                     ->with('galleries', 'brand')
                     ->groupBy('products.id')
@@ -219,7 +226,7 @@ class ListCategoryController extends Controller
                     }
 
                     $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                        ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                        ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
@@ -230,7 +237,7 @@ class ListCategoryController extends Controller
                         ->get();
                 } else {
                     $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                        ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                        ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
@@ -254,7 +261,7 @@ class ListCategoryController extends Controller
                     }
 
                     $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                        ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                        ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
@@ -265,7 +272,7 @@ class ListCategoryController extends Controller
                         ->get();
                 } else {
                     $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
-                        ->join('products_property_values', 'products.id', '=', 'products_property_values.product_id')
+                        ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')

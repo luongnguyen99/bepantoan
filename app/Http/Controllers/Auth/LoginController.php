@@ -71,4 +71,10 @@ class LoginController extends Controller
             return redirect()->route('admin.home');
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('home_client');
+    }
 }

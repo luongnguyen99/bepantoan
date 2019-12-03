@@ -83,10 +83,11 @@ Phòng trưng bày
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->address }}</td>
+                                <td>{{ get_excerpt($item->address,50) }}</td>
                                 <td>{{ $item->phone }}</td>
                                 <td>{{ $item->link }}</td>
                                 <td>
+                                    <a href="/" type="button" class="btn btn-success">Xem</a>
                                     <a href="/admin/showroom/edit/{{ $item->id }}" type="button" class="btn btn-warning">Sửa</a>
                                     <a href="/admin/showroom/del/{{ $item->id }}" type="button" class="btn btn-danger">Xóa</a>
                                 </td>

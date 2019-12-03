@@ -23,7 +23,7 @@
 		</div> <!-- end slide --> 
 
 		
-		z@if (!empty($category_sale))
+		@if (!empty($category_sale))
 			<div class="notice-title">
 				<div class="container">
 					<ul>
@@ -36,7 +36,7 @@
 			</div>			
 		@endif
 
-		@if (!empty($allCategory) && count($allCategory))
+		@if (!empty($allCategory) && count($allCategory) > 0)
 			<div class="wrap-category">
 				<div class="container">
 					<div class="section-title">
