@@ -8,6 +8,8 @@
 	<title>@yield('title')</title>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 	<link rel="stylesheet" href="{{asset('client/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+		integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
 	<link rel="stylesheet" href="{{asset('client/css/font-awesome.min.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/font-akr.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/pe-icon-7-stroke.css')}}">
@@ -99,70 +101,85 @@
             <div class="header-mobile hidden-md hidden-lg">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-3 col-sm-2">
-                            <div class="menu-site">
-                                <button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
-                                <div class="menu-box">
-                                    <div class="bg-menu hidden-md hidden-lg"></div>
+					<div class="col-xs-3 col-sm-2">
+						<div class="menu-site">
+							<button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
+							<div class="menu-box">
+								<div class="bg-menu hidden-md hidden-lg"></div>
 
-                                    <ul class="main-menu">
-                                        <span class="logo-menu">
-											<a href="<?php echo URL::to('/'); ?>">
-												@if($logo != null)
-													<img src="{{ $logo }}" alt="{{ $name_site }}">
-												@else
-													<h1 class="text-logo-header"> {{$name_site}} </h1>
+								<ul class="main-menu">
+									<span class="logo-menu">
+										<a href="<?php echo URL::to('/'); ?>">
+											@if($logo != null)
+												<img src="{{ $logo }}" alt="{{ $name_site }}">
+											@else
+												<h1 class="text-logo-header"> {{$name_site}} </h1>
+											@endif
+										</a>
+									</span> 
+									@php $dataset = build_categories_tree(); @endphp
+
+									@if ($dataset)
+										
+										@foreach ( $dataset  as $key => $tree )
+											@php
+												$cate_product = get_category_by_id($key)->toarray();
+											@endphp
+											<li class="ng-scope  drop-icon <?php echo ( isset($tree) && !empty($tree)  ) ? 're-icon menu-item-has-children' : false ?>">
+												<a href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
+													<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
+												</a>
+												@if ( isset($tree) && !empty($tree) )
+													<ul class="sub-menu">
+														@foreach ($tree as $item)
+														@php
+															$cate_product_child = get_category_by_id($item)->toarray();
+														@endphp	
+															<li class="ng-scope ng-has-child1"><a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a> </li>
+														@endforeach
+														
+
+													</ul>	
 												@endif
-											</a>
-										</span> 
-										@php $dataset = build_categories_tree(); @endphp
+												
+											</li>
+										@endforeach
 
-										@if ($dataset)
-											
-											@foreach ( $dataset  as $key => $tree )
-												@php
-													$cate_product = get_category_by_id($key)->toarray();
-												@endphp
-												<li class="ng-scope  drop-icon <?php echo ( isset($tree) && !empty($tree)  ) ? 're-icon menu-item-has-children' : false ?>">
-													<a href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
-														<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
-													</a>
-													@if ( isset($tree) && !empty($tree) )
-														<ul class="sub-menu">
-															@foreach ($tree as $item)
-															@php
-																$cate_product_child = get_category_by_id($item)->toarray();
-															@endphp	
-																<li class="ng-scope ng-has-child1"><a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a> </li>
-															@endforeach
-															
+									@endif
 
-														</ul>	
-													@endif
-													
-												</li>
-											@endforeach
+									<ul class="mobile-support">
 
+										@if (isset($menu) && !empty($menu))
+											@foreach ( $menu as $item_menu )
+
+												<li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+											@endforeach 
 										@endif
+										<li>
+											<a href="tel:{{$hotline}}">
+												<i class="pe-7s-call"></i> Hotline <b>{{$hotline}}</b> (24h/7)
+											</a>
+										</li>
 
-                                        <ul class="mobile-support">
+									</ul>
 
-                                            @if (isset($menu) && !empty($menu))
-                                                @foreach ( $menu as $item_menu )
-
-                                                    <li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
-                                                @endforeach 
-                                            @endif
-                                            <li>
-                                                <a href="tel:{{$hotline}}">
-                                                    <i class="pe-7s-call"></i> Hotline <b>{{$hotline}}</b> (24h/7)
-                                                </a>
-                                            </li>
-
-                                        </ul>
-
-                                    </ul>
-
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-8">
+						<div class="logo">
+							<a href="<?php echo URL::to('/'); ?>">
+								@if($logo != null)
+									<img src="{{ $logo }}" alt="{{ $name_site }}">
+								@else
+									<h1 class="text-logo-header"> {{$name_site}} </h1>
+								@endif
+							</a>
+						</div>
+						
+					</div>
+                    
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 					        <a href="#" target="_blank" rel="">
@@ -275,7 +292,7 @@
 			<div class="footer-map">
 				<div class="container">
 					<div class="foot-head">
-						Hệ thống showroom Beptot.vn
+						Hệ thống showroom Bepantoan.vn
 					</div>
 					<ul class="footer-address">
 						@php
@@ -447,6 +464,14 @@
 								'</li>'
 							});
 							$('#search_prd_m').html(html);
+							$('#search_prd_m').html(html);
+							var tick = $('body').not('#search_m');
+							$("body").on( 'click' , $(tick) , function (e) {
+							// e.preventDefault();
+							$('#search_prd_m').hide();
+							$('#search_prd_m').html('');
+							$('#search_m').val('');
+							})
 						}else{
 							$('#search_prd_m').html('Không có kết quả nào phù hợp');
 						}

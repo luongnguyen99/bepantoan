@@ -581,17 +581,19 @@ class OptionsController extends Controller
     }
     public function postSidebar(Request $r)
     {
+    	
         $sidebar = Option::where('key', '=', 'sidebar')->first();
         $arr = $r->all();
         $data_old = [];
         $data_new = [];
         if(!empty($arr['text']) || !empty($arr['icon'])){
             foreach ($arr['text'] as $key=>$text) {
-                foreach ($arr['icon'] as $icon) {
+                foreach ($arr['icon'] as $k=>$icon) {
                     $data_new[$key]['text'] = $text;
-                    $data_new[$key]['icon'] = $icon;
+                    $data_new[$k]['icon'] = $icon;
                 }
             }
+            
             if(!empty($arr['table']['content'])){
                 $merge_arr =  array_merge($data_new,$arr['table']['content']);
                 $sidebar->value = json_encode($merge_arr);
@@ -605,6 +607,7 @@ class OptionsController extends Controller
             }
             
         }else{
+        	
             if(!empty($arr['table']['content'])){
                 $sidebar->value = json_encode($arr['table']['content']);
                 $sidebar->save();

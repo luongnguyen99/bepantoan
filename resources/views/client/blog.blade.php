@@ -12,9 +12,9 @@
                     @foreach ($cate as $item)
 
                     <div class="ctg-pro-item">
-                        <a href="#">
+                        <a href="{{route('category_detail',['slug' => $item->slug])}}">
                             <div class="category-card__image">
-                                <img src="{{ $item->image }}" alt="Bếp từ">
+                                <img src="{{ $item->image }}" alt="{{ $item->name }}">
                             </div>
                             <div class="category-card__name "><strong>{{ $item->name }}</strong></div>
                         </a>

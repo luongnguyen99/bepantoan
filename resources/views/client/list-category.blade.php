@@ -70,7 +70,7 @@
                             @endif
             
                         </div>
-                        <a href="#" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
+                        <a href="{{url('danh-muc').'/'.$item->slug}}" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
                     </div>
                     <div class="hd-card-body">
                         <div class="row">
@@ -121,7 +121,7 @@
                                             @endif
                                             
                                             <div class="cate_pro_bot">
-                                                @if (!empty($product->sale_price))
+                                                @if (!empty($product->sale_price) )
                                                     <label>{{pveser_numberformat($product->sale_price)}}</label>   
                                                     <span>{{pveser_numberformat($product->price)}}</span>
                                                 @else

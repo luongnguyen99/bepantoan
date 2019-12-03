@@ -16,6 +16,7 @@ Route::get('/', 'Client\indexController@getList')->name('homepage');
 
 Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
 Route::post('saveLogin','Auth\LoginController@saveLogin')->name('saveLogin');
+Route::any('logout', 'Auth\LoginController@logout')->name('logout');
 Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middleware' => 'auth'], function () {
     Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
         ->name('ckfinder_examples');
@@ -259,6 +260,8 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     
     //rate star
     Route::post('rate_star','ProductController@rate_star')->name('rate_star');
+    //tim kiem
+    Route::get('tim-kiem', 'IndexController@searchEnter')->name('searchEnter');
     //saveCookie
     Route::post('saveCookieHistory', 'ProductController@saveCookieHistory')->name('saveCookieHistory');
     
@@ -283,6 +286,10 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('hoa-debug',function(){
         return view('client.hoa_debug');
     });
+    // crawler
+    Route::get('crawler','CrawlerController@index')->name('crawler');
+    Route::get('crawler_product_detail', 'CrawlerController@crawler_product_detail')->name('crawler_product_detail');
+    Route::get('crawler_product_detail_order_desc', 'CrawlerController@crawler_product_detail_order_desc')->name('crawler_product_detail_order_desc');
     
     Route::get('/{slug}.html','ProductController@detail')->name('product_detail');
     Route::get('{slug}','BlogController@getData');
@@ -290,6 +297,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
     Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
     Route::get('page/{slug}','IndexController@getPage')->name('page');
+
 });
 //=============> Composer layouts <================
 View::composer('*', function($view) {

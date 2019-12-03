@@ -1,17 +1,16 @@
 @extends('client.master.master')
 @section('title')
-Thương hiệu {{$brand[0]->name}}
+Thương hiệu {{!empty($brand[0]->name) ? $brand[0]->name : '' }}
 @endsection
 @section('content')
 <div class="home">
-   
     <div class="product">
         <div class="page-bread">
             <div class="container">
                 <ul>
                     <li><a href="{{route('home_client')}}">beptot.vn</a></li>
                     
-                    <li>Thương hiệu {{$brand[0]->name}}</li>
+                    <li>Thương hiệu {{!empty($brand[0]->name) ? $brand[0]->name : '' }}</li>
                 </ul>
             </div>
         </div>

@@ -10,7 +10,7 @@ class ShowroomsController extends Controller
 {
     public function getList()
     {
-        $db = Showroom::all();
+        $db = Showroom::orderby('id','desc')->get();
         return view('admin.showrooms.index',compact('db'));
     }
     public function getAdd()

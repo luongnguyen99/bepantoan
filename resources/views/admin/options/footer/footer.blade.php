@@ -123,6 +123,7 @@ Thiết lập footer
         </div>
         <div class="col-sm-10 text-center">
             <input type="submit" class="btn btn-success" value="Lưu khối">
+            <a href="/" target="blank" class="btn btn-success">Xem</a>
         </div>
         </div>
     </form>

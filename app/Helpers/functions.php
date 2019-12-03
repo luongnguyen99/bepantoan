@@ -239,3 +239,21 @@ function get_product_category_url( $slug_product , $slug_brand = null ){
 
 
 
+
+if (!function_exists('getToken')) {
+    function getToken($length = 12)
+    {
+        $token = '';
+        $codeAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $codeAlphabet .= time();
+        $codeAlphabet .= 'abcdefghijklmnopqrstuvwxyz';
+        $codeAlphabet .= '0123456789';
+        $max = strlen($codeAlphabet); // edited
+
+        for ($i = 0; $i < $length; ++$i) {
+            $token .= $codeAlphabet[random_int(0, $max - 1)];
+        }
+
+        return $token;
+    }
+}

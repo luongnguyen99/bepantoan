@@ -46,6 +46,7 @@
                             <div class="form-group text-center">
                                 <input type="submit" class="btn btn-primary waves-effect waves-light" name="add_menu"
                                     value="Thêm mới">
+                                <a href="/" target="blank" class="btn btn-success">Xem</a>
                             </div>
                         </form>
                     <!-- end content here -->

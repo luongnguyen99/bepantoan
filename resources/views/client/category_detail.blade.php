@@ -153,11 +153,12 @@
 													<div class="product-item">
 														<div class="product-img">
 															@php
-															if (!empty($product->sale_price)) {
+
+															if (!empty($product->sale_price) && $product->price != 0) {
 																$percent_sale = (($product->sale_price / $product->price)*100);
 																
 																$percent_sale2 = FLOOR(100 - $percent_sale);
-																};
+															};
 															@endphp
 															@if (!empty($product->sale_price))
 																<div class="pro-badge">
@@ -194,7 +195,7 @@
 																	<label>{{pveser_numberformat($product->sale_price)}}</label>
 																	<span>{{pveser_numberformat($product->price)}}</span>
 																@else
-																	<label>{{pveser_numberformat($product->price)}}</label>
+																	<label>{{$product->price != 0 ? pveser_numberformat($product->price) : 'Liên hệ'}}</label>
 																@endif
 															</div>
 														</div>

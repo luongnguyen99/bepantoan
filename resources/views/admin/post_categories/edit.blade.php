@@ -79,6 +79,7 @@ Danh mục
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->slug }}</td>
                                         <td>
+                                            <a href="/{{ $item->slug }}" class="btn btn-success">Xem</a>
                                             <a href="/admin/post_categories/edit/{{ $item->id }}" class="btn btn-warning">Sửa</a>
                                             <a href="/admin/post_categories/del/{{ $item->id }}" class="btn btn-danger">Xóa</a>
                                         </td>
