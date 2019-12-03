@@ -117,10 +117,7 @@
                     <li class="{{ activeNav('showroom','add') }}"><a href="{{route('admin.showroom.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li>
                 </ul>
             </li>
-<<<<<<< HEAD
-            {{-- Show rooms --}}
-            <li class="treeview {{activeNav('options')}}">
-=======
+
             {{-- Page --}}
             <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
                 <a href="#">
@@ -137,9 +134,25 @@
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                 </ul>
             </li>
+             {{-- User --}}
+             <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
+                <a href="#">
+                    <i class="fa fa-archive"></i>
+                    <span>Quản Lý Người Dùng</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('user')}}"><a href="{{route('admin.users.index')}}"><i
+                                class="fa fa-circle-o"></i> Tất Cả User</a></li>
+                    <li class="{{activeNav('user')}}"><a href="{{route('admin.users.add')}}"><i
+                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                </ul>
+            </li>
             {{-- Option --}}
             <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
->>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07
+
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span>Thiết lập</span>

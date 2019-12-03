@@ -4,17 +4,12 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
 use App\Models\{Product,Category,Gallery,Post, Post_category};
-=======
-use App\Models\{Product,Category,Gallery,Page,Post};
->>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07
 use DB;
 class IndexController extends Controller
 {
     public function getList()
     {
-<<<<<<< HEAD
         $categories_show_home = json_decode(get_option_by_key('categories_show_home'), true);
 
         $where = 'where ';
@@ -51,10 +46,6 @@ class IndexController extends Controller
         }])->first();
         $category_sale = Post::where('post_category_id',2)->orderBy('id', 'desc')->limit(1)->first();
         return view('client.home.index',compact('categories', 'allCategory','category_advisory', 'category_news', 'category_sale'));
-=======
-        $highlights_post = Post::orderby('views','desc')->take(4)->get();
-        return view('client.home.index',compact('highlights_post'));
->>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07
     }
     public function getSearch(Request $r)
     {
@@ -94,12 +85,6 @@ class IndexController extends Controller
         
         return view('client.search',compact('db'));
     }
-<<<<<<< HEAD
-
-    public function searchEnter(Request $request){
-        $products = Product::where('name', 'like', '%' . $request->search . '%')->paginate(15);
-        return view('client.search', compact('products'));
-=======
     public function getPage($slug)
     {
         $db = Page::where('slug',$slug)->first();
@@ -136,6 +121,5 @@ class IndexController extends Controller
         $data['prd'] = $arr_prd;
         
         return $data;
->>>>>>> 7807487f70ffd43a8ecee8748fa741f265609d07
     }
 }
