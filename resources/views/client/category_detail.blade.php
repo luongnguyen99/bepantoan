@@ -39,7 +39,7 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-					<li><a href="">beptot.vn</a></li>
+					<li><a href="">bepantoan.vn</a></li>
 					@if ($category)
 				    	<li><a href="{{route('category_detail',['slug' => $category->slug])}}">{{$category->name}}</a></li>		
 					@endif

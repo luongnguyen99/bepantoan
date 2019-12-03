@@ -17,6 +17,7 @@ Route::get('/', 'Client\indexController@getList')->name('homepage');
 Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
 Route::post('saveLogin','Auth\LoginController@saveLogin')->name('saveLogin');
 Route::any('logout', 'Auth\LoginController@logout')->name('logout');
+
 Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middleware' => 'auth'], function () {
     Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
         ->name('ckfinder_examples');
@@ -248,6 +249,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
 Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('/', 'IndexController@getList')->name('home_client');
+
     Route::get('search', 'IndexController@getSearch')->name('master.search');
     Route::get('search_m', 'IndexController@getSearchMobile')->name('master.search_m');
     // danh muc san pham 
@@ -293,7 +295,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     
     Route::get('/{slug}.html','ProductController@detail')->name('product_detail');
     Route::get('{slug}','BlogController@getData');
-
+    Route::get('error/404','BlogController@get404');
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
     Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
     Route::get('page/{slug}','IndexController@getPage')->name('page');

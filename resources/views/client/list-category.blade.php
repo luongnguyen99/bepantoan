@@ -5,10 +5,10 @@
     <div class="product">
     <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
         <div class="container">
-            @if (!empty($categories))
+            @if (!empty($categoryAll))
             <div class="arrows-category">
                 <div class="menu-cate">
-                    @foreach ($categories as $item)
+                    @foreach ($categoryAll as $item)
                     <div class="ctg-pro-item">
                         <a href="{{route('category_detail',['slug' => $item->slug])}}">
                             <div class="category-card__image">
@@ -82,14 +82,14 @@
                                 <div class="col-md-5h col-xs-6 col-sm-6">
                                     <div class="product-item">
                                         @php
-                                            if (!empty($product->sale_price)) {
+                                            if (!empty($product->sale_price) && $product->price != 0) {
                                                 $percent_sale = (($product->sale_price / $product->price)*100);
                                                 
                                                 $percent_sale2 = FLOOR(100 - $percent_sale);
                                             };
                                         @endphp
                                         <div class="product-img">
-                                            @if (!empty($product->sale_price))
+                                            @if (!empty($product->sale_price) && $product->price != 0)
                                                 <div class="pro-badge">
                                                     <span>-{{$percent_sale2}}%</span>
                                                 </div>

@@ -27,7 +27,7 @@ Giỏ hàng
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
+				    <li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
 				    <li>Giỏ hàng</li>
 				</ul>
 			</div>

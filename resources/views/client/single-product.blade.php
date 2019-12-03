@@ -28,7 +28,7 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
+				    <li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
 					<li><a href="{{route('category_detail',['slug' => get_category_by_id($product->category_id)->slug])}}">{{get_category_by_id($product->category_id)->name}}</a></li>
 					<li>{{$product->name}}</li>
 				</ul>
@@ -121,7 +121,7 @@
 												<del><span>{{pveser_numberformat($product->price)}}</span></del>
 												<span>{{pveser_numberformat($product->sale_price)}}</span>
 											@else
-												<span>{{pveser_numberformat($product->price)}}</span>
+												<span>{{ $product->price == 0 ? 'Liên hệ' : pveser_numberformat($product->price)}}</span>
 											@endif
                                         </strong>
                                     </div>
@@ -140,41 +140,43 @@
                                     </div>
                                     <div class="product-sets">
                                         <div class="qty-block">
-                                            <fieldset id="product-actions-fieldset">
-												<a class="btn" href="tel:0986 083 083"><i class="pe-7s-call"></i>Liên hệ trực tiếp:@if(!empty(get_option_by_key('hotline')))
-													<?php $hotline = json_decode(get_option_by_key('hotline'),true) ?>
+											<fieldset id="product-actions-fieldset">
+												@if(!empty(get_option_by_key('hotline')))
+												<?php $hotline = json_decode(get_option_by_key('hotline'),true) ?>
+													<a class="btn" href="tel:{{ $hotline['phone'] }}"><i class="pe-7s-call"></i>Liên hệ trực tiếp:
 													{{ $hotline['phone'] }} @endif 
 												<span>(Để có giá tốt nhất)</span></a>
-												<form action="{{route('cart.addCart')}}" method="POST">
-													@csrf
-													<input type="hidden" name="id_product" value={{$product->id}}>
-													<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
-													<a href="#" id-product={{$product->id}} class="buy_now btn btn-default btn-b1 btn-cart">
-														<i class="pe-7s-cart"></i>Mua ngay<span>(Xem hàng, không mua không sao)</span>
-													</a>
-												</form>
-                                                
+												@if (!empty($product->price) != 0)
+													<form action="{{route('cart.addCart')}}" method="POST">
+														@csrf
+														<input type="hidden" name="id_product" value={{$product->id}}>
+														<input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
+														<a href="#" id-product={{$product->id}} class="buy_now btn btn-default btn-b1 btn-cart">
+															<i class="pe-7s-cart"></i>Mua ngay<span>(Xem hàng, không mua không sao)</span>
+														</a>
+													</form>
+												@endif
                                             </fieldset>
                                         </div>
                                     </div>
                                     <div class="whotline">
                                         <li>
-                                            <a href="tel:024 33 100 100">
-												@if (!empty(get_option_by_key('switchboard')))
+											@if (!empty(get_option_by_key('switchboard')))
 												@php
-													$sb = json_decode(get_option_by_key('switchboard'),true)
+												$sb = json_decode(get_option_by_key('switchboard'),true)
 												@endphp
+													<a href="tel:{{ $sb['content'] }}">
                                                 <span>{{ $sb['content'] }}</span>
 												<p class="hotline">{{ $sb['phone'] }}</p>
 												@endif
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tel:0986 083 083">
-												@if (!empty(get_option_by_key('hotline')))
+											@if (!empty(get_option_by_key('hotline')))
 												@php
 													$hl = json_decode(get_option_by_key('hotline'),true)
 												@endphp
+                                            	<a href="tel:{{ $hl['content'] }}">
 												<span>{{ $hl['content'] }}</span>
 												<p class="hotline">{{ $hl['phone'] }}</p>
 												@endif
@@ -277,13 +279,13 @@
 									<div class="product-item">
 										<div class="product-img">
 											@php
-											if (!empty($item_product->sale_price)) {
+											if (!empty($item_product->sale_price) && $item_product->price != 0) {
 												$percent_sale = ((int)$item_product->sale_price / (int)$item_product->price)*100;
 												$percent_sale2 = round(100 - $percent_sale,0);
 												// dd($percent_sale2);
 											};
 											@endphp
-											@if (!empty($item_product->sale_price))
+											@if (!empty($item_product->sale_price) && $item_product->price != 0)
 												<div class="pro-badge">
 													<span>-{{$percent_sale2}}%</span>
 												</div>
@@ -313,11 +315,11 @@
                                                 @endforeach
                                             @endif
 											<div class="cate_pro_bot">
-												@if (!empty($item_product->sale_price))
+												@if (!empty($item_product->sale_price) && $item_product->price != 0)
                                                     <label>{{pveser_numberformat($item_product->sale_price)}}</label>   
                                                     <span>{{pveser_numberformat($item_product->price)}}</span>
                                                 @else
-                                                    <label>{{pveser_numberformat($item_product->price)}}</label>
+                                                    <label>{{$item_product->price == 0 ? 'Liên hệ' : pveser_numberformat($item_product->price)}}</label>
                                                 @endif
 									
 											</div>
@@ -351,13 +353,13 @@
 									<div class="product-item">
 										<div class="product-img">
 											@php
-											if (!empty($product_random->sale_price)) {
+											if (!empty($product_random->sale_price) && $product_random->price != 0) {
 											$percent_sale = ((int)$product_random->sale_price / (int)$product_random->price)*100;
 											$percent_sale2 = round(100 - $percent_sale,0);
 										
 											};
 											@endphp
-											@if (!empty($product_random->sale_price))
+											@if (!empty($product_random->sale_price) && $product_random->price != 0 )
 											<div class="pro-badge">
 												<span>-{{$percent_sale2}}%</span>
 											</div>
@@ -391,7 +393,7 @@
 												<label>{{pveser_numberformat($product_random->sale_price)}}</label>
 												<span>{{pveser_numberformat($product_random->price)}}</span>
 												@else
-												<label>{{pveser_numberformat($product_random->price)}}</label>
+												<label>{{$item_product->price == 0 ? 'Liên hệ' : pveser_numberformat($item_product->price)}}</label>
 												@endif
 									
 											</div>

@@ -7,7 +7,7 @@ Cảm ơn
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
+				    <li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
 				    <li>Cảm ơn</li>
 				</ul>
 			</div>

@@ -8,7 +8,7 @@ Thương hiệu {{!empty($brand[0]->name) ? $brand[0]->name : '' }}
         <div class="page-bread">
             <div class="container">
                 <ul>
-                    <li><a href="{{route('home_client')}}">beptot.vn</a></li>
+                    <li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
                     
                     <li>Thương hiệu {{!empty($brand[0]->name) ? $brand[0]->name : '' }}</li>
                 </ul>

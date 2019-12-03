@@ -74,6 +74,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        // dd('a');
         Auth::logout();
         return redirect()->route('home_client');
     }
