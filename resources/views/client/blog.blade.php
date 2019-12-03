@@ -28,7 +28,7 @@
     <div class="page-bread">
         <div class="container">
             <ul>
-                <li><a href="/">beptot.vn</a></li>
+                <li><a href="/">bepantoan.vn</a></li>
                 <li>{{ $title }}</li>
             </ul>
         </div>

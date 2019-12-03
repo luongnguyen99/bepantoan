@@ -17,7 +17,7 @@ class ProductController extends Controller
         if (empty($product)) {
             abort(404);
         }
-        $categories = Category::limit(12)->get();
+        $categories = Category::all();
         $productsRandom = Product::inRandomOrder()->with('galleries', 'brand')->limit(5)->get();
         $showrooms = Showroom::all();
 

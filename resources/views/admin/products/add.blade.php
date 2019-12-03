@@ -102,6 +102,13 @@ Thêm mới sản phẩm
     hr {
         border-top: 1px solid #d2d6de !important;
     }
+    .select2-container--default .select2-results__option[aria-disabled=true]{
+        font-weight: bold;
+    }
+    #category_id .chidren{
+        margin-left: 20px;
+    };
+   
 </style>
 @endsection
 
@@ -184,7 +191,8 @@ Thêm mới sản phẩm
                 <select  name="category_id" id="category_id" class="category_id form-control select2">
                         <option value="">--Chọn--</option>
                     @foreach ($categories as $item)
-                        <option value="{{$item->id}}">{{$item->name}}</option>
+                    {{-- {{dd($item)}} --}}
+                        <option value="{{$item->id}}" {{$item->parent_id == 0 ? 'disabled' : ''}} class="{{$item->parent_id != 0 ? 'chidren' : ''}}">{{$item->name}}</option>
                     @endforeach
                 </select>
                 <span class="errors error_category_id" style="color:red"></span>
@@ -444,9 +452,12 @@ Thêm mới sản phẩm
                 }
             });
     });
-        
+    $(document).ready(function() {
+        $('#category_id').select2();
+    });
+    $(document).ready(function() {
+        $('#brand_id').select2();
+    });
     
-   
-
 </script>
 @endsection

@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail')->everyMinute();
         $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail_order_desc')->everyMinute();
-        // $schedule->command('demo:cron')->cron('5 * * * *');
-        // $schedule->command('cronjob:desc')->cron('5 * * * *');
+        $schedule->command('demo:cron')->cron('5 * * * *');
+        $schedule->command('cronjob:desc')->cron('5 * * * *');
         // $schedule->command('demo:cron')->everyFiveMinutes();
         // $schedule->command('inspire')
         //          ->hourly();

@@ -108,14 +108,14 @@
 						<div class="col-md-5h col-xs-6 col-sm-6">
 							<div class="product-item">
 								@php
-								if (!empty($product->sale_price)) {
+								if (!empty($product->sale_price) && $product->price != 0) {
 								$percent_sale = (($product->sale_price / $product->price)*100);
 		
 								$percent_sale2 = FLOOR(100 - $percent_sale);
 								};
 								@endphp
 								<div class="product-img">
-									@if (!empty($product->sale_price))
+									@if (!empty($product->sale_price) && $product->price != 0)
 									<div class="pro-badge">
 										<span>-{{$percent_sale2}}%</span>
 									</div>

@@ -38,7 +38,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Trang cá nhân</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{route('home_client')}}" class="btn btn-default btn-flat">Đăng xuất</a>
+                                <a href="{{route('logout')}}" class="btn btn-default btn-flat">Đăng xuất</a>
                             </div>
                         </li>
                     </ul>

@@ -9,19 +9,21 @@ class BlogController extends Controller
 {
     public function getData($slug)
     {
-       
+      
         $cate = Category::all();
         $post_cate = Post_category::all();
         $new_post = Post::orderby('id','desc')->take(5)->get();
         $highlights_post = Post::orderby('views','desc')->take(5)->get();
+        $db_detail = Post::where('slug',$slug)->first();
         if ($slug == 'tin-tuc') {
             //Slug == Slug tin-tuc
             $db = Post::paginate(6);
             $title = 'Tin tức';
             return view('client.blog',compact('db','cate','post_cate','new_post','highlights_post','title'));
         }
-        else{
+        else if($db_detail || !empty($post_cate->where('slug',$slug)->first())){
             foreach ($post_cate as $value) {
+                
                 //Slug == Slug category
                 if ($value->slug == $slug) {
                     $db = Post_category::join('posts','posts.post_category_id','=','post_categories.id')
@@ -31,6 +33,7 @@ class BlogController extends Controller
                     return view('client.blog',compact('db','cate','post_cate','new_post','highlights_post','title'));
                 }
                 else{
+                    
                     //Slug == Slug product
                     $db_detail = Post::where('slug',$slug)->first();
                     if($db_detail){
@@ -46,6 +49,13 @@ class BlogController extends Controller
                 }
             }
         }
+        else if($slug != 'home' && $slug != 'login'){
+            return view('admin.posts.error');
+        }
+    }
+    public function get404()
+    {
+        return view('admin.posts.error');
     }
     public function Introduce()
     {

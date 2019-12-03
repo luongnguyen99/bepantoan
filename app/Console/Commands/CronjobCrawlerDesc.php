@@ -37,6 +37,7 @@ class CronjobCrawlerDesc extends Command
      */
     public function handle()
     {
-        return redirect()->route('crawler_product_detail_order_desc');
+        // $request = Request::create($this->option('uri'), 'GET');
+        $this->info(app()['App\Http\Controllers\Client\CrawlerController@crawler_product_detail_order_desc']);
     }
 }
