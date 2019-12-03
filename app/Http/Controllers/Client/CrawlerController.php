@@ -16,7 +16,7 @@ class CrawlerController extends Controller
         $arr_product = [];
         $a = 0;
         // for ($i=1; $i <= 1; $i++) { 
-            $ch = curl_init('https://beptot.vn/bep-gas-duong/?page=' . 9 . '&sort=&atr=on/');
+            $ch = curl_init('https://beptot.vn/bep-gas-am-hong-ngoai/?page=' . 1 . '&sort=&atr=on/');
             // nghĩa là giả mạo đang gửi từ trình duyệt nào đó, ở đây tôi dùng Firefox
             curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
             // Thiết lập trả kết quả về chứ không print ra
