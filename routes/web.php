@@ -23,7 +23,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
     Route::get('/', function () {
         return view('admin.home.index');
     })->name('home');
-
+    
     Route::group(['prefix' => 'categories','as' => 'categories.'], function () {
         Route::any('data', 'CategoryController@getData')->name('data');
         Route::get('/','CategoryController@index')->name('index');
@@ -240,6 +240,19 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('del/{id}', 'PageController@del');
 
+    });
+
+    ///=================> User <===================
+    Route::group(['prefix' => 'users','as'=>'users.'], function () {
+        Route::get('','UsersController@getuser')->name('index');
+
+        Route::get('add','UsersController@getadd')->name('add');
+        Route::post('add','UsersController@postadd');
+
+        Route::get('edit/{id}', 'UsersController@getedit')->name('edit');
+        Route::post('edit/{id}', 'UsersController@postedit');
+
+        Route::get('del/{id}', 'UsersController@getdel');
     });
 });
 
