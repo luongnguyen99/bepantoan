@@ -90,7 +90,7 @@
 					<div class="list-text-category hidden-xs hidden-sm">
 						@if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
 						@foreach ($arr_name_sub_category as $key => $item2)
-						<a href="{{url('danh-muc').'/'.$arr_slug_sub_category[$key]}}" class="itemprop"
+						<a href="{{url('danh-muc').'/'.(!empty($arr_slug_sub_category[$key]) ? $arr_slug_sub_category[$key] : '')}}" class="itemprop"
 							title="{{$item2}}">{{$item2}}</a>
 						@endforeach
 						@endif
@@ -153,7 +153,7 @@
 										<label>{{pveser_numberformat($product->sale_price)}}</label>
 										<span>{{pveser_numberformat($product->price)}}</span>
 										@else
-										<label>{{pveser_numberformat($product->price)}}</label>
+										<label>{{ $product->price == 0 ?  'Liên hệ' : pveser_numberformat($product->price)}}</label>
 										@endif
 									</div>
 								</div>

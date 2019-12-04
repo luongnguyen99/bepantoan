@@ -131,7 +131,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
     });
     //=================> Options <===================
     Route::group(['prefix' => 'options','as' => 'options.'],function(){
-
+        // Seo home
+        Route::get('seo_setting','OptionsController@seo_setting')->name('seo_setting');
         //=================>Logo<=============================
         Route::get('logo', 'OptionsController@getLogo')->name('logo');
         Route::post('logo', 'OptionsController@postLogo');

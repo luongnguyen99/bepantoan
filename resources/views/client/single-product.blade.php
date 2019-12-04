@@ -126,24 +126,31 @@
                                         </strong>
                                     </div>
                                     <div class="box_support">
-                                        @if(!empty(get_option_by_key('sale')))
+                                        
+								    <div class="box_support">
+										@if(!empty(get_option_by_key('sale')))
 										{!! get_option_by_key('sale') !!}
 										@endif
-                                        <div class="product-call-requests">
-                                        	<form>
-                                        		<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel" placeholder="Nhập số điện thoại " value="">
-                                        		<button type="button" class="btn">Đăng ký ngay</button>
-                                        		
-                                        	</form>
-                                            <span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
-                                        </div>
+										<div class="product-call-requests">
+											<form>
+												<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel"
+													placeholder="Nhập số điện thoại " value="">
+												<div class="call-form-hide">
+													<input type="text" name="" class="form-control" placeholder="Tên sản phẩm cần tư vấn">
+													<input type="text" name="" class="form-control" placeholder="Thời gian nhận tư vấn">
+												</div>
+												<button type="button" class="btn">Đăng ký ngay</button>
+											</form>
+											<span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
+										</div>
+									</div>
                                     </div>
                                     <div class="product-sets">
                                         <div class="qty-block">
 											<fieldset id="product-actions-fieldset">
 												@if(!empty(get_option_by_key('hotline')))
 												<?php $hotline = json_decode(get_option_by_key('hotline'),true) ?>
-													<a class="btn" href="tel:{{ $hotline['phone'] }}"><i class="pe-7s-call"></i>Liên hệ trực tiếp:
+													<a class="btn" href="tel:{{ $hotline['phone'] }}"><i class="pe-7s-call"></i>Liên hệ trực tiếp = 
 													{{ $hotline['phone'] }} @endif 
 												<span>(Để có giá tốt nhất)</span></a>
 												@if (!empty($product->price) != 0)

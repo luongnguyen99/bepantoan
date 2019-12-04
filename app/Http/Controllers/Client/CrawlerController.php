@@ -71,84 +71,87 @@ class CrawlerController extends Controller
             $check_slug_product = Product::where('slug', $arr_url_last)->first();
         //    dd($product['url']);
             if (!$check_slug_product) {
-                $html = file_get_html(trim($product['url'],'/'));
-                $category_id = $product['category_id'];
-                $brand_id = $product['brand_id'];
-                $status = 1;
-                if (!empty($html->find('.productdecor-details', 0)->outertext)) {
-                    $name = $html->find('.productdecor-details', 0)->find('h1', 0)->plaintext;
-                }else{
-                    $name = 'Chưa cập nhập';
-                }
-                $check_price = $html->find('.price', 0);
-                if (!empty($check_price)) {
-                    if (!empty($html->find('.price', 0)->find('del', 0))) {
-                        $price = $html->find('.price', 0)->find('del', 0)->find('span', 0)->plaintext ?? null;
-                        $sale_price = $html->find('.price > span', 0)->plaintext ?? null;
+                $url = trim($product['url'], '/');
+                $html = file_get_html($url);
+                if ($html !== false and !empty($html)) {
+                    $category_id = $product['category_id'];
+                    $brand_id = $product['brand_id'];
+                    $status = 1;
+                    if (!empty($html->find('.productdecor-details', 0)->outertext)) {
+                        $name = $html->find('.productdecor-details', 0)->find('h1', 0)->plaintext;
+                    }else{
+                        $name = 'Chưa cập nhập';
+                    }
+                    $check_price = $html->find('.price', 0);
+                    if (!empty($check_price)) {
+                        if (!empty($html->find('.price', 0)->find('del', 0))) {
+                            $price = $html->find('.price', 0)->find('del', 0)->find('span', 0)->plaintext ?? null;
+                            $sale_price = $html->find('.price > span', 0)->plaintext ?? null;
+                        }
+                        
+                    } else {
+                        $price = $html->find('.productdecor-price', 0)->plaintext ?? null;
+                    }
+                    $description = $html->find('#product-details-lists p', 0)->innertext ?? null;
+                    $infomation_detail = $html->find('.description-content', 0)->innertext ?? null;
+                    $galleries = [];
+
+                    $specifications = [];
+                    if (!empty($html->find('.attribute-content table tr'))) {
+                        foreach ($html->find('.attribute-content table tr') as $key1 =>  $key_spec) {
+                            $specifications[$key1]['key'] = $key_spec->first_child()->plaintext;
+                            $specifications[$key1]['value'] = $key_spec->last_child()->plaintext;
+                        };
                     }
                     
-                } else {
-                    $price = $html->find('.productdecor-price', 0)->plaintext ?? null;
-                }
-                $description = $html->find('#product-details-lists p', 0)->innertext ?? null;
-                $infomation_detail = $html->find('.description-content', 0)->innertext ?? null;
-                $galleries = [];
+                    $check_name = Product::where('name', $name)->first();
+                    if (!$check_name) {
+                        foreach ($html->find('.fotorama  img') as $image) {
+                            $arr_image = explode('/', $image->src);
+                            $name_image = $arr_image[count($arr_image) - 1];
+                            // echo ($image->src);
+                            $galleries[] =  url('/') . '/userfiles/images/product/' . $name_image;
+                            $path = public_path() . '/userfiles/images/product/' . $name_image;
 
-                $specifications = [];
-                if (!empty($html->find('.attribute-content table tr'))) {
-                    foreach ($html->find('.attribute-content table tr') as $key1 =>  $key_spec) {
-                        $specifications[$key1]['key'] = $key_spec->first_child()->plaintext;
-                        $specifications[$key1]['value'] = $key_spec->last_child()->plaintext;
+                            $this->save_image('https://beptot.vn' . $image->src, $path);
+                            // file_put_contents($img, $a, FILE_APPEND);
+                        };
+                    }
+
+                    $dataInsert = [
+                        'category_id' => $category_id,
+                        'brand_id' => $brand_id,
+                        'status' => $status,
+                        'name' => $name,
+                        'slug' =>  to_slug($name).getToken(2),
+                        'description' => $description,
+                        'infomation_detail' => $infomation_detail,
+                    ];
+
+                    if (!empty($price)) {
+                        $price = str_replace(' VNĐ', '', $price);
+                        $price = str_replace('.', '', $price);
+                        $dataInsert['price'] = trim($price);
                     };
-                }
-                
-                $check_name = Product::where('name', $name)->first();
-                if (!$check_name) {
-                    foreach ($html->find('.fotorama  img') as $image) {
-                        $arr_image = explode('/', $image->src);
-                        $name_image = $arr_image[count($arr_image) - 1];
-                        // echo ($image->src);
-                        $galleries[] =  url('/') . '/userfiles/images/product/' . $name_image;
-                        $path = public_path() . '/userfiles/images/product/' . $name_image;
 
-                        $this->save_image('https://beptot.vn' . $image->src, $path);
-                        // file_put_contents($img, $a, FILE_APPEND);
+                    if (!empty($sale_price)) {
+                        $sale_price = str_replace(' VNĐ', '', $sale_price);
+                        $sale_price = str_replace('.', '', $sale_price);
+                        $dataInsert['sale_price'] = $sale_price;
                     };
-                }
 
-                $dataInsert = [
-                    'category_id' => $category_id,
-                    'brand_id' => $brand_id,
-                    'status' => $status,
-                    'name' => $name,
-                    'slug' =>  to_slug($name).getToken(2),
-                    'description' => $description,
-                    'infomation_detail' => $infomation_detail,
-                ];
+                    if (!empty($specifications)) {
+                        $dataInsert['specifications'] = json_encode($specifications);
+                    }
+                    if (!$check_name) {
+                        $insertProduct = Product::create($dataInsert);
 
-                if (!empty($price)) {
-                    $price = str_replace(' VNĐ', '', $price);
-                    $price = str_replace('.', '', $price);
-                    $dataInsert['price'] = trim($price);
-                };
-
-                if (!empty($sale_price)) {
-                    $sale_price = str_replace(' VNĐ', '', $sale_price);
-                    $sale_price = str_replace('.', '', $sale_price);
-                    $dataInsert['sale_price'] = $sale_price;
-                };
-
-                if (!empty($specifications)) {
-                    $dataInsert['specifications'] = json_encode($specifications);
-                }
-                if (!$check_name) {
-                    $insertProduct = Product::create($dataInsert);
-
-                    foreach ($galleries as $image_url) {
-                        $insertGalery = Gallery::insert([
-                            'product_id' => $insertProduct->id,
-                            'image' => $image_url,
-                        ]);
+                        foreach ($galleries as $image_url) {
+                            $insertGalery = Gallery::insert([
+                                'product_id' => $insertProduct->id,
+                                'image' => $image_url,
+                            ]);
+                        }
                     }
                 }
                 Crawler_product::where('url', $product['url'])->update(['status' => 1]);

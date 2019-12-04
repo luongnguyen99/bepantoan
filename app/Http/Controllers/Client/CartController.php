@@ -16,21 +16,25 @@ class CartController extends Controller
 {
     public function addCart(Request $request){
         
+
         $product = Product::where('id',$request->id_product)->first();
         $cart = [];
-    
-        $cart = Cart::add([
-            [
-            'id' => $request->id_product,
-            'name' => $product->name,
-            'qty' => 1,
-            'price' => !empty($product->sale_price) ? $product->sale_price : $product->price,
-            'weight' => 0
-            ],
-        ]);
-       
-        if ($cart) {
-           return redirect()->route('showCart');
+        if (!is_numeric ($product->price)) {
+            abort(404,'Không thể thêm sản phẩm này vào giỏ hàng');
+        }else{
+            $cart = Cart::add([
+                [
+                'id' => $request->id_product,
+                'name' => $product->name,
+                'qty' => 1,
+                'price' => !empty($product->sale_price) ? $product->sale_price : $product->price,
+                'weight' => 0
+                ],
+            ]);
+        
+            if ($cart) {
+                return redirect()->route('showCart');
+            }
         }
         
     }
