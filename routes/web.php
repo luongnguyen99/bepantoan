@@ -254,6 +254,17 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('del/{id}', 'UsersController@getdel');
     });
+    ///=================> Phone Order <===============
+    Route::group(['prefix' => 'phone_order','as'=>'phone_order.'], function () {
+        Route::get('phone_order', 'PhoneOrderController@getphone_order')->name('phone_order');
+        Route::get('xuly/{id}', 'PhoneOrderController@xuly');
+
+        Route::get('detailorder', 'PhoneOrderController@getdetailorder')->name('detailorder');
+
+        Route::get('del/{id}', 'PhoneOrderController@getdel');
+
+
+    });
 });
 
 /* ---------Client----------  */
@@ -303,7 +314,10 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
     Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
     Route::get('page/{slug}','IndexController@getPage')->name('page');
+
+    Route::post('phone/getphone', 'CartController@postphone')->name('phone');
 });
+
 //=============> Composer layouts <================
 View::composer('*', function($view) {
     // //=============>HOTLINE<=================

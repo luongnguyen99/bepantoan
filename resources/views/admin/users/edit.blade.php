@@ -30,20 +30,25 @@ Tài Khoản
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control"  placeholder="Tên" name="name" value="{{ $user->name }}">
                             </div>
-                    
+                            @if($errors->has('name'))
+                                <div class="alert alert-danger" style="opacity:0.5" role="alert">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </div>
+                                @endif
                             <div class="form-group">
                                 <label for="name">Email</label>
                                 <input type="text" class="form-control"  placeholder="Nhập Email" name="email" value="{{ $user->email }}">
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="name">Email Xác Minh</label>
                                 <input type="text" class="form-control"  placeholder="Email Xác Minh" name="email_verified_at" value="{{ $user->email_verified_at }}">
-                            </div>
+                            </div> --}}
+                            
                             <div class="form-group">
                                 <label for="name">Password</label>
                                 <input type="text" class="form-control"  placeholder="Nhập Password" name="password" value="">
                             </div>
-                            
+                           
                             <div class="form-group">
                                 <label for="name">Chọn Quyền</label>
                                 <select name="level" class="form-control">

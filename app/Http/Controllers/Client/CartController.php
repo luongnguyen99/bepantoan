@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use Cart;
+use App\Http\Requests\Phone;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Order_detail;
 use Mail;
+
 
 class CartController extends Controller
 {
@@ -125,6 +127,20 @@ class CartController extends Controller
             ], 200);
         }
 
+    }
+    public function postphone(Request $r){
+        $validator = Validator::make($r->all(), [
+            'sdt'=>'required|numeric|min:10',
+
+        ]);
+        if ($validator->fails()) {
+            return 'Loi';
+        }
+        $db = new Phone_Order;
+        $db->phone = $r->sdt;
+        $db->status = 1;
+        $db->save();
+        return 'success';
     }
 }
  

@@ -30,24 +30,43 @@ Tài Khoản
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control"  placeholder="Tên" name="name">
                                 </div>
+                                @if($errors->has('name'))
+                                <div class="alert alert-danger" style="opacity:0.5" role="alert">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="name">Email</label>
-                                    <input type="text" class="form-control"  placeholder="Nhập Email" name="email">
+                                    <input type="email" class="form-control"  placeholder="Nhập Email" name="email">
                                 </div>
+                                @if($errors->has('email'))
+                                <div class="alert alert-danger" style="opacity:0.5" role="alert">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="name">Password</label>
-                                    <input type="text" class="form-control"  placeholder="Nhập Password" name="password">
+                                    <input type="password" class="form-control"  placeholder="Nhập Password" name="password">
                                 </div>
-                                <div class="form-group">
+                                @if($errors->has('password'))
+                                <div class="alert alert-danger" style="opacity:0.5" role="alert">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </div>
+                                @endif
+                                {{-- <div class="form-group">
                                     <label for="name">Email Xác Minh</label>
                                     <input type="text" class="form-control"  placeholder="Email Xác Minh" name="email_verified_at">
                                 </div>
-                              
+                                @if($errors->has('email_verified_at'))
+                                <div class="alert alert-danger" style="opacity:0.5" role="alert">
+                                    <strong>{{ $errors->first('email_verified_at') }}</strong>
+                                </div>
+                                @endif --}}
                                 <div class="form-group">
                                         <label for="name">Chọn Quyền</label>
                                 <select name="level" class="form-control">
                                     <option value="0">---Chọn Quyền---</option>
-                                    <option value="500">ADMIN</option>
+                                    <option value="300">ADMIN</option>
                                 </select>
                                 </div>
                                  {{-- <table class="table">
