@@ -65,8 +65,9 @@ class CategoryController extends Controller
                     
                 ], 200);
         }else{
+            $name_category = str_replace(',','-',$request->name); 
             $data = [
-                'name' => $request->name,
+                'name' => $name_category,
                 'slug' => to_slug($request->slug),
                 'parent_id' => $request->parent_id,
             ];
@@ -113,8 +114,9 @@ class CategoryController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
+            $name_category = str_replace(',','-',$request->name); 
             $data = [
-                'name' => trim($request->name),
+                'name' => $name_category,
                 'slug' => to_slug(trim($request->slug)),
                 'parent_id' => $request->parent_id,
             ];
