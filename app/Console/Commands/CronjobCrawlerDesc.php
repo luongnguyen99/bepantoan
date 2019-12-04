@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use App\Http\Controllers\Client\CrawlerController;
 class CronjobCrawlerDesc extends Command
 {
     /**
@@ -38,6 +38,6 @@ class CronjobCrawlerDesc extends Command
     public function handle()
     {
         // $request = Request::create($this->option('uri'), 'GET');
-        $this->info(app()['App\Http\Controllers\Client\CrawlerController@crawler_product_detail_order_desc']);
+        CrawlerController::index();
     }
 }
