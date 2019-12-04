@@ -110,14 +110,8 @@
                                             </p>
                                         </div>
                                     </div>
-                                    @endforeach
-                                    @endif
-                                </div>
-                                <div id="sync2" class="owl-carousel owl-theme">
-                                    @if (count($product->galleries) > 0)
-                                    @foreach ($product->galleries as $image)
-                                    <div class="item">
-                                        <img src="{{$image->image}}" alt="">
+                                    <div id="product-details-lists">
+										@php echo !empty($product->description) ? $product->description : 'Chưa cập nhập' @endphp
                                     </div>
                                     <div class="productdecor-price">
 										
@@ -131,29 +125,25 @@
 											@endif
                                         </strong>
                                     </div>
-
-                                </div>
-                                <div id="product-details-lists">
-                                    @php echo !empty($product->description) ? $product->description : 'Chưa cập nhập'
-                                    @endphp
-                                </div>
-                                <div class="productdecor-price">
-                                    <strong class="price">
-                                        @if (!empty($product->sale_price) )
-                                        <del><span>{{pveser_numberformat($product->price)}}</span></del>
-                                        <span>{{pveser_numberformat($product->sale_price)}}</span>
-                                        @endif
-                                    </strong>
-                                </div>
-                                {{-- <div class="box_support">
-                                        @if(!empty(get_option_by_key('sale')))
+                                    <div class="box_support">
+                                        
+								    <div class="box_support">
+										@if(!empty(get_option_by_key('sale')))
 										{!! get_option_by_key('sale') !!}
 										@endif
-                                        <div class="product-call-requests">
-												<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" name="phone_order" type="tel" placeholder="Nhập số điện thoại " value="">
-												<button type="button" class="btn btn-success btn-get-phone">Đăng ký ngay</button>
-                                            <span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
-                                        </div>
+										<div class="product-call-requests">
+											<form>
+												<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel"
+													placeholder="Nhập số điện thoại " value="">
+												<div class="call-form-hide">
+													<input type="text" name="" class="form-control" placeholder="Tên sản phẩm cần tư vấn">
+													<input type="text" name="" class="form-control" placeholder="Thời gian nhận tư vấn">
+												</div>
+												<button type="button" class="btn">Đăng ký ngay</button>
+											</form>
+											<span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
+										</div>
+									</div>
                                     </div>
                                     <div class="product-sets">
                                         <div class="qty-block">
@@ -322,65 +312,14 @@
 												<img alt="{{$item_product->brand->name}}" src="{{$item_product->brand->image}}"></a>
 											</div>
 											@if (!empty($item_product->gift))
-=======
-										</div>
-									</div>
-									 --}}
-
-                                <div class="box_support">
-                                    @if(!empty(get_option_by_key('sale')))
-                                    {!! get_option_by_key('sale') !!}
-                                    @endif
-                                    <div class="product-call-requests">
-                                        <form>
-                                            <input class="ty-input-text-full cm-number form-control" id="PhoneRegister"
-                                                type="tel" placeholder="Nhập số điện thoại " value="">
-                                            <div class="call-form-hide">
-                                                <input type="text" name="" class="form-control"
-                                                    placeholder="Tên sản phẩm cần tư vấn">
-                                                <input type="text" name="" class="form-control"
-                                                    placeholder="Thời gian nhận tư vấn">
-                                            </div>
-                                            <button type="button" class="btn">Đăng ký ngay</button>
-                                        </form>
-                                        <span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
-                                    </div>
-                                </div>
-
-
-                                <div class="product-sets">
-                                    <div class="qty-block">
-                                        <fieldset id="product-actions-fieldset">
-                                            <a class="btn" href="tel:0986 083 083"><i class="pe-7s-call"></i>Liên hệ
-                                                trực tiếp:@if(!empty(get_option_by_key('hotline')))
-                                                <?php $hotline = json_decode(get_option_by_key('hotline'),true) ?>
-                                                {{ $hotline['phone'] }} @endif
-                                                <span>(Để có giá tốt nhất)</span></a>
-                                            <form action="{{route('cart.addCart')}}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="id_product" value={{$product->id}}>
-
-                                                <input type="hidden" name="ip" value={{$_SERVER['REMOTE_ADDR']}}>
-                                                <a href="#" id-product={{$product->id}}
-                                                    class="buy_now btn btn-default btn-b1 btn-cart">
-                                                    <i class="pe-7s-cart"></i>Mua ngay<span>(Xem hàng, không mua không
-                                                        sao)</span>
-                                                </a>
-                                            </form>
-
-                                        </fieldset>
-                                    </div>
-                                </div>
-                                <div class="whotline">
-                                    <li>
-                                        <a href="tel:024 33 100 100">
-                                            @if (!empty(get_option_by_key('switchboard')))
-
                                             @php
-                                            $sb = json_decode(get_option_by_key('switchboard'),true)
+                                            $arr_gift = json_decode($item_product->gift,true);
                                             @endphp
-                                            <span>{{ $sb['content'] }}</span>
-                                            <p class="hotline">{{ $sb['phone'] }}</p>
+                                                @foreach ($arr_gift as $gift)
+                                                    <div class="gift-sale">
+                                                        <strong>{{$gift['value']}}</strong>
+                                                    </div>
+                                                @endforeach
                                             @endif
 											<div class="cate_pro_bot">
 												@if (!empty($item_product->sale_price) && $item_product->price != 0)
@@ -600,147 +539,123 @@
 	                            <a href="javascript:void(0)" onclick="change_captcha()" title="Tạo mã khác" rel="nofollow">
 	                                <img src="/Content/pc/css/images/icon-refreh.png" alt="refresh security code">
 	                            </a> -->
-                    {{-- </div> --}}
-
-                    <div class="form-group">
-                        <button type="submit" class="btn submitcomment">Gửi</button>
-                    </div>
-                </form>
-                <ul class="comments-list"></ul>
-            </div>
-        </div>
-        <div class="hd-card-body section-margin-bottom ">
-            <div class="hd-module-title">
-                <h3 class="module-title">Sản phẩm đã xem</h3>
-            </div>
-            <div class="single-sidebar">
-                <div class="owl-carousel owl-theme slide-pro-seen">
-                    @if (!empty($_COOKIE['arr_id_history']))
-                    @php
-                    $arr_history = json_decode($_COOKIE['arr_id_history'],true);
-                    @endphp
-                    @if (count($arr_history) > 0)
-                    @foreach (array_reverse($arr_history) as $item)
-
-                    <div class="item">
-                        <div class="slide-pro-seen-item">
-                            <div class="tb-recent-thumbb">
-                                <a href="{{route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : ''])}}"
-                                    class="active">
-                                    <img class="attachment"
-                                        src="{{!empty(get_product_by_id($item)->galleries[0]) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
-                                        alt="{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}">
-                                </a>
-                            </div>
-                            <div class="title-beg">
-                                <a
-                                    href="{{ route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : '']) }}">{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}</a>
-                            </div>
-                            <div class="title-price-recent">{{!empty(get_product_by_id($item)->sale_price) ?
+	                        {{-- </div> --}}
+	                        
+	                        <div class="form-group">
+	                            <button type="submit" class="btn submitcomment">Gửi</button>
+	                        </div>
+	                    </form>
+	                    <ul class="comments-list"></ul>
+	                </div>
+				</div>
+				<div class="hd-card-body section-margin-bottom ">
+	                <div class="hd-module-title">
+	                    <h3 class="module-title">Sản phẩm đã xem</h3>
+	                </div>
+	                <div class="single-sidebar">
+	                	<div class="owl-carousel owl-theme slide-pro-seen">
+							@if (!empty($_COOKIE['arr_id_history']))
+								@php
+								$arr_history = json_decode($_COOKIE['arr_id_history'],true);
+								@endphp
+								@if (count($arr_history) > 0)
+									@foreach (array_reverse($arr_history) as $item)
+									
+										<div class="item">
+											<div class="slide-pro-seen-item">
+												<div class="tb-recent-thumbb">
+													<a href="{{route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : ''])}}" class="active">
+														<img class="attachment"
+													src="{{!empty(get_product_by_id($item)->galleries[0]) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
+															alt="{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}">
+													</a>
+												</div>
+												<div class="title-beg">
+													<a href="{{ route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : '']) }}">{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}</a>
+												</div>
+												<div class="title-price-recent">{{!empty(get_product_by_id($item)->sale_price) ?
 												!empty(get_product_by_id($item)->sale_price) ? pveser_numberformat(get_product_by_id($item)->sale_price) : '' :
 												!empty(get_product_by_id($item)->price) ? pveser_numberformat(get_product_by_id($item)->price) : ''}}</div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @endif
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
+											</div> 
+										</div>
+									@endforeach
+								@endif
+							@endif
+						</div>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	
+	</div>
 
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script type="text/javascript">
-    $('body').on('click', '.btn-get-phone', function () {
-        var sdt = $('#PhoneRegister').val();
-        $.ajax({
-            url: "{{ route("
-            phone ") }}",
-            type: 'post',
-
-            data: {
-                sdt: sdt,
-                _token: `{{csrf_token()}}`,
-            }, // xu ly
-            success: (function (data) { // hien thi
-                if (data == 'success') {
-                    alert('Thêm Thành Công !!!');
-                } else if (data == 'Loi') {
-                    alert('Thêm Không Thành Công !!!');
-                }
-            })
-        });
-    })
-
-</script>
 <script>
-    $(function () {
-        $.ajax({
-            url: "{{ route('saveCookieHistory') }}",
-            method: "POST",
-            data: {
-                product_id: `{{$product->id}}`,
-                _token: `{{csrf_token()}}`,
-            },
-            success: function (data) {
-                console.log(data);
-            }
-        })
-    })
-    $(function () {
-        $('.submitcomment').on('click', function (e) {
-            e.preventDefault();
-            var formData = new FormData($('#commentForm')[0]);
-            formData.set('product_id', `{{$product->id}}`);
-            $.ajax({
-                url: "{{ route('rate_star') }}",
-                method: "POST",
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function (data) {
-                    if (data.errors) {
-                        html = '';
-                        if (typeof data.messages.vote != 'undefined') {
-                            html += `<li>${data.messages.vote[0]}</li>`;
-                        };
-                        if (typeof data.messages.name != 'undefined') {
-                            html += `<li>${data.messages.name[0]}</li>`;
-                        };
-                        if (typeof data.messages.phone != 'undefined') {
-                            html += `<li>${data.messages.phone[0]}</li>`;
-                        };
-                        if (typeof data.messages.content != 'undefined') {
-                            html += `<li>${data.messages.content[0]}</li>`;
-                        };
-                        Swal.fire({
-
-                            icon: 'error',
-                            html: `<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,
-                            focusConfirm: false,
-                            confirmButtonText: ' Ok!',
-                        })
-                    } else {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Thành công',
-                            text: 'Đánh giá thành công!',
-                        }).then((result) => {
-                            if (result.value) {
-                                window.location.reload();
-                            }
-                        })
-
-                    }
-                }
-            })
-        })
-    })
-
+	$(function() {
+		$.ajax({
+			url:"{{ route('saveCookieHistory') }}",
+			method:"POST",
+			data: {
+				product_id : `{{$product->id}}`,
+				_token : `{{csrf_token()}}`,
+			},
+			success : function(data) {
+				console.log(data);
+			}
+		})
+	})
+	$(function(){
+		$('.submitcomment').on('click',function(e) {
+			e.preventDefault();
+				var formData = new FormData($('#commentForm')[0]);
+				formData.set('product_id',`{{$product->id}}`);
+				$.ajax({
+					url:"{{ route('rate_star') }}",
+					method:"POST",
+					processData: false,
+					contentType: false,
+					data: formData,
+					success:function(data){
+						if (data.errors) {
+							html = '';
+							if (typeof data.messages.vote != 'undefined') {
+								html += `<li>${data.messages.vote[0]}</li>`;			
+							};
+							if (typeof data.messages.name != 'undefined') {
+								html += `<li>${data.messages.name[0]}</li>`;
+							};
+							if (typeof data.messages.phone != 'undefined') {
+								html += `<li>${data.messages.phone[0]}</li>`;
+							};
+							if (typeof data.messages.content != 'undefined') {
+								html += `<li>${data.messages.content[0]}</li>`;
+							};
+							Swal.fire({
+							
+							icon: 'error',
+							html:
+							`<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,
+							focusConfirm: false,
+							confirmButtonText:
+							' Ok!',
+							})
+						}else{
+							Swal.fire({
+							icon: 'success',
+							title: 'Thành công',
+							text: 'Đánh giá thành công!',
+							}).then((result) => {
+								if (result.value) {
+									window.location.reload();
+								}
+							})
+							
+						}
+					}
+			})
+		})
+	})
 </script>
 @endsection
