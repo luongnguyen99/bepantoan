@@ -160,9 +160,9 @@
 																$percent_sale2 = FLOOR(100 - $percent_sale);
 															};
 															@endphp
-															@if (!empty($product->sale_price))
+															@if (!empty($product->sale_price) && $product->price != 0)
 																<div class="pro-badge">
-																	<span>-{{$percent_sale2}}%</span>
+																	<span>-{{ !empty($percent_sale2) ? $percent_sale2 : ''}}%</span>
 																</div>
 															@endif
 												

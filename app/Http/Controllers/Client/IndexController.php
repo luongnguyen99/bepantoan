@@ -47,7 +47,7 @@ class IndexController extends Controller
         
         $category_sale = Post::where('post_category_id',2)->orderBy('id', 'desc')->limit(1)->first();
         $highlights_post = Post::orderby('views', 'desc')->where('post_category_id',3)->take(4)->get();
-
+        // dd($categories);
         return view('client.home.index',compact('categories', 'allCategory','category_advisory', 'category_news', 'category_sale', 'highlights_post'));
     }
     public function getSearch(Request $r)
