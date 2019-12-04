@@ -158,6 +158,7 @@ class ListCategoryController extends Controller
                             ->limit(get_option_by_key('posts_per_page'))->get();
 
                         $brands = null;
+                        
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
                     }
                 }

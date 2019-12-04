@@ -131,7 +131,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
     });
     //=================> Options <===================
     Route::group(['prefix' => 'options','as' => 'options.'],function(){
-
+        // Seo home
+        Route::get('seo_setting','OptionsController@seo_setting')->name('seo_setting');
         //=================>Logo<=============================
         Route::get('logo', 'OptionsController@getLogo')->name('logo');
         Route::post('logo', 'OptionsController@postLogo');
@@ -324,10 +325,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
     Route::get('page/{slug}','IndexController@getPage')->name('page');
 
-<<<<<<< HEAD
-=======
     Route::post('phone/getphone', 'CartController@postphone')->name('phone');
->>>>>>> f7c8a4a362a00b6a6eb5f5b8d09a333e8d0e9a72
 });
 
 //=============> Composer layouts <================

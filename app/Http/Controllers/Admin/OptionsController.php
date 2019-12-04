@@ -39,10 +39,10 @@ class OptionsController extends Controller
     public function postHotline(Request $r)
     {
         $r->validate([
-            'phone' => 'numeric'
+            'phone' => 'required'
         ],
         [
-            'phone.numeric' => 'Chỉ được nhập kiểu số'
+            'phone.required' => 'Không được bỏ trống'
         ]);
         $arr = [];
         $request['phone'] = $r->phone;
@@ -557,11 +557,11 @@ class OptionsController extends Controller
     public function postSwitchboard(Request $r)
     {
         $r->validate([
-            'phone'=>'numeric',
+            'phone'=>'required',
             'content_switchboard' => 'required'
         ],
         [
-            'phone.numeric'=>'Chỉ được nhập số',
+            'phone.required'=>'Không được bỏ trống',
             'content_switchboard.required'=>'Nội dung không được bỏ trống'
         ]);
         $switchboard = Option::where('key', '=', 'switchboard')->first();
@@ -709,5 +709,9 @@ class OptionsController extends Controller
             return redirect()->back()->with('success', 'Cập nhập email thành công');
         };
         return view('admin.options.main.email_admin');
+    }
+
+    public function seo_setting(Request $request){
+        
     }
 }

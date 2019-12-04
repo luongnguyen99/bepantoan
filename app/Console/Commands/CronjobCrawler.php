@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use App\Http\Controllers\Client\CrawlerController;
 class CronjobCrawler extends Command
 {
     /**
@@ -37,6 +37,6 @@ class CronjobCrawler extends Command
      */
     public function handle()
     {
-        return redirect()->route('crawler_product_detail');
+        CrawlerController::crawler_product_detail();
     }
 }

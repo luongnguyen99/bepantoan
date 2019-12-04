@@ -117,10 +117,6 @@
                     <li class="{{ activeNav('showroom','add') }}"><a href="{{route('admin.showroom.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li>
                 </ul>
             </li>
-<<<<<<< HEAD
-
-=======
->>>>>>> 065f9f241b2fb0acf052b49cde540b5d463c987b
             {{-- Page --}}
             <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
                 <a href="#">
@@ -155,10 +151,6 @@
             </li>
             {{-- Option --}}
             <li class="treeview {{activeNav('options')}} {{activeNav('options')}}">
-<<<<<<< HEAD
-
-=======
->>>>>>> 065f9f241b2fb0acf052b49cde540b5d463c987b
                 <a href="#">
                     <i class="fa fa-cog"></i>
                     <span>Thiết lập</span>
@@ -176,6 +168,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
+                            <li class="{{activeNav('options','seo_setting')}}"><a href="{{route('admin.options.seo_setting')}}"><span class="glyphicon glyphicon-record"></span> Thiết lập SEO</a></li>
                             <li class="{{activeNav('options','slide')}}"><a href="{{route('admin.options.slide')}}"><span class="glyphicon glyphicon-record"></span> Danh sách Slide</a></li>
                             <li class="{{activeNav('options','footer')}}"><a href="{{route('admin.options.footer')}}"><span class="glyphicon glyphicon-record"></span>
                                 Footer</a></li>
