@@ -43,7 +43,7 @@ Tài Khoản
                             <th>STT</th>
                             <th>Tên</th>
                             <th>Email</th>
-                            <th>Email xác minh</th>
+                            {{-- <th>Email xác minh</th> --}}
                             <th>Quyền</th>
                             <th>Quản lý</th>
                         </tr>
@@ -56,18 +56,27 @@ Tài Khoản
                             
                             <td>{{ $item->email }}</td>
                            
-                            <td>{{ $item->email_verified_at }}</td>
+                            {{-- <td>{{ $item->email_verified_at }}</td> --}}
                             @if ($item->role==500)
                             <td>ADMIN</td>
                             @else
+                            
                             <td>Chưa Chọn Quyền</td>
                             @endif
                             
                                 <td>
                                     <a href="/admin/users/edit/{{ $item->id }}" type="button"
                                         class="btn btn-warning">Sửa</a>
-                                    <a href="/admin/users/del/{{ $item->id }}" type="button"
+                                   @if ($item->role != 500)
+                                    @if (Auth::user()->id != $item->id)
+                                        <a href="/admin/users/del/{{ $item->id }}" type="button"
                                         class="btn btn-danger">Xóa</a>
+                                    @endif
+                                    {{-- @else
+                                    <a href="/admin/users/del/{{ $item->id }}" type="button"
+                                        class="btn btn-danger">Xóa</a> --}}
+                                    @endif
+                                    
                                 </td>
                         </tr>       
                         @endforeach

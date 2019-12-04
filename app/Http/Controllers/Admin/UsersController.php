@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Date;
-
+use App\Http\Requests\Admin\UserRequest;
 class UsersController extends Controller
 {
     //
@@ -19,7 +19,7 @@ class UsersController extends Controller
         //$data['json'] = json_decode($data['per'][0]->role,true);
         return view('admin.users.add',$data);
     }
-    public function postadd(Request $r){
+    public function postadd(UserRequest $r){
         $users=new User;
         $users->name=$r->name;
         $users->email=$r->email;
@@ -34,7 +34,7 @@ class UsersController extends Controller
         //$data['json'] = json_decode($data['user']->role,true);
         return view('admin.users.edit',$data);
     }
-    public function postedit(Request $r,$id){
+    public function postedit(UserRequest $r,$id){
         $users=User::find($id);
         $users->name=$r->name;
         $users->email=$r->email;
@@ -45,7 +45,8 @@ class UsersController extends Controller
         return redirect('admin/users')->with('thongbao','Đã Sửa Thành Công');
     }
     public function getdel($id){
-        User::destroy($id);
+        User::find($id)->delete();
         return redirect('admin/users')->with('thongbao','Đã Xóa Thành Công');
     }
+
 }

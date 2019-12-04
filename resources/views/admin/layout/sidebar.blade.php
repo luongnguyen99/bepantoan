@@ -147,9 +147,9 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('user')}}"><a href="{{route('admin.users.index')}}"><i
+                    <li class="{{activeNav('users')}}"><a href="{{route('admin.users.index')}}"><i
                                 class="fa fa-circle-o"></i> Tất Cả User</a></li>
-                    <li class="{{activeNav('user')}}"><a href="{{route('admin.users.add')}}"><i
+                    <li class="{{activeNav('users')}}"><a href="{{route('admin.users.add')}}"><i
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                 </ul>
             </li>
@@ -196,8 +196,21 @@
                     <li class="{{activeNav('options','introduce')}}"><a href="{{route('admin.options.introduce')}}"><span class="glyphicon glyphicon-record"></span>Giới thiệu</a></li>
                            
                 </ul>
+                
             </li>
-
+            <li class="treeview {{activeNav('phone_order')}}">
+                    <a href="#">
+                        <span class="glyphicon glyphicon-copy"></span>
+                        <span>Số Điện Thoại Tư Vấn</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.phone_order')}}"><span class="glyphicon glyphicon-record"></span> Chưa Xử Lý</a></li>
+                        <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.detailorder')}}"><span class="glyphicon glyphicon-record"></span> Đã Xử Lý</a></li>
+                    </ul>
+                </li>
         </ul>
     </section>
     <!-- /.sidebar -->

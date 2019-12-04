@@ -72,7 +72,7 @@
 					</div>
 					<div class="col-md-3 col-xs-12 col-sm-12">
 						<div class="form-search">
-							<form method="get" action="{{route('searchEnter')}}">
+							<form method="get" action="">
 								{{-- @csrf --}}
 								<input id="search" type="text" name="search" class="form-control" autocomplete="off" placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
