@@ -776,6 +776,9 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 0;
     padding-left: 0;
 }
+.prdBrand img{
+    height:60px;
+}
 .product-dsc .gift-sale {
     color: #0497d0;
     width: 100%;

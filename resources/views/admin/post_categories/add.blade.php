@@ -14,7 +14,6 @@ Danh mục
                 <h3 class="box-title">
                     Thêm mới danh mục
                 </h3>
-
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title=""
                         data-original-title="Collapse">
@@ -28,16 +27,48 @@ Danh mục
                     <div class="form-group">
                         <label for="name">Tên danh mục</label>
                         <input id="inputName" class="form-control" type="text" name="name"
-                            value="">
-                        <div class="text-danger error_name" id="error_name"></div>
+                        value="{{!empty(old('name')) ? old('name') : ''}}">
+                        @error('name')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="slug">Đường dẫn</label>
                         <input id="inputSlug" class="form-control" type="text" name=slug 
-                            value="">
-                        <div class="text-danger error_slug" id="error_slug"></div>
+                            value="{{!empty(old('slug')) ? old('slug') : ''}}">
+                        @error('slug')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
+                        
                     </div>
-               
+                    <div class="input-wrap" style="margin: 20px;">
+                        <label class="checkbox">
+                            <input type="checkbox" id="add_seo" name="add_seo">
+                            <span class="ico"></span> Thiết lập SEO
+                        </label>
+                    </div>
+                    <div class="seo_content" style="display:none">
+                        <div class="form-group">
+                            <label for="seo_title">Tiêu đề</label>
+                            <input  class="form-control" name="seo_title" value="" placeholder="Seo tiêu đề">
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_keyword">Từ khóa</label>
+                            <input  class="form-control" name="seo_keyword" value="" placeholder="Từ khóa">
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_description">Mô tả</label>
+                            <textarea name="seo_description" class="form-control" id="seo_description" cols="30"
+                                 rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Chặn robot google</label><br>
+                            <label class="switch">
+                                <input type="checkbox"  name="block_robot_google">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>  
+                    </div>
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
                     </div>

@@ -21,6 +21,12 @@ class CreatePostsTable extends Migration
             $table->text('content')->nullable();
             $table->string('image',191)->nullable();
             $table->bigInteger('views')->default(0);
+            
+            $table->string('seo_title',191)->nullable();
+            $table->string('seo_keyword',191)->nullable();
+            $table->string('seo_description',191)->nullable();
+            $table->tinyInteger('block_robot_google')->default(-1)->nullable();
+
             $table->bigInteger('post_category_id')->nullable()->unsigned();
             $table->foreign('post_category_id')->references('id')->on('post_categories')->onDelete('set null');
             $table->timestamps();

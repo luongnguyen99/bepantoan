@@ -168,7 +168,6 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{{activeNav('options','seo_setting')}}"><a href="{{route('admin.options.seo_setting')}}"><span class="glyphicon glyphicon-record"></span> Thiết lập SEO</a></li>
                             <li class="{{activeNav('options','slide')}}"><a href="{{route('admin.options.slide')}}"><span class="glyphicon glyphicon-record"></span> Danh sách Slide</a></li>
                             <li class="{{activeNav('options','footer')}}"><a href="{{route('admin.options.footer')}}"><span class="glyphicon glyphicon-record"></span>
                                 Footer</a></li>
@@ -176,6 +175,8 @@
                             
                         </ul>
                     </li>
+                    <li class="{{activeNav('options','seo_setting')}}"><a href="{{route('admin.options.seo_setting')}}"><span
+                                class="glyphicon glyphicon-record"></span> Thiết lập SEO</a></li>
                     <li class="{{activeNav('options','logo')}}"><a href="{{route('admin.options.logo')}}"><span class="glyphicon glyphicon-record"></span> Logo</a></li>
                     <li class="{{activeNav('options','hotline')}}"><a href="{{route('admin.options.hotline')}}"><span class="glyphicon glyphicon-record"></span>Liên hệ</a></li>
                     <li class="{{activeNav('options','email_admin')}}"><a href="{{route('admin.options.email_admin')}}"><span

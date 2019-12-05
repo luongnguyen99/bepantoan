@@ -77,3 +77,11 @@ function ChangeToSlug(n, s) {
         })
     })
 
+$('#add_seo').on('click', function () {
+    checked = $('#add_seo:checked').length;
+    if (checked == 1) {
+        $('.seo_content').css('display', 'block');
+    } else {
+        $('.seo_content').css('display', 'none');
+    }
+});

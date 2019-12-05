@@ -55,7 +55,7 @@ class ListCategoryController extends Controller
                         } elseif ($arr_price[1] == 'max') {
                             array_push($condition, ['price', '>', $arr_price[0]]);
                         } elseif ($arr_price[0] != 'min' && $arr_price[1] != 'max') {
-                            array_push($condition, ['price', '<=', $arr_price[0]]);
+                            array_push($condition, ['price', '<=', $arr_price[1]]);
                             array_push($condition, ['price', '>=', $arr_price[0]]);
                         }
                     }
@@ -213,7 +213,7 @@ class ListCategoryController extends Controller
                 } elseif ($arr_price[1] == 'max') {
                     array_push($condition, ['price', '>', $arr_price[0]]);
                 } elseif ($arr_price[0] != 'min' && $arr_price[1] != 'max') {
-                    array_push($condition, ['price', '<=', $arr_price[0]]);
+                    array_push($condition, ['price', '<=', $arr_price[1]]);
                     array_push($condition, ['price', '>=', $arr_price[0]]);
                 }
             }
@@ -316,7 +316,9 @@ class ListCategoryController extends Controller
                             <a href="<?php echo route('product_detail',['slug' => $product->slug]) ?>">
                                 <?php
                                      if (count($product->galleries) > 0 && !empty($product->galleries)) {
-                                        echo '<img src="'.$product->galleries[0]->image.'" alt="'.$product->name.'">';
+                                        echo '<img src="'.(@getimagesize($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png')).'" alt="'.$product->name.'">';
+                                    }else{
+                                        echo '<img src="'.asset('client/img/default_product.png').'" alt="'.$product->name.'">';
                                     };
                                 ?>
                             </a>

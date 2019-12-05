@@ -18,6 +18,11 @@ class CreatePagesTable extends Migration
             $table->string('title',191)->unique();
             $table->string('slug',191)->unique();
             $table->text('content')->nullable();
+            $table->string('seo_title',191)->nullable();
+            $table->string('seo_keyword',191)->nullable();
+            $table->string('seo_description',191)->nullable();
+            $table->tinyInteger('block_robot_google')->default(-1)->nullable();
+            
             $table->timestamps();
         });
     }

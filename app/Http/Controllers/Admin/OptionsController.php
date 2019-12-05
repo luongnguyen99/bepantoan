@@ -712,6 +712,24 @@ class OptionsController extends Controller
     }
 
     public function seo_setting(Request $request){
-        
+        if ($request->isMethod('post')) {
+            Option::where('key', '=', 'seo_title_home')->update(['value' => $request->seo_title_home]);
+            Option::where('key', '=', 'seo_description_home')->update(['value' => $request->seo_description_home]);
+            Option::where('key', '=', 'seo_keyword_home')->update(['value' => $request->seo_keyword_home]);
+
+            if (!empty($request->block_robot_google_home) && $request->block_robot_google_home == 'on') {
+                Option::where('key', '=', 'block_robot_google_home')->update(['value' => 1]);
+            }else{
+                Option::where('key', '=', 'block_robot_google_home')->update(['value' => -1]);
+            }
+
+            if (!empty($request->block_robot_google) && $request->block_robot_google == 'on') {
+                Option::where('key', '=', 'block_robot_google')->update(['value' => 1]);
+            }else{
+                Option::where('key', '=', 'block_robot_google')->update(['value' => -1]);
+            }
+            return redirect()->back()->with('success', 'Cập nhập thành công');
+        }
+        return view('admin.options.seo_setting');
     }
 }

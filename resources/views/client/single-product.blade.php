@@ -47,18 +47,27 @@
 									@if (count($product->galleries) > 0)
 									@foreach ($product->galleries as $image)
 									<div class="item">
-										<img src="{{$image->image}}" alt="">
+										<img src="{{@getimagesize($image->image) ? $image->image : asset('client/img/default_product.png') }}" alt="">
 									</div>
 									@endforeach
+									@else
+									<div class="item">
+										<img src="{{asset('client/img/default_product.png')}}" alt="">
+									</div>
+									
 									@endif
 								</div>
 								<div id="sync2" class="owl-carousel owl-theme">
 									@if (count($product->galleries) > 0)
 									@foreach ($product->galleries as $image)
-									<div class="item">
-										<img src="{{$image->image}}" alt="">
-									</div>
+										<div class="item">
+											<img src="{{@getimagesize($image->image) ? $image->image : asset('client/img/default_product.png') }}" alt="">
+										</div>
 									@endforeach
+									@else
+										<div class="item">
+											<img src="{{asset('client/img/default_product.png')}}" alt="">
+										</div>
 									@endif
 								</div>
 							</div>
@@ -317,9 +326,9 @@
 								@endif
 								<div class="img-responsive">
 									<a href="{{route('product_detail',['slug' => $item_product->slug])}}">
-										@if (count($item_product->galleries) > 0 && !empty($item_product->galleries))
-										<img src="{{$item_product->galleries[0]->image}}" alt="{{$item_product->name}}">
-										@endif
+										
+										<img src="{{!empty($item_product->galleries) ? @getimagesize($item_product->galleries[0]->image) ? $item_product->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}" alt="{{$item_product->name}}">
+										
 									</a>
 								</div>
 							</div>
@@ -396,11 +405,10 @@
 								@endif
 								<div class="img-responsive">
 									<a href="{{route('product_detail',['slug' => $product_random->slug])}}">
-										@if (count($product_random->galleries) > 0 &&
-										!empty($product_random->galleries))
-										<img src="{{$product_random->galleries[0]->image}}"
+										
+										<img src="{{!empty($product_random->galleries) ? @getimagesize($product_random->galleries[0]->image) ? $product_random->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png') }}"
 											alt="{{$product_random->name}}">
-										@endif
+										
 									</a>
 								</div>
 							</div>
@@ -410,8 +418,9 @@
 								</h3>
 								<div class="cate_pro_title">
 									<a href="#" class="prdBrand">
+										
 										<img alt="{{$product_random->brand->name}}"
-											src="{{$product_random->brand->image}}"></a>
+											src="{{$product_random->brand->image }}"></a>
 								</div>
 								@if (!empty($product_random->gift))
 								@php
@@ -471,7 +480,7 @@
 							$total_comment) * 100; $width_4s=($total_comment_4s / $total_comment) * 100;
 							$width_3s=($total_comment_3s / $total_comment) * 100; $width_2s=($total_comment_2s /
 							$total_comment) * 100; $width_1s=($total_comment_1s / $total_comment) * 100; //
-							dd($width_5s); @endphp <div class="col-md-4 col-sm-6 col-xs-6">
+							 @endphp <div class="col-md-4 col-sm-6 col-xs-6">
 							<ul class="ratingBarList">
 								<li class="ratingBarListItem">
 									<span class="ratingBarLabel ">5 ☆</span>
@@ -595,9 +604,10 @@
 								<a href="{{route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : ''])}}"
 									class="active">
 									<img class="attachment"
-										src="{{!empty(get_product_by_id($item)->galleries[0]) ?  get_product_by_id($item)->galleries[0]->image : ''}}"
+										src="{{!empty(get_product_by_id($item)->galleries[0]) ?  @getimagesize(get_product_by_id($item)->galleries[0]->image) ? get_product_by_id($item)->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}"
 										alt="{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}">
 								</a>
+								
 							</div>
 							<div class="title-beg">
 								<a
@@ -623,6 +633,24 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
+	$(function(){
+		beptot = 'beptot.vn';
+		data = 'Data/upload';
+		scope = $('.description-content').find('img');
+		scope_a = $('.description-content').find('a');
+		$.each(scope ,function(i,v){
+			if($(this).attr('src').indexOf(data) !== -1 || $(this).attr('src').indexOf(beptot) !== -1){
+				$(this).remove();
+			};			
+		});
+
+		$.each(scope_a ,function(i,v){
+		if($(this).attr('href').indexOf(data) !== -1 || $(this).attr('href').indexOf(beptot) !== -1){
+				$(this).attr('href','#');
+			};
+		});
+		
+	});
 	$(function() {
 		$.ajax({
 			url:"{{ route('saveCookieHistory') }}",

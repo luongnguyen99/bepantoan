@@ -26,6 +26,12 @@ class CreateProductsTable extends Migration
             $table->text('infomation_detail')->nullable();
             $table->text('specifications')->nullable();
             $table->tinyInteger('status')->default(0);
+
+            $table->string('seo_title',191)->nullable();
+            $table->string('seo_keyword',191)->nullable();
+            $table->string('seo_description',191)->nullable();
+            $table->tinyInteger('block_robot_google')->default(-1)->nullable();
+            
             $table->timestamps();
         });
     }

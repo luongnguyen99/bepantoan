@@ -19,6 +19,10 @@ class CreateCategoriesTable extends Migration
             $table->string('slug',191)->unique();
             $table->bigInteger('parent_id')->nullable()->default(0)->unsigned();
             $table->string('image',191)->nullable();
+            $table->string('seo_title',191)->nullable();
+            $table->string('seo_keyword',191)->nullable();
+            $table->string('seo_description',191)->nullable();
+            $table->tinyInteger('block_robot_google')->default(-1)->nullable();
             $table->timestamps();
         });
     }
