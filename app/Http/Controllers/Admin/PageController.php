@@ -33,7 +33,16 @@ class PageController extends Controller
         $db->title = $r->name;
         $db->slug = $r->slug;
         $db->content = $r->content;
-        
+        if ($r->add_seo == 'on') {
+            $db->seo_title = $r->seo_title;
+            $db->seo_keyword = $r->seo_keyword;
+            $db->seo_description = $r->seo_description;
+            if ($r->block_robot_google == 'on' && !empty($r->block_robot_google)) {
+                    $db->block_robot_google = 1;
+            }else{
+                    $db->block_robot_google = -1;
+            }
+        };
         $db->save();
         return redirect('admin/page')->with('add_success','Thêm thành công'); 
     }
@@ -50,7 +59,16 @@ class PageController extends Controller
         $db->title = $r->name;
         $db->slug = $r->slug;
         $db->content = $r->content;
-        
+        if ($r->add_seo == 'on') {
+            $db->seo_title = $r->seo_title;
+            $db->seo_keyword = $r->seo_keyword;
+            $db->seo_description = $r->seo_description;
+            if ($r->block_robot_google == 'on' && !empty($r->block_robot_google)) {
+                    $db->block_robot_google = 1;
+            }else{
+                    $db->block_robot_google = -1;
+            }
+        };
         $db->save();
         return redirect('admin/page')->with('edit_success','Sửa thành công');
     }

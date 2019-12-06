@@ -36,7 +36,7 @@ class ProductController extends Controller
             [
                 'name' => 'required',
                 'slug' => 'required|unique:products,slug',
-                'price' => 'required|numeric|gt:0',
+                'price' => 'required|numeric|gt:0|nullable',
                 'sale_price' => 'nullable|lt:price|numeric|gt:0',
                 'status' => 'required',
                 'category_id' => 'required',
@@ -94,7 +94,16 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
                 'brand_id' => $request->brand_id
                 ];
-
+                if ($request->add_seo == 'on') {
+                    $data['seo_title'] = $request->seo_title;
+                    $data['seo_keyword'] = $request->seo_keyword;
+                    $data['seo_description'] = $request->seo_description;
+                    if ($request->block_robot_google == 'on' && !empty($request->block_robot_google)) {
+                         $data['block_robot_google'] = 1;
+                    }else{
+                         $data['block_robot_google'] = -1;
+                    }
+                };
                 if (!empty($request->gift)){
                     $data['gift'] = json_encode($request->gift);
                 };
@@ -154,7 +163,7 @@ class ProductController extends Controller
             [
                 'name' => 'required',
                 'slug' => 'required|unique:products,slug,'.$id,
-                'price' => 'required|numeric|gt:0',
+                'price' => 'numeric|gt:0|nullable',
                 'sale_price' => 'nullable|lt:price|numeric|gt:0',
                 'status' => 'required',
                 'category_id' => 'required',
@@ -210,7 +219,16 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
 
             ];
-
+            if ($request->add_seo == 'on') {
+                    $data['seo_title'] = $request->seo_title;
+                    $data['seo_keyword'] = $request->seo_keyword;
+                    $data['seo_description'] = $request->seo_description;
+                    if ($request->block_robot_google == 'on' && !empty($request->block_robot_google)) {
+                         $data['block_robot_google'] = 1;
+                    }else{
+                         $data['block_robot_google'] = -1;
+                    }
+            };
             if (!empty($request->gift)) {
                 $data['gift'] = json_encode($request->gift);
             };

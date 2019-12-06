@@ -21,7 +21,11 @@ class Product extends Model
         'specifications',
         'status',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'seo_title',
+        'seo_keyword',
+        'seo_description',
+        'block_robot_google'
     ];
 
     public function property_values(){

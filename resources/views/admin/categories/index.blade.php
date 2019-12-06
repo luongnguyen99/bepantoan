@@ -123,9 +123,38 @@ Danh mục
                         </div>
                         <a class="btn btn-primary choose_image_product" id="choose_image_product" >Chọn ảnh</a> 
                     </div>
+                    
+                    <div class="input-wrap" style="margin: 20px;">
+                        <label class="checkbox">
+                            <input type="checkbox" id="add_seo" name="add_seo">
+                            <span class="ico"></span> Thiết lập SEO
+                        </label>
+                    </div>
+                    <div class="seo_content" style="display:none">
+                        <div class="form-group">
+                            <label for="seo_title">Tiêu đề</label>
+                            <input class="form-control" name="seo_title" value="" placeholder="Seo tiêu đề">
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_keyword">Từ khóa</label>
+                            <input class="form-control" name="seo_keyword" value="" placeholder="Từ khóa">
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_description">Mô tả</label>
+                            <textarea name="seo_description" class="form-control" id="seo_description" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Chặn robot google</label><br>
+                            <label class="switch">
+                                <input type="checkbox" name="block_robot_google">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group" style="margin-top:20px">
                         <button class=" btn btn-success" type="submit">Lưu</button>
                     </div>
+                    
                 </form>
 
 

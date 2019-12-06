@@ -337,9 +337,8 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 22px;
 }
 .footer-address li {
-    width: 20%;
     padding: 5px;
-    float: left;
+    display: block;
 }
 .footer-address li div.bg {
     list-style: none;
@@ -357,13 +356,11 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     color: #ed1c24;
     text-transform: uppercase;
-    height: 45px;
 }
 .footer-address li address {
     margin-bottom: 18px;
     font-size: 13px;
     color: #666;
-    height: 40px;
 }
 .footer-address li .phone {
     margin-bottom: 10px;
@@ -775,9 +772,6 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     padding-right: 0;
     padding-left: 0;
-}
-.prdBrand img{
-    height:60px;
 }
 .product-dsc .gift-sale {
     color: #0497d0;
@@ -1235,9 +1229,8 @@ ul.listform_filter {
     background: #fff;
     text-align: center;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
-    background: #e63155;
-    background: -webkit-linear-gradient(to left, #e63155, #89216b);
-    background: linear-gradient(to left, #e63155, #89216b);
+    background: -webkit-linear-gradient(to left, #2269a9, #f40000);
+    background: linear-gradient(to left, #2269a9, #f40000);
     border-radius: 5px;
     -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
@@ -1386,11 +1379,11 @@ ul.listform_filter {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
     margin: 1%;
     float: left;
+    min-height: 85px;
 }
-.wsupport-s li i {
-    display: block;
-    font-size: 26px;
+.wsupport-s li .img_hoa {
     margin-bottom: 5px;
+    display: inline-block;
 }
 .wsupport-s li p {
     font-size: 11px;
@@ -2169,7 +2162,93 @@ ul.listform_filter {
     font-weight: 600;
     text-transform: uppercase;
 }
-
+/* bộ lọc mới */
+.filterBoxFixed{
+    background-color: #dd1015;
+}
+.btn-filters {
+    display: inline-block;
+    width: 167px;
+    height: 33px;
+    border-radius: 3px;
+    border: solid 1px #c8c9c6;
+    text-transform: capitalize;
+    font-size: 14px;
+    line-height: 14px;
+    color: #212121;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 8px;
+    text-align: left;
+    font-weight: normal;
+}
+.btn-filters .caret {
+    margin-top: 4px;
+    float: right;
+}
+.new-filter-qh .hd-module-title .dropdown-menu {
+    width: 298px;
+    max-height: 368px;
+    overflow-x: hidden;
+    border-radius: 0;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,.24);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.24);
+    background-color: #fff;
+    font-size: 13px;
+    border: 1px solid #e6e6e6;
+    color: #5D5E5C;
+    padding: 8px;
+    left: 0;
+    top: 43px;
+}
+.new-filter-qh .hd-module-title .dropdown-menu > li {
+    width: 50%;
+    padding: 9px 0;
+}
+.new-filter-qh .hd-module-title .dropdown-menu > li .checkbox {
+    margin: 0;
+}
+.new-filter-qh .hd-module-title .dropdown-menu > li .checkbox label {
+    font-size: 12px;
+    padding-left: 22px;
+    display: inline-block;
+    position: relative;
+}
+.new-filter-qh .checkbox label::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 0;
+    top: 0;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: #fff;
+    -webkit-transition: border .15s ease-in-out,color .15s ease-in-out;
+    -o-transition: border .15s ease-in-out,color .15s ease-in-out;
+    transition: border .15s ease-in-out,color .15s ease-in-out;
+}
+.new-filter-qh .checkbox label::after {
+    display: inline-block;
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 0;
+    top: 0;
+    padding-left: 3px;
+    padding-top: 1px;
+    font-size: 11px;
+    color: #555;
+}
+.new-filter-qh .hd-module-title .dropdown-menu > li img {
+    height: 33px;
+    object-fit: contain;
+    width: 150px;
+    margin-top: -9px;
+    object-fit: contain !important;
+    margin-left: -10px;
+}
 @media screen and (max-width: 991px) {
 	.header-mobile{
 		box-shadow: 2px 2px 3px rgba(0,0,0,.1);
@@ -2368,6 +2447,29 @@ ul.listform_filter {
 	    font-weight: 500;
 	    color: #e83a3a;
 	}
+    .boxFilterLeft {
+        width: 32.3%;
+        position: unset;
+        margin-bottom: 5px;
+    }
+    .btn-filters {
+        margin-bottom: 0;
+        width: 100%;
+        padding: 3px;
+        font-size: 13px;
+        text-align: center;
+    }
+    .new-filter-qh .hd-card-body .hd-module-title {
+        padding: 5px;
+        margin: 0 -5px;
+        padding-top: 10px;
+    }
+    .new-filter-qh .hd-module-title .dropdown-menu{
+        width: 100%;
+        top: 38px;
+        max-height: 338px;
+        overflow-x: hidden;
+    }
   
 } 
 @media screen and (min-width: 768px) and (max-width: 991px) {

@@ -76,7 +76,18 @@ class CategoryController extends Controller
                 'slug' => to_slug($request->slug),
                 'parent_id' => $request->parent_id,
             ];
-            
+            // dd($request->all());
+            if ($request->add_seo == 'on') {
+                    $data['seo_title'] = $request->seo_title;
+                    $data['seo_keyword'] = $request->seo_keyword;
+                    $data['seo_description'] = $request->seo_description;
+                    if ($request->block_robot_google == 'on' && !empty($request->block_robot_google)) {
+                         $data['block_robot_google'] = 1;
+                    }else{
+                         $data['block_robot_google'] = -1;
+                    }
+            };
+            // dd($data);
             if (!empty($request->image)) {
                 $data['image'] = $request->image;
             };
@@ -129,7 +140,16 @@ class CategoryController extends Controller
             if (!empty($request->image)) {
                 $data['image'] = $request->image;
             };
-
+            if ($request->add_seo == 'on') {
+                    $data['seo_title'] = $request->seo_title;
+                    $data['seo_keyword'] = $request->seo_keyword;
+                    $data['seo_description'] = $request->seo_description;
+                    if ($request->block_robot_google == 'on' && !empty($request->block_robot_google)) {
+                         $data['block_robot_google'] = 1;
+                    }else{
+                         $data['block_robot_google'] = -1;
+                    }
+            };
             $check = Category::where('id',$id)->update($data);
 
             $category = Category::find($id);

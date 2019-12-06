@@ -57,6 +57,17 @@ class PostsController extends Controller
         }else{
             $db->post_category_id = null;
         }
+
+        if ($r->add_seo == 'on') {
+            $db->seo_title = $r->seo_title;
+            $db->seo_keyword = $r->seo_keyword;
+            $db->seo_description = $r->seo_description;
+            if ($r->block_robot_google == 'on' && !empty($r->block_robot_google)) {
+                    $db->block_robot_google = 1;
+            }else{
+                    $db->block_robot_google = -1;
+            }
+        };
         $db->save();
         return redirect('admin/posts')->with('add_success','Thêm thành công'); 
     }
@@ -64,7 +75,7 @@ class PostsController extends Controller
     {
         $db = Post::find($id);
         $post_cate = Post_category::all();
-        
+        // dd($db);
         return view('admin.posts.edit',compact(['db','post_cate']));
     }
     public function postEdit(Request $r,$id)
@@ -91,6 +102,17 @@ class PostsController extends Controller
         }else{
             $db->post_category_id = $r->parent_id;
         }
+
+        if ($r->add_seo == 'on') {
+            $db->seo_title = $r->seo_title;
+            $db->seo_keyword = $r->seo_keyword;
+            $db->seo_description = $r->seo_description;
+            if ($r->block_robot_google == 'on' && !empty($r->block_robot_google)) {
+                    $db->block_robot_google = 1;
+            }else{
+                    $db->block_robot_google = -1;
+            }
+        };
         
         
         $db->save();

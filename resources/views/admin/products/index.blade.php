@@ -166,7 +166,7 @@ Sản phẩm
                     return `
                     <div> ${step + data.name} </div>
                     <div class="div-action">
-                    <a href="{{url('/')}}/${data.slug}.html">Chi tiết</a> |
+                    <a target="_blank" href="{{url('/')}}/${data.slug}">Chi tiết</a> |
                     <a class="btn-edit"
                         href="{{ url('admin/products/edit/') }}/${data.id}">Sửa</a>
                         | <a class="btn-remove" data-id ="${data.id}"  href="javascript:;">Xoá</a></div>

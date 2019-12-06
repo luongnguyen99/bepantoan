@@ -58,7 +58,40 @@ Sửa Trang
                     <div class="form-group">
                         <button type="button" class="btn btn-success" id="add_img">Upload ảnh vào nội dung</button>
                     </div>
-                   
+                   <div class="input-wrap" style="margin: 20px;">
+                    <label class="checkbox">
+                        <input type="checkbox"
+                            {{!empty($db->seo_title) || !empty($db->seo_keyword) || !empty($db->seo_description) || !empty($db->block_robot_google) && $db->block_robot_google != -1 ? 'checked' : '' }}
+                            id="add_seo" name="add_seo">
+                        <span class="ico"></span> Thiết lập SEO
+                    </label>
+                    </div>
+                    <div class="seo_content"
+                        style="{{!empty($db->seo_title) || !empty($db->seo_keyword) || !empty($db->seo_description) || !empty($db->block_robot_google) && $db->block_robot_google != -1 ? 'display:block' : 'display:none' }}">
+                        <div class="form-group">
+                            <label for="seo_title">Tiêu đề</label>
+                            <input class="form-control" name="seo_title" value="{{!empty($db->seo_title) ? $db->seo_title : ''}}"
+                                placeholder="Seo tiêu đề">
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_keyword">Từ khóa</label>
+                            <input class="form-control" name="seo_keyword" value="{{!empty($db->seo_keyword) ? $db->seo_keyword : ''}}"
+                                placeholder="Từ khóa">
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_description">Mô tả</label>
+                            <textarea name="seo_description" class="form-control" id="seo_description" cols="30"
+                                rows="10">{{!empty($db->seo_description) ? $db->seo_description : ''}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Chặn robot google</label><br>
+                            <label class="switch">
+                                <input type="checkbox" {{!empty($db->block_robot_google) && $db->block_robot_google != -1 ? 'checked' : ''}}
+                                    name="block_robot_google">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <button class=" btn btn-success" type="submit">Lưu</button>
                     </div>

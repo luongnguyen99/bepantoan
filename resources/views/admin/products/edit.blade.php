@@ -322,6 +322,41 @@ Sửa sản phẩm
                     </div>
                     <span class="choose_gallery btn btn-sm btn-primary">Thêm ảnh</span>
                 </div>
+                <div class="input-wrap" style="margin: 20px;">
+                    <label class="checkbox">
+                        <input type="checkbox"
+                            {{!empty($product->seo_title) || !empty($product->seo_keyword) || !empty($product->seo_description) || !empty($product->block_robot_google) && $product->block_robot_google != -1 ? 'checked' : '' }}
+                            id="add_seo" name="add_seo">
+                        <span class="ico"></span> Thiết lập SEO
+                    </label>
+                </div>
+                <div class="seo_content"
+                    style="{{!empty($product->seo_title) || !empty($product->seo_keyword) || !empty($product->seo_description) || !empty($product->block_robot_google) && $product->block_robot_google != -1 ? 'display:block' : 'display:none' }}">
+                    <div class="form-group">
+                        <label for="seo_title">Tiêu đề</label>
+                        <input class="form-control" name="seo_title"
+                            value="{{!empty($product->seo_title) ? $product->seo_title : ''}}" placeholder="Seo tiêu đề">
+                    </div>
+                    <div class="form-group">
+                        <label for="seo_keyword">Từ khóa</label>
+                        <input class="form-control" name="seo_keyword"
+                            value="{{!empty($product->seo_keyword) ? $product->seo_keyword : ''}}" placeholder="Từ khóa">
+                    </div>
+                    <div class="form-group">
+                        <label for="seo_description">Mô tả</label>
+                        <textarea name="seo_description" class="form-control" id="seo_description" cols="30"
+                            rows="10">{{!empty($product->seo_description) ? $product->seo_description : ''}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Chặn robot google</label><br>
+                        <label class="switch">
+                            <input type="checkbox"
+                                {{!empty($product->block_robot_google) && $product->block_robot_google != -1 ? 'checked' : ''}}
+                                name="block_robot_google">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
                 <div style="margin-top: 40px;" class="mt-2">
                     <button type="submit" class="btn btn-success submit_data">Lưu</button>
                     <a href="{{route('admin.products.index')}}" class="btn btn-danger">Huỷ</a>

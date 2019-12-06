@@ -50,7 +50,7 @@ Cửa hàng
                     </div>
                     <div class=" form-group">
                         <label for="image">Số điện thoại</label>
-                        <input type="number" value="{{ $item->phone }}" name="phone" class="form-control"">
+                        <input type="text" value="{{ $item->phone }}" name="phone" class="form-control"">
                     </div>
                     <div class=" form-group">
                         <label for="image">Nhúng bản đồ</label>

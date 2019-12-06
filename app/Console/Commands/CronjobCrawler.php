@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\Client\CrawlerController;
+use App\Models\Product;
 class CronjobCrawler extends Command
 {
     /**
@@ -37,6 +38,8 @@ class CronjobCrawler extends Command
      */
     public function handle()
     {
-        CrawlerController::crawler_product_detail();
+        Product::whereIn('products.category_id',[22,24])->update([
+            'products.gift' => '{"5327":{"value":"T\u1eb7ng D\u00c2Y GAS L\u00d5I TH\u1ebeP H\u00c0N QU\u1ed0C","link":"https:\/\/luongnd2286.xyz\/day-gas-loi-thep-han-quoc","image":"http:\/\/luongnd2286.xyz\/userfiles\/images\/2019-12-6%209-31-5.png"}}',
+        ]);
     }
 }
