@@ -92,9 +92,14 @@ class ListCategoryController extends Controller
                                 ->orderBy('created_at', 'desc')
                                 ->limit(get_option_by_key('posts_per_page'))->get();
                         };
-
-                        $brands = Brand::all();
+                        
+                        $brands = Brand::select('brands.*')
+                            ->join('products','products.brand_id','=','brands.id')
+                            ->join('categories','categories.id','=','products.category_id')
+                            ->where('categories.id',$category->id)
+                            ->groupBy('brands.id')->get();
                         $brand = null;
+                        
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
                     } else {
 
@@ -143,7 +148,12 @@ class ListCategoryController extends Controller
                             ->limit(get_option_by_key('posts_per_page'))->get();
 
                         // dd($products);
-                        $brands = Brand::all();
+                        $brands = Brand::select('brands.*')
+                            ->join('products','products.brand_id','=','brands.id')
+                            ->join('categories','categories.id','=','products.category_id')
+                            ->where('categories.id',$category->id)
+                            ->groupBy('brands.id')->get();;
+                        
                         $brand = null;
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
                     } else {
@@ -292,9 +302,10 @@ class ListCategoryController extends Controller
             }
         }
         ob_start();
+        // dd($products);
         foreach ($products as $product) {
             ?>
-            <div class="col-md-3 col-xs-6 col-sm-6" style="">
+            <div class="col-md-5h col-xs-6 col-sm-6" style="">
                 <div class="product-item">
                     <div class="product-img">
                         <?php                         

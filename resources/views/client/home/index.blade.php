@@ -1,5 +1,21 @@
 @extends('client.master.master')
-@section('title','Trang chủ')
+@section('seo')
+	@if (!empty(get_option_by_key('seo_title_home')))
+		<title>{{get_option_by_key('seo_title_home')}}</title>
+	@else
+		<title>Trang chủ</title>
+	@endif
+	<meta name="keywords" content="{{!empty(get_option_by_key('seo_keyword_home')) ? get_option_by_key('seo_keyword_home') : '' }}" />
+	<meta name="description" content="{{!empty(get_option_by_key('seo_description_home')) ? get_option_by_key('seo_description_home') : '' }}" />
+
+	@if (!empty(get_option_by_key('block_robot_google')))
+		<meta name="robots" content="nofollow, noindex" />
+	@else
+		@if (!empty(get_option_by_key('block_robot_google_home')))
+			<meta name="robots" content="nofollow, noindex" />
+		@endif
+	@endif
+@endsection
 @section('content')
 <div class="home">
 		@php

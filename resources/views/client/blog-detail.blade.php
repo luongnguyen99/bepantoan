@@ -1,7 +1,9 @@
 @extends('client.master.master')
-@section('title')
-{{ $db_detail->title }}
+@section('seo')
+
+	
 @endsection
+
 @section('content')
 	<div class="product blog">
 		<div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
@@ -28,7 +30,7 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-				    <li><a href="#">bepantoan.vn</a></li>
+				    <li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
 				    <li>Tin tức</li>
 				</ul>
 			</div>

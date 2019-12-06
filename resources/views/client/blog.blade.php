@@ -1,6 +1,53 @@
 @extends('client.master.master')
+@if (!empty($db))
+	
+	@if (!empty($db->seo_title))
+		<title>{{$db->seo_title}}</title>
+	@else
+		<title>{{ $title }}</title>
+	@endif
+	<meta name="keywords" content="{{!empty($db->seo_keyword) ? $db->seo_keyword : '' }}" />
+	
+	
+	<meta name="description" content="{{!empty($db->seo_description) ? $db->seo_description :  '' }}" />
+
+	@if (!empty(get_option_by_key('block_robot_google')))
+		<meta name="robots" content="nofollow, noindex" />
+	@else
+		@if (!empty($db->block_robot_google))
+			<meta name="robots" content="nofollow, noindex" />
+		@endif
+	@endif
+@else
+
+	@if (!empty($db_detail->seo_title))
+		<title>{{$db_detail->seo_title}}</title>
+	@else
+		<title>{{ $title }}</title>
+	@endif
+	<meta name="keywords" content="{{!empty($db_detail->seo_keyword) ? $db_detail->seo_keyword : '' }}" />
+	@if (!empty($db_detail->short_desc))
+		@php
+			$seo_desc = substr($db_detail->short_desc,0,150);
+		@endphp
+	@else
+		@php
+			$seo_desc = '';
+		@endphp
+	@endif
+	
+	<meta name="description" content="{{!empty($db_detail->seo_description) ? $db_detail->seo_description :  $seo_desc }}" />
+
+	@if (!empty(get_option_by_key('block_robot_google')))
+		<meta name="robots" content="nofollow, noindex" />
+	@else
+		@if (!empty($db_detail->block_robot_google))
+			<meta name="robots" content="nofollow, noindex" />
+		@endif
+	@endif
+@endif
 @section('title')
-{{ $title }}
+
 @endsection
 @section('content')
 <div class="product blog">

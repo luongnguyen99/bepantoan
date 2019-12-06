@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>
+    <title> 
         @yield('page_title')
     </title>
+    
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -32,6 +33,7 @@
     <link rel="stylesheet" href="{{asset('admin0/dist/css/skins/_all-skins.min.css')}}">
         
     <link rel="stylesheet" href="{{asset('admin0/css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('admin0/css/nestable.css')}}">
     @yield('style')
     <link rel="stylesheet" href="{{asset('admin0/dist/css/AdminLTE.min.css')}}">
     {{-- css here --}}
@@ -99,7 +101,7 @@
     <script src="{{asset('admin0/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('admin0/plugins/select2/select2.min.js')}}"></script>
     <script src="{{asset('admin0/plugins/sweet_alert/sweetalert.min.js')}}"></script>
-
+    <script src="{{asset('admin0/js/nestable.js')}}"></script>
     <script src="{{asset('admin0/js/main.js')}}"></script>
     <!-- CK Editor -->
     <script src="{{asset('admin0/bower_components/ckeditor/ckeditor.js')}}"></script>

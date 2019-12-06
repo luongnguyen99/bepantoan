@@ -696,8 +696,12 @@ class OptionsController extends Controller
 
     public function choose_category_show_home(Request $request){
         if ($request->isMethod('post')) {
-            Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->categories)]);
-            return redirect()->back()->with('success', 'Cập nhập thành công');
+            $arr = json_decode($request->categories,true);
+            $new_arr = array_column($arr,'id');
+            Option::where('key','=','categories_show_home')->update(['value' => json_encode($new_arr)]);
+            return response([
+                'errors' => false,
+            ]);
         };
         $categories = Category::all();
         return view('admin.options.home.choose_category_show_home',compact('categories'));
@@ -716,17 +720,16 @@ class OptionsController extends Controller
             Option::where('key', '=', 'seo_title_home')->update(['value' => $request->seo_title_home]);
             Option::where('key', '=', 'seo_description_home')->update(['value' => $request->seo_description_home]);
             Option::where('key', '=', 'seo_keyword_home')->update(['value' => $request->seo_keyword_home]);
-
             if (!empty($request->block_robot_google_home) && $request->block_robot_google_home == 'on') {
                 Option::where('key', '=', 'block_robot_google_home')->update(['value' => 1]);
             }else{
-                Option::where('key', '=', 'block_robot_google_home')->update(['value' => -1]);
+                Option::where('key', '=', 'block_robot_google_home')->update(['value' => 0]);
             }
 
             if (!empty($request->block_robot_google) && $request->block_robot_google == 'on') {
                 Option::where('key', '=', 'block_robot_google')->update(['value' => 1]);
             }else{
-                Option::where('key', '=', 'block_robot_google')->update(['value' => -1]);
+                Option::where('key', '=', 'block_robot_google')->update(['value' => 0]);
             }
             return redirect()->back()->with('success', 'Cập nhập thành công');
         }

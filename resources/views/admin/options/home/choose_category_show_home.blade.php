@@ -5,12 +5,31 @@
 @section('page_title')
 Chọn danh mục nổi bật
 @endsection
-
+@section('style')
     <style>
-    .select2-container--default .select2-selection--multiple .select2-selection__choice{
-        float:none !important;
-    }
+        .cke_contents {
+            min-height: 100px !important;
+        }
+    
+        .col-xs-12 {
+            margin-top: 10px !important;
+        }
+    
+        .pull-right {
+            margin-left: 5px;
+        }
+    
+        .dd-empty {
+            display: none
+        }
+    
+        #nestable3 {
+            padding: 4px 8px !important;
+            border: 1px #e0e0e0 solid;
+            min-height: 40px;
+        }
     </style>
+@endsection
 
 {{-- content --}}
 @section('content')
@@ -43,50 +62,81 @@ Chọn danh mục nổi bật
 @endif
 {{-- end alert --}}
 
-
-<!-- main content -->
 <div class="row">
-    <div class="col-sm-12">
-        <div class="box box-success">
-            <div class="box-header">
-                <h3 class="box-title">
-                    Chọn danh mục nổi bật
-                </h3>
 
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title=""
-                        data-original-title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                </div>
-            </div>
+    {{-- ****************** --}}
+
+    <div class="col-xs-12">
+        <div class="box box-primary">
             <div class="box-body">
-                <!--  content here -->
-                @php
-                    $categories_show_home = json_decode(get_option_by_key('categories_show_home'),true);
-                @endphp
-                <form method="POST" action="{{route('admin.options.choose_category_show_home')}}">
-                    @csrf
-                    <div classs="form-group">
-                        <label for="categories">Chọn danh mục nổi bật</label><br>
-                        <select class="categories_select2 form-control" style="width:20%" name="categories[]" multiple="multiple">
-                           
+
+                {{-- ************** --}}
+               
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Thêm danh mục</label>
+                        <select name="categories" id="categories2" class="form-control categories2">
+                            @forelse ($categories as $item)
+                            <option value="{{$item->id}}">
+                                {{$item->name}}
+                            </option>
+                            @empty
+
+                            @endforelse
                         </select>
                     </div>
-                    <div class="form-group" style="margin-top:20px">
-                        <button class=" btn btn-success" type="submit">Lưu</button>
+                    <div style="margin: 10px 0px">
+                        <button style="margin: 5px 0px" class="btn btn-bitbucket btn-sm btn_add_element">Thêm <i
+                                class="fa fa-long-arrow-right"></i></button>
                     </div>
-                </form>
+                </div>
+                <div class="col-sm-6">
+                    <div>
+                        <label for="">Thứ tự danh mục hiển thị trang chủ</label>
+                    </div>
+                    <div class="dd" id="nestable3">
+                        <ol class="dd-list">
+                            @php
+                            $arr = json_decode(get_option_by_key('categories_show_home'),true);
+                            // dd($arr);
+                            @endphp
+                            @if (is_array($arr) && count($arr) > 0)
+                            @foreach ($arr as $key => $item)
+                            @php
+                            $category = get_category_by_id($item);
+                            @endphp
+                            <li class="dd-item dd3-item" data-id="{{ $category->id }}">
+                                <div class="dd-handle dd3-handle"></div>
+                                <div class="dd3-content">
+                                    <div class="text-box">
+                                        {{ $category->name }}
+                                    </div>
+                                </div>
+                                <div class="pull-right2">
+                                    <span style="cursor: pointer" class="btn_remove_element">
+                                        <i class="fa fa-close"></i>
+                                    </span>
+                                </div>
+                            </li>
+                            @endforeach
+                            @endif
+
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div style="margin: 20px 0px" class="">
+                        <button class="btn btn-success btn_save">Lưu</button>
+                    </div>
+                </div>
+                {{-- ----------------- --}}
 
 
-
-                <!-- end content here -->
+                {{-- **************** --}}
             </div>
         </div>
     </div>
-    {{-- /////////////////// --}}
-    
 </div>
-<!-- end main content -->
 
 
 
@@ -94,43 +144,78 @@ Chọn danh mục nổi bật
 
 
 
-
+@endsection
 <!----- javascript here -------->
 @section('js')
-
-
 <script>
-    $(function () {
-        $(document).ready(function() {
-            $('.categories_select2').select2({
-                ajax: {
-                    url: `{{route('admin.categories.searchCategory')}}`,
-                    method: 'post',
-                    data: function (params) {
-                        var query = {
-                            search: params.term,
-                        }
-                    },
-                    processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.name,
-                                        id: item.id,
-                                        value: item.id
-                                    }
-                                })
-                            };
-                    },
+    $(document).ready(function () {
+        $('#categories2').select2();
+    });
+
+</script>
+<script>
+    $('.dd').nestable({
+        maxDepth: 1,
+        group: 2
+    });
+    $('.btn_save').click(function () {
+        var a = $('.dd').nestable('serialize');
+        var myJSON = JSON.stringify(a);
+        var formData = new FormData();
+        $.ajax({
+            url : `{{route('admin.options.choose_category_show_home')}}`,
+            method: 'post',
+            type: 'json',
+            dataType: 'json',
+            data: {
+                categories: myJSON,
+                _token: '{{ csrf_token() }}'
+            },
+        }).done(
+            result => {
+                var msg = result;
+                if (result.error == false) {
+                    window.location.reload();
+                } else {       
+                    window.location.reload();
                 }
+              
             });
-            
-        });
     })
-    
+
+</script>
+<script>
+    function buildItem(text, value) {
+
+        var html = `<li class="dd-item dd3-item" data-id="${value}">
+                        <div class="dd-handle dd3-handle"></div>
+                        <div class="dd3-content">${text}</div>
+                        <div class="pull-right2">
+                            <span style="cursor: pointer" class="btn_remove_element">
+                                <i class="fa fa-close"></i>
+                            </span>
+                        </div>
+                    </li>`;
+        return html;
+    }
+    $(function () {
+        $('body').on('click', '.btn_add_element', function () {
+            let text = $("#categories2 option:selected").text();
+            text = $.trim(text);
+            let value = $("#categories2").val();
+            
+            $('.dd-list').append(buildItem(text, value));
+
+        })
+        $('body').on('click', '.fa-close', function (e) {
+            $(this).parents('.dd3-item').remove();
+        })
+    })
+
 </script>
 
-@endsection
 
 
 @endsection
+
+

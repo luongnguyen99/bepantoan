@@ -5,17 +5,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-	<meta name="description" content="Nội dung" />
-
-	<meta name="keywords" content="Nội dung" />
+	@yield('seo')
 	
-	<meta name="robots" content="nofollow, noindex" />
-	
-	<meta name="og:title" content="Tiêu đề" />
-	<meta name="og:description" content="Mô tả" />
-	<meta name="og:image" content="Ảnh đại diện (Lấy luôn thumbnail)" />
 
 
 	<title>@yield('title')</title>

@@ -1,8 +1,22 @@
 @extends('client.master.master')
-@section('title')
-{{$category->name}}
-{{!empty($brand) ? $brand->name : ''}}
+@section('seo')
+	@if (!empty($category->seo_title))
+		<title>{{$category->seo_title}}</title>
+	@else
+		<title>{{$category->name}} {{!empty($brand) ? $brand->name : ''}}</title>
+	@endif
+	<meta name="keywords" content="{{!empty($category->seo_keyword) ? $category->seo_keyword : '' }}" />
+	<meta name="description" content="{{!empty($category->seo_description) ? $category->seo_description : '' }}" />
+
+	@if (!empty(get_option_by_key('block_robot_google')))
+		<meta name="robots" content="nofollow, noindex" />
+	@else
+		@if (!empty($category->block_robot_google))
+			<meta name="robots" content="nofollow, noindex" />
+		@endif
+	@endif
 @endsection
+
 @section('css')
 	<style>
 	input[type="radio"] {
@@ -39,7 +53,7 @@
 		<div class="page-bread">
 			<div class="container">
 				<ul>
-					<li><a href="">bepantoan.vn</a></li>
+					<li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
 					@if ($category)
 				    	<li><a href="{{route('category_detail',['slug' => $category->slug])}}">{{$category->name}}</a></li>		
 					@endif
@@ -49,11 +63,137 @@
 				</ul>
 			</div>
 		</div>
+		<section class="new-filter-qh">
+			<div class="container">
+				<div class="hd-card-body">
+					<div class="hd-module-title filterBoxFixed">
+						<div class="row">
+							<form id="form_filter" method="GET" action="">
+							<div class="col-xs-12">
+								
+								@if (!empty($brands))
+								<div class="boxFilterLeft btn-group">
+									<button type="button" class="btn btn-filters btn-default dropdown-toggle" data-toggle="dropdown"
+										aria-expanded="false">
+										Hãng Sản xuất <span class="caret"></span>
+									</button>
+									<ul class="listform_filter category right-property dropdown-menu" role="menu">
+										<div class="box-filter">
+											<h3>HÃNG SẢN XUẤT</h3>
+											<ul class="listform_filter filterBrand">
+												@foreach ($brands as $item)
+												<li>
+													<div class="radio">
+														<input type="radio" name="hang-san-xuat"
+															{{!empty($_GET['hang-san-xuat']) && $_GET['hang-san-xuat'] == $item->id  ? 'checked' : ''}}
+															value="{{$item->id}}" id="brand_{{$item->id}}">
+														<label for="brand_{{$item->id}}">
+															<img src="{{$item->image}}" class="icImgBrand" alt="{{$item->name}}">
+														</label>
+													</div>
+												</li>
+												@endforeach
+											</ul>
+										</div>	
+									</ul>
+								</div>
+								@endif
+		
+		
+								<div class="boxFilterLeft btn-group">
+									<button type="button" class="btn btn-filters btn-default dropdown-toggle"
+										data-toggle="dropdown" aria-expanded="false">
+										Mức giá <span class="caret"></span>
+									</button>
+									<ul class="listform_filter right-property dropdown-menu" role="menu">
+		
+										<li>
+											<div class="radio">
+												<input type="radio" name="muc-gia" id="muc-gia102"
+													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '3000000-5000000'  ? 'checked' : ''}}
+													value="3000000-5000000">
+												<label for="muc-gia102"> 3 triệu - 5 triệu</label>
+											</div>
+										</li>
+										
+										<li>
+											<div class="radio">
+												<input type="radio" name="muc-gia" id="muc-gia103"
+													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '5000000-10000000'  ? 'checked' : ''}}
+													value="5000000-10000000">
+												<label for="muc-gia103"> 5 triệu - 10 triệu</label>
+											</div>
+										</li>
+										
+										<li>
+											<div class="radio">
+												<input type="radio" name="muc-gia" id="muc-gia104"
+													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '10000000-15000000'  ? 'checked' : ''}}
+													value="10000000-15000000">
+												<label for="muc-gia104"> 10 triệu - 15 triệu</label>
+											</div>
+										</li>
+										
+										<li>
+											<div class="radio">
+												<input type="radio" name="muc-gia" id="muc-gia105"
+													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '15000000-max'  ? 'checked' : ''}} value="15000000-max">
+												<label for="muc-gia105">Trên 15 triệu</label>
+											</div>
+										</li>
+										
+										<li>
+											<div class="radio">
+												<input type="radio" name="muc-gia" id="muc-gia490"
+													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == 'min-3000000'  ? 'checked' : ''}} value="min-3000000">
+												<label for="muc-gia490">Dưới 3 triệu</label>
+											</div>
+										</li>
+		
+									</ul>
+								</div>
+								@if (!empty($category))
+									@if (count($category->properties) > 0)
+										@foreach ($category->properties as $property)
+											<div class="boxFilterLeft btn-group">
+												<button type="button" class="btn btn-filters btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+													{{$property->name}} <span class="caret"></span>
+												</button>
+												
+												<ul class="listform_filter right-property dropdown-menu" role="menu">
+													@if (count($property->property_values) > 0)
+														@foreach ($property->property_values as $property_value)
+															<li>
+																<div class="radio">
+																<input type="radio" {{!empty($_GET[$property->slug]) && $_GET[$property->slug] == $property_value->id  ? 'checked' : ''}} name="{{$property->slug}}" value="{{$property_value->id}}" id="{{$property->slug.$property_value->id}}">
+																	<label for="{{$property->slug.$property_value->id}}">{{$property_value->name}}</label>
+																</div>
+															</li>
+														@endforeach
+													@endif	
+												</ul>
+											</div>
+										@endforeach
+									@endif
+								@endif
+								</form>	
+								
+		
+								
+							</div>
+						</div>
+					</div>
+				</div>
+		
+			</div>
+		</section>
 		<div class="pro-content">
 			<div class="container">
 				<div class="pro-bg">
 					<div class="row">
-						<div class="col-md-3 col-xs-12 col-sm-12">
+						
+						
+						{{-- <div class="col-md-3 col-xs-12 col-sm-12">
 							<form id="form_filter" method="GET" action="">
 								<div class="sidebar-left">
 									@if (!empty($brands))
@@ -136,20 +276,20 @@
 									@endif				
 								</div>
 							</form>
-						</div>
-						<div class="col-md-9 col-xs-12 col-sm-12">
+						</div> --}}
+						<div class="col-md-12 col-xs-12 col-sm-12">
 							<div class="single-products">
 								@if (!empty($products))
 									<div class="hd-card-body">
 										<h1><a href="#" class="fs-hotit"
 												title="{{$category->name}} {{!empty($brand) ? $brand->name : ''}}">{{$category->name}}
 												{{!empty($brand) ? $brand->name : ''}}</a></h1>
-										<div class="row product-fs">
+										<div class="row">
 											@php
 												$i = 1;
 											@endphp
 											@foreach ($products as $product)
-												<div class="col-md-3 col-xs-6 col-sm-6" style={{$i % 5 == 0 ? 'clear:both' : ''}}>
+												<div class="col-md-5h col-xs-6 col-sm-6">
 													<div class="product-item">
 														<div class="product-img">
 															@php
@@ -251,8 +391,9 @@
 					arr_get: `<?php echo !empty($_GET) ? json_encode($_GET) : '' ?> `,
 				},
 				success:function(data){ 
+					
 					new_posts_current = Number(total_post_current) + Number(posts_per_page);
-					$('.row.product-fs').find('div.col-md-3.col-xs-6.col-sm-6').last().after(data);
+					$('.pro-bg > .row').find('div.col-md-5h.col-xs-6.col-sm-6').last().after(data);
 					$('.lms-pagination.pagination').attr('total-post-current',new_posts_current);
 					
 					if (data.length == 0) {

@@ -1,7 +1,32 @@
 @extends('client.master.master')
-@section('title')
-{{ $product->name }}
+@section('seo')
+	@if (!empty($product->seo_title))
+		<title>{{$product->seo_title}}</title>
+	@else
+		<title>{{ !empty($product->name) ? substr($product->name,0,65) : '' }}</title>
+	@endif
+	<meta name="keywords" content="{{!empty($product->seo_keyword) ? $product->seo_keyword : '' }}" />
+	@if (!empty($product->description))
+		@php
+			$seo_desc = substr($product->description,0,150);
+		@endphp
+	@else
+		@php
+			$seo_desc = '';
+		@endphp
+	@endif
+	
+	<meta name="description" content="{{!empty($product->seo_description) ? $product->seo_description :  $seo_desc }}" />
+
+	@if (!empty(get_option_by_key('block_robot_google')))
+		<meta name="robots" content="nofollow, noindex" />
+	@else
+		@if (!empty($product->block_robot_google))
+			<meta name="robots" content="nofollow, noindex" />
+		@endif
+	@endif
 @endsection
+
 @section('content')
 
 <div class="single-pro product">

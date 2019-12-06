@@ -20,7 +20,7 @@ class CreatePostCategoriesTable extends Migration
             $table->string('seo_title',191)->nullable();
             $table->string('seo_keyword',191)->nullable();
             $table->string('seo_description',191)->nullable();
-            $table->tinyInteger('block_robot_google')->default(-1)->nullable();
+            $table->tinyInteger('block_robot_google')->default(0)->nullable();
             $table->timestamps();
         });
     }
