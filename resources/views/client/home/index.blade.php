@@ -83,19 +83,23 @@
 					<h2 class="title">
 						<a href="{{url('danh-muc').'/'.$item->slug}}" title="{{$item->name}}">{{$item->name}}</a>
 					</h2>
-					@php
-					$arr_name_sub_category = explode(",",$item->brand_name);
-					$arr_slug_sub_category = explode(",",$item->brand_slug);
-					@endphp
-					<div class="list-text-category hidden-xs hidden-sm">
-						@if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
-						@foreach ($arr_name_sub_category as $key => $item2)
-						<a href="{{url('danh-muc').'/'.(!empty($arr_slug_sub_category[$key]) ? $arr_slug_sub_category[$key] : '')}}" class="itemprop"
-							title="{{$item2}}">{{$item2}}</a>
-						@endforeach
-						@endif
-		
-					</div>
+					@if ($item->brand_name != null && $item->brand_slug != null)
+						@php
+						$arr_name_sub_category = explode(",",$item->brand_name);
+						$arr_slug_sub_category = explode(",",$item->brand_slug);
+						@endphp
+						
+						<div class="list-text-category hidden-xs hidden-sm">
+							@if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
+							@foreach ($arr_name_sub_category as $key => $item2)
+							<a href="{{url('danh-muc').'/'.(!empty($arr_slug_sub_category[$key]) ? $arr_slug_sub_category[$key] : '')}}"
+								class="itemprop" title="{{$item2}}">{{$item2}}</a>
+							@endforeach
+							@endif
+						
+						</div>
+					@endif
+					
 					<a href="{{url('danh-muc').'/'.$item->slug}}" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
 				</div>
 				<div class="hd-card-body">

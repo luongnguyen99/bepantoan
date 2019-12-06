@@ -16,7 +16,7 @@
 @section('content')
 <div class="home">
 	<div class="product">
-		<div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
+		{{-- <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
 		    <div class="container">
 				@if (!empty($categories))
 					<div class="arrows-category">
@@ -35,7 +35,7 @@
 					</div>
 				@endif
 		    </div>
-		</div>
+		</div> --}}
 		<div class="page-bread">
 			<div class="container">
 				<ul>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="home">
     <div class="product">
-    <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
+    {{-- <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
         <div class="container">
             @if (!empty($categoryAll))
             <div class="arrows-category">
@@ -22,7 +22,7 @@
             </div>
             @endif
         </div>
-    </div>
+    </div> --}}
     <div class="wrap-brand">
         <div class="container">
             @if (count($brands) > 0 && !empty($brands))

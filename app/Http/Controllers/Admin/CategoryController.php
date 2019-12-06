@@ -8,9 +8,14 @@ use DataTables;
 use App\Models\Category;
 use Validator;
 use App\Models\Property;
+use App\Models\Categories_properties;
 class CategoryController extends Controller
 {
-    
+    public function searchCategory(Request $request){
+        $categories = Category::where('name' , 'LIKE' , '%'.$request->search.'%')->get();
+        return $categories;
+    }
+
     public function getData(){
         $categories = Category::select()->orderBy('id', 'desc')->with('properties')->get();
         $categoriesRecursive = $this->categoriesRecursive($categories);
@@ -114,6 +119,7 @@ class CategoryController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
+            
             $name_category = str_replace(',','-',$request->name); 
             $data = [
                 'name' => $name_category,
@@ -131,6 +137,8 @@ class CategoryController extends Controller
 
             if (!empty($request->properties)) {
                 $category->properties()->sync($request->properties);
+            }else{
+               Categories_properties::where('category_id',$id)->delete();
             }
 
             return redirect()->route('admin.categories.index')->with('success','Cập nhập danh mục thành công');

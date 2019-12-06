@@ -34,6 +34,9 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('saveEdit/{id}','CategoryController@saveEdit')->name('saveEdit');
         Route::post('delete','CategoryController@delete')->name('delete');
         Route::post('deleteMulti','CategoryController@deleteMulti')->name('deleteMulti');
+
+        Route::post('searchCategory','CategoryController@searchCategory')->name('searchCategory');
+        // searchCategory
     });
 
     Route::group(['prefix' => 'brands', 'as' => 'brands.'], function () {
@@ -318,8 +321,8 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('crawler_product_detail', 'CrawlerController@crawler_product_detail')->name('crawler_product_detail');
     Route::get('crawler_product_detail_order_desc', 'CrawlerController@crawler_product_detail_order_desc')->name('crawler_product_detail_order_desc');
     
-    Route::get('/{slug}.html','ProductController@detail')->name('product_detail');
-    Route::get('{slug}','BlogController@getData');
+    Route::get('/{slug}','ProductController@detail')->name('product_detail');
+    Route::get('post/{slug}','BlogController@getData');
     Route::get('error/404','BlogController@get404');
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
     Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');

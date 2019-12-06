@@ -54,8 +54,20 @@ if (!function_exists('get_detail_products_by_id')) {
 // get product
 if (!function_exists('get_products_by_category_id')) {
     function get_products_by_category_id($id){
-        $products = Product::where('category_id',$id)->orderBy('created_at','desc')->with('galleries','brand')->limit(5)->get();
+        $checkCategory = Category::where('parent_id',$id)->get();
+        
+        if (count($checkCategory) == 0) {
+            $products = Product::where('category_id',$id)->orderBy('created_at','desc')->with('galleries','brand')->limit(5)->get();
+        }else{
+            $inCategory = [];
+            foreach ($checkCategory as $key => $value) {
+                $inCategory[] = $value->id;
+            }
+            // var_dump($inCategory);
+            $products = Product::whereIn('category_id',$inCategory)->orderBy('created_at','desc')->with('galleries','brand')->limit(5)->get();
+        }
         return $products;
+       
     };
 }
 

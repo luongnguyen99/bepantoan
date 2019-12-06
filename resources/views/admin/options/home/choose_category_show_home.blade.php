@@ -69,9 +69,7 @@ Chọn danh mục nổi bật
                     <div classs="form-group">
                         <label for="categories">Chọn danh mục nổi bật</label><br>
                         <select class="categories_select2 form-control" style="width:20%" name="categories[]" multiple="multiple">
-                            @foreach ($categories as $item)
-                            <option {{!empty($categories_show_home) ? in_array($item->id,$categories_show_home) ? 'selected' : '' : ''}} value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
+                           
                         </select>
                     </div>
                     <div class="form-group" style="margin-top:20px">
@@ -104,9 +102,32 @@ Chọn danh mục nổi bật
 <script>
     $(function () {
         $(document).ready(function() {
-            $('.categories_select2').select2();
+            $('.categories_select2').select2({
+                ajax: {
+                    url: `{{route('admin.categories.searchCategory')}}`,
+                    method: 'post',
+                    data: function (params) {
+                        var query = {
+                            search: params.term,
+                        }
+                    },
+                    processResults: function (data) {
+                            return {
+                                results: $.map(data, function (item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.id,
+                                        value: item.id
+                                    }
+                                })
+                            };
+                    },
+                }
+            });
+            
         });
     })
+    
 </script>
 
 @endsection

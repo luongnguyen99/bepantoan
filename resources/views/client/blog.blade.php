@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="product blog">
-    <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
+    {{-- <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
         <div class="container">
             <div class="arrows-category">
                 <div class="menu-cate">
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="page-bread">
         <div class="container">
             <ul>

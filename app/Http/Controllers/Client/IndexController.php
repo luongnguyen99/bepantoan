@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function getList()
     {
         $categories_show_home = json_decode(get_option_by_key('categories_show_home'), true);
-
+        // dd($categories_show_home);
         $where = 'where ';
         if (!empty($categories_show_home) && count($categories_show_home) > 0) {
             foreach ($categories_show_home as $key => $value) {
