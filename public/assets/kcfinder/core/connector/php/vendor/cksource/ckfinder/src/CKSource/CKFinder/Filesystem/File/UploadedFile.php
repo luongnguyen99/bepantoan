@@ -268,7 +268,7 @@ class UploadedFile extends File
      */
     public function isValidImage()
     {
-        if (@getimagesize($this->tempFilePath) === false) {
+        if (!empty($this->tempFilePath) === false) {
             return false ;
         }
 

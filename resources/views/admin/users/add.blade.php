@@ -66,7 +66,7 @@ Tài Khoản
                                         <label for="name">Chọn Quyền</label>
                                 <select name="level" class="form-control">
                                     <option value="0">---Chọn Quyền---</option>
-                                    <option value="300">ADMIN</option>
+                                    <option value="300">Admin</option>
                                 </select>
                                 </div>
                                  {{-- <table class="table">

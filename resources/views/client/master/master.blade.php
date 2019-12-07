@@ -121,35 +121,42 @@
 											@endif
 										</a>
 									</span> 
-									@php $dataset = build_categories_tree(); @endphp
-
-									@if ($dataset)
+									
 										
-										@foreach ( $dataset  as $key => $tree )
-											@php
-												$cate_product = get_category_by_id($key)->toarray();
-											@endphp
-											<li class="ng-scope  drop-icon <?php echo ( isset($tree) && !empty($tree)  ) ? 're-icon menu-item-has-children' : false ?>">
-												<a href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
-													<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
-												</a>
-												@if ( isset($tree) && !empty($tree) )
-													<ul class="sub-menu">
-														@foreach ($tree as $item)
-														@php
-															$cate_product_child = get_category_by_id($item)->toarray();
-														@endphp	
-															<li class="ng-scope ng-has-child1"><a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a> </li>
-														@endforeach
-														
-
-													</ul>	
-												@endif
+										@php $dataset = json_decode(get_option_by_key('show_category_menu_mobile'),true); 
 												
+										@endphp
+										
+										@if ($dataset)
+										
+										@foreach ( $dataset as $key => $tree )
+											@php
+												$cate_product = get_category_by_id($tree['id'])->toarray();
+												
+											@endphp
+											<li
+												class="ng-scope drop-icon re-icon {{ isset($tree['children']) && !empty($tree['children']) ? 'menu-item-has-children' : '' }} ">
+												<a style="color:#2269a9" href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
+														<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
+												</a>
+												@if ( isset($tree['children']) && !empty($tree['children']) )
+												<ul class="sub-menu">
+													@foreach ($tree['children'] as $item)
+													@php
+													$cate_product_child = get_category_by_id($item)->toarray();
+													@endphp
+													<li class="ng-scope ng-has-child1">
+														<a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a>
+													</li>
+													@endforeach
+												</ul>
+												@endif	
 											</li>
 										@endforeach
-
-									@endif
+										
+										@endif
+									
+									
 
 									<ul class="mobile-support">
 
@@ -405,12 +412,13 @@
 							var arr_prd = data.prd;
 							var arr_cate = data.cate;
 							var html = '';
-							jQuery.each(arr_cate,function(key,item){
-								html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+							jQuery.each(arr_cate,function(key1,item1){
+								html += '<li class="page">Tìm trong <a href="danh-muc/'+item1.slug+'" target="_blank">'+item1.name+'</a></li>'
+								// console.log(item);
 							});
 							jQuery.each(arr_prd,function(key,item){
 								html += '<li>'+
-								'<a href="san-pham/'+item.slug+'">'+
+								'<a href="'+item.slug+'">'+
 									'<div class="media">'+
 										'<div class="media-left">'+
 											'<img src="'+item.image+'" class="media-object thumb">'+
@@ -453,12 +461,12 @@
 							var arr_prd = data.prd;
 							var arr_cate = data.cate;
 							var html = '';
-							jQuery.each(arr_cate,function(key,item){
-								html += '<li class="page">Tìm trong <a href="#" target="_blank">'+item.name+'</a></li>'
+							jQuery.each(arr_cate,function(key1,item1){
+								html += '<li class="page">Tìm trong <a href="danh-muc/'+item1.slug+'" target="_blank">'+item1.name+'</a></li>'
 							});
 							jQuery.each(arr_prd,function(key,item){
 								html += '<li>'+
-								'<a href="san-pham/'+item.slug+'">'+
+								'<a href="'+item.slug+'">'+
 									'<div class="media">'+
 										'<div class="media-left">'+
 											'<img src="'+item.image+'" class="media-object thumb">'+

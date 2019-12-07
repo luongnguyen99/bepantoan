@@ -64,6 +64,9 @@ jQuery(document).ready(function() {
   jQuery('.product-call-requests>form').click(function() {
     jQuery(this).addClass('show-form-call');
     jQuery(this).children('.call-form-hide').show();
+    jQuery(this).find('.btn-tigger').hide();
+    jQuery(this).find('.btn-phone-sbmit').show();
+
     /* Act on the event */
   });
 

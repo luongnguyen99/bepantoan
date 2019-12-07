@@ -10,17 +10,17 @@ class PhoneOrderController extends Controller
 {
     //
     public function getphone_order(){
-        $data['phone']=Phone_Order::where('status',1)->get();
+        $data['phone']=Phone_Order::where('status',0)->get();
         return view('admin.phone_order.phone_order',$data);
     }
     public function xuly(Request $r,$id){
         $phone=Phone_Order::find($id);
-        $phone->status=2;
+        $phone->status=1;
         $phone->save();
         return redirect('admin/phone_order/detailorder');
     }
     public function getdetailorder(){ 
-        $data['phone']=Phone_Order::where('status',2)->get();
+        $data['phone']=Phone_Order::where('status',1)->get();
         return view('admin.phone_order.detailorder',$data);
     }
     public function getdel($id){

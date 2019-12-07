@@ -176,17 +176,15 @@
 									{!! get_option_by_key('sale') !!}
 									@endif
 									<div class="product-call-requests">
-										<form>
-											<input class="ty-input-text-full cm-number form-control"
-												id="PhoneRegister" type="tel" placeholder="Nhập số điện thoại "
-												value="">
+										<form id="get_info_customer">
+											<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel" name="phone_info" placeholder="Nhập số điện thoại "value="">
 											<div class="call-form-hide">
-												<input type="text" name="" class="form-control"
-													placeholder="Tên sản phẩm cần tư vấn">
-												<input type="text" name="" class="form-control"
-													placeholder="Thời gian nhận tư vấn">
+												<input type="text" name="product_name" class="form-control" placeholder="Tên sản phẩm cần tư vấn" value="{{ $product->name }}" >
+												<input type="hidden" name="product_id" value="{{ $product->id }}" >
+												<input type="text" name="sp_time" class="form-control" placeholder="Thời gian nhận tư vấn">
 											</div>
-											<button type="button" class="btn">Đăng ký ngay</button>
+											<button type="button" class="btn btn-phone-sbmit" style="display: none">Đăng ký ngay</button>
+											<button type="button" class="btn btn-tigger">Đăng ký ngay</button>
 										</form>
 										<span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
 									</div>
@@ -740,5 +738,53 @@
 			})
 		})
 	})
+
+	//  get phone submit
+
+
+	$(document).ready(function () {		
+		$('.btn-phone-sbmit').click(function (e) { 
+			e.preventDefault();
+
+			let data = $(this).parents('#get_info_customer').serializeArray();
+
+			console.log(data);
+
+			$.ajax({
+				type: "post",
+				url: "{{ route('phone') }}",
+				data: {
+					_token : `{{csrf_token()}}`,
+					dataset : data
+				},
+				dataType: "json",
+				success: function (response) {
+					//  check 
+					if(response.status==200){
+						Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Gửi yêu cầu thành công chúng tôi sẽ liên hệ lại với quý khách sớm nhất!',
+						})
+					}else{
+						html = '';
+						let error = JSON.parse(response.error);
+						// error = JSON.parse(error);
+						html = html + error.phone_info;
+
+						Swal.fire({
+							
+						icon: 'error',
+						html:
+						`<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,
+						focusConfirm: false,
+						confirmButtonText:
+						' Ok!',
+						})
+					}
+				}
+			});
+		});
+	});
 </script>
 @endsection

@@ -327,7 +327,7 @@ class ListCategoryController extends Controller
                             <a href="<?php echo route('product_detail',['slug' => $product->slug]) ?>">
                                 <?php
                                      if (count($product->galleries) > 0 && !empty($product->galleries)) {
-                                        echo '<img src="'.(@getimagesize($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png')).'" alt="'.$product->name.'">';
+                                        echo '<img src="'.(!empty($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png')).'" alt="'.$product->name.'">';
                                     }else{
                                         echo '<img src="'.asset('client/img/default_product.png').'" alt="'.$product->name.'">';
                                     };

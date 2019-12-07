@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Date;
 use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\EditUserRequest;
+use Auth;
 class UsersController extends Controller
 {
     //
@@ -16,16 +18,15 @@ class UsersController extends Controller
     }
     public function getadd(){
         $data['per'] = User::all();
-        //$data['json'] = json_decode($data['per'][0]->role,true);
+        
         return view('admin.users.add',$data);
     }
     public function postadd(UserRequest $r){
-        $users=new User;
-        $users->name=$r->name;
-        $users->email=$r->email;
-        $users->role=$r->input('level');
-        //$users->role=json_encode($r->role);
-        $users->password=bcrypt($r->password);
+        $users = new User;
+        $users->name = $r->name;
+        $users->email = $r->email;
+        $users->role = $r->input('level');
+        $users->password = bcrypt($r->password);
         $users->save();
         return redirect('admin/users')->with('thongbao','Đã Thêm Thành Công');
     }
@@ -34,13 +35,16 @@ class UsersController extends Controller
         //$data['json'] = json_decode($data['user']->role,true);
         return view('admin.users.edit',$data);
     }
-    public function postedit(UserRequest $r,$id){
-        $users=User::find($id);
-        $users->name=$r->name;
-        $users->email=$r->email;
-        $users->role=$r->input('level');
-        //$users->role=json_encode($r->role);
-        $users->password=bcrypt($r->password);
+    public function postedit(EditUserRequest $r,$id){
+
+        $users = User::find($id);
+       
+        $users->name = $r->name;
+        $users->email = $r->email;
+        $users->role = $r->input('level');
+        if (!empty($users->password)) {
+            $users->password = bcrypt($r->password);
+        }
         $users->save();
         return redirect('admin/users')->with('thongbao','Đã Sửa Thành Công');
     }

@@ -79,7 +79,7 @@
             {{-- Post Category --}}
             <li class="treeview {{activeNav('post_categories')}}">
                 <a href="#">
-                    <span class="glyphicon glyphicon-copy"></span>
+                    <i class="fa fa-clipboard"></i>
                     <span>Danh mục tin tức</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -118,35 +118,50 @@
                 </ul>
             </li>
             {{-- Page --}}
-            <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
+            <li class="treeview {{activeNav('page')}}">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
-                    <span>Tùy chỉnh trang</span>
+                    <i class="far fa-copy"></i>
+                    <span>Trang</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('page')}}"><a href="{{route('admin.page.index')}}"><i
+                    <li class="{{activeNav('page','index')}}"><a href="{{route('admin.page.index')}}"><i
                                 class="fa fa-circle-o"></i> Danh sách</a></li>
-                    <li class="{{activeNav('page')}}"><a href="{{route('admin.page.add')}}"><i
+                    <li class="{{activeNav('page','add')}}"><a href="{{route('admin.page.add')}}"><i
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                 </ul>
             </li>
              {{-- User --}}
-             <li class="treeview {{activeNav('page')}} {{activeNav('page')}}">
+             <li class="treeview {{activeNav('users')}} }}">
                 <a href="#">
-                    <i class="fa fa-archive"></i>
-                    <span>Quản Lý Người Dùng</span>
+                    <i class="fas fa-user-secret"></i>
+                    <span>Quản trị</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('users')}}"><a href="{{route('admin.users.index')}}"><i
-                                class="fa fa-circle-o"></i> Tất Cả User</a></li>
-                    <li class="{{activeNav('users')}}"><a href="{{route('admin.users.add')}}"><i
+                    <li class="{{activeNav('users','index')}}"><a href="{{route('admin.users.index')}}"><i
+                                class="fa fa-circle-o"></i> Danh sách </a></li>
+                    <li class="{{activeNav('users','add')}}"><a href="{{route('admin.users.add')}}"><i
                         class="fa fa-circle-o"></i> Thêm mới</a></li>
+                </ul>
+            </li>
+            <li class="treeview {{activeNav('phone_order')}}">
+                <a href="#">
+                    <i class="fa fa-clipboard"></i>
+                    <span>Đăng ký tư vấn</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.phone_order')}}"><span
+                                class="glyphicon glyphicon-record"></span> Chưa xử lý</a></li>
+                    <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.detailorder')}}"><span
+                                class="glyphicon glyphicon-record"></span> Đã xử lý</a></li>
                 </ul>
             </li>
             {{-- Option --}}
@@ -184,26 +199,14 @@
                     <li class="{{activeNav('options','payment')}}"><a href="{{route('admin.options.payment')}}"><span class="glyphicon glyphicon-record"></span>Thanh toán</a></li>
                     <li class="{{activeNav('options','social_network')}}"><a href="{{route('admin.options.social_network')}}"><span class="glyphicon glyphicon-record"></span>Mạng xã hội</a></li>
                     <li class="{{activeNav('options','menu')}}"><a href="{{route('admin.options.menu')}}"><span class="glyphicon glyphicon-record"></span>Menu</a></li>
-                    <li class="{{activeNav('options','choose_category_show_menu_mobile')}}"><a href="{{route('admin.options.choose_category_show_menu_mobile')}}"><span class="glyphicon glyphicon-record"></span>Danh mục category mobile</a></li>
+                    <li class="{{activeNav('options','choose_category_show_menu_mobile')}}"><a href="{{route('admin.options.choose_category_show_menu_mobile')}}"><span class="glyphicon glyphicon-record"></span>Danh mục mobile</a></li>
                     <li class="{{activeNav('options','prd-detail')}}"><a href="{{route('admin.options.prd-detail')}}"><span class="glyphicon glyphicon-record"></span>Chi tiết sản phẩm</a></li>
                     <li class="{{activeNav('options','introduce')}}"><a href="{{route('admin.options.introduce')}}"><span class="glyphicon glyphicon-record"></span>Giới thiệu</a></li>
                            
                 </ul>
                 
             </li>
-            <li class="treeview {{activeNav('phone_order')}}">
-                    <a href="#">
-                        <span class="glyphicon glyphicon-copy"></span>
-                        <span>Số Điện Thoại Tư Vấn</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.phone_order')}}"><span class="glyphicon glyphicon-record"></span> Chưa Xử Lý</a></li>
-                        <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.detailorder')}}"><span class="glyphicon glyphicon-record"></span> Đã Xử Lý</a></li>
-                    </ul>
-                </li>
+
         </ul>
     </section>
     <!-- /.sidebar -->

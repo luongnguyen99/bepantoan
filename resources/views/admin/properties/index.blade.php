@@ -265,7 +265,7 @@ Thuộc tính
                     } else {
                         
                         form.find('.error_name').html('');
-                        swal("Deleted!",
+                        swal("Thành công!",
                                 "Thêm thành công.",
                                 "success").then(function () {
                                 $('#datatable').DataTable().ajax.reload();
@@ -315,7 +315,7 @@ Thuộc tính
                             }).done(result => {
                                 
                                 if (result.err == false) {
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function () {
                                         $('#datatable').DataTable().ajax.reload();
@@ -354,7 +354,7 @@ $(function() {
                             .then((willDelete) => {
                                 if (willDelete) {
                                     ajaxFunc("{{route('admin.properties.deleteMulti')}}", formData);
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function() {
                                         $('#datatable').DataTable().ajax.reload();

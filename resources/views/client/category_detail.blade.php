@@ -309,7 +309,7 @@
 															<div class="img-responsive">
 																<a href="{{route('product_detail',['slug' => $product->slug])}}">
 																	@if (count($product->galleries) > 0 && !empty($product->galleries))
-																		<img src="{{!empty($product->galleries[0]->image) ? @getimagesize($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}" alt="{{$product->name}}">
+																		<img src="{{!empty($product->galleries[0]->image) ? !empty($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}" alt="{{$product->name}}">
 																	@endif
 																</a>
 															</div>

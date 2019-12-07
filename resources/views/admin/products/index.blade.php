@@ -256,7 +256,7 @@ Sản phẩm
                             }).done(result => {
                                 
                                 if (result.err == false) {
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function () {
                                         $('#datatable').DataTable().ajax.reload();
@@ -295,7 +295,7 @@ $(function() {
                             .then((willDelete) => {
                                 if (willDelete) {
                                     ajaxFunc("{{route('admin.products.deleteMulti')}}", formData);
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function() {
                                         $('#datatable').DataTable().ajax.reload();

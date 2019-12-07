@@ -331,6 +331,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('page/{slug}','IndexController@getPage')->name('page');
 
     Route::post('phone/getphone', 'CartController@postphone')->name('phone');
+
 });
 
 //=============> Composer layouts <================

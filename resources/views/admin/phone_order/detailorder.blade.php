@@ -19,6 +19,7 @@
 									<tr class="bg-primary">
 										<th>ID</th>
 										<th>Số Điện Thoại</th>
+										<th>Thông tin</th>
 										<th>Thời gian</th>
 										<th>Thao Tác</th>
 									</tr>
@@ -28,6 +29,18 @@
 										<tr>
 											<td>{{ $key+1 }}</td>
 											<td>{{ $row->phone }}</td>
+											<?php 
+												if(isset($row->info) && !empty($row->info)){ 
+													$info = json_decode($row->info , true);
+												}
+											
+											?>											
+											<td> 
+												<ul>
+													<li>Thời gian tư vấn : {{ $info['sp_time']}} </li>
+													<li>Sản phẩm cần tư vấn : <a href="{{ url('/').'/'.get_detail_products_by_id($info['product_id'])->slug  }}" target="_blank"> {{ $info['product_name'] }} </a>  </li>
+												</ul>
+											</td>
 											<td>{{ Carbon\Carbon::parse($row->updated_at)->format('d/m/Y') }}</td>
 										
 										<td>

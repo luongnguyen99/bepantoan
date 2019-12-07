@@ -235,7 +235,7 @@ Thêm giá trị thuộc tính {{$property->name}}
                     } else {
                         form.find('.error_name').html('');
                         form.find('input[name=name]').val('');
-                        swal("Deleted!",
+                        swal("Thành công!",
                                 "Thêm thành công.",
                                 "success").then(function () {
                                 $('#datatable').DataTable().ajax.reload();
@@ -284,7 +284,7 @@ Thêm giá trị thuộc tính {{$property->name}}
                             }).done(result => {
                                 
                                 if (result.err == false) {
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function () {
                                         $('#datatable').DataTable().ajax.reload();
@@ -323,7 +323,7 @@ $(function() {
                             .then((willDelete) => {
                                 if (willDelete) {
                                     ajaxFunc("{{route('admin.properties.deleteMulti_value')}}", formData);
-                                    swal("Deleted!",
+                                    swal("Thành công!",
                                         "Xóa thành công.",
                                         "success").then(function() {
                                         $('#datatable').DataTable().ajax.reload();

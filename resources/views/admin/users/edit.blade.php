@@ -37,7 +37,7 @@ Tài Khoản
                                 @endif
                             <div class="form-group">
                                 <label for="name">Email</label>
-                                <input type="text" class="form-control"  placeholder="Nhập Email" name="email" value="{{ $user->email }}">
+                                <input type="text" class="form-control" readonly placeholder="Nhập Email" name="email" value="{{ $user->email }}">
                             </div>
                             {{-- <div class="form-group">
                                 <label for="name">Email Xác Minh</label>
@@ -48,14 +48,18 @@ Tài Khoản
                                 <label for="name">Password</label>
                                 <input type="text" class="form-control"  placeholder="Nhập Password" name="password" value="">
                             </div>
-                           
-                            <div class="form-group">
-                                <label for="name">Chọn Quyền</label>
-                                <select name="level" class="form-control">
-                                    <option @if($user->role==0) selected @endif value="0">---Chọn Quyền---</option>
-                                    <option @if($user->role==500) selected @endif  value="500">ADMIN</option>
-                                </select>
-                            </div>
+                            @if (Auth::user()->role == 500)
+                                <div class="form-group">
+                                    <label for="name">Chọn Quyền</label>
+                                    <select name="level" class="form-control">
+                                        <option @if($user->role==0) selected @endif value="0">---Chọn Quyền---</option>
+                                        <option @if($user->role >= 300 ) selected @endif value="300">Admin</option>
+                                    </select>
+                                </div>
+                            @else
+                                <input type="hidden" name="level" value="300">
+                            @endif
+                            
                             {{--  <table class="table">
                                     <thead>
                                       <tr>

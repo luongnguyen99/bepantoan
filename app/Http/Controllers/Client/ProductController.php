@@ -84,13 +84,13 @@ class ProductController extends Controller
             $arr = json_decode($_COOKIE['arr_id_history'],true);
             if (!array_search($request->product_id, $arr)) {
                 array_push($arr, $request->product_id);
-                setcookie('arr_id_history', json_encode($arr), time() + (86400 * 30), "/");
+                setcookie('arr_id_history', json_encode($arr), time() + (86400), "/");
             }     
         } else {
             $arr = [
                 $request->product_id
             ];
-            setcookie('arr_id_history',json_encode($arr),time() + (86400 * 30), "/");
+            setcookie('arr_id_history',json_encode($arr),time() + (86400), "/");
         }
         
     }

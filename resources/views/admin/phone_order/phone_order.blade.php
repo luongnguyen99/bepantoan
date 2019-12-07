@@ -23,7 +23,7 @@
 										<tr class="bg-primary">
 											<th>ID</th>
 											<th>Số Điện Thoại</th>
-											
+											<th>Thông tin</th>
 											<th>Xử lý</th>
 										</tr>
 									</thead>
@@ -32,6 +32,18 @@
 									<tr>
 										<td>{{ $key+1 }}</td>
 										<td>{{ $item->phone }}</td>
+										<?php 
+											if(isset($item->info) && !empty($item->info)){ 
+												$info = json_decode($item->info , true);
+											}
+										
+										?>											
+										<td> 
+											<ul>
+												<li>Thời gian tư vấn : {{ $info['sp_time']}} </li>
+												<li>Sản phẩm cần tư vấn : <a href="{{ url('/').'/'.get_detail_products_by_id($info['product_id'])->slug  }}" target="_blank"> {{ $info['product_name'] }} </a>  </li>
+											</ul>
+										</td>
 										<td>
 											<a href="/admin/phone_order/xuly/{{ $item->id }}" class="btn-xl btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>Xử lý</a>
 										</td>

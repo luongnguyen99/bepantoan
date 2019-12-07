@@ -57,24 +57,21 @@ Tài Khoản
                             <td>{{ $item->email }}</td>
                            
                             {{-- <td>{{ $item->email_verified_at }}</td> --}}
-                            @if ($item->role==500)
-                            <td>ADMIN</td>
+                            @if ($item->role >= 300)
+                            <td>Admin</td>
                             @else
                             
                             <td>Chưa Chọn Quyền</td>
                             @endif
                             
                                 <td>
-                                    <a href="/admin/users/edit/{{ $item->id }}" type="button"
-                                        class="btn btn-warning">Sửa</a>
-                                   @if ($item->role != 500)
-                                    @if (Auth::user()->id != $item->id)
-                                        <a href="/admin/users/del/{{ $item->id }}" type="button"
-                                        class="btn btn-danger">Xóa</a>
+                                    @if (Auth::user()->role == 500 || $item->id == Auth::user()->id )
+                                        <a href="/admin/users/edit/{{ $item->id }}" type="button" class="btn btn-warning">Sửa</a>    
                                     @endif
-                                    {{-- @else
-                                    <a href="/admin/users/del/{{ $item->id }}" type="button"
-                                        class="btn btn-danger">Xóa</a> --}}
+                                    
+                                    @if (Auth::user()->role == 500 && $item->role != 500)         
+                                            <a href="/admin/users/del/{{ $item->id }}" type="button"
+                                            class="btn btn-danger">Xóa</a>
                                     @endif
                                     
                                 </td>

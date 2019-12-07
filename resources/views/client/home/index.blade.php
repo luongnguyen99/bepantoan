@@ -51,8 +51,24 @@
 				</div>
 			</div>			
 		@endif
-
+		
+		@php
+			$allCategory1 = json_decode(get_option_by_key('show_category_menu_mobile'),true);
+			$allCategory = [];
+			foreach ($allCategory1 as  $value) {
+				if ($value['id']) {
+					array_push($allCategory,get_category_by_id($value['id']));
+				};
+				if (!empty($value['children'])) {
+					foreach ($value['children'] as $key => $value1) {
+						array_push($allCategory,get_category_by_id($value1['id']));
+					}
+				}
+			}
+			// dd($allCategory);
+		@endphp
 		@if (!empty($allCategory) && count($allCategory) > 0)
+			
 			<div class="wrap-category">
 				<div class="container">
 					<div class="section-title">
@@ -62,7 +78,6 @@
 						@foreach ($allCategory as $key => $item)
 							@if ($key % 2 == 0)
 								<div class="item">
-									
 										<div class="ctg-pro-item">
 											<a href="{{route('category_detail',['slug' => $allCategory[$key]->slug])}}">
 												<div class="category-card__image">
@@ -144,7 +159,7 @@
 									<div class="img-responsive">
 										<a href="{{route('product_detail',['slug' => $product->slug])}}">
 											@if (count($product->galleries) > 0 && !empty($product->galleries))
-											<img src="{{!empty($product->galleries) ? @getimagesize($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png')  : asset('client/img/default_product.png')}}" alt="{{$product->name}}">
+											<img src="{{!empty($product->galleries) ? !empty($product->galleries[0]->image) ? $product->galleries[0]->image : asset('client/img/default_product.png')  : asset('client/img/default_product.png')}}" alt="{{$product->name}}">
 											@endif
 										</a>
 									</div>
