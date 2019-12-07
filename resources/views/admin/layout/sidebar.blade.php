@@ -179,13 +179,12 @@
                                 class="glyphicon glyphicon-record"></span> Thiết lập SEO</a></li>
                     <li class="{{activeNav('options','logo')}}"><a href="{{route('admin.options.logo')}}"><span class="glyphicon glyphicon-record"></span> Logo</a></li>
                     <li class="{{activeNav('options','hotline')}}"><a href="{{route('admin.options.hotline')}}"><span class="glyphicon glyphicon-record"></span>Liên hệ</a></li>
-                    <li class="{{activeNav('options','email_admin')}}"><a href="{{route('admin.options.email_admin')}}"><span
-                                class="glyphicon glyphicon-record"></span>Email quản trị viên</a></li>
+                    <li class="{{activeNav('options','email_admin')}}"><a href="{{route('admin.options.email_admin')}}"><span class="glyphicon glyphicon-record"></span>Email quản trị viên</a></li>
                     <li class="{{activeNav('options','footer-copy')}}"><a href="{{route('admin.options.footer-copy')}}"><span class="glyphicon glyphicon-record"></span>Copyright</a></li>
                     <li class="{{activeNav('options','payment')}}"><a href="{{route('admin.options.payment')}}"><span class="glyphicon glyphicon-record"></span>Thanh toán</a></li>
                     <li class="{{activeNav('options','social_network')}}"><a href="{{route('admin.options.social_network')}}"><span class="glyphicon glyphicon-record"></span>Mạng xã hội</a></li>
                     <li class="{{activeNav('options','menu')}}"><a href="{{route('admin.options.menu')}}"><span class="glyphicon glyphicon-record"></span>Menu</a></li>
-                    <li class="{{activeNav('options','menu-phone')}}"><a href="{{route('admin.options.menu-phone')}}"><span class="glyphicon glyphicon-record"></span>Menu di động</a></li>
+                    <li class="{{activeNav('options','choose_category_show_menu_mobile')}}"><a href="{{route('admin.options.choose_category_show_menu_mobile')}}"><span class="glyphicon glyphicon-record"></span>Danh mục category mobile</a></li>
                     <li class="{{activeNav('options','prd-detail')}}"><a href="{{route('admin.options.prd-detail')}}"><span class="glyphicon glyphicon-record"></span>Chi tiết sản phẩm</a></li>
                     <li class="{{activeNav('options','introduce')}}"><a href="{{route('admin.options.introduce')}}"><span class="glyphicon glyphicon-record"></span>Giới thiệu</a></li>
                            

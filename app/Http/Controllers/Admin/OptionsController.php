@@ -432,6 +432,7 @@ class OptionsController extends Controller
             $result .= '<ol class="dd-list">';
             foreach ($arr_menu as $key => $item) {
                 $item = get_object_vars($item);
+                // dd($item);
                 $name = $item['name'];
                 $link = $item['link'];
                 $icon = $item['icon'];
@@ -705,6 +706,17 @@ class OptionsController extends Controller
         };
         $categories = Category::all();
         return view('admin.options.home.choose_category_show_home',compact('categories'));
+    }
+
+    public function choose_category_show_menu_mobile(Request $request){
+        if ($request->isMethod('post')) {
+            Option::where('key','=','show_category_menu_mobile')->update(['value' => $request->categories]);
+            return response([
+                'errors' => false,
+            ]);
+        };
+        $categories = Category::all();
+        return view('admin.options.home.choose_category_show_menu',compact('categories'));
     }
 
     public function email_admin(Request $request){

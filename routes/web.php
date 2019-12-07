@@ -221,6 +221,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         // Chọn danh mục hiển thị trang chủ
         Route::any('choose_category_show_home', 'OptionsController@choose_category_show_home')->name('choose_category_show_home');
+        // Chọn danh mục hiển thị menu mobile
+        Route::any('choose_category_show_menu_mobile', 'OptionsController@choose_category_show_menu_mobile')->name('choose_category_show_menu_mobile');
         // Email admin
         Route::any('email_admin', 'OptionsController@email_admin')->name('email_admin');
 
