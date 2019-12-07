@@ -54,6 +54,10 @@
 			<div class="container">
 				<ul>
 					<li><a href="{{route('home_client')}}">bepantoan.vn</a></li>
+					@if ($category->parent_id != 0)
+						@php $c = get_category_by_id($category->parent_id) @endphp
+						<li><a href="{{route('category_detail',['slug' => $c->slug])}}">{{$c->name}}</a></li>
+					@endif
 					@if ($category)
 				    	<li><a href="{{route('category_detail',['slug' => $category->slug])}}">{{$category->name}}</a></li>		
 					@endif
