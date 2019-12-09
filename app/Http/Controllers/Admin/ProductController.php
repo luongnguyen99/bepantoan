@@ -217,6 +217,7 @@ class ProductController extends Controller
                 'infomation_detail' => $request->infomation_detail,
                 'status' => $request->status,
                 'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id
 
             ];
             if ($request->add_seo == 'on') {
