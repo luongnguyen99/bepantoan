@@ -405,6 +405,45 @@
 				@endif
 			</div>
 			<div class="hd-card-body section-margin-bottom ">
+				<div class="hd-module-title">
+					<h3 class="module-title">Sản phẩm đã xem</h3>
+				</div>
+				<div class="single-sidebar">
+					<div class="owl-carousel owl-theme slide-pro-seen">
+						@if (!empty($_COOKIE['arr_id_history']))
+						@php
+						$arr_history = json_decode($_COOKIE['arr_id_history'],true);
+						@endphp
+						@if (count($arr_history) > 0)
+						@foreach (array_reverse($arr_history) as $item)
+			
+						<div class="item">
+							<div class="slide-pro-seen-item">
+								<div class="tb-recent-thumbb">
+									<a href="{{route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : ''])}}"
+										class="active">
+										<img class="attachment"
+											src="{{!empty(get_product_by_id($item)->galleries[0]) ?  @getimagesize(get_product_by_id($item)->galleries[0]->image) ? get_product_by_id($item)->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}"
+											alt="{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}">
+									</a>
+			
+								</div>
+								<div class="title-beg">
+									<a
+										href="{{ route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : '']) }}">{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}</a>
+								</div>
+								<div class="title-price-recent">{{!empty(get_product_by_id($item)->sale_price) ?
+															!empty(get_product_by_id($item)->sale_price) ? pveser_numberformat(get_product_by_id($item)->sale_price) : '' :
+															!empty(get_product_by_id($item)->price) ? pveser_numberformat(get_product_by_id($item)->price) : ''}}</div>
+							</div>
+						</div>
+						@endforeach
+						@endif
+						@endif
+					</div>
+				</div>
+			</div>
+			<div class="hd-card-body section-margin-bottom ">
 				@if (count($productsRandom) > 0 && !empty($productsRandom))
 				<div class="hd-module-title">
 					<h3 class="module-title">Sản phẩm khách hàng quan tâm</h3>
@@ -608,45 +647,7 @@
 				<ul class="comments-list"></ul>
 			</div>
 		</div>
-		<div class="hd-card-body section-margin-bottom ">
-			<div class="hd-module-title">
-				<h3 class="module-title">Sản phẩm đã xem</h3>
-			</div>
-			<div class="single-sidebar">
-				<div class="owl-carousel owl-theme slide-pro-seen">
-					@if (!empty($_COOKIE['arr_id_history']))
-					@php
-					$arr_history = json_decode($_COOKIE['arr_id_history'],true);
-					@endphp
-					@if (count($arr_history) > 0)
-					@foreach (array_reverse($arr_history) as $item)
-
-					<div class="item">
-						<div class="slide-pro-seen-item">
-							<div class="tb-recent-thumbb">
-								<a href="{{route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : ''])}}"
-									class="active">
-									<img class="attachment"
-										src="{{!empty(get_product_by_id($item)->galleries[0]) ?  @getimagesize(get_product_by_id($item)->galleries[0]->image) ? get_product_by_id($item)->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}"
-										alt="{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}">
-								</a>
-								
-							</div>
-							<div class="title-beg">
-								<a
-									href="{{ route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : '']) }}">{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}</a>
-							</div>
-							<div class="title-price-recent">{{!empty(get_product_by_id($item)->sale_price) ?
-												!empty(get_product_by_id($item)->sale_price) ? pveser_numberformat(get_product_by_id($item)->sale_price) : '' :
-												!empty(get_product_by_id($item)->price) ? pveser_numberformat(get_product_by_id($item)->price) : ''}}</div>
-						</div>
-					</div>
-					@endforeach
-					@endif
-					@endif
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </div>
 

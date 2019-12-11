@@ -33,16 +33,19 @@
                     </div>
                 </div>
                 <div class="owl-carousel owl-theme slide-pro-ctg slide-brand">
-                    @foreach ($brands as $item)
-                        <div class="item">
-                            <div class="brand-item">
-                                <a href="{{route('brand_category',['slug' => $item->slug])}}" title="{{$item->name}}">
-                                    <div class="category-card__image">
-                                        <img src="{{!empty($item->image) ? $item->image : '' }}" alt="{{$item->name}}">
-                                    </div>
-                                </a>
+                    @foreach ($brands as $key => $item)
+                       
+                            <div class="item">
+                                <div class="brand-item">
+                                    <a href="{{route('brand_category',['slug' => $brands[$key]->slug])}}" title="{{$brands[$key]->name}}">
+                                        <div class="category-card__image">
+                                            <img src="{{!empty($brands[$key]->image) ? $brands[$key]->image : '' }}" alt="{{$brands[$key]->name}}">
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                            
+                       
                     @endforeach
                 </div>
             @endif
@@ -65,6 +68,9 @@
                         <div class="list-text-category hidden-xs hidden-sm">
                             @if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
                                 @foreach ($arr_name_sub_category as $key =>  $item2)
+                                    @if ($key == 5)
+                                    @break
+                                    @endif
                                     <a href="{{url('danh-muc').'/'.$arr_slug_sub_category[$key]}}" class="itemprop" title="{{$item2}}">{{$item2}}</a>   
                                 @endforeach
                             @endif

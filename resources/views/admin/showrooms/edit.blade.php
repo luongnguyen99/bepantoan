@@ -46,32 +46,23 @@ Cửa hàng
                     </div>
                     <div class="form-group">
                         <label for="image">Liên hệ</label>
-                        <input value="{{ $item->hotline }}" name="hotline" class="form-control"">
+                        <input value="{{ $item->hotline }}" name="hotline" class="form-control">
                     </div>
                     <div class=" form-group">
                         <label for="image">Số điện thoại</label>
-                        <input type="text" value="{{ $item->phone }}" name="phone" class="form-control"">
+                        <input type="text" value="{{ $item->phone }}" name="phone" class="form-control">
                     </div>
                     <div class=" form-group">
                         <label for="image">Nhúng bản đồ</label>
-                        <input value="{{ $item->embed_google_map }}" name="embed_google_map" class="form-control"">
+                        <input value="{{ $item->embed_google_map }}" name="embed_google_map" class="form-control">
                     </div>
-                    <div class=" col-md-12" style="margin-top: 20px;margin-left:-15px;">
-                        <label>Chọn ảnh bản đồ</label>
-                        <div class="form-group" ninh='123'>
-                            <input type="button" class="btn btn-info" id="add" name="action" value="Chọn ảnh bản đồ">
-                            <img id="img_old" class="" src="{{ $item->img }}" width="60" height="40" alt="">
-                            <input id="img_old1" type="hidden" name="img_old" value="{{ $item->img }}">
-                            <input id="img_" type="hidden" name="img[]" value="">
-                            <input type="hidden" name="list_img" id="list-img"
-                                value='<?php echo isset($_POST['list_img']) ? $_POST['list_img'] : '' ?>'>
-                        </div>
-                        <div class="col-sm-12 text-center" id="img-cat">
-                        </div>
+                    <div class="form-group">
+                        <label for="image">Link youtube</label>
+                        <input value="{{ $item->link_youtube }}" name="link_youtube" class="form-control">
                     </div>
                     <div class=" form-group">
                         <label for="image">Đường dẫn</label>
-                        <input value="{{ $item->link }}" name="link" class="form-control"">
+                        <input value="{{ $item->link }}" name="link" class="form-control">
                     </div>
                     <div class=" form-group">
                         <button class=" btn btn-success" type="submit">Lưu</button>

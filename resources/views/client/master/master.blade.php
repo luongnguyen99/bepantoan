@@ -327,13 +327,27 @@
 										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->phone }}</a></span>
 									</div>
 								</div>
-								
-								
-								<?php echo $item->embed_google_map ?>
+								<div class="row">
+									<div class="col-sm-12 col-md-6 col-lg-6">
+										@php
+											$url = $item->link_youtube;
+											parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
+										@endphp
+										<iframe width="100%" height="450" src="https://www.youtube.com/embed/{{$my_array_of_vars['v']}}"" frameborder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-6">
+											<?php echo $item->embed_google_map ?>
+											<a href="{{ $item->link }}" title="Giới thiệu Showroom" class="btn btnintro"
+												style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
+											<a data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" href="#" id="map3" class="btn btnmap showMap"
+												style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản
+												đồ đường đi</a>
+									</div>
+								</div>
+							
 
-
-								<a href="{{ $item->link }}" title="Giới thiệu Showroom" class="btn btnintro" style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-								<a data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" href="#" id="map3" class="btn btnmap showMap" style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản đồ đường đi</a>
+								
 							</div>
 						</li>
 						@endforeach

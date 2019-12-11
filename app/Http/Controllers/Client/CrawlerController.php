@@ -16,8 +16,8 @@ class CrawlerController extends Controller
         $url = [];
         $arr_product = [];
         $a = 0;
-        for ($i=1; $i <= 8; $i++) { 
-            $ch = curl_init('https://beptot.vn/tu-lanh/?page=' . $i . '&sort=&atr=on/');
+        for ($i=1; $i <= 1; $i++) { 
+            $ch = curl_init('https://beptot.vn/bep-gas-am-hong-ngoai/?page=' . $i . '&sort=&atr=on/');
             // nghĩa là giả mạo đang gửi từ trình duyệt nào đó, ở đây tôi dùng Firefox
             curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
             // Thiết lập trả kết quả về chứ không print ra
@@ -29,28 +29,26 @@ class CrawlerController extends Controller
             // Đóng CURL
             curl_close($ch);
 
-
             $html = str_get_html($result);
             $flag = false;
             
-            // $i = 0;
             if (!empty($html->find('.product-dsc',0)->innertext)) {
                 foreach ($html->find('.product-dsc') as $key => $value) {
 
                     $check = Crawler_product::where('url', $value->find('h3 > a', 0)->href)->first();
                     $checkAlt = to_slug($value->find('.cate_pro_title  a > img', 0)->alt);
-                    if (!$check && !empty($checkAlt) && $checkAlt != 'viet-nam') {
+                    if (!$check) {
                         $arr_product[$key]['url'] =  $value->find('h3 > a', 0)->href;
                         $brand = Brand::where('slug', to_slug($value->find('.cate_pro_title  a > img', 0)->alt))->first();
-                        $arr_product[$key]['brand_id'] =  !empty($brand) ? $brand->id : 1;
-                        $arr_product[$key]['category_id'] = 60;
+                        $arr_product[$key]['brand_id'] =  !empty($brand) ? $brand->id : 39;
+                        $arr_product[$key]['category_id'] = 68;
                         $arr_product[$key]['created_at'] = date('Y-m-d H:i:s');
                     };
                     $flag = true;
                 };
             }
             
-            // dd($check);
+            // dd($arr_product);
             Crawler_product::insert($arr_product);
             echo $i. '-----Tiếp đi bạn ơi!!!</h1>';
             
@@ -65,7 +63,7 @@ class CrawlerController extends Controller
         $arr_product = [];
         foreach ($data as $key => $product) {
            
-            try {
+            // try {
                 $arr_url = explode('/',trim($product['url'], '/'));
                 $arr_url_last = $arr_url[count($arr_url)-1];
                 
@@ -160,12 +158,13 @@ class CrawlerController extends Controller
                         }
                     }
                     Crawler_product::where('url', $product['url'])->update(['status' => 1]);
-                }else{
-                    Crawler_product::where('url', $product['url'])->update(['status' => 1]);
-                }
-            } catch (\Throwable $th) {
-                 Crawler_product::where('url', $product['url'])->update(['status' => 1]);
-            }
+                };
+                // else{
+                //     Crawler_product::where('url', $product['url'])->update(['status' => 1]);
+                // }
+            // } catch (\Throwable $th) {
+            //      Crawler_product::where('url', $product['url'])->update(['status' => 1]);
+            // }
             
             
             // dd(json_encode($specifications));

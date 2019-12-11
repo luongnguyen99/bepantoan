@@ -59,11 +59,11 @@
 				if ($value['id']) {
 					array_push($allCategory,get_category_by_id($value['id']));
 				};
-				if (!empty($value['children'])) {
-					foreach ($value['children'] as $key => $value1) {
-						array_push($allCategory,get_category_by_id($value1['id']));
-					}
-				}
+				// if (!empty($value['children'])) {
+				// 	foreach ($value['children'] as $key => $value1) {
+				// 		array_push($allCategory,get_category_by_id($value1['id']));
+				// 	}
+				// }
 			}
 			// dd($allCategory);
 		@endphp
@@ -106,8 +106,10 @@
 		@endif
 	
 		
-		@if (count($categories) > 0 && !empty($categories))
-		@foreach ($categories as $item)
+		@if (count($categories_show_home) > 0 && !empty($categories_show_home))
+		@foreach ($categories_show_home as $id)
+		@php  $item  = get_detail_category_by_id_show_home($id) @endphp
+		
 		<div class="single-products">
 			<div class="container">
 				<div class="nav_cate_title">
@@ -123,6 +125,9 @@
 						<div class="list-text-category hidden-xs hidden-sm">
 							@if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
 							@foreach ($arr_name_sub_category as $key => $item2)
+							@if ($key == 5)
+								@break
+							@endif
 							<a href="{{url('danh-muc').'/'.(!empty($arr_slug_sub_category[$key]) ? $arr_slug_sub_category[$key] : '')}}"
 								class="itemprop" title="{{$item2}}">{{$item2}}</a>
 							@endforeach

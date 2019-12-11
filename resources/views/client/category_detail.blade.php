@@ -22,8 +22,8 @@
 	input[type="radio"] {
 	-webkit-appearance: checkbox;
 	-moz-appearance: checkbox;
-	-ms-appearance: checkbox; /* not currently supported */
-	-o-appearance: checkbox; /* not currently supported */
+	-ms-appearance: checkbox; 
+	-o-appearance: checkbox; 
 	}
 	</style>
 @endsection
@@ -88,7 +88,7 @@
 												@foreach ($brands as $item)
 												<li>
 													<div class="radio">
-														<input type="radio" name="hang-san-xuat"
+														<input type="radio" class="choose_value {{!empty($_GET['hang-san-xuat']) && $_GET['hang-san-xuat'] == $item->id  ? 'checked' : ''}}" name="hang-san-xuat"
 															{{!empty($_GET['hang-san-xuat']) && $_GET['hang-san-xuat'] == $item->id  ? 'checked' : ''}}
 															value="{{$item->id}}" id="brand_{{$item->id}}">
 														<label for="brand_{{$item->id}}">
@@ -113,7 +113,7 @@
 		
 										<li>
 											<div class="radio">
-												<input type="radio" name="muc-gia" id="muc-gia102"
+												<input type="radio" name="muc-gia" class="choose_value {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '3000000-5000000'  ? 'checked' : ''}}" id="muc-gia102"
 													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '3000000-5000000'  ? 'checked' : ''}}
 													value="3000000-5000000">
 												<label for="muc-gia102"> 3 triệu - 5 triệu</label>
@@ -122,7 +122,7 @@
 										
 										<li>
 											<div class="radio">
-												<input type="radio" name="muc-gia" id="muc-gia103"
+												<input type="radio" name="muc-gia" class="choose_value {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '5000000-10000000'  ? 'checked' : ''}}" id="muc-gia103"
 													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '5000000-10000000'  ? 'checked' : ''}}
 													value="5000000-10000000">
 												<label for="muc-gia103"> 5 triệu - 10 triệu</label>
@@ -131,8 +131,8 @@
 										
 										<li>
 											<div class="radio">
-												<input type="radio" name="muc-gia" id="muc-gia104"
-													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '10000000-15000000'  ? 'checked' : ''}}
+												<input type="radio" name="muc-gia" class="choose_value {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '10000000-15000000'  ? 'checked' : ''}}" id="muc-gia104"
+													{{!empty($_GET['muc-gia'])  && $_GET['muc-gia'] == '10000000-15000000'  ? 'checked' : ''}}
 													value="10000000-15000000">
 												<label for="muc-gia104"> 10 triệu - 15 triệu</label>
 											</div>
@@ -140,7 +140,7 @@
 										
 										<li>
 											<div class="radio">
-												<input type="radio" name="muc-gia" id="muc-gia105"
+												<input type="radio" name="muc-gia" class="choose_value {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '15000000-max'  ? 'checked' : ''}}" id="muc-gia105"
 													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == '15000000-max'  ? 'checked' : ''}} value="15000000-max">
 												<label for="muc-gia105">Trên 15 triệu</label>
 											</div>
@@ -148,7 +148,7 @@
 										
 										<li>
 											<div class="radio">
-												<input type="radio" name="muc-gia" id="muc-gia490"
+												<input type="radio" name="muc-gia" class="choose_value {{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == 'min-3000000'  ? 'checked' : ''}}" id="muc-gia490"
 													{{!empty($_GET['muc-gia']) && $_GET['muc-gia'] == 'min-3000000'  ? 'checked' : ''}} value="min-3000000">
 												<label for="muc-gia490">Dưới 3 triệu</label>
 											</div>
@@ -169,7 +169,7 @@
 														@foreach ($property->property_values as $property_value)
 															<li>
 																<div class="radio">
-																<input type="radio" {{!empty($_GET[$property->slug]) && $_GET[$property->slug] == $property_value->id  ? 'checked' : ''}} name="{{$property->slug}}" value="{{$property_value->id}}" id="{{$property->slug.$property_value->id}}">
+																<input class="choose_value {{!empty($_GET[$property->slug]) && $_GET[$property->slug] == $property_value->id  ? 'checked' : ''}}" type="radio" {{!empty($_GET[$property->slug]) && $_GET[$property->slug] == $property_value->id  ? 'checked' : ''}} name="{{$property->slug}}" value="{{$property_value->id}}" id="{{$property->slug.$property_value->id}}">
 																	<label for="{{$property->slug.$property_value->id}}">{{$property_value->name}}</label>
 																</div>
 															</li>
@@ -180,6 +180,37 @@
 										@endforeach
 									@endif
 								@endif
+								<div class="boxFilterLeft btn-group">
+									<button type="button" class="btn btn-filters btn-default dropdown-toggle" data-toggle="dropdown"
+										aria-expanded="false">
+										Sắp xếp theo <span class="caret"></span>
+									</button>
+									<ul class="listform_filter right-property dropdown-menu" role="menu">
+								
+										<li>
+											<div class="radio">
+												<input type="radio" class="choose_value {{!empty($_GET['sort']) && $_GET['sort'] == 'asc'  ? 'checked' : ''}}" name="sort" id="sort102"
+													{{!empty($_GET['sort']) && $_GET['sort'] == 'asc'  ? 'checked' : ''}}
+													value='asc'>
+												<label for="sort102"> Từ thấp đến cao</label>
+											</div>
+										</li>
+								
+										<li>
+											<div class="radio">
+												<input type="radio" class="choose_value {{!empty($_GET['sort']) && $_GET['sort'] == 'desc'  ? 'checked' : ''}}" name="sort" id="sort103"
+													{{!empty($_GET['sort']) && $_GET['sort'] == 'desc'  ? 'checked' : ''}}
+													value="desc">
+												<label for="sort103"> Từ cao đến thấp</label>
+											</div>
+										</li>
+								
+										
+								
+										
+								
+									</ul>
+								</div>
 								</form>	
 								
 		
@@ -375,8 +406,17 @@
 @section('js')
 	<script>
 		var form_filter = $('#form_filter').find('input[type=radio]');
-		$(document).on('change',form_filter,function() {
-			$('#form_filter').submit();
+		$(document).on('click','.choose_value',function() {
+			
+			if($(this).hasClass('checked')) {
+				$(this).removeClass('checked');
+				$(this).prop('checked', false );
+				$('#form_filter').submit();
+			} else {
+				$(this).addClass('checked');
+				$(this).prop('checked', true );
+				$('#form_filter').submit();
+			}
 		})
 	</script>
 	

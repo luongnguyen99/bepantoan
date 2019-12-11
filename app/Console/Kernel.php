@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail')->everyFiveMinutes();
+        $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail')->everyFiveMinutes();
         // $schedule->call('App\Http\Controllers\Client\CrawlerController@crawler_product_detail_order_desc')->everyMinute();
         // $schedule->command('demo:cron')->cron('5 * * * *');
         // $schedule->command('cronjob:desc')->cron('5 * * * *');

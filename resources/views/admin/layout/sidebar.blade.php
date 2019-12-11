@@ -114,7 +114,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="{{ activeNav('showroom','index') }}"><a href="{{route('admin.showroom.index')}}"><span class="glyphicon glyphicon-record"></span> Danh sách</a></li>
-                    <li class="{{ activeNav('showroom','add') }}"><a href="{{route('admin.showroom.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li>
+                    {{-- <li class="{{ activeNav('showroom','add') }}"><a href="{{route('admin.showroom.add')}}"><span class="glyphicon glyphicon-record"></span> Thêm mới</a></li> --}}
                 </ul>
             </li>
             {{-- Page --}}

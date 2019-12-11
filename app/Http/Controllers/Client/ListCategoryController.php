@@ -44,7 +44,7 @@ class ListCategoryController extends Controller
                 // Nếu có $_GET 
                 if (!empty($_GET)) {
                     $array_get = $_GET;
-                    $newArrayExcept = array_diff_key($array_get, array_flip(["hang-san-xuat", "muc-gia"]));
+                    $newArrayExcept = array_diff_key($array_get, array_flip(["hang-san-xuat", "muc-gia","sort"]));
                     $arrayExceptKey = array_values($newArrayExcept);
 
 
@@ -64,6 +64,16 @@ class ListCategoryController extends Controller
                         array_push($condition, ['brand_id', '=', $_GET['hang-san-xuat']]);
                     }
 
+                    if (!empty($_GET['sort'])) {
+                        if ($_GET['sort'] == 'asc') {
+                            $order_by = [ 'key' => DB::raw('IF(sale_price IS NULL or sale_price = "", price , sale_price)'), 'value' => 'asc'];
+                        }elseif($_GET['sort'] == 'desc'){
+                            $order_by = [ 'key' => DB::raw('IF(sale_price IS NULL or sale_price = "", price , sale_price)'), 'value' => 'desc'];
+                        }
+                    }else{
+                        $order_by = [ 'key' => 'created_at', 'value' => 'desc'];
+                    }
+
                     if (empty($slug2)) {
 
                         if (!empty($arrayExceptKey) && count($arrayExceptKey) > 0) {
@@ -75,23 +85,24 @@ class ListCategoryController extends Controller
                                 }
                             }
 
-                            $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                            $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
                                 ->groupBy('products.id')
                                 ->havingRaw($filterValue)
-                                ->orderBy('created_at', 'desc')
+                                ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
                         } else {
-                            $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                            $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
                                 ->groupBy('products.id')
-                                ->orderBy('created_at', 'desc')
+                                ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
                         };
+                        // dd($products);
                         
                         $brands = Brand::select('brands.*')
                             ->join('products','products.brand_id','=','brands.id')
@@ -114,21 +125,21 @@ class ListCategoryController extends Controller
                                 }
                             }
 
-                            $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                            $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
                                 ->groupBy('products.id')
                                 ->havingRaw($filterValue)
-                                ->orderBy('created_at', 'desc')
+                                ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
                         } else {
-                            $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                            $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
                                 ->groupBy('products.id')
-                                ->orderBy('created_at', 'desc')
+                                ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
                         };
 
@@ -152,7 +163,7 @@ class ListCategoryController extends Controller
                             ->join('products','products.brand_id','=','brands.id')
                             ->join('categories','categories.id','=','products.category_id')
                             ->where('categories.id',$category->id)
-                            ->groupBy('brands.id')->get();;
+                            ->groupBy('brands.id')->get();
                         
                         $brand = null;
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
@@ -212,9 +223,10 @@ class ListCategoryController extends Controller
             // có arr_get
         } else {
             $array_get = json_decode($request->arr_get, true);
-            $newArrayExcept = array_diff_key($array_get, array_flip(["hang-san-xuat", "muc-gia"]));
+            // dd($request->arr_get);
+            $newArrayExcept = array_diff_key($array_get, array_flip(["hang-san-xuat", "muc-gia","sort" ]));
             $arrayExceptKey = array_values($newArrayExcept);
-
+            // dd($arrayExceptKey);
             // co muc gia
             if (!empty($array_get['muc-gia'])) {
                 $arr_price = explode('-', $array_get['muc-gia']);
@@ -231,6 +243,16 @@ class ListCategoryController extends Controller
             if (!empty($array_get['hang-san-xuat'])) {
                 array_push($condition, ['brand_id', '=', $array_get['hang-san-xuat']]);
             }
+            
+            if (!empty($array_get['sort'])) {
+                if ($array_get['sort'] == 'asc') {
+                    $order_by = [ 'key' => DB::raw('IF(sale_price IS NULL or sale_price = "", price , sale_price)'), 'value' => 'asc'];
+                }elseif($array_get['sort'] == 'desc'){
+                    $order_by = [ 'key' => DB::raw('IF(sale_price IS NULL or sale_price = "", price , sale_price)'), 'value' => 'desc'];
+                }
+            }else{
+                $order_by = [ 'key' => 'created_at', 'value' => 'desc'];
+            }
 
             // khong co brand_id
             if (empty($request->brand_id)) {
@@ -243,23 +265,23 @@ class ListCategoryController extends Controller
                         }
                     }
 
-                    $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                    $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                         ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
                         ->havingRaw($filterValue)
-                        ->orderBy('created_at', 'desc')
+                        ->orderBy($order_by['key'],$order_by['value'])
                         ->skip($request->total_post_current)
                         ->take(get_option_by_key('posts_per_page'))
                         ->get();
                 } else {
-                    $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                    $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                         ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
-                        ->orderBy('created_at', 'desc')
+                        ->orderBy($order_by['key'],$order_by['value'])
                         ->skip($request->total_post_current)
                         ->take(get_option_by_key('posts_per_page'))
                         ->get();
@@ -278,23 +300,23 @@ class ListCategoryController extends Controller
                         }
                     }
 
-                    $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                    $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                         ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
                         ->havingRaw($filterValue)
-                        ->orderBy('created_at', 'desc')
+                        ->orderBy($order_by['key'],$order_by['value'])
                         ->skip($request->total_post_current)
                         ->take(get_option_by_key('posts_per_page'))
                         ->get();
                 } else {
-                    $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
+                    $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                         ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
                         ->where($condition)
                         ->with('galleries', 'brand')
                         ->groupBy('products.id')
-                        ->orderBy('created_at', 'desc')
+                        ->orderBy($order_by['key'],$order_by['value'])
                         ->skip($request->total_post_current)
                         ->take(get_option_by_key('posts_per_page'))
                         ->get();

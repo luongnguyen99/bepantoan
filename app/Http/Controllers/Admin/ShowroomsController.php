@@ -44,17 +44,8 @@ class ShowroomsController extends Controller
         $db->hotline = $r->hotline;
         $db->phone = $r->phone;
         $db->embed_google_map = $r->embed_google_map;
-        if (!empty($r->img_old)) {
-            $imgs = $r->img_old;
-        }
-        else{
-            if (!empty($r->img_)) {
-                $imgs = $r->img_;
-                $db->img = $imgs;
-            }else{
-                $db->img = null;
-            }
-        }
+        $db->link_youtube = $r->link_youtube;
+       
         $db->link = $r->link;
         $db->save();
         return redirect('admin/showroom')->with('edit_success','Sửa thành công');

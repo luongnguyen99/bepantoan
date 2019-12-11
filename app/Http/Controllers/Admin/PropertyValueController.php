@@ -29,7 +29,7 @@ class PropertyValueController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:property_values,name'
+                'name' => 'required'
             ],
             [
                 'name.required' => 'Giá trị không được để trống',
@@ -48,7 +48,7 @@ class PropertyValueController extends Controller
         } else {
             $insert = Property_value::insert([
                 'name' => $request->name,
-                'slug' => to_slug($request->name),
+                'slug' => to_slug($request->name).getToken(4),
                 'property_id' => $id
             ]);
             if ($insert) {
@@ -84,7 +84,7 @@ class PropertyValueController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:property_values,name,' . $id,
+                'name' => 'required',
 
             ],
             [
@@ -99,7 +99,7 @@ class PropertyValueController extends Controller
         } else {
             $update = Property_value::where('id', $id)->update([
                 'name' => $request->name,
-                'slug' => to_slug($request->name),
+                'slug' => to_slug($request->name).getToken(4),
             ]);
             if ($update > 0) {
                 return redirect()->route('admin.properties.index')->with('success', 'Cập nhập giá trị thành công');

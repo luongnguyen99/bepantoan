@@ -269,3 +269,14 @@ if (!function_exists('getToken')) {
         return $token;
     }
 }
+
+function get_detail_category_by_id_show_home($id){
+     $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
+            GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
+            from `categories`
+            inner join `products` on `categories`.`id` = `products`.`category_id`
+            inner join `brands` on `brands`.`id` = `products`.`brand_id`
+            where categories.`id` = $id
+            group by `categories`.`id`");
+    return $categories[0];
+}

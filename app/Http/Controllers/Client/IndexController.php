@@ -24,20 +24,19 @@ class IndexController extends Controller
             $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
             GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
             from `categories`
-            inner join `products` on `categories`.`id` = `products`.`category_id`
-            inner join `brands` on `brands`.`id` = `products`.`brand_id` $where
+            left join `products` on `categories`.`id` = `products`.`category_id`
+            left join `brands` on `brands`.`id` = `products`.`brand_id` $where
             group by `categories`.`id`");
         }else{
             $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
             GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
             from `categories`
-            inner join `products` on `categories`.`id` = `products`.`category_id`
-            inner join `brands` on `brands`.`id` = `products`.`brand_id`
+            left join `products` on `categories`.`id` = `products`.`category_id`
+            left join `brands` on `brands`.`id` = `products`.`brand_id`
             group by `categories`.`id`
             ORDER BY RAND() LIMIT 4 ");
         };
-        // $posts = Post::
-        // $allCategory = json_decode(get_option_by_key('show_category_menu_mobile'),true);
+      
         $category_advisory = Post_category::where('id',1)->with(['posts' => function($query){
              $query->orderBy('id', 'desc')->limit(10);
         }])->first();
@@ -48,7 +47,7 @@ class IndexController extends Controller
         $category_sale = Post::where('post_category_id',2)->orderBy('id', 'desc')->limit(1)->first();
         $highlights_post = Post::orderby('views', 'desc')->where('post_category_id',3)->take(4)->get();
         // dd($categories);
-        return view('client.home.index',compact('categories','category_advisory', 'category_news', 'category_sale', 'highlights_post'));
+        return view('client.home.index',compact('category_advisory', 'category_news', 'category_sale', 'highlights_post','categories_show_home'));
     }
     public function getSearch(Request $r)
     {
