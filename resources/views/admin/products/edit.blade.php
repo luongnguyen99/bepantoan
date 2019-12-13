@@ -146,7 +146,7 @@ Sửa sản phẩm
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Giá khuyến mãi</label>
-                            <input type="number" class="form-control price" id="sale_price" name="sale_price" {{!empty($product->price) ? $product->price : ''}} min="0">
+                            <input type="number" class="form-control price" id="sale_price" name="sale_price" value="{{!empty($product->sale_price) ? $product->sale_price : ''}}" min="0">
                             <span class="errors error_sale_price" style="color:red"></span>
                         </div>
                     </div>

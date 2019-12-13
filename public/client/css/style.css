@@ -129,13 +129,15 @@ h1, h2, h3, h4, h5, h6 {
     padding: 7px 15px;
     color: #fff;
     margin: 0 10px;
+    margin-left: 25%;
     border-radius: 30px;
 }
 .quick-menu a.hotline {
     background: #f40000;
-    padding: 7px 15px;
+    padding: 6px 15px;
     color: #fff;
     border-radius: 30px;
+    font-size: 15px;
 }
 .quick-cart a {
     position: relative;
@@ -2536,4 +2538,10 @@ ul.listform_filter {
 }
 .description-content > div {
     height: 30px !important;
+}
+
+@media only screen and (max-width: 1440px) {
+    .quick-menu a.km {   
+        margin-left: 12%;
+    }   
 }

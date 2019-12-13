@@ -51,7 +51,7 @@ class CategoryController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:categories,name',
+                'name' => 'required',
                 'slug' => 'required|unique:categories,slug',
             ],
             [
@@ -116,7 +116,7 @@ class CategoryController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:categories,name,'.$id,
+                'name' => 'required',
                 'slug' => 'required|unique:categories,slug,'.$id,
             ],
             [

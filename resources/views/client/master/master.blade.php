@@ -48,7 +48,7 @@
 		
 		<div class="header-pc hidden-xs hidden-sm">
 			<div class="container">
-				<div class="row">
+				<div class="row" style="display: flex;align-items: center;">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
 
@@ -407,7 +407,7 @@
 		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
 		<script>
-			
+		url_host = window.location.origin;
 		$.ajaxSetup({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -427,12 +427,13 @@
 							var arr_cate = data.cate;
 							var html = '';
 							jQuery.each(arr_cate,function(key1,item1){
-								html += '<li class="page">Tìm trong <a href="danh-muc/'+item1.slug+'" target="_blank">'+item1.name+'</a></li>'
+								// console.log(item1);
+								html += '<li class="page">Tìm trong <a href="'+url_host+'/danh-muc/'+item1.slug+'" target="_blank">'+item1.name+'</a></li>'
 								// console.log(item);
 							});
 							jQuery.each(arr_prd,function(key,item){
 								html += '<li>'+
-								'<a href="'+item.slug+'">'+
+								'<a href="'+url_host+'/'+item.slug+'">'+
 									'<div class="media">'+
 										'<div class="media-left">'+
 											'<img src="'+item.image+'" class="media-object thumb">'+
@@ -476,11 +477,11 @@
 							var arr_cate = data.cate;
 							var html = '';
 							jQuery.each(arr_cate,function(key1,item1){
-								html += '<li class="page">Tìm trong <a href="danh-muc/'+item1.slug+'" target="_blank">'+item1.name+'</a></li>'
+								html += '<li class="page">Tìm trong <a href="'+url_host+'/danh-muc/'+item1.slug+'" target="_blank">'+item1.name+'</a></li>'
 							});
 							jQuery.each(arr_prd,function(key,item){
 								html += '<li>'+
-								'<a href="'+item.slug+'">'+
+								'<a href="'+url_host+'/'+item.slug+'">'+
 									'<div class="media">'+
 										'<div class="media-left">'+
 											'<img src="'+item.image+'" class="media-object thumb">'+

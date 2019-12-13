@@ -3,27 +3,57 @@
 @section('content')
 <div class="home">
     <div class="product">
-    {{-- <div class="wrap-category hidden-xs hidden-sm" id="ProductCategory">
+    @php
+    $allCategory1 = json_decode(get_option_by_key('show_category_menu_mobile'),true);
+    $allCategory = [];
+    foreach ($allCategory1 as $value) {
+    if ($value['id']) {
+    array_push($allCategory,get_category_by_id($value['id']));
+    };
+    
+    }
+    
+    @endphp
+    @if (!empty($allCategory) && count($allCategory) > 0)
+    
+    <div class="wrap-category">
         <div class="container">
-            @if (!empty($categoryAll))
-            <div class="arrows-category">
-                <div class="menu-cate">
-                    @foreach ($categoryAll as $item)
+            <div class="section-title">
+                <h3>Danh mục sản phẩm</h3>
+            </div>
+            <div class="owl-carousel owl-theme slide-pro-ctg">
+                @foreach ($allCategory as $key => $item)
+                @if ($key % 2 == 0)
+                <div class="item">
                     <div class="ctg-pro-item">
-                        <a href="{{route('category_detail',['slug' => $item->slug])}}">
+                        <a href="{{route('category_detail',['slug' => $allCategory[$key]->slug])}}">
                             <div class="category-card__image">
-                                <img src="{{$item->image}}" alt="{{$item->name}}">
+                                <img src="{{!empty($allCategory[$key]->image) ? $allCategory[$key]->image : ''}}"
+                                    alt="{{$allCategory[$key]->name}}">
                             </div>
-                            <div class="category-card__name "><strong>{{$item->name}}</strong></div>
+                            <div class="category-card__name "><strong>{{$allCategory[$key]->name}}</strong></div>
                         </a>
                     </div>
-                    @endforeach
+    
+                    @if (isset($allCategory[$key + 1]) && !empty($allCategory[$key + 1]) )
+                    <div class="ctg-pro-item">
+                        <a href="{{route('category_detail',['slug' => $allCategory[$key + 1]->slug])}}">
+                            <div class="category-card__image">
+                                <img src="{{!empty($allCategory[$key + 1]->image) ? $allCategory[$key + 1]->image : ''}}"
+                                    alt="{{$allCategory[$key + 1]->name}}">
+                            </div>
+                            <div class="category-card__name "><strong>{{$allCategory[$key + 1]->name}}</strong></div>
+                        </a>
+                    </div>
+                    @endif
                 </div>
+                @endif
+                @endforeach
             </div>
-            @endif
         </div>
-    </div> --}}
-    <div class="wrap-brand">
+    </div>
+    @endif
+    {{-- <div class="wrap-brand">
         <div class="container">
             @if (count($brands) > 0 && !empty($brands))
                 <div class="section-title">
@@ -51,7 +81,7 @@
             @endif
            
         </div>
-    </div>
+    </div> --}}
     </div>
     @if (count($categories) > 0 && !empty($categories))
         @foreach ($categories as $item)

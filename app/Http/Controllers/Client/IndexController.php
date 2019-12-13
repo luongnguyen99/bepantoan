@@ -51,6 +51,7 @@ class IndexController extends Controller
     }
     public function getSearch(Request $r)
     {
+        
         $key = $r->key;
         $arr_prd = Product::where('name', 'like', '%'.$key.'%')->select('*')->take(2)->get()->toarray();
         
@@ -101,6 +102,7 @@ class IndexController extends Controller
     }
     public function getSearchMobile(Request $r)
     {
+        // dd('aaa');
         $key = $r->key;
         $arr_prd = Product::where('name', 'like', '%'.$key.'%')->select('*')->take(2)->get()->toarray();
         

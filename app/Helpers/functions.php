@@ -3,6 +3,7 @@ use App\Models\Product;
 use App\Models\Option;
 use App\Models\Category;
 use App\Models\Order;
+use Jenssegers\Agent\Agent as Agent;
 
 if (!function_exists('activeNav')) {
     function activeNav($segment_2 = '', $segment_3 = '')
@@ -55,16 +56,18 @@ if (!function_exists('get_detail_products_by_id')) {
 if (!function_exists('get_products_by_category_id')) {
     function get_products_by_category_id($id){
         $checkCategory = Category::where('parent_id',$id)->get();
-        
+        $Agent = new Agent();
+        $limit = $Agent->isMobile() ? 6 : 5;
+        // dd($limit);
         if (count($checkCategory) == 0) {
-            $products = Product::where('category_id',$id)->orderBy('created_at','desc')->with('galleries','brand')->limit(5)->get();
+            $products = Product::where('category_id',$id)->orderBy('created_at','desc')->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
         }else{
             $inCategory = [];
             foreach ($checkCategory as $key => $value) {
                 $inCategory[] = $value->id;
             }
             // var_dump($inCategory);
-            $products = Product::whereIn('category_id',$inCategory)->orderBy('created_at','desc')->with('galleries','brand')->limit(5)->get();
+            $products = Product::whereIn('category_id',$inCategory)->orderBy('created_at','desc')->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
         }
         return $products;
        
