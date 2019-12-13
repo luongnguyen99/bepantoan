@@ -64,6 +64,26 @@ h1, h2, h3, h4, h5, h6 {
     background: #ed1c24;
     color: #fff;
 }
+.quick-menu a.km {
+    background: #2269a9;
+    padding: 7px 15px;
+    color: #fff;
+    margin: 0 10px;
+    margin-left: 22%;
+    border-radius: 30px;
+}
+@media only screen and (max-width: 1440px) {
+    .quick-menu a.km {   
+        margin-left: 8%;
+    }   
+}
+
+@media only screen and (max-width: 1220px) {
+    .quick-menu a.km {   
+        margin-left: 0% !important;
+    }   
+}
+
 /* header */
 .header-pc{
 	padding: 15px 0;
@@ -124,14 +144,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 20px;
     vertical-align: middle;
 }
-.quick-menu a.km {
-    background: #2269a9;
-    padding: 7px 15px;
-    color: #fff;
-    margin: 0 10px;
-    margin-left: 25%;
-    border-radius: 30px;
-}
+
 .quick-menu a.hotline {
     background: #f40000;
     padding: 6px 15px;
@@ -2540,8 +2553,3 @@ ul.listform_filter {
     height: 30px !important;
 }
 
-@media only screen and (max-width: 1440px) {
-    .quick-menu a.km {   
-        margin-left: 12%;
-    }   
-}

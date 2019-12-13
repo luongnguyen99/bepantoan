@@ -120,7 +120,7 @@ class CartController extends Controller
 
             // gui mail admin
             $email_admin = get_option_by_key('email_admin');
-        
+            // dd($email_admin);
             Mail::send('template_mail/order_success_admin', array('data' => $data, 'carts' => $carts, 'id_order' => $id_order), function ($message) use ($email_admin) {
                 $message->to($email_admin, 'Bếp Tốt')->subject('Đơn hàng mới!');
             });

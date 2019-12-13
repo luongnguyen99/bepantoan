@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Option;
+use App\Models\Brand;
 class OptionsController extends Controller
 {
     //==========> LOGO <=====================
@@ -706,6 +707,14 @@ class OptionsController extends Controller
         };
         $categories = Category::all();
         return view('admin.options.home.choose_category_show_home',compact('categories'));
+    }
+
+    public function show_brand_by_id_category($id){
+        $brands = Brand::select('brand.*')
+                ->join('products','brands.id','=','products.brand_id')
+                ->join('categories','categories.id','=','products.category_id')
+                ->where('categories.id',$id)
+                ->groupBy('brands.id');
     }
 
     public function choose_category_show_menu_mobile(Request $request){

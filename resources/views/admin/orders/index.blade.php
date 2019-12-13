@@ -156,8 +156,9 @@
                     data: 'total',
                     title: "Tổng tiền",
                     render: function(data){
+                        console.log(data);
                         total = data.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-                        total = total.replace('.00', "đ");
+                        // total = total.replace('.00', "đ");
 
                         return `${total}đ`;
                     }

@@ -69,70 +69,56 @@ Chọn danh mục nổi bật
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-body">
-
-                {{-- ************** --}}
-               
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Thêm danh mục</label>
-                        <select name="categories" id="categories2" class="form-control categories2">
-                            @forelse ($categories as $item)
-                            <option value="{{$item->id}}">
-                                {{$item->name}}
-                            </option>
-                            @empty
-
-                            @endforelse
-                        </select>
-                    </div>
-                    <div style="margin: 10px 0px">
-                        <button style="margin: 5px 0px" class="btn btn-bitbucket btn-sm btn_add_element">Thêm <i
-                                class="fa fa-long-arrow-right"></i></button>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div>
-                        <label for="">Thứ tự danh mục hiển thị trang chủ</label>
-                    </div>
-                    <div class="dd" id="nestable3">
-                        <ol class="dd-list">
-                            @php
-                            $arr = json_decode(get_option_by_key('categories_show_home'),true);
-                            // dd($arr);
-                            @endphp
-                            @if (is_array($arr) && count($arr) > 0)
-                            @foreach ($arr as $key => $item)
-                            @php
-                            $category = get_category_by_id($item);
-                            @endphp
-                            <li class="dd-item dd3-item" data-id="{{ $category->id }}">
-                                <div class="dd-handle dd3-handle"></div>
-                                <div class="dd3-content">
-                                    <div class="text-box">
-                                        {{ $category->name }}
+                <form class="repeater" method="POST" action="https://thanhca.pveser.com/admin/options/save_sort_category">
+                    <input type="hidden" name="_token" value="1n5DbAORUApmQxZIrMQ4K79r4oGhxwAroUgYb7vW">
+                    <div data-repeater-list="outer_list" class="abcd">
+                        <div data-repeater-item="" class="repeater_div">
+    
+                            <div class="form-group row">
+                                <div class="col-xs-10">
+                                    <label>Danh mục</label>
+                                    <select name="outer_list[0][category]" id="category" class="form-control category">
+                                        @foreach ($categories as $item) 
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
+                                      
+                                    </select>
+                                </div>
+                                <div class="col-xs-2">
+    
+                                    <a class="btn btn-info up" style="margin-top:25px"><i class="fa fa-arrow-up"></i></a>
+                                    <a class="btn btn-success down" style="margin-top:25px"><i
+                                            class="fa fa-arrow-down"></i></a>
+                                    <input data-repeater-delete="" type="button" value="Xóa" class="btn btn-danger"
+                                        style="margin-top:25px">
+                                </div>
+                            </div>
+    
+    
+                            <!-- innner repeater -->
+                            <div class="inner-repeater">
+                                <div>
+                                    <div>
+                                        <div class="form-group">
+                                            <label>Hãng sản xuất</label>
+                                            <select name="brands[]" 
+                                                class="form-control brands" multiple>
+                                               <option value="">--Chọn--</option>
+                                                
+                                            </select>
+                                        </div>
+    
                                     </div>
                                 </div>
-                                <div class="pull-right2">
-                                    <span style="cursor: pointer" class="btn_remove_element">
-                                        <i class="fa fa-close"></i>
-                                    </span>
-                                </div>
-                            </li>
-                            @endforeach
-                            @endif
-
-                        </ol>
+    
+                            </div>
+    
+                        </div>
+                        
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div style="margin: 20px 0px" class="">
-                        <button class="btn btn-success btn_save">Lưu</button>
-                    </div>
-                </div>
-                {{-- ----------------- --}}
-
-
-                {{-- **************** --}}
+                    <button type="submit" class="btn btn-success">Lưu</button>
+                    <input data-repeater-create="" type="button" value="Thêm" class="btn btn-primary callBackSelect2">
+                </form>
             </div>
         </div>
     </div>
@@ -147,19 +133,11 @@ Chọn danh mục nổi bật
 @endsection
 <!----- javascript here -------->
 @section('js')
-<script>
-    $(document).ready(function () {
-        $('#categories2').select2();
-    });
+<script src="{{asset('admin0/js/repeater.js')}}"></script>
 
-</script>
 <script>
-    $('.dd').nestable({
-        maxDepth: 1,
-        group: 2
-    });
+    
     $('.btn_save').click(function () {
-        var a = $('.dd').nestable('serialize');
         var myJSON = JSON.stringify(a);
         var formData = new FormData();
         $.ajax({
@@ -180,38 +158,58 @@ Chọn danh mục nổi bật
                     window.location.reload();
                 }
               
-            });
+        });
     })
 
 </script>
 <script>
-    function buildItem(text, value) {
+$(document).ready(function () {
+    jQuery('.repeater').repeater({});
+    $('body').find('.category').select2();
+    $('body').find('.brands').select2();
+    $('.callBackSelect2').click(function(){
+        $('body').find(".category:last").select2({});
+        $('body').find('.brands:last').select2();
+    });
+    jQuery('body').on('click','.up',function(){
+        divCurrent = $(this).parents('.repeater_div');
+        var wrapper = $(this).closest('.repeater_div');
 
-        var html = `<li class="dd-item dd3-item" data-id="${value}">
-                        <div class="dd-handle dd3-handle"></div>
-                        <div class="dd3-content">${text}</div>
-                        <div class="pull-right2">
-                            <span style="cursor: pointer" class="btn_remove_element">
-                                <i class="fa fa-close"></i>
-                            </span>
-                        </div>
-                    </li>`;
-        return html;
-    }
-    $(function () {
-        $('body').on('click', '.btn_add_element', function () {
-            let text = $("#categories2 option:selected").text();
-            text = $.trim(text);
-            let value = $("#categories2").val();
-            
-            $('.dd-list').append(buildItem(text, value));
+        var selectEq1_1 = $(divCurrent.prev()).find('select:eq(0)').attr('name');
+        var selectEq1_2 = $(divCurrent).find('select:eq(0)').attr('name');
 
-        })
-        $('body').on('click', '.fa-close', function (e) {
-            $(this).parents('.dd3-item').remove();
-        })
-    })
+        var selectEq2_1 = $(divCurrent.prev()).find('select:eq(1)').attr('name');
+        var selectEq2_2 = $(divCurrent).find('select:eq(1)').attr('name');
 
+        $(wrapper).find('select:eq(0)').attr('name',selectEq1_1);
+        $(divCurrent.prev()).find('select:eq(0)').attr('name',selectEq1_2);
+
+        $(wrapper).find('select:eq(1)').attr('name',selectEq2_1);
+        $(divCurrent.prev()).find('select:eq(1)').attr('name',selectEq2_2);
+
+        wrapper.insertBefore(divCurrent.prev());
+    }); 
+
+    jQuery('body').on('click','.down',function(){
+        divCurrent = $(this).parents('.repeater_div');
+        var wrapper = $(this).closest('.repeater_div');
+
+        var selectEq1_1 = $(divCurrent.next()).find('select:eq(0)').attr('name');
+        var selectEq1_2 = $(divCurrent).find('select:eq(0)').attr('name');
+
+        var selectEq2_1 = $(divCurrent.next()).find('select:eq(1)').attr('name');
+        var selectEq2_2 = $(divCurrent).find('select:eq(1)').attr('name');
+
+        $(wrapper).find('select:eq(0)').attr('name',selectEq1_1);
+        $(divCurrent.next()).find('select:eq(0)').attr('name',selectEq1_2);
+
+        $(wrapper).find('select:eq(1)').attr('name',selectEq2_1);
+        $(divCurrent.next()).find('select:eq(1)').attr('name',selectEq2_2);
+
+
+        wrapper.insertAfter(divCurrent.next());
+    });
+});
 </script>
 
 
