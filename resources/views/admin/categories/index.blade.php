@@ -94,6 +94,14 @@ Danh mục
                             value="{{ !empty(old('slug')) ? old('slug') : ''}}">
                         <div class="text-danger error_slug" id="error_slug"></div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="name">Tên rút gọn</label>
+                        <input class="form-control" type="text" name="short_name" id="short_name"
+                            value="{{ !empty(old('short_name')) ? old('short_name') : ''}}">
+                        <div class="text-danger error_short_name" id="error_short_name"></div>
+                    </div>
+
                     <div class="form-group">
                         <label for="parent_id">Danh mục gốc</label>
                         <select name="parent_id" id="parent_id" class="form-control select2_add">
@@ -215,7 +223,7 @@ Danh mục
                                         value="${url}">
                                     
                                 </div>
-								`)
+							`)
                     });
                 });
             }
@@ -285,6 +293,11 @@ Danh mục
                     data: 'slug',
                     title: "Đường dẫn tĩnh",
                     autoWidth: true
+                },
+                {
+                    data : 'short_name',
+                    title : "Tên rút gọn",
+                    autoWidth : true,
                 },
                 {
                     data: 'parent_name',

@@ -69,7 +69,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 7px 15px;
     color: #fff;
     margin: 0 10px;
-    margin-left: 22%;
+    /* margin-left: 22%; */
     border-radius: 30px;
 }
 @media only screen and (max-width: 1440px) {
@@ -648,22 +648,25 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: solid 2px #ce0707;
 }
 .nav_cate_title .title {
+    cursor: pointer;
     float: left;
     color: #fff;
     padding-left: 15px;
     background: url('../img/bg_title_box.png') right top;
-    padding-right: 100px;
+    padding-right: 75px;
     font-size: 15px;
     margin: 0;
     text-transform: uppercase;
     font-weight: 600;
 }
 .nav_cate_title .title a {
+    text-transform: uppercase;
     display: inline-block;
     vertical-align: middle;
     font-size: 14px;
     color: #fff;
     padding: 11px 5px;
+    min-width: 170px;
 }
 .list-text-category {
     float: left;
@@ -2212,6 +2215,7 @@ ul.listform_filter {
     width: 298px;
     max-height: 368px;
     overflow-x: hidden;
+    overflow-y: scroll;
     border-radius: 0;
     -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,.24);
     box-shadow: 0 4px 8px 0 rgba(0,0,0,.24);

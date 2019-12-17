@@ -69,51 +69,99 @@ Chọn danh mục nổi bật
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-body">
-                <form class="repeater" method="POST" action="https://thanhca.pveser.com/admin/options/save_sort_category">
-                    <input type="hidden" name="_token" value="1n5DbAORUApmQxZIrMQ4K79r4oGhxwAroUgYb7vW">
+                <form class="repeater" method="POST" action="{{route('admin.options.choose_category_show_home')}}">
+                    @csrf
+                    @php
+                        $categories_show_home = json_decode(get_option_by_key('categories_show_home'),true);
+                        // dd($categories_show_home);
+                    @endphp
+                    
                     <div data-repeater-list="outer_list" class="abcd">
-                        <div data-repeater-item="" class="repeater_div">
-    
-                            <div class="form-group row">
-                                <div class="col-xs-10">
-                                    <label>Danh mục</label>
-                                    <select name="outer_list[0][category]" id="category" class="form-control category">
-                                        @foreach ($categories as $item) 
-                                            <option value="{{$item->id}}">{{$item->name}}</option>
-                                        @endforeach
-                                      
-                                    </select>
-                                </div>
-                                <div class="col-xs-2">
-    
-                                    <a class="btn btn-info up" style="margin-top:25px"><i class="fa fa-arrow-up"></i></a>
-                                    <a class="btn btn-success down" style="margin-top:25px"><i
-                                            class="fa fa-arrow-down"></i></a>
-                                    <input data-repeater-delete="" type="button" value="Xóa" class="btn btn-danger"
-                                        style="margin-top:25px">
-                                </div>
-                            </div>
-    
-    
-                            <!-- innner repeater -->
-                            <div class="inner-repeater">
-                                <div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label>Hãng sản xuất</label>
-                                            <select name="brands[]" 
-                                                class="form-control brands" multiple>
-                                               <option value="">--Chọn--</option>
-                                                
+                        @if (!empty($categories_show_home) && count($categories_show_home) > 0)
+                            @foreach ($categories_show_home as $element)
+                            {{-- {{dd($element)}} --}}
+                                <div data-repeater-item="" class="repeater_div">
+                                    <div class="form-group row">
+                                        <div class="col-xs-10">
+                                            <label>Danh mục</label>
+                                            <select name="category" id="category" class="form-control category">
+                                                <option value="">---Chọn---</option>
+                                                @foreach ($categories as $item)
+                                                    <option {{$item->id == $element['category'] ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
-    
+                                        <div class="col-xs-2">
+                                            <a class="btn btn-info up" style="margin-top:25px"><i class="fa fa-arrow-up"></i></a>
+                                            <a class="btn btn-success down" style="margin-top:25px"><i class="fa fa-arrow-down"></i></a>
+                                            <input data-repeater-delete="" type="button" value="Xóa" class="btn btn-danger" style="margin-top:25px">
+                                        </div>
+                                    </div>
+                                
+                                
+                                    <!-- innner repeater -->
+                                    <div class="inner-repeater">
+                                        <div>
+                                            <div>
+                                                <div class="form-group">
+                                                    <label>Hãng sản xuất</label>
+                                                   
+                                                    <select name="brands" class="form-control brands" multiple>
+                                                        @if (!empty($element['brands']))
+                                                            @foreach ($element['brands'] as $brand)
+                                                                @php
+                                                                    $detail_brand = get_brand_by_id($brand);
+                                                                @endphp
+                                                                <option {{in_array($detail_brand['id'],$element['brands']) ? 'selected' : ''}} value="{{$detail_brand['id']}}">{{$detail_brand['name']}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                
+                                            </div>
+                                        </div>
+                                    </div>                          
+                                </div>
+                            @endforeach
+                        @else
+                            <div data-repeater-item="" class="repeater_div">
+                                <div class="form-group row">
+                                    <div class="col-xs-10">
+                                        <label>Danh mục</label>
+                                        <select name="category" id="category" class="form-control category">
+                                            <option value="">---Chọn---</option>
+                                            @foreach ($categories as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2">
+                            
+                                        <a class="btn btn-info up" style="margin-top:25px"><i class="fa fa-arrow-up"></i></a>
+                                        <a class="btn btn-success down" style="margin-top:25px"><i class="fa fa-arrow-down"></i></a>
+                                        <input data-repeater-delete="" type="button" value="Xóa" class="btn btn-danger" style="margin-top:25px">
                                     </div>
                                 </div>
-    
+                            
+                            
+                                <!-- innner repeater -->
+                                <div class="inner-repeater">
+                                    <div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label>Hãng sản xuất</label>
+                                                <select name="brands" class="form-control brands" multiple>
+                                                    
+                                                </select>
+                                            </div>
+                            
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                            
                             </div>
-    
-                        </div>
+                        @endif
                         
                     </div>
                     <button type="submit" class="btn btn-success">Lưu</button>
@@ -135,33 +183,6 @@ Chọn danh mục nổi bật
 @section('js')
 <script src="{{asset('admin0/js/repeater.js')}}"></script>
 
-<script>
-    
-    $('.btn_save').click(function () {
-        var myJSON = JSON.stringify(a);
-        var formData = new FormData();
-        $.ajax({
-            url : `{{route('admin.options.choose_category_show_home')}}`,
-            method: 'post',
-            type: 'json',
-            dataType: 'json',
-            data: {
-                categories: myJSON,
-                _token: '{{ csrf_token() }}'
-            },
-        }).done(
-            result => {
-                var msg = result;
-                if (result.error == false) {
-                    window.location.reload();
-                } else {       
-                    window.location.reload();
-                }
-              
-        });
-    })
-
-</script>
 <script>
 $(document).ready(function () {
     jQuery('.repeater').repeater({});
@@ -210,9 +231,30 @@ $(document).ready(function () {
         wrapper.insertAfter(divCurrent.next());
     });
 });
+
+$(document).on('change','.category',function() {
+    var id = $(this).find("option:selected").val();
+   $.ajax({
+        url : `{{route('admin.options.show_brand_by_id_category')}}`,
+        method: 'POST',
+        type: 'json',
+        dataType: 'json',
+        data: {
+            id: id,
+            _token: '{{ csrf_token() }}'
+        },
+    }).done(
+        result => {
+            // console.log(result);
+            html = '';
+            result.forEach(element => {
+               html += `<option value="${element.id}">${element.name}</option>`;
+            });
+            $('.brands:last').html(html);
+            
+    });
+})
 </script>
-
-
 
 @endsection
 

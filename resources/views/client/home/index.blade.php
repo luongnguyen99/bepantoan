@@ -106,9 +106,9 @@
 		@endif
 	
 		
-		@if (count($categories_show_home) > 0 && !empty($categories_show_home))
-		@foreach ($categories_show_home as $id)
-		@php  $item  = get_detail_category_by_id_show_home($id) @endphp
+		@if (!empty($categories_show_home))
+		@foreach ($categories_show_home as $elm)
+		@php  $item  = get_detail_category_by_id_show_home($elm['category']) @endphp
 		
 		<div class="single-products">
 			<div class="container">
@@ -116,24 +116,21 @@
 					<h2 class="title">
 						<a href="{{url('danh-muc').'/'.$item->slug}}" title="{{$item->name}}">{{$item->name}}</a>
 					</h2>
-					@if ($item->brand_name != null && $item->brand_slug != null)
+					@if (!empty($elm['brands']) && $item->parent_id != 0)
 						@php
-						$arr_name_sub_category = explode(",",$item->brand_name);
-						$arr_slug_sub_category = explode(",",$item->brand_slug);
-						@endphp
-						
-						<div class="list-text-category hidden-xs hidden-sm">
-							@if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
-							@foreach ($arr_name_sub_category as $key => $item2)
-							@if ($key == 5)
-								@break
-							@endif
-							<a href="{{url('danh-muc').'/'.(!empty($arr_slug_sub_category[$key]) ? $arr_slug_sub_category[$key] : '')}}"
-								class="itemprop" title="{{$item2}}">{{$item2}}</a>
-							@endforeach
-							@endif
-						
-						</div>
+							$brands = $elm['brands'];
+							// dd($brands);
+						@endphp		
+							<div class="list-text-category hidden-xs hidden-sm">
+								@foreach ($brands as $brand)
+									@php
+										$detail_brand = get_brand_by_id($brand);
+										// dd($detail_brand);
+									@endphp
+									<a href="{{route('category_detail',['slug' => $item->slug , 'slug2' => $detail_brand->slug])}}"
+										class="itemprop" title="{{(!empty($item->short_name) ? $item->short_name : $item->name) . ' '. $detail_brand->name}}">{{(!empty($item->short_name) ? $item->short_name : $item->name) . ' '. $detail_brand->name}}</a>
+								@endforeach	
+							</div>
 					@endif
 					
 					<a href="{{url('danh-muc').'/'.$item->slug}}" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>

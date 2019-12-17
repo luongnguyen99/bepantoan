@@ -25,7 +25,7 @@ class Post_categoriesController extends Controller
                   'name.required' => 'Tên không được để trống',
                   'slug.required' => 'Đường dẫn không được để trống',
                   'slug.unique' => 'Đường dẫn đã tồn tại điền đường dẫn khác',
-             ],
+             ]
           );
           if($validator->fails()){
                return redirect()->back()->withErrors($validator->errors())->withInput();
@@ -67,7 +67,7 @@ class Post_categoriesController extends Controller
                     'name.required' => 'Tên không được để trống',
                     'slug.required' => 'Đường dẫn không được để trống',
                     'slug.unique' => 'Đường dẫn đã tồn tại điền đường dẫn khác',
-               ],
+               ]
           );
           if($validator->fails()){
                return redirect()->back()->withErrors($validator->errors())->withInput();

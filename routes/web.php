@@ -34,8 +34,9 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('saveEdit/{id}','CategoryController@saveEdit')->name('saveEdit');
         Route::post('delete','CategoryController@delete')->name('delete');
         Route::post('deleteMulti','CategoryController@deleteMulti')->name('deleteMulti');
-
         Route::post('searchCategory','CategoryController@searchCategory')->name('searchCategory');
+
+        Route::any('sort_brand','CategoryController@sort_brand')->name('sort_brand');
         // searchCategory
     });
 
@@ -221,6 +222,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         // Chọn danh mục hiển thị trang chủ
         Route::any('choose_category_show_home', 'OptionsController@choose_category_show_home')->name('choose_category_show_home');
+        // Ajax show brand
+        Route::post('show_brand_by_id_category','OptionsController@show_brand_by_id_category')->name('show_brand_by_id_category');
         // Chọn danh mục hiển thị menu mobile
         Route::any('choose_category_show_menu_mobile', 'OptionsController@choose_category_show_menu_mobile')->name('choose_category_show_menu_mobile');
         // Email admin
@@ -315,9 +318,11 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('abc', function(){
         dd(Cart::destroy());
     });
+
     Route::get('hoa-debug',function(){
         return view('client.hoa_debug');
     });
+
     // crawler
     Route::get('crawler','CrawlerController@index')->name('crawler');
     Route::get('crawler_product_detail', 'CrawlerController@crawler_product_detail')->name('crawler_product_detail');
@@ -328,6 +333,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('error/404','BlogController@get404');
     Route::get('tin-tuc/gioi-thieu','BlogController@Introduce');
     Route::post('tim-kiem','IndexController@searchBtn')->name('tim-kiem');
+
     Route::get('page/{slug}','IndexController@getPage')->name('page');
 
     Route::post('phone/getphone', 'CartController@postphone')->name('phone');

@@ -9,6 +9,8 @@ use App\Models\Category;
 use Validator;
 use App\Models\Property;
 use App\Models\Categories_properties;
+use App\Models\Order_brand;
+use DB;
 class CategoryController extends Controller
 {
     public function searchCategory(Request $request){
@@ -74,6 +76,7 @@ class CategoryController extends Controller
             $data = [
                 'name' => $name_category,
                 'slug' => to_slug($request->slug),
+                'short_name' => $request->short_name,
                 'parent_id' => $request->parent_id,
             ];
             // dd($request->all());
@@ -136,6 +139,7 @@ class CategoryController extends Controller
                 'name' => $name_category,
                 'slug' => to_slug(trim($request->slug)),
                 'parent_id' => $request->parent_id,
+                'short_name' => $request->short_name,
             ];
             if (!empty($request->image)) {
                 $data['image'] = $request->image;
@@ -165,6 +169,37 @@ class CategoryController extends Controller
             
         }
     }
+
+    public function sort_brand(Request $request){
+        if ($request->isMethod('post')) {      
+            DB::table('order_brand')->delete();
+            $data = $request->arr;
+            foreach ($data as $value) {
+                $i = 1;
+                foreach ($value['brand'] as $value1) {
+                    $order_brand = new Order_brand;
+                    $order_brand->category_id = $value['cate'];
+                    $order_brand->brand_id = (int)$value1;
+                    $order_brand->order_position = $i;
+                            
+                    $order_brand->save();
+                    $i++;
+                };
+            }
+
+            return response()->json([
+                0 => 'Thêm thành công',
+            ], 200);
+           
+        };
+        
+        $brand_order = Order_brand::groupBy('category_id')->get();
+        $brand_order->load('getBrandOrder');
+        // dd($brand_order->toArray());
+        $categories = Category::all();
+        return view('admin.categories.sort',compact('categories','brand_order'));
+    }
+
 
     public function delete(Request $request){
         $check = Category::where('id',$request->id)->delete();

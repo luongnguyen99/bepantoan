@@ -215,7 +215,7 @@
 					<div class="col-xs-12 col-sm-12">
 						<div class="btn-group-cate hidden-lg hidden-md">
 							<button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-								Danh mục sản phẩm <span class="caret"></span>
+								Lọc Danh mục sản phẩm <span class="caret"></span>
 							</button>
 					
 							@php $all_cateshows = show_heder_list_cate(); @endphp
@@ -302,9 +302,9 @@
 			</div>
 			<div class="footer-map">
 				<div class="container">
-					<div class="foot-head">
+					<!-- <div class="foot-head">
 						Hệ thống showroom Bepantoan.vn
-					</div>
+					</div> -->
 					<ul class="footer-address">
 						@php
 							$sw = App\Models\Showroom::all();
@@ -313,11 +313,11 @@
 						@foreach ($sw as $item)
 						<li>
 							<div class="bg">
-								<h4>{{ $item->name }}</h4>
+								<!-- <h4>{{ $item->name }}</h4>
 								<address>
 									<b>{{ $item->address }}</b>
-								</address>
-								<div class="phone">
+								</address> -->
+								<!-- <div class="phone">
 									<div>
 										<label>Điện thoại cơ sở: </label>
 										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->hotline }}</a></span>
@@ -326,7 +326,7 @@
 										<label style="color: black !important">Hotline: </label>
 										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->phone }}</a></span>
 									</div>
-								</div>
+								</div> -->
 								<div class="row">
 									<div class="col-sm-12 col-md-6 col-lg-6">
 										@php
@@ -514,5 +514,8 @@
 		});
 		</script>
 		@yield('js')
+
+		{{ $f_code }}
+
 	</body>
 	</html>

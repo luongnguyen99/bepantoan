@@ -3,6 +3,7 @@ use App\Models\Product;
 use App\Models\Option;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Brand;
 use Jenssegers\Agent\Agent as Agent;
 
 if (!function_exists('activeNav')) {
@@ -60,15 +61,26 @@ if (!function_exists('get_products_by_category_id')) {
         $limit = $Agent->isMobile() ? 6 : 5;
         // dd($limit);
         if (count($checkCategory) == 0) {
-            $products = Product::where('category_id',$id)->orderBy('created_at','desc')->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
+            $products = Product::select(DB::raw('products.*'),DB::raw('order_brand.order_position as position'))
+            ->join('order_brand','order_brand.brand_id','=','products.brand_id')->where('products.category_id',$id)
+            ->whereColumn('order_brand.category_id','=','products.category_id')
+            ->orderBy(DB::raw('order_brand.order_position'),'asc')
+            ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
+            // dd($products);
         }else{
             $inCategory = [];
             foreach ($checkCategory as $key => $value) {
                 $inCategory[] = $value->id;
             }
-            // var_dump($inCategory);
-            $products = Product::whereIn('category_id',$inCategory)->orderBy('created_at','desc')->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
+
+            $products = Product::select(DB::raw('products.*'),DB::raw('order_brand.order_position as position'))
+            ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+            ->whereColumn('order_brand.category_id','=','products.category_id')
+            ->whereIn('products.category_id',$inCategory)
+            ->orderBy(DB::raw('order_brand.order_position'),'asc')
+            ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
         }
+        // dd($products);
         return $products;
        
     };
@@ -98,6 +110,16 @@ if (!function_exists('get_product_by_id')) {
         return $product;
     }
 }
+
+// get brand
+if (!function_exists('get_brand_by_id')) {
+    function get_brand_by_id($id)
+    {
+        $brand = Brand::where(['id' => $id])->first();
+        return $brand;
+    }
+}
+
 
 if (!function_exists('count_order_awaiting_approval')) {
     function count_order_awaiting_approval(){
@@ -254,7 +276,6 @@ function get_product_category_url( $slug_product , $slug_brand = null ){
 
 
 
-
 if (!function_exists('getToken')) {
     function getToken($length = 12)
     {
@@ -274,12 +295,35 @@ if (!function_exists('getToken')) {
 }
 
 function get_detail_category_by_id_show_home($id){
-     $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
-            GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
-            from `categories`
-            inner join `products` on `categories`.`id` = `products`.`category_id`
-            inner join `brands` on `brands`.`id` = `products`.`brand_id`
-            where categories.`id` = $id
-            group by `categories`.`id`");
-    return $categories[0];
+    //  $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
+    //         GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
+    //         from `categories`
+    //         inner join `products` on `categories`.`id` = `products`.`category_id`
+    //         inner join `brands` on `brands`.`id` = `products`.`brand_id`
+    //         where categories.`id` = $id
+    //         group by `categories`.`id`");
+
+    $category = Category::where('id',$id)->first();
+    return $category;
+}
+
+if (!function_exists('show_brand_by_id_category')) {
+    function show_brand_by_id_category($id){
+        $checkCategory = Category::where('parent_id',$id)->get();
+        $inCategory = [];
+        if (count($checkCategory) != 0) {
+            foreach ($checkCategory as $key => $value) {
+                $inCategory[] = $value->id;
+            }
+        }else{
+            $inCategory = [(int)$id];
+        }
+        
+        $brands = Brand::select('brands.*')
+                ->join('products','brands.id','=','products.brand_id')
+                ->join('categories','categories.id','=','products.category_id')
+                ->whereIn('categories.id',$inCategory)
+                ->groupBy('brands.id')->get();
+        return json_decode($brands,true);
+    }
 }

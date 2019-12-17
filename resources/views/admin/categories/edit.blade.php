@@ -105,6 +105,14 @@ Sửa danh mục
                         <span style="color:red">{{$message}}</span>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label for="name">Tên rút gọn</label>
+                        <input class="form-control" type="text" name="short_name" id="short_name"
+                            value="{{ !empty(old('slug')) ? old('slug') : $category->short_name}}">
+                        <div class="text-danger error_short_name" id="error_short_name"></div>
+                    </div>
+
                     <div class="form-group">
                         <label for="parent_id">Danh mục gốc</label>
                         <select name="parent_id" id="parent_id" class="form-control select2_add">
@@ -261,9 +269,9 @@ Sửa danh mục
         $(document).ready(function() {
             $('.select2_add').select2();
         });
+    });
 
-
-    })
+    
 
 
     

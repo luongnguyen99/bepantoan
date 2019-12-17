@@ -698,23 +698,31 @@ class OptionsController extends Controller
 
     public function choose_category_show_home(Request $request){
         if ($request->isMethod('post')) {
-            $arr = json_decode($request->categories,true);
-            $new_arr = array_column($arr,'id');
-            Option::where('key','=','categories_show_home')->update(['value' => json_encode($new_arr)]);
-            return response([
-                'errors' => false,
-            ]);
+            Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->outer_list)]);
         };
         $categories = Category::all();
+        
         return view('admin.options.home.choose_category_show_home',compact('categories'));
     }
 
-    public function show_brand_by_id_category($id){
-        $brands = Brand::select('brand.*')
+    public function show_brand_by_id_category(Request $request){
+      
+        $checkCategory = Category::where('parent_id',$request->id)->get();
+        $inCategory = [];
+        if (count($checkCategory) != 0) {
+            foreach ($checkCategory as $key => $value) {
+                $inCategory[] = $value->id;
+            }
+        }else{
+            $inCategory = [(int)$request->id];
+        }
+       
+        $brands = Brand::select('brands.*')
                 ->join('products','brands.id','=','products.brand_id')
                 ->join('categories','categories.id','=','products.category_id')
-                ->where('categories.id',$id)
-                ->groupBy('brands.id');
+                ->whereIn('categories.id',$inCategory)
+                ->groupBy('brands.id')->get();
+        return response()->json($brands, 200);
     }
 
     public function choose_category_show_menu_mobile(Request $request){

@@ -657,24 +657,7 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
-	$(function(){
-		beptot = 'beptot.vn';
-		data = 'Data/upload';
-		scope = $('.description-content').find('img');
-		scope_a = $('.description-content').find('a');
-		$.each(scope ,function(i,v){
-			if($(this).attr('src').indexOf(data) !== -1 || $(this).attr('src').indexOf(beptot) !== -1){
-				$(this).remove();
-			};			
-		});
-
-		$.each(scope_a ,function(i,v){
-		if($(this).attr('href').indexOf(data) !== -1 || $(this).attr('href').indexOf(beptot) !== -1){
-				$(this).attr('href','#');
-			};
-		});
-		
-	});
+	
 	$(function() {
 		$.ajax({
 			url:"{{ route('saveCookieHistory') }}",

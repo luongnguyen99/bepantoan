@@ -223,5 +223,35 @@ jQuery(document).ready(function () {
             jQuery(this).parent().parent().children('.sub-menu').slideToggle('fast');
         });
     }
+
+    //  custom lowcase
+
+    function Capliztecus(text){
+      let lowCase = text.toLowerCase();
+
+      let first = lowCase.charAt(0);
+
+      let uperFirst = text.charAt(0).toUpperCase();
+
+      lowCase = lowCase.replace(first,"");
+
+      // let finalText = lowCase.replace( text.charAt(0) , uperFirst  );
+      // console.log(text.charAt(0));
+
+      return uperFirst + lowCase;
+      
+      
+
+    }
+
+    jQuery('.nav_cate_title .list-text-category a').each( function () { 
+        
+        let text = jQuery(this).text();
+        
+        text = Capliztecus(text);
+
+        jQuery(this).text(text);
+        
+    });
 });
 

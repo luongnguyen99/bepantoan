@@ -12,30 +12,30 @@ class IndexController extends Controller
     {
         $categories_show_home = json_decode(get_option_by_key('categories_show_home'), true);
         // dd($categories_show_home);
-        $where = 'where ';
-        if (!empty($categories_show_home) && count($categories_show_home) > 0) {
-            foreach ($categories_show_home as $key => $value) {
-                $where .= ' categories.id = '.$value;
-                if ($key+1 < count($categories_show_home)) {
-                    $where .= ' or '; 
-                }
-            }
+        // $where = 'where ';
+        // if (!empty($categories_show_home) && count($categories_show_home) > 0) {
+        //     foreach ($categories_show_home as $key => $value) {
+        //         $where .= ' categories.id = '.$value;
+        //         if ($key+1 < count($categories_show_home)) {
+        //             $where .= ' or '; 
+        //         }
+        //     }
 
-            $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
-            GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
-            from `categories`
-            left join `products` on `categories`.`id` = `products`.`category_id`
-            left join `brands` on `brands`.`id` = `products`.`brand_id` $where
-            group by `categories`.`id`");
-        }else{
-            $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
-            GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
-            from `categories`
-            left join `products` on `categories`.`id` = `products`.`category_id`
-            left join `brands` on `brands`.`id` = `products`.`brand_id`
-            group by `categories`.`id`
-            ORDER BY RAND() LIMIT 4 ");
-        };
+        //     $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
+        //     GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
+        //     from `categories`
+        //     left join `products` on `categories`.`id` = `products`.`category_id`
+        //     left join `brands` on `brands`.`id` = `products`.`brand_id` $where
+        //     group by `categories`.`id`");
+        // }else{
+        //     $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name,
+        //     GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug
+        //     from `categories`
+        //     left join `products` on `categories`.`id` = `products`.`category_id`
+        //     left join `brands` on `brands`.`id` = `products`.`brand_id`
+        //     group by `categories`.`id`
+        //     ORDER BY RAND() LIMIT 4 ");
+        // };
       
         $category_advisory = Post_category::where('id',1)->with(['posts' => function($query){
              $query->orderBy('id', 'desc')->limit(10);
