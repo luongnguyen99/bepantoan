@@ -3,7 +3,7 @@
 
 {{-- page title --}}
 @section('page_title')
-Sắp xếp danh mục
+Sắp xếp hãng
 @endsection
 
 
@@ -134,8 +134,14 @@ Sắp xếp danh mục
             </div>
         </div>
     </div>
-    <div class="col-sm-5">
-        <button type="button" style="position: fixed;" class="btn btn-success save_attr">Lưu</button>
+    <div class="col-sm-1">
+        <button type="button" style="position: fixed;margin-left: 70px;" class="btn btn-success save_attr">Lưu</button>
+    </div>
+    <div class="col-sm-2">
+        <form action="{{route('admin.categories.reset_sort')}}" method="POST">
+            @csrf
+            <button type="submit" style="position: fixed;" class="btn btn-success reset">Làm mới</button>
+        </form>
     </div>
 </div>
 
@@ -201,8 +207,12 @@ $('.save_attr').on('click',function(){
                 window.location.reload();
             },
             
-        });
-})
+    });
+});
+
+@if (session('success_reload'))
+    $('.save_attr').trigger('click');
+@endif
 </script>
 @endsection
 <!----- end javascript here -------->

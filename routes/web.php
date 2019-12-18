@@ -37,6 +37,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('searchCategory','CategoryController@searchCategory')->name('searchCategory');
 
         Route::any('sort_brand','CategoryController@sort_brand')->name('sort_brand');
+
+        Route::post('reset_sort','CategoryController@reset_sort')->name('reset_sort');
         // searchCategory
     });
 

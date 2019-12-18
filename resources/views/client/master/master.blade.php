@@ -307,40 +307,41 @@
 					</div> -->
 					<ul class="footer-address">
 						@php
-							$sw = App\Models\Showroom::all();
+							$sw = App\Models\Showroom::orderBy('id','asc')->first();
+						
 						@endphp
 						@if (!empty($sw))
-						@foreach ($sw as $item)
+					
 						<li>
 							<div class="bg">
-								<!-- <h4>{{ $item->name }}</h4>
-								<address>
-									<b>{{ $item->address }}</b>
-								</address> -->
-								<!-- <div class="phone">
+								 {{-- <h4>{{ $sw->name }}</h4> --}}
+								{{-- <address>
+									<b>{{ $sw->address }}</b>
+								</address> --}}
+								 {{-- <div class="phone">
 									<div>
 										<label>Điện thoại cơ sở: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->hotline }}</a></span>
+										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $sw->hotline }}</a></span>
 									</div>
 									<div>
 										<label style="color: black !important">Hotline: </label>
-										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $item->phone }}</a></span>
+										<span><a style="color: #dd1015 !important; font-size: 16px; font-weight: bold;" href="#">{{ $sw->phone }}</a></span>
 									</div>
-								</div> -->
+								</div>  --}}
 								<div class="row">
 									<div class="col-sm-12 col-md-6 col-lg-6">
 										@php
-											$url = $item->link_youtube;
+											$url = $sw->link_youtube;
 											parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
 										@endphp
 										<iframe width="100%" height="450" src="https://www.youtube.com/embed/{{$my_array_of_vars['v']}}"" frameborder="0"
 											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 									</div>
 									<div class="col-sm-12 col-md-6 col-lg-6">
-											<?php echo $item->embed_google_map ?>
-											<a href="{{ $item->link }}" title="Giới thiệu Showroom" class="btn btnintro"
+											<?php echo $sw->embed_google_map ?>
+											<a href="{{ $sw->link }}" title="Giới thiệu Showroom" class="btn btnintro"
 												style="font: 11px/20px arial; color: #fff; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Xem chi tiết</a>
-											<a data-toggle="modal" data-target="#exampleModalCenter{{ $item->id }}" href="#" id="map3" class="btn btnmap showMap"
+											<a data-toggle="modal" data-target="#exampleModalCenter{{ $sw->id }}" href="#" id="map3" class="btn btnmap showMap"
 												style="font: 11px/20px arial; color: #fff; background: #1665ab; padding: 2px 8px; margin-bottom: 10px; cursor: pointer;">Bản
 												đồ đường đi</a>
 									</div>
@@ -350,32 +351,31 @@
 								
 							</div>
 						</li>
-						@endforeach
+						
 						@endif
 					</ul>
 					
 					@if (!empty($sw))
-					@foreach ($sw as $item)
 					
-					<div class="modal fade" id="exampleModalCenter{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal fade" id="exampleModalCenter{{ $sw->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 					<div class="modal-dialog  modal-dialog-centered" role="document">
 						<div class="modal-content" style="border-radius:0%">
 						<div class="modal-header text-center" style="background-color:#dd1015;color:white">
-							<h5 class="modal-title" style="line-height: 10%;padding-top: 10px;" id="exampleModalLongTitle">{{ $item->name }}</h5>
+							<h5 class="modal-title" style="line-height: 10%;padding-top: 10px;" id="exampleModalLongTitle">{{ $sw->name }}</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
 							<div style="max-width:100%; overflow:hidden">
-								<?php echo $item->embed_google_map ?>
+								<?php echo $sw->embed_google_map ?>
 							</div>
 						</div>
 						
 						</div>
 					</div>
 					</div>
-					@endforeach
+					
 					@endif
 				</div>
 			</div>
@@ -446,6 +446,8 @@
 								'</a>'+
 								'</li>'
 							});
+
+							
 							$('#search_prd').html(html);
 							var tick = $('body').not('#search_prd');
 							$("body").on( 'click' , $(tick) , function (e) {
@@ -515,7 +517,7 @@
 		</script>
 		@yield('js')
 
-		{{ $f_code }}
+		{!! $f_code; !!} 
 
 	</body>
 	</html>

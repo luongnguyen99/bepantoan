@@ -1,5 +1,14 @@
 @extends('client.master.master')
 @section('title','Sản phẩm')
+@section('css')
+    <style>
+        @media only screen and (max-width: 768px) {
+            .hd-card-body > .row > .col-md-5h.col-xs-6.col-sm-6:nth-child(2n-1){
+            clear:both;
+            }
+        }
+    </style>
+@endsection
 @section('content')
 <div class="home">
     <div class="product">
@@ -94,21 +103,25 @@
                     <h2 class="title">
                         <a href="{{url('danh-muc').'/'.get_category_by_id($item->category_id)->slug}}" title="{{get_category_by_id($item->category_id)->name}}">{{get_category_by_id($item->category_id)->name}}</a>
                     </h2>
-                    
+                    <!-- <div class="owl-carousel owl-theme sub-cate-title"> -->
                     @foreach ($item->getBrandOrder as $key => $brand_id)
                         @php
                             if ($key == 5) {
                                 break;
                             };
                         @endphp
-                        <div class="list-text-category hidden-xs hidden-sm">
-                            <a href="{{url('danh-muc').'/'.get_category_by_id($item->category_id)->slug.'/'.get_brand_by_id($brand_id->brand_id)->slug}}" class="itemprop" title="{{get_category_by_id($item->category_id)->name.' '.get_brand_by_id($brand_id->brand_id)->name}}">
-                                {{get_category_by_id($item->category_id)->name.' '.get_brand_by_id($brand_id->brand_id)->name}}
-                            </a>
-                        </div>
+                        <!-- <div class="item"> -->
+                            <div class="list-text-category hidden-xs hidden-sm">
+                                <a href="{{url('danh-muc').'/'.get_category_by_id($item->category_id)->slug.'/'.get_brand_by_id($brand_id->brand_id)->slug}}" class="itemprop" title="{{get_category_by_id($item->category_id)->name.' '.get_brand_by_id($brand_id->brand_id)->name}}">
+                                    {{(!empty(get_category_by_id($item->category_id)->short_name) ? get_category_by_id($item->category_id)->short_name :
+                                    get_category_by_id($item->category_id)->name).' '.get_brand_by_id($brand_id->brand_id)->name}}
+                                </a>
+                            </div>
+                        <!-- </div> -->
                     @endforeach
-                    <a href="{{url('danh-muc').'/'.get_category_by_id($item->category_id)->slug}}" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
                     
+                    <a href="{{url('danh-muc').'/'.get_category_by_id($item->category_id)->slug}}" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
+                    <!-- </div> -->
                 </div>
                 <div class="hd-card-body">
                     <div class="row">
@@ -193,6 +206,7 @@
         @endif
     @else
         @if (count($categories) > 0 && !empty($categories))
+
         @foreach ($categories as $item)
             <div class="single-products">
                 <div class="container">
@@ -204,18 +218,23 @@
                         $arr_name_sub_category = explode(",",$item->brand_name);
                         $arr_slug_sub_category = explode(",",$item->brand_slug);
                         @endphp
+                        
                         <div class="list-text-category hidden-xs hidden-sm">
-                            @if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
-                            @foreach ($arr_name_sub_category as $key => $item2)
-                            @if ($key == 5)
-                            @break
-                            @endif
-                            <a href="{{url('danh-muc').'/'.$arr_slug_sub_category[$key]}}" class="itemprop"
-                                title="{{$item2}}">{{$item2}}</a>
-                            @endforeach
-                            @endif
+                            <!-- <div class="owl-carousel owl-theme sub-cate-title"> -->
+                                @if ($arr_slug_sub_category > 0 && !empty($arr_slug_sub_category))
+                                @foreach ($arr_name_sub_category as $key => $item2)
+                                @if ($key == 5)
+                                @break
+                                @endif
+                                
+                                    <a href="{{url('danh-muc').'/'.$arr_slug_sub_category[$key]}}" class="itemprop" title="{{$item2}}">{{$item2}}</a>
+                                <!-- </div> -->
+                                @endforeach
+                                @endif
 
+                            
                         </div>
+                        
                         <a href="{{url('danh-muc').'/'.$item->slug}}" class="viewall">Xem thêm<i class="fa fa-angle-right"></i></a>
                     </div>
                     <div class="hd-card-body">
@@ -298,6 +317,7 @@
                 </div>
             </div>
         @endforeach
+        </div>
         @endif
     @endif
         

@@ -57,7 +57,9 @@
                     <li class="{{activeNav('products','add')}}"><a href="{{route('admin.products.add')}}"><span class="glyphicon glyphicon-record"></span>
                                             Thêm mới sản phẩm</a></li>
                     <li class="{{activeNav('properties')}}"><a href="{{route('admin.properties.index')}}"><span class="glyphicon glyphicon-record"></span> Thuộc tính</a></li>
-                    <li class="{{activeNav('categories')}}"><a href="{{route('admin.categories.index')}}"><span class="glyphicon glyphicon-record"></span> Danh mục sản phẩm</a></li>
+                    <li class="{{activeNav('categories','index')}}"><a href="{{route('admin.categories.index')}}"><span class="glyphicon glyphicon-record"></span> Danh mục sản phẩm</a></li>
+                    <li class="{{activeNav('categories','sort_brand')}}"><a href="{{route('admin.categories.sort_brand')}}"><span
+                                class="glyphicon glyphicon-record"></span>Sắp xếp hãng</a></li>
                 </ul>
             </li>
             {{-- orders --}}

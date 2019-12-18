@@ -41,14 +41,18 @@ class ListCategoryController extends Controller
                 $brands = Brand::all();
                 // $categoryAll = Category::all();
                 $checkCategory = Category::where('parent_id',$category->id)->get();
-                // dd($checkCategory);
                 $inCategory = [];   
                 foreach ($checkCategory as $key => $value) {
                     $inCategory[] = $value->id;
                 }
-
+                
                 $checkIsOrder = Order_brand::whereIn('category_id',$inCategory)->count();
-                $brand_order = Order_brand::whereIn('category_id',$inCategory)->groupBy('category_id')->get();
+                // dd($checkIsOrder);
+                $brand_order = Order_brand::join('categories','categories.id','=','order_brand.category_id')
+                ->whereIn('order_brand.category_id',$inCategory)
+                ->orderBy('categories.created_at','desc')
+                ->groupBy('order_brand.category_id')
+                ->with('getBrandOrder')->get();
                 // dd($brand_order);
                 $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name, GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug from `categories` inner join `products` on `categories`.`id` = `products`.`category_id` left join `brands` on `brands`.`id` = `products`.`brand_id` where categories.parent_id = $category->id group by `categories`.`id` order by created_at desc");
                 // dd($categories);
@@ -60,6 +64,7 @@ class ListCategoryController extends Controller
                 ];
                 // Nếu có $_GET 
                 if (!empty($_GET)) {
+                     
                     $array_get = $_GET;
                     $newArrayExcept = array_diff_key($array_get, array_flip(["hang-san-xuat", "muc-gia","sort"]));
                     $arrayExceptKey = array_values($newArrayExcept);
@@ -90,9 +95,9 @@ class ListCategoryController extends Controller
                     }else{
                         $order_by = [ 'key' => DB::raw('order_brand.order_position'), 'value' => 'asc'];
                     }
-
-                    if (empty($slug2)) {
-
+                    // dd($slug2);
+                    if (empty($slug2) && $slug2 == "") {
+                        // dd($condition);
                         if (!empty($arrayExceptKey) && count($arrayExceptKey) > 0) {
                             $filterValue = '';
                             foreach ($arrayExceptKey as $key => $value) {
@@ -101,10 +106,10 @@ class ListCategoryController extends Controller
                                     $filterValue .= " and ";
                                 }
                             }
-
+                           
                             $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
-                                ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+                                ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
                                 ->whereColumn('order_brand.category_id','=','products.category_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
@@ -112,31 +117,33 @@ class ListCategoryController extends Controller
                                 ->havingRaw($filterValue)
                                 ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
+                                
                         } else {
                             $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
-                                ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+                                ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
                                 ->whereColumn('order_brand.category_id','=','products.category_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
                                 ->groupBy('products.id')
                                 ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
+                                // dd($condition);
                         };
-                        // dd($products);
                         
                         $brands = Brand::select('brands.*')
                             ->join('products','products.brand_id','=','brands.id')
                             ->join('categories','categories.id','=','products.category_id')
                             ->where('categories.id',$category->id)
                             ->groupBy('brands.id')->get();
+                        // dd($brands);
                         $brand = null;
-                        
+                        // dd($brands);
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
                     } else {
-
                         $brand = Brand::where('slug', $slug2)->first();
-                        array_push($condition, ['products.brand_id', '=', $brand->id]);
+                         
+                       
                         if (!empty($arrayExceptKey) && count($arrayExceptKey) > 0) {
                             $filterValue = '';
                             foreach ($arrayExceptKey as $key => $value) {
@@ -148,7 +155,7 @@ class ListCategoryController extends Controller
 
                             $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
-                                ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+                                ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
                                 ->whereColumn('order_brand.category_id','=','products.category_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
@@ -159,15 +166,16 @@ class ListCategoryController extends Controller
                         } else {
                             $products = Product::select(DB::raw('products.*,IF(sale_price IS NULL or sale_price = "", price , sale_price) as price_order'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                                 ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
-                                ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+                                ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
                                 ->whereColumn('order_brand.category_id','=','products.category_id')
                                 ->where($condition)
                                 ->with('galleries', 'brand')
                                 ->groupBy('products.id')
                                 ->orderBy($order_by['key'],$order_by['value'])
                                 ->limit(get_option_by_key('posts_per_page'))->get();
+                               
                         };
-
+                        
                         $brands = null;
 
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
@@ -177,7 +185,7 @@ class ListCategoryController extends Controller
                         // dd($condition);
                         $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                             ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
-                            ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+                            ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
                             ->whereColumn('order_brand.category_id','=','products.category_id')
                             ->where($condition)
                             ->with('galleries', 'brand')
@@ -191,7 +199,7 @@ class ListCategoryController extends Controller
                             ->join('categories','categories.id','=','products.category_id')
                             ->where('categories.id',$category->id)
                             ->groupBy('brands.id')->get();
-                        
+                        // dd($brands);
                         $brand = null;
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));
                     } else {
@@ -199,7 +207,7 @@ class ListCategoryController extends Controller
                         array_push($condition, ['products.brand_id', '=', $brand->id]);
                         $products = Product::select(DB::raw('products.*'), DB::raw('GROUP_CONCAT( products_property_values.property_value_id ) AS arr_id'))
                             ->leftJoin('products_property_values', 'products.id', '=', 'products_property_values.product_id')
-                            ->join('order_brand','order_brand.brand_id','=','products.brand_id')
+                            ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
                             ->whereColumn('order_brand.category_id','=','products.category_id')
                             ->where($condition)
                             ->with('galleries', 'brand')

@@ -200,6 +200,10 @@ class CategoryController extends Controller
         return view('admin.categories.sort',compact('categories','brand_order'));
     }
 
+    public function reset_sort(Request $request){
+        DB::table('order_brand')->delete();
+        return redirect()->back()->with('success_reload','Reset');
+    }
 
     public function delete(Request $request){
         $check = Category::where('id',$request->id)->delete();

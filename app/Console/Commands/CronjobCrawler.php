@@ -38,8 +38,8 @@ class CronjobCrawler extends Command
      */
     public function handle()
     {
-        Product::whereIn('products.category_id',[17,18])->update([
-            'products.gift' => '{"5560":{"value":"T\u1eb7ng B\u1ed9 n\u1ed3i t\u1eeb Fivestar 5 chi\u1ebfc tr\u1ecb gi\u00e1 1.150.000 \u0111","link":"https:\/\/luongnd2286.xyz\/bo-noi-fivestar-5-mon-vung-kinh","image":"http:\/\/luongnd2286.xyz\/userfiles\/images\/10569106_846093875400964_7585170393470138753_nx200x200x4.jpg"}}',
+        Product::whereIn('products.category_id',[21])->update([
+            'products.gift' => '{"8076":{"value":"CH\u1ea2O CARO CH\u1ed0NG D\u00cdNH JOLLY EF S\u1ea6N SJ24","link":"https:\/\/bepantoan.pveser.com\/chao-caro-chong-dinh-jolly-ef-san-sj24","image":"http:\/\/bepantoan.pveser.com\/userfiles\/images\/chao-chong-dinh-sunhouse-SJ24%20(1).png"}}',
         ]);
     }
 }

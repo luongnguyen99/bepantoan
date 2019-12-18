@@ -324,13 +324,13 @@
 				</div>
 			</div>
 			<div class="hd-card-body section-margin-bottom">
-				@if (!empty(get_products_by_category_id($product->category_id)))
+				@if (!empty(get_products_relation_by_category_id($product->category_id,(!empty($product->sale_price) ? $product->sale_price : $product->price ))))
 				<div class="hd-module-title">
 					<h3 class="module-title">Sản phẩm Liên quan</h3>
 				</div>
 				<div class="row">
 
-					@foreach (get_products_by_category_id($product->category_id) as $item_product)
+					@foreach (get_products_relation_by_category_id($product->category_id,(!empty($product->sale_price) ? $product->sale_price : $product->price )) as $item_product)
 
 					<div class="col-md-5h col-xs-6 col-sm-6">
 						<div class="product-item">

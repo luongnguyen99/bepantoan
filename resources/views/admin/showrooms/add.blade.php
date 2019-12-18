@@ -30,7 +30,7 @@ Cửa hàng
                     {{-- {{@csrf_field()}} --}}
                     <div class="form-group">
 
-                        <label for="name">Tên phòng</label>
+                        <label for="name">Tên cửa hàng</label>
                         <input class="form-control" type="text" name="name"
                             value="{{ !empty(old('name')) ? old('name') : ''}}">
                         {{ showError($errors,'name') }}

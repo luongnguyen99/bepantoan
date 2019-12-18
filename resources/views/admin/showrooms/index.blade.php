@@ -66,7 +66,7 @@ Phòng trưng bày
             </div>
             <div class="box-body">
                 <!--  content here -->
-                {{-- <a href="/admin/showroom/add" class="btn btn-primary">Thêm</a> --}}
+                <a href="/admin/showroom/add" class="btn btn-primary">Thêm</a>
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>

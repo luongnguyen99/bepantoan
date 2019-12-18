@@ -25,8 +25,8 @@ class ShowroomsController extends Controller
         $db->hotline = $r->hotline;
         $db->phone = $r->phone;
         $db->embed_google_map = $r->embed_google_map;
-        $imgs = $r->img_;
-        $db->img = $imgs;
+        // $imgs = $r->img_;
+        // $db->img = $imgs;
         $db->link = $r->link;
         $db->save();
         return redirect('admin/showroom')->with('add_success','Thêm mới thành công');

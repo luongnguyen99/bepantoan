@@ -19,6 +19,11 @@
 
 @section('css')
 	<style>
+	@media only screen and (max-width: 768px) {
+		.hd-card-body > .row > .col-md-5h.col-xs-6.col-sm-6:nth-child(2n-1){
+			clear:both;
+		}
+	}
 	input[type="radio"] {
 	-webkit-appearance: checkbox;
 	-moz-appearance: checkbox;

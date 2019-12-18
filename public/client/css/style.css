@@ -713,14 +713,15 @@ h1, h2, h3, h4, h5, h6 {
 .single-products{
 	padding: 20px 0;
 }
-.single-products .product-fs > div:nth-child(5n+1){
-    clear:both;
-}
+ @media only screen and (min-width: 992px) {
+        .single-products .product-fs > div:nth-child(5n+1){
+            clear:both;
+        }
 
-.single-products > .hd-card-body > div.row div:nth-child(5n+1){
-    clear:both;
-}
-
+        .single-products > .hd-card-body > div.row div:nth-child(5n+1){
+            clear:both;
+        }
+ }
 .product-item{
 	position: relative;
     margin-top: 20px;

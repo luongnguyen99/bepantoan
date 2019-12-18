@@ -16,6 +16,15 @@
 		@endif
 	@endif
 @endsection
+@section('css')
+	<style>
+		@media only screen and (max-width: 768px) {
+			.hd-card-body>.row>.col-md-5h.col-xs-6.col-sm-6:nth-child(2n-1) {
+				clear: both;
+			}
+		}
+	</style>
+@endsection
 @section('content')
 <div class="home">
 		@php
@@ -116,7 +125,7 @@
 					<h2 class="title">
 						<a href="{{url('danh-muc').'/'.$item->slug}}" title="{{$item->name}}">{{$item->name}}</a>
 					</h2>
-					@if (!empty($elm['brands']) && $item->parent_id != 0)
+					@if (!empty($elm['brands']))
 						@php
 							$brands = $elm['brands'];
 							// dd($brands);

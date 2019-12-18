@@ -104,15 +104,15 @@ Chọn danh mục nổi bật
                                         <div>
                                             <div>
                                                 <div class="form-group">
+                                                    @php $brand_category =  !empty($element['brands']) ? $element['brands'] : [0 => 'abc']  @endphp
+                                                    @php $brands = show_brand_by_id_category($element['category']) @endphp
                                                     <label>Hãng sản xuất</label>
-                                                   
+                                                    
                                                     <select name="brands" class="form-control brands" multiple>
-                                                        @if (!empty($element['brands']))
-                                                            @foreach ($element['brands'] as $brand)
-                                                                @php
-                                                                    $detail_brand = get_brand_by_id($brand);
-                                                                @endphp
-                                                                <option {{in_array($detail_brand['id'],$element['brands']) ? 'selected' : ''}} value="{{$detail_brand['id']}}">{{$detail_brand['name']}}</option>
+                                                        @if (!empty($brands))
+                                                            @foreach ($brands as $brand)
+                                                               {{-- {{dd($brand['id'])}} --}}
+                                                                <option {{in_array($brand['id'],$brand_category) ? 'selected' : ''}} value="{{$brand['id']}}">{{$brand['name']}}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
@@ -250,7 +250,7 @@ $(document).on('change','.category',function() {
             result.forEach(element => {
                html += `<option value="${element.id}">${element.name}</option>`;
             });
-            $('.brands:last').html(html);
+            $(this).parents('.repeater_div').find('.brands').html(html);
             
     });
 })

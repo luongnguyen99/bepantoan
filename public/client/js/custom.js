@@ -56,6 +56,26 @@ jQuery(document).ready(function() {
       }
   })
 
+
+  
+  $('.sub-cate-title').owlCarousel({
+    loop:false,
+    margin:0,
+    nav:false,
+    dots:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:4
+        },
+        1000:{
+            items:5
+        }
+    }
+})
+
   jQuery( ".form-search>form>input" ).keyup(function() {
     jQuery(this).parent().children('ul.resuiltSearch').slideDown();
       
