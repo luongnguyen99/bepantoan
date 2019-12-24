@@ -72,17 +72,19 @@ h1, h2, h3, h4, h5, h6 {
     /* margin-left: 22%; */
     border-radius: 30px;
 }
-@media only screen and (max-width: 1440px) {
+/* @media only screen and (max-width: 1440px) {
     .quick-menu a.km {   
         margin-left: 8%;
     }   
-}
+} */
 
 @media only screen and (max-width: 1220px) {
     .quick-menu a.km {   
         margin-left: 0% !important;
     }   
 }
+
+
 
 /* header */
 .header-pc{
@@ -792,6 +794,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #333;
 }
 .cate_pro_title {
+    /* display: none; */
     text-align: center;
     padding-right: 0;
     padding-left: 0;
@@ -1410,6 +1413,8 @@ ul.listform_filter {
 .wsupport-s li .img_hoa {
     margin-bottom: 5px;
     display: inline-block;
+    width: 28px;
+    height: 28px;
 }
 .wsupport-s li p {
     font-size: 11px;
@@ -1433,7 +1438,7 @@ ul.listform_filter {
 .map-bt p {
     font-size: 14px;
     line-height: 25px;
-    color: #dd1015;
+    color: #000;
     font-weight: bold;
     margin: 0;
 }
@@ -1445,7 +1450,7 @@ ul.listform_filter {
 .map-bt p span {
     color: black;
     font-size: 12px;
-    font-weight: normal;
+    /* font-weight: normal; */
     font-style: italic;
 }
 .col_product_view .description-title, .col_product_view .attribute-title {
@@ -2483,7 +2488,7 @@ ul.listform_filter {
         margin-bottom: 0;
         width: 100%;
         padding: 3px;
-        font-size: 13px;
+        font-size: 11px;
         text-align: center;
     }
     .new-filter-qh .hd-card-body .hd-module-title {
@@ -2538,7 +2543,21 @@ ul.listform_filter {
 	}
 	.ctg-pro-item .category-card__name{
 		font-size: 12px;
-	}
+    }
+    .nav_cate_title .title {
+        cursor: pointer;
+        float: left;
+        color: #fff;
+        padding-left: 15px;
+        background: url('../img/bg_title_box.png') right top;
+        padding-right: 50px;
+        font-size: 15px;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    
+
 }
 .wrap-category .section-title h3{
 	color: #f40000;
@@ -2557,4 +2576,106 @@ ul.listform_filter {
 .description-content > div {
     height: 30px !important;
 }
+@media only screen and (max-width: 1199px) {
+    .quick-menu a{
+        position: relative;
+        line-height: 32px;
+        padding: 0 10px;
+        cursor: pointer;
+        color: #111;
+        font-weight: 500;
+        text-transform: uppercase;
+    }  
+}
 
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .quick-menu a.hotline {
+        background: #f40000;
+        padding: 6px 8px;
+        color: #fff;
+        border-radius: 30px;
+        font-size: 15px;
+    }
+    .quick-menu a.km {
+        background: #2269a9;
+        padding: 7px 8px;
+        color: #fff;
+        margin: 0 8px;
+        /* margin-left: 22%; */
+        border-radius: 30px;
+    }
+    .quick-menu a {
+        position: relative;
+        line-height: 32px;
+        padding: 0 5px;
+        cursor: pointer;
+        color: #111;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    .quick-menu a i {
+        margin-right: 5px;
+        font-size: 15px;
+        vertical-align: middle;
+    }
+
+    .quick-menu a.km {
+        font-size: 12px;
+        background: #2269a9;
+        padding: 7px 8px;
+        color: #fff;
+        margin: 0 8px;
+        margin-left: 10px !important;
+        border-radius: 30px;
+    }
+
+    .quick-menu a.hotline {
+        font-size: 12px;
+        background: #f40000;
+        padding: 6px 8px;
+        color: #fff;
+        border-radius: 30px;
+        /* font-size: 15px; */
+    }
+    .logo img{
+        height: auto !important;
+        margin-top: -15px;
+    }
+}
+
+
+@media only screen and (min-width: 1367px) {
+    .quick-menu a.km {
+        background: #2269a9;
+        padding: 7px 15px;
+        color: #fff;
+        margin: 0 10px;
+        margin-left: 100px !important;
+        border-radius: 30px;
+    }
+}
+.slide-pro-ctg .owl-stage{
+    margin: 0 auto;
+}
+
+.first-shw-address{
+    color: #dd1015 !important;
+}
+.first-shw-address span{
+    color: #dd1015 !important;
+    font-weight: bold;
+}
+.after-conetnt-single span{
+    font-size: 24px;
+    font-weight: 700;
+    color: #dd1015;
+    margin-bottom: 20px;
+}
+section.after-conetnt-single {
+    padding: 15px 25px;
+    border: solid thin #DD273B;
+}
+section.after-conetnt-single ul{
+    margin-top: 20px;
+}

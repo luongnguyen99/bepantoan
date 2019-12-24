@@ -20,6 +20,7 @@ jQuery(document).ready(function() {
 	})
 
 	$('.slide-pro-ctg').owlCarousel({
+      // center:true,
 	    loop:false,
 	    margin:10,
 	    nav:true,
@@ -247,6 +248,7 @@ jQuery(document).ready(function () {
     //  custom lowcase
 
     function Capliztecus(text){
+
       let lowCase = text.toLowerCase();
 
       let first = lowCase.charAt(0);
@@ -254,24 +256,77 @@ jQuery(document).ready(function () {
       let uperFirst = text.charAt(0).toUpperCase();
 
       lowCase = lowCase.replace(first,"");
-
-      // let finalText = lowCase.replace( text.charAt(0) , uperFirst  );
-      // console.log(text.charAt(0));
-
       return uperFirst + lowCase;
       
-      
-
     }
 
     jQuery('.nav_cate_title .list-text-category a').each( function () { 
         
         let text = jQuery(this).text();
         
+        text = text.trim();
+
         text = Capliztecus(text);
 
         jQuery(this).text(text);
         
     });
+
+    jQuery('.nav_cate_title').each( ( key , value ) =>{
+
+        let a_w = jQuery(value).find('.viewall').width();
+
+        let main_w = 0;
+
+        let max_w = jQuery(value).width();
+
+        jQuery(value).find('.list-text-category').each((index , item)=>{
+
+            let item_w = jQuery(item).width();
+
+            main_w = main_w + item_w;
+
+        });
+
+        let title_w = jQuery(value).find('.title').width();
+
+        let final_w = main_w + title_w;
+
+        if( ( max_w - a_w  - final_w ) < a_w  ){
+
+            jQuery(value).find('.list-text-category').last().hide();
+
+            // console.log(jQuery(value).find('.list-text-category').last());
+
+        }
+
+        // console.log(max_w - a_w);
+
+        // console.log(final_w + "===");
+
+    });
+
+    //  beautiful filter
+    if(jQuery('#form_filter').length > 0 && jQuery(window).width() < 992 ){
+
+      let count_elm = jQuery('#form_filter .boxFilterLeft.btn-group ').size();
+      if( count_elm <= 6 ){
+        let f_width = 100 / count_elm;
+        if(count_elm%2==0){
+            f_width = 200 / count_elm;
+        }
+        jQuery('#form_filter .boxFilterLeft.btn-group ').each(function(){
+            jQuery(this).css('width' , (f_width - 0.8) + "%");
+        });
+
+      }
+
+
+    }
+
+
+    //  cam ket
+
+
 });
 

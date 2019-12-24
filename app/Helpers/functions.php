@@ -77,7 +77,7 @@ if (!function_exists('get_products_by_category_id')) {
             ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
             ->whereColumn('order_brand.category_id','=','products.category_id')
             ->whereIn('products.category_id',$inCategory)
-            ->orderBy(DB::raw('order_brand.order_position'),'asc')
+            ->orderBy(DB::raw('order_brand.order_position'),'desc')
             ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
         }
         // dd($products);
@@ -92,24 +92,25 @@ if (!function_exists('get_products_relation_by_category_id')) {
         $checkCategory = Category::where('parent_id',$id)->get();
         $Agent = new Agent();
         $limit = $Agent->isMobile() ? 6 : 5;
-        // dd($limit);
-        if (count($checkCategory) == 0) {
+        // // dd($limit);
+        // if (count($checkCategory) == 0) {
             $products = Product::select(DB::raw('products.*'))
             ->with('galleries','brand')
+            ->where('products.category_id',$id)
             ->whereBetween(DB::raw('IF(sale_price <> NULL OR sale_price <> "",sale_price,price)'),[$price-5000000,$price+5000000])
             ->limit($Agent->isMobile() ? 6 : 5)->get();
             // dd($products);
-        }else{
-            $inCategory = [];
-            foreach ($checkCategory as $key => $value) {
-                $inCategory[] = $value->id;
-            }
+        // }else{
+        //     $inCategory = [];
+        //     foreach ($checkCategory as $key => $value) {
+        //         $inCategory[] = $value->id;
+        //     }
 
-            $products = Product::select(DB::raw('products.*'))
-            ->whereIn('products.category_id',$inCategory)
-            ->whereBetween(DB::raw('IF(sale_price <> NULL OR sale_price <> "",sale_price,price)'),[$price-5000000,$price+5000000])
-            ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
-        }
+        //     $products = Product::select(DB::raw('products.*'))
+        //     ->whereIn('products.category_id',$inCategory)
+        //     ->whereBetween(DB::raw('IF(sale_price <> NULL OR sale_price <> "",sale_price,price)'),[$price-5000000,$price+5000000])
+        //     ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
+        // }
         // dd($products);
         return $products;
        

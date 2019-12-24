@@ -23,9 +23,11 @@ class ListCategoryController extends Controller
         // dd($check);
         $brand_order = Order_brand::groupBy('category_id')->with('getBrandOrder')->get();
         
+        $inCategory = null;
+        
         $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name, GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug from `categories` inner join `products` on `categories`.`id` = `products`.`category_id` inner join `brands` on `brands`.`id` = `products`.`brand_id` group by `categories`.`id`");
         // dd($categories);
-        return view('client.list-category', compact('categories', 'brands', 'categoryAll','brand_order','checkIsOrder'));
+        return view('client.list-category', compact('categories', 'brands', 'categoryAll','brand_order','checkIsOrder','inCategory'));
     }
 
     public function category_detail($slug, $slug2 = '')
@@ -45,7 +47,7 @@ class ListCategoryController extends Controller
                 foreach ($checkCategory as $key => $value) {
                     $inCategory[] = $value->id;
                 }
-                
+                // dd($inCategory);
                 $checkIsOrder = Order_brand::whereIn('category_id',$inCategory)->count();
                 // dd($checkIsOrder);
                 $brand_order = Order_brand::join('categories','categories.id','=','order_brand.category_id')
@@ -56,7 +58,7 @@ class ListCategoryController extends Controller
                 // dd($brand_order);
                 $categories = DB::select("select categories.*, GROUP_CONCAT(DISTINCT categories.name,' ',brands.name) AS brand_name, GROUP_CONCAT(DISTINCT categories.slug,'/',brands.slug) as brand_slug from `categories` inner join `products` on `categories`.`id` = `products`.`category_id` left join `brands` on `brands`.`id` = `products`.`brand_id` where categories.parent_id = $category->id group by `categories`.`id` order by created_at desc");
                 // dd($categories);
-                return view('client.list-category', compact('categories', 'brands', 'categoryAll','checkIsOrder','brand_order'));
+                return view('client.list-category', compact('categories', 'brands', 'categoryAll','checkIsOrder','brand_order','inCategory'));
             }else{
                 $condition = [
                     ['products.category_id', '=', $category->id],

@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="{{asset('client/css/helper.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
+	<!-- <link rel="stylesheet" href="{{asset('client/css/aos.css')}}"> -->
 	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
 
 	@yield('css')
@@ -404,6 +405,7 @@
 		<script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/jquery-scrolltofixed-min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/owl.carousel.min.js')}}"></script>
+		<!-- <script type="text/javascript" src="{{asset('client/js/aos.js')}}"></script> -->
 		<script type="text/javascript" src="{{asset('client/js/custom.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/main.js')}}"></script>
 		<script>

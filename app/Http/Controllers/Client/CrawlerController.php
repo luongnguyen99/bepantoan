@@ -17,7 +17,7 @@ class CrawlerController extends Controller
         $arr_product = [];
         $a = 0;
         for ($i=1; $i <= 1; $i++) { 
-            $ch = curl_init('https://beptot.vn/bep-gas-am-hong-ngoai/?page=' . $i . '&sort=&atr=on/');
+            $ch = curl_init('https://beptot.vn/day-dan-gas/');
             // nghĩa là giả mạo đang gửi từ trình duyệt nào đó, ở đây tôi dùng Firefox
             curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
             // Thiết lập trả kết quả về chứ không print ra
@@ -34,14 +34,14 @@ class CrawlerController extends Controller
             
             if (!empty($html->find('.product-dsc',0)->innertext)) {
                 foreach ($html->find('.product-dsc') as $key => $value) {
-
                     $check = Crawler_product::where('url', $value->find('h3 > a', 0)->href)->first();
+                    // dd($check);
                     $checkAlt = to_slug($value->find('.cate_pro_title  a > img', 0)->alt);
                     if (!$check) {
                         $arr_product[$key]['url'] =  $value->find('h3 > a', 0)->href;
                         $brand = Brand::where('slug', to_slug($value->find('.cate_pro_title  a > img', 0)->alt))->first();
                         $arr_product[$key]['brand_id'] =  !empty($brand) ? $brand->id : 39;
-                        $arr_product[$key]['category_id'] = 68;
+                        $arr_product[$key]['category_id'] = 73;
                         $arr_product[$key]['created_at'] = date('Y-m-d H:i:s');
                     };
                     $flag = true;
@@ -56,7 +56,7 @@ class CrawlerController extends Controller
         die;
     }
 
-    public function crawler_product_detail(){
+    public static function crawler_product_detail(){
         ini_set('max_execution_time', '0');
         $data  = Crawler_product::where('status',-1)->limit(15)->get();
         // dd($data[0]['url']);
@@ -117,7 +117,14 @@ class CrawlerController extends Controller
                                 $galleries[] =  url('/') . '/userfiles/images/product/' . $name_image;
                                 $path = public_path() . '/userfiles/images/product/' . $name_image;
 
-                                $this->save_image('https://beptot.vn' . $image->src, $path);
+                                $ch = curl_init(urldecode('https://beptot.vn' . $image->src));
+                                $fp = fopen($path, 'wb');
+                                curl_setopt($ch, CURLOPT_FILE, $fp);
+                                curl_setopt($ch, CURLOPT_HEADER, 0);
+                                curl_exec($ch);
+                                curl_close($ch);
+                                fclose($fp);
+                                // $this->save_image(urldecode('https://beptot.vn' . $image->src), $path);
                             };
                         }
 

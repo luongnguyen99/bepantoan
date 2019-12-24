@@ -113,17 +113,20 @@ class CartController extends Controller
                 ]);
             }
             $id_order = $insertOrder->id;
+            
             // gui mail khach hang
+           
             Mail::send('template_mail/order_success', array('data' => $data,'carts' => $carts,'id_order' => $id_order), function ($message) use ($data) {
-                $message->to($data['email'], 'Bếp Tốt')->subject('Đặt hàng thành công!');
+                $message->to($data['email'], 'Bếp An Toàn')->subject('Đặt hàng thành công!');
             });
 
             // gui mail admin
             $email_admin = get_option_by_key('email_admin');
             // dd($email_admin);
             Mail::send('template_mail/order_success_admin', array('data' => $data, 'carts' => $carts, 'id_order' => $id_order), function ($message) use ($email_admin) {
-                $message->to($email_admin, 'Bếp Tốt')->subject('Đơn hàng mới!');
+                $message->to($email_admin, 'Bếp An Toàn')->subject('Đơn hàng mới!');
             });
+            
 
             Cart::destroy();
             return response([
@@ -175,9 +178,17 @@ class CartController extends Controller
             $db->info = json_encode($info);
 
             $db->status = 0;
-
+            // dd($db);
+            $data = json_decode($db,true);
+            // dd($data);
             try {
                 $db->save();
+                // gui mail admin
+                $email_admin = get_option_by_key('email_admin');
+                Mail::send('template_mail/register_advisory', array('data' => $data,'info' => $info), function ($message) use ($email_admin) {
+                    $message->to($email_admin, 'Bếp An Toàn')->subject('Đăng ký nhận tin!');
+                });
+
                 echo json_encode( array( 'status' => 200 , 'message' => 'Lưu thành công yêu cầu tư vấn!' ) );
             } catch (\Throwable $th) {
                 $error['error'] = "Lưu thất bại vui lòng thử lại";

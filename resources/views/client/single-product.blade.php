@@ -72,7 +72,7 @@
 									@if (count($product->galleries) > 0)
 									@foreach ($product->galleries as $image)
 									<div class="item">
-										<img src="{{@getimagesize($image->image) ? $image->image : asset('client/img/default_product.png') }}" alt="">
+										<img src="{{!empty($image->image) ? $image->image : asset('client/img/default_product.png') }}" alt="">
 									</div>
 									@endforeach
 									@else
@@ -86,7 +86,7 @@
 									@if (count($product->galleries) > 0)
 									@foreach ($product->galleries as $image)
 										<div class="item">
-											<img src="{{@getimagesize($image->image) ? $image->image : asset('client/img/default_product.png') }}" alt="">
+											<img src="{{!empty($image->image) ? $image->image : asset('client/img/default_product.png') }}" alt="">
 										</div>
 									@endforeach
 									@else
@@ -199,6 +199,11 @@
 													class="pe-7s-call"></i>Liên hệ trực tiếp 
 												{{ $hotline['phone'] }} @endif
 												<span>(Để có giá tốt nhất)</span></a>
+											<a class="btn" style="background:#1abc9c"><i class="pe-7s-home"></i>Đăng kí xem hàng tại nhà
+												<span>(Không mua không sao)</span>
+											</a>
+											<a class="btn" style="background:#e17055"><i class="pe-7s-alarm"></i>Khảo sát tư vấn lắp đặt tại nhà
+												<span>(Miễn phí)</span></a>
 											@if (!empty($product->price) != 0)
 											<form action="{{route('cart.addCart')}}" method="POST">
 												@csrf
@@ -263,9 +268,9 @@
 							</div>
 							<div class="map-bt">
 								@if (count($showrooms) > 0 && !empty($showrooms) )
-								<label>Hệ thống siêu thị:</label>
-								@foreach ($showrooms as $item)
-								<p>
+								<label>Hệ thống showroom:</label>
+								@foreach ($showrooms  as $key => $item)
+								<p class="<?php if( $key == 0 ) echo 'first-shw-address'  ?>">
 									<i class="fa fa-map-marker"></i>{{$item->name}}<br>
 									<span>{{!empty($item->address) ? $item->address : ''}}</span>
 								</p>
@@ -283,6 +288,24 @@
 									@php echo !empty($product->infomation_detail) ? $product->infomation_detail : 'Chưa
 									cập nhập' @endphp
 
+									<section class="after-conetnt-single">
+										<span>Bếp an toàn cam kết:</span>
+										<ul>
+											
+											<li>1: Cam Kết Sản Phẩm Chính Hãng 100%</li>
+											<li>2: Hoàn tiền 200% Phát Hiện Sản phẩm không chính hãng</li>
+											<li>3: Hoàn Tiền 200% sai xuất xứ</li>
+											<li>4: nhận đổi trả trong 30 ngày</li>
+											<li>5: cam kết giá tốt nhất</li>
+											<li>6: Cam kết 100% Quà tặng giá trị</li>
+											<li>7: bảo trì trọn đời</li>
+											<li>8: lắp đặt miễn phí tại Hà nội</li>
+											<li>9: giao hàng toàn quốc</li>
+											<li>10 : thanh toán khi nhận hàng</li>
+										</ul>
+
+									</section>
+									
 								</div>
 								<div class="show-more">
 									<a href="javascript:void(0)" class="readmore" id="js-show-more"> Xem Thêm</a>
@@ -324,6 +347,9 @@
 				</div>
 			</div>
 			<div class="hd-card-body section-margin-bottom">
+				@php
+					// dd($product->category_id);
+				@endphp
 				@if (!empty(get_products_relation_by_category_id($product->category_id,(!empty($product->sale_price) ? $product->sale_price : $product->price ))))
 				<div class="hd-module-title">
 					<h3 class="module-title">Sản phẩm Liên quan</h3>
@@ -350,7 +376,7 @@
 								<div class="img-responsive">
 									<a href="{{route('product_detail',['slug' => $item_product->slug])}}">
 										
-										<img src="{{!empty($item_product->galleries) ? @getimagesize($item_product->galleries[0]->image) ? $item_product->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}" alt="{{$item_product->name}}">
+										<img src="{{!empty($item_product->galleries) ? !empty($item_product->galleries[0]->image) ? $item_product->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}" alt="{{$item_product->name}}">
 										
 									</a>
 								</div>
@@ -423,7 +449,7 @@
 									<a href="{{route('product_detail',['slug' => !empty(get_product_by_id($item)->slug) ? get_product_by_id($item)->slug : ''])}}"
 										class="active">
 										<img class="attachment"
-											src="{{!empty(get_product_by_id($item)->galleries[0]) ?  @getimagesize(get_product_by_id($item)->galleries[0]->image) ? get_product_by_id($item)->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}"
+											src="{{!empty(get_product_by_id($item)->galleries[0]) ?  !empty(get_product_by_id($item)->galleries[0]->image) ? get_product_by_id($item)->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png')}}"
 											alt="{{!empty(get_product_by_id($item)->name) ? get_product_by_id($item)->name : ''}}">
 									</a>
 			
@@ -468,7 +494,7 @@
 								<div class="img-responsive">
 									<a href="{{route('product_detail',['slug' => $product_random->slug])}}">
 										
-										<img src="{{!empty($product_random->galleries) ? @getimagesize($product_random->galleries[0]->image) ? $product_random->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png') }}"
+										<img src="{{!empty($product_random->galleries) ? !empty($product_random->galleries[0]->image) ? $product_random->galleries[0]->image : asset('client/img/default_product.png') : asset('client/img/default_product.png') }}"
 											alt="{{$product_random->name}}">
 										
 									</a>
