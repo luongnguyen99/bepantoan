@@ -100,7 +100,7 @@ Bài viết
                             <td></td>
                             @endif
                             <td>
-                                <a target="blank" href="/{{ $item->slug }}" type="button"
+                                <a target="blank" href="/post/{{ $item->slug }}" type="button"
                                     class="btn btn-success">Xem</a>
                                 <a href="/admin/posts/edit/{{ $item->id }}" type="button"
                                     class="btn btn-warning">Sửa</a>

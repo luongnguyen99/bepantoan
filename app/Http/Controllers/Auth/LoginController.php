@@ -67,7 +67,8 @@ class LoginController extends Controller
             }else{
                 $remember = false;
             }
-            Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember);
+            $check = Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember);
+            // dd($check);
             return redirect()->route('admin.home');
         }
     }

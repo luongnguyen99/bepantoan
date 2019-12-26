@@ -226,6 +226,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::any('choose_category_show_home', 'OptionsController@choose_category_show_home')->name('choose_category_show_home');
         // Ajax show brand
         Route::post('show_brand_by_id_category','OptionsController@show_brand_by_id_category')->name('show_brand_by_id_category');
+        // Ajax show product
+        Route::post('show_product_by_id_category','OptionsController@show_product_by_id_category')->name('show_product_by_id_category');
         // Chọn danh mục hiển thị menu mobile
         Route::any('choose_category_show_menu_mobile', 'OptionsController@choose_category_show_menu_mobile')->name('choose_category_show_menu_mobile');
         // Email admin
@@ -271,12 +273,15 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
     Route::group(['prefix' => 'phone_order','as'=>'phone_order.'], function () {
         Route::get('phone_order', 'PhoneOrderController@getphone_order')->name('phone_order');
         Route::get('xuly/{id}', 'PhoneOrderController@xuly');
-
         Route::get('detailorder', 'PhoneOrderController@getdetailorder')->name('detailorder');
-
         Route::get('del/{id}', 'PhoneOrderController@getdel');
+    });
 
-
+    Route::group(['prefix' => 'register_advisory','as' => 'register_advisory.'], function () {
+        Route::get('/done','Register_advisoryController@index')->name('index');
+        Route::get('/processing','Register_advisoryController@processing')->name('processing');
+        Route::get('/delete/{id}', 'Register_advisoryController@delete')->name('delete');
+        Route::get('change_status/{id}', 'Register_advisoryController@change_status');
     });
 });
 
@@ -297,6 +302,8 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     
     //rate star
     Route::post('rate_star','ProductController@rate_star')->name('rate_star');
+    //submit form tư vấn
+    Route::post('submitform_advisory','ProductController@submitform_advisory')->name('submitform_advisory');
     //tim kiem
     Route::get('tim-kiem', 'IndexController@searchEnter')->name('searchEnter');
     //saveCookie

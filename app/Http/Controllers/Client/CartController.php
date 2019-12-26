@@ -64,7 +64,6 @@ class CartController extends Controller
             [
                 'Name' => 'required',
                 'Phone' => 'required|regex:/[0-9]{9,10}/',
-                'Email' => 'required|email',
                 'Address' => 'required',
                 'Payment' => 'required'
             ],
@@ -72,7 +71,6 @@ class CartController extends Controller
                 'Name.required' => 'Nhập tên',
                 'Phone.required' => 'Nhập số điện thoại',
                 'Phone.regex' => 'Không đúng định dạng số điện thoại',
-                'Email.required' => 'Nhập mail',
                 'Address.required' => 'Nhập địa chỉ',
                 'Payment.required' => 'Chọn phương thức thanh toán'
             ]
@@ -87,7 +85,7 @@ class CartController extends Controller
             $data = [
                 'name_guest' => $request->Name,
                 'phone' => $request->Phone,
-                'email' => $request->Email,
+                'email' => !empty($request->Email) ?? null ,
                 'address' => $request->Address,
                 'total' => Cart::subtotal(0, '', ''),
                 'method_payment' => $request->Payment,
@@ -115,10 +113,11 @@ class CartController extends Controller
             $id_order = $insertOrder->id;
             
             // gui mail khach hang
-           
-            Mail::send('template_mail/order_success', array('data' => $data,'carts' => $carts,'id_order' => $id_order), function ($message) use ($data) {
+            if (!empty($request->Email)) {
+                Mail::send('template_mail/order_success', array('data' => $data,'carts' => $carts,'id_order' => $id_order), function ($message) use ($data) {
                 $message->to($data['email'], 'Bếp An Toàn')->subject('Đặt hàng thành công!');
-            });
+                });
+            };
 
             // gui mail admin
             $email_admin = get_option_by_key('email_admin');

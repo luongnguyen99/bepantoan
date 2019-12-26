@@ -38,10 +38,15 @@ class UsersController extends Controller
     public function postedit(EditUserRequest $r,$id){
 
         $users = User::find($id);
-       
+        // dd($users->role);
+        if ($users->role == 500) {
+            $users->role = 500;
+        }else{
+            $users->role = $r->input('level');
+        }
         $users->name = $r->name;
         $users->email = $r->email;
-        $users->role = $r->input('level');
+        // $users->role = $r->input('level');
         if (!empty($users->password)) {
             $users->password = bcrypt($r->password);
         }

@@ -259,9 +259,7 @@ Giỏ hàng
 					if (typeof data.messages.Phone != 'undefined') {
 						html += `<li>${data.messages.Phone[0]}</li>`;
 					};
-					if (typeof data.messages.Email != 'undefined') {
-						html += `<li>${data.messages.Email[0]}</li>`;
-					};
+					
 					if (typeof data.messages.Address != 'undefined') {
 						html += `<li>${data.messages.Address[0]}</li>`;
 					};

@@ -84,7 +84,7 @@ Chọn danh mục nổi bật
                                     <div class="form-group row">
                                         <div class="col-xs-10">
                                             <label>Danh mục</label>
-                                            <select name="category" id="category" class="form-control category">
+                                            <select name="category" id="category" class="form-control category abc">
                                                 <option value="">---Chọn---</option>
                                                 @foreach ($categories as $item)
                                                     <option {{$item->id == $element['category'] ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
@@ -101,34 +101,44 @@ Chọn danh mục nổi bật
                                 
                                     <!-- innner repeater -->
                                     <div class="inner-repeater">
-                                        <div>
-                                            <div>
-                                                <div class="form-group">
-                                                    @php $brand_category =  !empty($element['brands']) ? $element['brands'] : [0 => 'abc']  @endphp
-                                                    @php $brands = show_brand_by_id_category($element['category']) @endphp
-                                                    <label>Hãng sản xuất</label>
-                                                    
-                                                    <select name="brands" class="form-control brands" multiple>
-                                                        @if (!empty($brands))
-                                                            @foreach ($brands as $brand)
-                                                               {{-- {{dd($brand['id'])}} --}}
-                                                                <option {{in_array($brand['id'],$brand_category) ? 'selected' : ''}} value="{{$brand['id']}}">{{$brand['name']}}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                
-                                            </div>
+                                        <div class="form-group">
+                                            @php $brand_category =  !empty($element['brands']) ? $element['brands'] : [0 => 'abc']  @endphp
+                                            @php $brands = show_brand_by_id_category($element['category']) @endphp
+                                            <label class="title_brand">Hãng sản xuất</label>
+                                            
+                                            <select name="brands" class="form-control brands" multiple>
+                                                @if (!empty($brands))
+                                                    @foreach ($brands as $brand)
+                                                        {{-- {{dd($brand['id'])}} --}}
+                                                        <option {{in_array($brand['id'],$brand_category) ? 'selected' : ''}} value="{{$brand['id']}}">{{$brand['name']}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="title_product">Sản phẩm</label>
+                                            @php
+                                            $product_arr =  !empty($element['products']) ? $element['products'] : [0 => 'abc'];
+                                            $products = get_products_by_category_id_option($element['category']);
+                                            
+                                            @endphp
+                                            <select name="products" class="form-control products" multiple>
+                                                @foreach ($products as $product)
+                                                    <option {{in_array($product['id'],$product_arr) ? 'selected' : ''}} value="{{$product['id']}}">{{$product['name']}}</option>
+                                                @endforeach
+        
+                                            </select>
+                                        </div>                      
                                     </div>                          
                                 </div>
+                                <hr>
                             @endforeach
                         @else
                             <div data-repeater-item="" class="repeater_div">
                                 <div class="form-group row">
                                     <div class="col-xs-10">
                                         <label>Danh mục</label>
-                                        <select name="category" id="category" class="form-control category">
+                                        <select name="category" id="category" class="form-control category abc">
                                             <option value="">---Chọn---</option>
                                             @foreach ($categories as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
@@ -146,20 +156,20 @@ Chọn danh mục nổi bật
                             
                                 <!-- innner repeater -->
                                 <div class="inner-repeater">
-                                    <div>
-                                        <div>
-                                            <div class="form-group">
-                                                <label>Hãng sản xuất</label>
-                                                <select name="brands" class="form-control brands" multiple>
-                                                    
-                                                </select>
-                                            </div>
-                            
-                                        </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="title_brand">Hãng sản xuất</label>
+                                        <select name="brands" class="form-control brands" multiple>        
+                                        </select>
                                     </div>
-                            
+
+                                    <div class="form-group">
+                                        <label class="title_product">Sản phẩm</label>
+                                        <select name="products" class="form-control products" multiple>
+                                        </select>
+                                    </div>
+    
                                 </div>
-                            
                             </div>
                         @endif
                         
@@ -187,11 +197,30 @@ Chọn danh mục nổi bật
 $(document).ready(function () {
     jQuery('.repeater').repeater({});
     $('body').find('.category').select2();
-    $('body').find('.brands').select2();
+    $('body').find('.brands').select2({});
+    $('body').find('.products').select2({});
+
     $('.callBackSelect2').click(function(){
-        $('body').find(".category:last").select2({});
-        $('body').find('.brands:last').select2();
+        $('body').find(".category:last").select2({
+            // tags: true;
+        });
+        $('body').find('.brands:last').select2({
+            // tags: true,
+        });
+        $('body').find('.products:last').select2({
+        // tags: true,
+        });
     });
+    $("select").on("select2:select", function (evt) {
+        var element = evt.params.data.element;
+        var $element = $(element);
+        
+        $element.detach();
+        // console.log($element);
+        $(this).append($element);
+        $(this).trigger("change");
+    });
+
     jQuery('body').on('click','.up',function(){
         divCurrent = $(this).parents('.repeater_div');
         var wrapper = $(this).closest('.repeater_div');
@@ -231,29 +260,66 @@ $(document).ready(function () {
         wrapper.insertAfter(divCurrent.next());
     });
 });
+$(document).on('change','.category.abc',function() {
+var i = 0;
+    if (i == 0) {
+        // console.log('aa');
+        scope = $(this);
+        var id = $(this).find("option:selected").val();
+        $.ajax({
+                url : `{{route('admin.options.show_brand_by_id_category')}}`,
+                method: 'POST',
+                type: 'json',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                beforeSend: function() {
+                    scope.parents('.repeater_div').find('.title_brand').html('Hãng sản xuất  <span style="font-weight: 100;color:red"> Loading ... </span>');
+                }
+            }).done(
+                result => {
+                    scope.parents('.repeater_div').find('.title_brand').html('Hãng sản xuất');
+                    html = '';
+                    result.forEach(element => {
+                    html += `<option value="${element.id}">${element.name}</option>`;
+                    });
+                    $(this).parents('.repeater_div').find('.brands').html(html);
+        });
 
-$(document).on('change','.category',function() {
-    var id = $(this).find("option:selected").val();
-   $.ajax({
-        url : `{{route('admin.options.show_brand_by_id_category')}}`,
-        method: 'POST',
-        type: 'json',
-        dataType: 'json',
-        data: {
-            id: id,
-            _token: '{{ csrf_token() }}'
-        },
-    }).done(
-        result => {
-            // console.log(result);
-            html = '';
-            result.forEach(element => {
-               html += `<option value="${element.id}">${element.name}</option>`;
-            });
-            $(this).parents('.repeater_div').find('.brands').html(html);
-            
-    });
-})
+        $.ajax({
+            url : `{{route('admin.options.show_product_by_id_category')}}`,
+            method: 'POST',
+            type: 'json',
+            dataType: 'json',
+            data: {
+                id: id,
+                _token: '{{ csrf_token() }}'
+            },
+            beforeSend: function() {
+                    scope.parents('.repeater_div').find('.title_product').html('Sản phẩm  <span style="font-weight: 100;color:red"> Loading ... </span>');
+            }
+        }).done(
+            result => {
+                scope.parents('.repeater_div').find('.title_product').html('Sản phẩm');
+                html = '';
+                result.forEach(element => {
+                html += `<option value="${element.id}">${element.name}</option>`;
+                });
+                $(this).parents('.repeater_div').find('.products').html(html);
+        });
+
+        i = 1;  
+    }else{
+        i = 0;
+    }
+   
+
+
+});
+
+
 </script>
 
 @endsection

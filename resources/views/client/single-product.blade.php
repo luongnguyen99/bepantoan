@@ -199,10 +199,10 @@
 													class="pe-7s-call"></i>Liên hệ trực tiếp 
 												{{ $hotline['phone'] }} @endif
 												<span>(Để có giá tốt nhất)</span></a>
-											<a class="btn" style="background:#1abc9c"><i class="pe-7s-home"></i>Đăng kí xem hàng tại nhà
+											<a class="btn show_modal" style="background:#1abc9c" data-toggle="modal" text="Đăng kí xem hàng tại nhà" type="2"><i class="pe-7s-home"></i>Đăng kí xem hàng tại nhà
 												<span>(Không mua không sao)</span>
 											</a>
-											<a class="btn" style="background:#e17055"><i class="pe-7s-alarm"></i>Khảo sát tư vấn lắp đặt tại nhà
+											<a class="btn show_modal" style="background:#e17055" data-toggle="modal" text="Khảo sát tư vấn lắp đặt tại nhà" type="1"><i class="pe-7s-alarm"></i>Khảo sát tư vấn lắp đặt tại nhà
 												<span>(Miễn phí)</span></a>
 											@if (!empty($product->price) != 0)
 											<form action="{{route('cart.addCart')}}" method="POST">
@@ -678,12 +678,60 @@
 </div>
 
 </div>
-
+<div class="modal" id="myModal">
+	<div class="modal-dialog" style="top: 50%;transform: translateY(-50%);">
+		<div class="modal-content">
+			<div class="box_support">
+				<p class="hotline" style="font-size:19px;margin-top:3%"></p>
+				<p class="value"></p>
+				<i class="fa fa-times hide_modal" aria-hidden="true" style="float: right;color: white;font-size: 20px;margin-top: -7%;" data-dismiss="modal"></i>
+				<div class="product-call-requests">
+					<form id="submitform_advisory" class="show-form-call">
+						@csrf
+						<input type="hidden" name="type" value="">
+						<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel" name="phone_info"
+							placeholder="Nhập số điện thoại " value="">
+						<div class="call-form-hide" style="display: block;">
+							<input type="text" name="product_name" class="form-control" placeholder="Tên sản phẩm cần tư vấn"
+								value="{{$product->name}}">
+							<input type="hidden" name="product_id" value="{{$product->id}}">
+							<input type="text" name="sp_time" class="form-control" placeholder="Thời gian nhận tư vấn">
+						</div>
+						<button type="submit" class="btn" style="">Đăng ký ngay</button>
+						{{-- <button type="button" class="btn btn-tigger" style="display: none;">Đăng ký ngay</button> --}}
+					</form>
+					<span class="call-note">Chúng tôi sẽ gọi lại cho quý khách</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script>
-	
+	$(function(){
+		$('.show_modal').on('click',function(){
+			text = $(this).attr('text');
+			type = $(this).attr('type');
+			$('#myModal').find('p.hotline').html(text);
+			$('#myModal').find('input[name=type]').val(type);
+			$('#myModal').css('background','rgba(0,0,0,0.5)');
+			$('#myModal').show();
+		});
+
+		$('.hide_modal').on('click',function(){
+			$('#myModal').hide();
+			$('#myModal').css('background','rgba(0,0,0,0)');
+		});
+
+		// $('.hide_modal').on('click',function(){
+		// 	// console.log('aa');
+		// 	$('#myModal').css('background','rgba(0,0,0,0)');
+		// 	$('#myModal').hide();
+		// });
+	});
+
 	$(function() {
 		$.ajax({
 			url:"{{ route('saveCookieHistory') }}",
@@ -693,10 +741,11 @@
 				_token : `{{csrf_token()}}`,
 			},
 			success : function(data) {
-				console.log(data);
+				
 			}
 		})
-	})
+	});
+	
 	$(function(){
 		$('.submitcomment').on('click',function(e) {
 			e.preventDefault();
@@ -711,9 +760,7 @@
 					success:function(data){
 						if (data.errors) {
 							html = '';
-							if (typeof data.messages.vote != 'undefined') {
-								html += `<li>${data.messages.vote[0]}</li>`;			
-							};
+							
 							if (typeof data.messages.name != 'undefined') {
 								html += `<li>${data.messages.name[0]}</li>`;
 							};
@@ -745,7 +792,52 @@
 							
 						}
 					}
-			})
+				})
+		});
+		
+		$('#submitform_advisory').on('submit',function(e){
+			e.preventDefault();
+			var formData = new FormData($('#submitform_advisory')[0]);
+
+			$.ajax({
+					url:"{{ route('submitform_advisory') }}",
+					method:"POST",
+					processData: false,
+					contentType: false,
+					data: formData,
+					success:function(data){
+						if (data.errors) {
+							html = '';
+							if (typeof data.messages.phone_info != 'undefined') {
+								html += `<li>${data.messages.phone_info[0]}</li>`;
+							};
+							
+							Swal.fire({
+			
+							icon: 'error',
+							html:
+							`<ul style="text-decoration: none;line-height: 2;font-size: 15px;">${html}</ul>`,
+							focusConfirm: false,
+							confirmButtonText:
+							' Ok!',
+							})
+						}else{
+							$('#myModal').css('background','rgba(0,0,0,0)');
+							$('#myModal').hide();
+							// Swal.fire({
+							// icon: 'success',
+							// title: 'Thành công',
+							// text: 'Chúng tôi sẽ gọi lại cho quý khách!',
+							// }).then((result) => {
+							// 	if (result.value) {
+							// 		$('#myModal').css('background','rgba(0,0,0,0)');
+							// 		$('#myModal').hide();
+							// 	}
+							// })
+							
+						}
+					}
+				})
 		})
 	})
 
@@ -755,11 +847,7 @@
 	$(document).ready(function () {		
 		$('.btn-phone-sbmit').click(function (e) { 
 			e.preventDefault();
-
 			let data = $(this).parents('#get_info_customer').serializeArray();
-
-			console.log(data);
-
 			$.ajax({
 				type: "post",
 				url: "{{ route('phone') }}",

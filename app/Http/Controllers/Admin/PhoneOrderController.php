@@ -10,7 +10,7 @@ class PhoneOrderController extends Controller
 {
     //
     public function getphone_order(){
-        $data['phone']=Phone_Order::where('status',0)->get();
+        $data['phone']=Phone_Order::where('status',0)->orderBy('created_at','desc')->get();
         return view('admin.phone_order.phone_order',$data);
     }
     public function xuly(Request $r,$id){
@@ -20,7 +20,7 @@ class PhoneOrderController extends Controller
         return redirect('admin/phone_order/detailorder');
     }
     public function getdetailorder(){ 
-        $data['phone']=Phone_Order::where('status',1)->get();
+        $data['phone']=Phone_Order::where('status',1)->orderBy('created_at','desc')->get();
         return view('admin.phone_order.detailorder',$data);
     }
     public function getdel($id){

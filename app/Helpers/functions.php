@@ -86,6 +86,27 @@ if (!function_exists('get_products_by_category_id')) {
     };
 }
 
+// get product option
+if (!function_exists('get_products_by_category_id_option')) {
+    function get_products_by_category_id_option($id){
+        $checkCategory = Category::where('parent_id',$id)->get();
+        $inCategory = [];
+        if (count($checkCategory) != 0) {
+            foreach ($checkCategory as $key => $value) {
+                $inCategory[] = $value->id;
+            }
+        }else{
+            $inCategory = [(int)$id];
+        }
+
+        $products = Product::select('id','name')->whereIn('category_id',$inCategory)->get()->toArray();
+        // dd($products);
+        return $products;
+       
+    };
+}
+
+
 // get product relation
 if (!function_exists('get_products_relation_by_category_id')) {
     function get_products_relation_by_category_id($id,$price){
@@ -357,4 +378,10 @@ if (!function_exists('show_brand_by_id_category')) {
                 ->groupBy('brands.id')->get();
         return json_decode($brands,true);
     }
+}
+
+function check_device(){
+    $Agent = new Agent();
+    $limit = $Agent->isMobile() ? 6 : 5;
+	return $limit;
 }

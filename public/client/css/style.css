@@ -1408,7 +1408,7 @@ ul.listform_filter {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
     margin: 1%;
     float: left;
-    min-height: 85px;
+    min-height: 100px;
 }
 .wsupport-s li .img_hoa {
     margin-bottom: 5px;
@@ -2555,6 +2555,7 @@ ul.listform_filter {
         margin: 0;
         text-transform: uppercase;
         font-weight: 600;
+        background-repeat: no-repeat;
     }
     
 
@@ -2655,6 +2656,33 @@ ul.listform_filter {
         border-radius: 30px;
     }
 }
+
+@media only screen and (max-width: 767px) {
+    .wsupport-s li {
+        min-height: 100px;
+    }
+    .page-bread ul li{
+        font-size: 12px;
+        padding: 5px 0;
+        max-width: 195px;
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .wsupport-s li {
+        min-height: 125px;
+    }
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1366px) {
+    .wsupport-s li {
+        min-height: 111px;
+    }
+}
+
+
 .slide-pro-ctg .owl-stage{
     margin: 0 auto;
 }

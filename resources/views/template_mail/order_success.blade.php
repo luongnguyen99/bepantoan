@@ -85,8 +85,7 @@
                                                                 </td>
                                                                 <td style="padding:3px 9px 9px 9px;border-top:0;border-left:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px;font-weight:normal"
                                                                     valign="top"><span
-                                                                        style="text-transform:capitalize">Nguyễn Đại
-                                                                        Lượng</span>
+                                                                        style="text-transform:capitalize">Bếp An Toàn</span>
                                                                     <br>
                                                                     <a href="mailto:{{$data['email']}}"
                                                                         target="_blank">{{$data['email']}}</a>

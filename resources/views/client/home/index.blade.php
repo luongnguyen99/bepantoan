@@ -146,11 +146,16 @@
 				</div>
 				<div class="hd-card-body">
 					<div class="row">
+						
+						@if (!empty($elm['products']))
 						@php
-						$products = get_products_by_category_id($item->id);
+							$limit = count($elm['products']) < check_device() ? count($elm['products']) : check_device();
+							
 						@endphp
-						@if (count($products) > 0 && !empty($products))
-						@foreach ($products as $product)
+						@for ($i = 0;$i < $limit;$i++)
+						@php
+							$product = get_product_by_id($elm['products'][$i]);
+						@endphp
 						<div class="col-md-5h col-xs-6 col-sm-6">
 							<div class="product-item">
 								@php
@@ -216,7 +221,7 @@
 								</div>
 							</div>
 						</div>
-						@endforeach
+						@endfor
 						@endif
 					</div>
 				</div>
@@ -267,12 +272,12 @@
 		                <div class="col-md-3 col-sm-6 col-xs-12">
 		                    <div class="blog-container-inner">
 		                        <div class="post-thumb">
-		                            <a href="{{ $item->slug }}">
+		                            <a href="/post/{{ $item->slug }}">
 		                                <img class="attachment-blog-list wp-post-image" alt="blog-2" src="{{ $item->image }}"></a>
 		                        </div>
 		                        <div class="visual-inner">
 		                            <h2 class="blog-title">
-		                                <a href="{{ $item->slug }}">{{ $item->title }}</a>
+		                                <a href="/post/{{ $item->slug }}">{{ $item->title }}</a>
 		                            </h2>
 		                            <div class="blog-meta">
 		                                <span class="published">

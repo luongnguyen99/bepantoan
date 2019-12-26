@@ -85,7 +85,7 @@ Sắp xếp hãng
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title">
-                    Sắp xếp hãng sản xuất
+                    Sắp xếp hãng sản xuất <span style="color:red;font-size:15px"> ( Lưu ý : Mỗi khi thêm một hãng mới vào trong danh mục. Vui lòng làm mới để cập nhập hãng !!!) </span>
                 </h3>
             </div>
             <div class="box-body">
@@ -204,7 +204,13 @@ $('.save_attr').on('click',function(){
                 _token : `{{csrf_token()}}`,
             },
             success: function (result) {
-                window.location.reload();
+                swal("Thành công!",
+                    "Cập nhập sắp xếp hãng thành công",
+                    "success").then(function () {
+                 
+                    window.location.reload();
+                });
+                
             },
             
     });

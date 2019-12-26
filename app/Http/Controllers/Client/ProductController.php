@@ -9,7 +9,9 @@ use App\Models\Category;
 use App\Models\Showroom;
 use App\Models\Comment;
 use Illuminate\Http\Response; 
-use Validator;  
+use App\Models\Register_advisory;
+use Validator;
+use Mail;
 class ProductController extends Controller
 {
     public function detail($slug){
@@ -75,6 +77,49 @@ class ProductController extends Controller
             return response([
                 'errors' => false,
                 'messages' => 'Đánh giá thành công',
+            ]);
+        }
+    }
+
+    public function submitform_advisory(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'phone_info' => 'required|regex:/[0-9]{9,10}/',
+               
+            ],
+            [
+                'phone_info.required' => 'Nhập số điện thoại',
+                'phone_info.regex' => 'Nhập đúng định dạng số điện thoại',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response([
+                'errors' => true,
+                'messages' => $validator->errors(),
+            ]);
+        }else{
+            $data = [
+                'product_id' => $request->product_id,
+                'phone' => $request->phone_info,
+                'time' => $request->sp_time ?? null,
+                'type' => $request->type,
+                'status' => -1,
+                'created_at' => date('Y-m-d H:i:s', time()),
+            ];
+            $product_name = $request->product_name;
+
+            $insert = Register_advisory::insert($data);
+            $email_admin = get_option_by_key('email_admin');
+
+            Mail::send('template_mail/register_advisory2', array('data' => $data,'product_name' => $product_name), function ($message) use ($email_admin) {
+                $message->to($email_admin, 'Bếp An Toàn')->subject('Đăng ký tư vấn!');
+            });
+
+            return response([
+                'errors' => false,
+                'messages' => 'Thành công',
             ]);
         }
     }

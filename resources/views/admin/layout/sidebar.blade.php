@@ -154,16 +154,33 @@
             <li class="treeview {{activeNav('phone_order')}}">
                 <a href="#">
                     <i class="fa fa-clipboard"></i>
+                    <span>Đăng ký CTKM</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{activeNav('phone_order','phone_order')}}"><a href="{{route('admin.phone_order.phone_order')}}"><span
+                                class="glyphicon glyphicon-record"></span> Chưa xử lý</a></li>
+                    <li class="{{activeNav('phone_order','detailorder')}}"><a href="{{route('admin.phone_order.detailorder')}}"><span
+                                class="glyphicon glyphicon-record"></span> Đã xử lý</a></li>
+                </ul>
+            </li>
+            <li class="treeview {{activeNav('register_advisory')}}">
+                <a href="#">
+                    <i class="fa fa-clipboard"></i>
                     <span>Đăng ký tư vấn</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.phone_order')}}"><span
-                                class="glyphicon glyphicon-record"></span> Chưa xử lý</a></li>
-                    <li class="{{activeNav('phone_order')}}"><a href="{{route('admin.phone_order.detailorder')}}"><span
-                                class="glyphicon glyphicon-record"></span> Đã xử lý</a></li>
+                    <li class="{{activeNav('register_advisory','processing')}}"><a
+                            href="{{route('admin.register_advisory.processing')}}"><span class="glyphicon glyphicon-record"></span> Chưa
+                            xử lý</a></li>
+                    <li class="{{activeNav('register_advisory','done')}}"><a
+                            href="{{route('admin.register_advisory.index')}}"><span class="glyphicon glyphicon-record"></span> Đã xử
+                            lý</a></li>
                 </ul>
             </li>
             {{-- Option --}}
@@ -204,7 +221,7 @@
                     <li class="{{activeNav('options','choose_category_show_menu_mobile')}}"><a href="{{route('admin.options.choose_category_show_menu_mobile')}}"><span class="glyphicon glyphicon-record"></span>Danh mục mobile</a></li>
                     <li class="{{activeNav('options','prd-detail')}}"><a href="{{route('admin.options.prd-detail')}}"><span class="glyphicon glyphicon-record"></span>Chi tiết sản phẩm</a></li>
                     <li class="{{activeNav('options','introduce')}}"><a href="{{route('admin.options.introduce')}}"><span class="glyphicon glyphicon-record"></span>Giới thiệu</a></li>
-                           
+                    <li class="{{activeNav('options','general')}}"><a href="{{route('admin.options.general')}}"><span class="glyphicon glyphicon-record"></span>Thiết lập chung</a></li>    
                 </ul>
                 
             </li>

@@ -16,8 +16,8 @@ class CrawlerController extends Controller
         $url = [];
         $arr_product = [];
         $a = 0;
-        for ($i=1; $i <= 1; $i++) { 
-            $ch = curl_init('https://beptot.vn/day-dan-gas/');
+        for ($i=1; $i <= 2; $i++) { 
+            $ch = curl_init('https://beptot.vn/bep-gas-gia-re/?page='.$i.'&sort=&atr=on');
             // nghĩa là giả mạo đang gửi từ trình duyệt nào đó, ở đây tôi dùng Firefox
             curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
             // Thiết lập trả kết quả về chứ không print ra
@@ -41,7 +41,7 @@ class CrawlerController extends Controller
                         $arr_product[$key]['url'] =  $value->find('h3 > a', 0)->href;
                         $brand = Brand::where('slug', to_slug($value->find('.cate_pro_title  a > img', 0)->alt))->first();
                         $arr_product[$key]['brand_id'] =  !empty($brand) ? $brand->id : 39;
-                        $arr_product[$key]['category_id'] = 73;
+                        $arr_product[$key]['category_id'] = 25;
                         $arr_product[$key]['created_at'] = date('Y-m-d H:i:s');
                     };
                     $flag = true;

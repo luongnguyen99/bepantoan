@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Option;
 use App\Models\Brand;
+use App\Models\Product;
 class OptionsController extends Controller
 {
     //==========> LOGO <=====================
@@ -698,6 +699,7 @@ class OptionsController extends Controller
 
     public function choose_category_show_home(Request $request){
         if ($request->isMethod('post')) {
+            // dd($request->all());
             Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->outer_list)]);
         };
         $categories = Category::all();
@@ -723,6 +725,21 @@ class OptionsController extends Controller
                 ->whereIn('categories.id',$inCategory)
                 ->groupBy('brands.id')->get();
         return response()->json($brands, 200);
+    }
+
+    public function show_product_by_id_category(Request $request){
+        $checkCategory = Category::where('parent_id',$request->id)->get();
+        $inCategory = [];
+        if (count($checkCategory) != 0) {
+            foreach ($checkCategory as $key => $value) {
+                $inCategory[] = $value->id;
+            }
+        }else{
+            $inCategory = [(int)$request->id];
+        }
+
+        $products = Product::select('id','name')->whereIn('category_id',$inCategory)->get();
+        return response()->json($products, 200);
     }
 
     public function choose_category_show_menu_mobile(Request $request){

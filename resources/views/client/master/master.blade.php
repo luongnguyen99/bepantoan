@@ -46,7 +46,7 @@
 {{ $h_code }}
 <body>
 	<header>
-		
+		{{-- {{dd($menu_mobile)}} --}}
 		<div class="header-pc hidden-xs hidden-sm">
 			<div class="container">
 				<div class="row" style="display: flex;align-items: center;">
@@ -218,18 +218,21 @@
 							<button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								Lọc Danh mục sản phẩm <span class="caret"></span>
 							</button>
-					
-							@php $all_cateshows = show_heder_list_cate(); @endphp
-							@if ($all_cateshows)
 							<ul class="dropdown-menu sub-categories-mobile" role="menu">
-								@foreach ( $all_cateshows as $cate_ )
+								
+								@foreach ( $dataset as $id_category )
+								
+								@php
+									$cate_ = get_category_by_id($id_category['id']);
+								
+								@endphp
 								<li>
 									<a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
 											<img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
 								</li>
 								@endforeach
 							</ul>
-							@endif
+						
 							{{-- 
 												</form> --}}
 						</div>

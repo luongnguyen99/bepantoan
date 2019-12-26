@@ -230,8 +230,11 @@ class ProductController extends Controller
                          $data['block_robot_google'] = -1;
                     }
             };
+            // dd($request->gifts);
             if (!empty($request->gift)) {
                 $data['gift'] = json_encode($request->gift);
+            }else{
+                $data['gift'] = null;
             };
 
             if (!empty($request->specifications)) {

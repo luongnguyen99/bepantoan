@@ -138,7 +138,7 @@ class ListCategoryController extends Controller
                             ->join('categories','categories.id','=','products.category_id')
                             ->where('categories.id',$category->id)
                             ->groupBy('brands.id')->get();
-                        // dd($brands);
+                       
                         $brand = null;
                         // dd($brands);
                         return view('client.category_detail', compact('products', 'category', 'brands', 'brand', 'categories'));

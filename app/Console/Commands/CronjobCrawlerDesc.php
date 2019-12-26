@@ -38,7 +38,7 @@ class CronjobCrawlerDesc extends Command
     public function handle()
     {
         // $request = Request::create($this->option('uri'), 'GET');
-        // CrawlerController::index();
-        CrawlerController::crawler_product_detail();
+        CrawlerController::index();
+        // CrawlerController::crawler_product_detail();
     }
 }
