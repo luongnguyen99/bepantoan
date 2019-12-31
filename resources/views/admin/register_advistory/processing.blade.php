@@ -28,6 +28,7 @@ Danh sách số điện thoại đăng ký khuyến mãi
                                 </tr>
                             </thead>
                             <tbody>
+                               
                                 @foreach ($register_advisory_processing as $key => $item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -46,6 +47,7 @@ Danh sách số điện thoại đăng ký khuyến mãi
                                             <li>Sản phẩm cần tư vấn : <a href="{{ url('/').'/'.get_detail_products_by_id($item['product_id'])->slug  }}"
                                                     target="_blank"> {{ get_detail_products_by_id($item['product_id'])->name }} </a> </li>
                                             @endif
+                                            <li>Địa chỉ tư vấn : {{ $item['address']}} </li>
 
                                         </ul>
                                     </td>

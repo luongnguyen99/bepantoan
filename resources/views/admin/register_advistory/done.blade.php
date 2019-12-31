@@ -40,12 +40,14 @@ Danh sách đăng ký tư vấn
                                                 echo $row['type'] == 2 ? 'Đăng kí xem hàng tại nhà' : 'Khảo sát tư vấn lắp đặt tại nhà';
                                                 @endphp
                                             </li>
+                                            
                                             <li>Thời gian tư vấn : {{ $row['time']}} </li>
                                             @if (!empty(get_detail_products_by_id($row['product_id'])->slug))
                                             <li>Sản phẩm cần tư vấn : <a
                                                     href="{{ url('/').'/'.get_detail_products_by_id($row['product_id'])->slug  }}"
                                                     target="_blank"> {{ get_detail_products_by_id($row['product_id'])->name }} </a> </li>
                                             @endif
+                                            <li>Địa chỉ tư vấn : {{ $row['address']}} </li>
                                         </ul>
                                     </td>
                                     <td>{{ Carbon\Carbon::parse($row->updated_at)->format('d/m/Y') }}</td>

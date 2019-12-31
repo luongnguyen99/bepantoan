@@ -102,8 +102,9 @@ h1, h2, h3, h4, h5, h6 {
 .form-search form button{
 	position: absolute;
 	right: 0;
-	top: 0;
-	bottom: 0;
+	/* top: 0; */
+    bottom: 0;
+    height: 32px;
 	background: #dd1015;
     color: #fff;
     font-weight: 600;
@@ -2668,6 +2669,14 @@ ul.listform_filter {
         overflow-x: scroll;
         white-space: nowrap;
     }
+
+    .hd-card-body .col-md-5h:nth-child(2n + 1){
+        clear: both;
+    }
+
+    .favorite-product .favorite-product-item:last-child{
+        display: none;
+    }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2706,4 +2715,135 @@ section.after-conetnt-single {
 }
 section.after-conetnt-single ul{
     margin-top: 20px;
+}
+.custom_search_data{
+    border-top: unset !important;
+}
+.custom_search_data label {
+    display: inline-block;
+    color: #ed1d24;
+    font: bold 18px/30px arial;
+}
+
+.custom_search_data span {
+    font: 13px/30px arial;
+    text-indent: 10px;
+    text-decoration: line-through;
+}
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 16px;
+}
+@media only screen and (max-width: 767px) {
+    #callNowButton {
+        display: inline-block !important;
+    }
+}
+
+.ppocta-ft-fix {
+    /* display: none; */
+    position: fixed;
+    bottom: 5px;
+    left: 10px;
+    min-width: 120px;
+    text-align: center;
+    z-index: 9999;
+}
+#messengerButton {
+    display: inline-block;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    background: #4267b2;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px -2px rgba(0,0,0,.7);
+}
+#messengerButton>a>i {
+    background: url(../img/messenger.png) center center no-repeat;
+    background-size: 57%;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+#zaloButton {
+    display: inline-block;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    background: #5ac5ef;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px -2px rgba(0,0,0,.7);
+}
+#zaloButton>a>i {
+    background: url(../img/zalo.png) center center no-repeat;
+    background-size: 57%;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+
+
+#callNowButton {
+    display: none;
+    position: relative;
+    border-radius: 50%;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    box-shadow: 0px 0px 10px -2px rgba(0,0,0,.7);
+}
+
+#callNowButton a {
+    display: block;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    text-align: center;
+}
+#callNowButton i {
+    border-radius: 50%;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url(../img/callbutton.png) center center no-repeat #090;
+}
+#callNowButton a.txt {
+    position: absolute;
+    top: -40px;
+    left: calc(50% - 60px);
+    background: #090;
+    width: 120px;
+    max-width: 120px;
+    line-height: 2;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-size: 15px;
+}
+#callNowButton a.txt:after {
+    position: absolute;
+    bottom: -8px;
+    left: 50px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 8px solid #090;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
 }

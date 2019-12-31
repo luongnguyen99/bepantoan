@@ -16,11 +16,7 @@
     $allCategory1 = json_decode(get_option_by_key('show_category_menu_mobile'),true);
     $allCategory = [];
     if (!empty($inCategory) && count($inCategory) > 0) {
-        foreach ($inCategory as $key => $value) {
-            if ($value) {
-                array_push($allCategory,get_category_by_id($value));
-            };
-        }
+        $allCategory = $categories;
     }else{
         foreach ($allCategory1 as $value) {
             if ($value['id']) {

@@ -103,6 +103,7 @@ class ProductController extends Controller
             $data = [
                 'product_id' => $request->product_id,
                 'phone' => $request->phone_info,
+                'address' => $request->address,
                 'time' => $request->sp_time ?? null,
                 'type' => $request->type,
                 'status' => -1,

@@ -469,14 +469,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="hd-card-body section-margin-bottom ">
+			<div class="hd-card-body section-margin-bottom favorite-product">
 				@if (count($productsRandom) > 0 && !empty($productsRandom))
 				<div class="hd-module-title">
 					<h3 class="module-title">Sản phẩm khách hàng quan tâm</h3>
 				</div>
 				<div class="row">
 					@foreach ($productsRandom as $product_random)
-					<div class="col-md-5h col-xs-6 col-sm-6">
+					<div class="col-md-5h col-xs-6 col-sm-6 favorite-product-item">
 						<div class="product-item">
 							<div class="product-img">
 								@php
@@ -689,13 +689,26 @@
 					<form id="submitform_advisory" class="show-form-call">
 						@csrf
 						<input type="hidden" name="type" value="">
-						<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel" name="phone_info"
-							placeholder="Nhập số điện thoại " value="">
+						<div class="form-group">
+							<label for="" style="color:white;font-size:15px;float:left">Nhập số điện thoại</label>
+							<input class="ty-input-text-full cm-number form-control" id="PhoneRegister" type="tel" name="phone_info"
+								placeholder="Ví dụ : 0912331335" value="">
+						</div>
 						<div class="call-form-hide" style="display: block;">
-							<input type="text" name="product_name" class="form-control" placeholder="Tên sản phẩm cần tư vấn"
+						<div class="form-group">
+							<label for="" style="color:white;font-size:15px;float:left">Nhập tên sản phẩm cần tư vấn</label>
+							<input type="text" name="product_name" class="form-control" placeholder="Ví dụ : Sản phẩm A"
 								value="{{$product->name}}">
+						</div>
 							<input type="hidden" name="product_id" value="{{$product->id}}">
-							<input type="text" name="sp_time" class="form-control" placeholder="Thời gian nhận tư vấn">
+						<div class="form-group">
+							<label for="" style="color:white;font-size:15px;float:left">Thời gian nhận tư vấn</label>
+							<input type="text" name="sp_time" class="form-control" placeholder="Ví dụ : 8h">
+						</div>
+						<div class="form-group">
+							<label for="" style="color:white;font-size:15px;float:left">Nhập địa chỉ</label>
+							<input type="text" name="address" class="form-control" placeholder="Ví dụ : 618 Đường Láng">
+						</div>
 						</div>
 						<button type="submit" class="btn" style="">Đăng ký ngay</button>
 						{{-- <button type="button" class="btn btn-tigger" style="display: none;">Đăng ký ngay</button> --}}
@@ -822,18 +835,18 @@
 							' Ok!',
 							})
 						}else{
-							$('#myModal').css('background','rgba(0,0,0,0)');
-							$('#myModal').hide();
-							// Swal.fire({
-							// icon: 'success',
-							// title: 'Thành công',
-							// text: 'Chúng tôi sẽ gọi lại cho quý khách!',
-							// }).then((result) => {
-							// 	if (result.value) {
-							// 		$('#myModal').css('background','rgba(0,0,0,0)');
-							// 		$('#myModal').hide();
-							// 	}
-							// })
+							// $('#myModal').css('background','rgba(0,0,0,0)');
+							// $('#myModal').hide();
+							Swal.fire({
+							icon: 'success',
+							title: 'Thành công',
+							text: 'Chúng tôi sẽ gọi lại cho quý khách!',
+							}).then((result) => {
+								if (result.value) {
+									$('#myModal').css('background','rgba(0,0,0,0)');
+									$('#myModal').hide();
+								}
+							})
 							
 						}
 					}

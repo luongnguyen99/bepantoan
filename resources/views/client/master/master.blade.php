@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	@yield('seo')
 	
 
@@ -52,12 +52,12 @@
 				<div class="row" style="display: flex;align-items: center;">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-
+	
 							<a href="<?php echo URL::to('/'); ?>">
 								@if($logo != null)
-									<img src="{{ $logo }}" alt="{{ $name_site }}">
+								<img src="{{ $logo }}" alt="{{ $name_site }}">
 								@else
-									<h1 class="text-logo-header"> {{$name_site}} </h1>
+								<h1 class="text-logo-header"> {{$name_site}} </h1>
 								@endif
 							</a>
 						</div>
@@ -66,115 +66,101 @@
 						<div class="form-search">
 							<form method="get" action="">
 								{{-- @csrf --}}
-								<input id="search" type="text" name="search" class="form-control" autocomplete="off" placeholder="Nhập từ khóa tìm kiếm">
+								<input id="search" type="text" name="search" class="form-control" autocomplete="off"
+									placeholder="Nhập từ khóa tìm kiếm">
 								<button type="button" class="btn">Tìm kiếm</button>
 								<ul id="search_prd" class="resuiltSearch ul-menu-muiten search-suggest">
 								</ul>
-
+	
 							</form>
 						</div>
 					</div>
 					<div class="col-md-7 col-xs-12 col-sm-12">
 						<div class="quick-menu hidden-xs">
 							<?php								
-								$menu = json_decode($menu, true);
-							?>
-
-                                    @if (isset($menu) && !empty($menu))
-                                        @foreach ( $menu as $item_menu )
-                                        <a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : " # "  }}" class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}"><i class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a> 
-                                        @endforeach 
-                                    @endif 
-                                    @php $hotline = json_decode($hotline, true); $hotline = $hotline['phone']; @endphp
-
-                                    <a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
+									$menu = json_decode($menu, true);
+								?>
+	
+							@if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
+							<a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : " # "  }}"
+								class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}"><i
+									class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a> @endforeach @endif
+							@php $hotline = json_decode($hotline, true); $hotline = $hotline['phone']; @endphp
+	
+							<a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
 								@if ($hotline)
-									{{ $hotline }}
+								{{ $hotline }}
 								@endif
 							</a>
-                            </div>
-                            <div class="quick-cart">
-                                <a href="{{route('showCart')}}" target="_blank" rel="">
-                                    <img alt="Giỏ hàng" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="header-mobile hidden-md hidden-lg">
-                <div class="container">
-                    <div class="row">
+						</div>
+						<div class="quick-cart">
+							<a href="{{route('showCart')}}" target="_blank" rel="">
+								<img alt="Giỏ hàng" src="{{asset('client/img/cart_bg.png')}}"><span
+									class="num">{{Cart::count()}}</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="header-mobile hidden-md hidden-lg">
+			<div class="container">
+				<div class="row">
 					<div class="col-xs-3 col-sm-2">
 						<div class="menu-site">
 							<button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
 							<div class="menu-box">
 								<div class="bg-menu hidden-md hidden-lg"></div>
-
+	
 								<ul class="main-menu">
 									<span class="logo-menu">
 										<a href="<?php echo URL::to('/'); ?>">
 											@if($logo != null)
-												<img src="{{ $logo }}" alt="{{ $name_site }}">
+											<img src="{{ $logo }}" alt="{{ $name_site }}">
 											@else
-												<h1 class="text-logo-header"> {{$name_site}} </h1>
+											<h1 class="text-logo-header"> {{$name_site}} </h1>
 											@endif
 										</a>
-									</span> 
-									
-										
-										@php $dataset = json_decode(get_option_by_key('show_category_menu_mobile'),true); 
-												
-										@endphp
-										
-										@if ($dataset)
-										
-										@foreach ( $dataset as $key => $tree )
-											@php
-												$cate_product = get_category_by_id($tree['id'])->toarray();
-												
-											@endphp
-											<li
-												class="ng-scope drop-icon re-icon {{ isset($tree['children']) && !empty($tree['children']) ? 'menu-item-has-children' : '' }} ">
-												<a style="color:#2269a9" href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
-														<img src="{{ $cate_product['image'] }}" alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
-												</a>
-												@if ( isset($tree['children']) && !empty($tree['children']) )
-												<ul class="sub-menu">
-													@foreach ($tree['children'] as $item)
-													@php
-													$cate_product_child = get_category_by_id($item)->toarray();
-													@endphp
-													<li class="ng-scope ng-has-child1">
-														<a href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a>
-													</li>
-													@endforeach
-												</ul>
-												@endif	
+									</span> @php $dataset =
+									json_decode(get_option_by_key('show_category_menu_mobile'),true); @endphp @if ($dataset)
+									@foreach ( $dataset as $key => $tree ) @php $cate_product =
+									get_category_by_id($tree['id'])->toarray(); @endphp
+									<li
+										class="ng-scope drop-icon re-icon {{ isset($tree['children']) && !empty($tree['children']) ? 'menu-item-has-children' : '' }} ">
+										<a style="color:#2269a9"
+											href="{{ get_product_category_url( $cate_product['slug'] ) }}"><span>
+												<img src="{{ $cate_product['image'] }}"
+													alt="{{$cate_product['name'] }}"></span>{{$cate_product['name'] }}
+										</a> @if ( isset($tree['children']) && !empty($tree['children']) )
+										<ul class="sub-menu">
+											@foreach ($tree['children'] as $item) @php $cate_product_child =
+											get_category_by_id($item)->toarray(); @endphp
+											<li class="ng-scope ng-has-child1">
+												<a
+													href="{{get_product_category_url( $cate_product_child['slug'] )}}">{{ $cate_product_child['name'] }}</a>
 											</li>
-										@endforeach
-										
+											@endforeach
+										</ul>
 										@endif
-									
-									
-
+									</li>
+									@endforeach @endif
+	
 									<ul class="mobile-support">
-
-										@if (isset($menu) && !empty($menu))
-											@foreach ( $menu as $item_menu )
-
-												<li><i class="{{ $item_menu['icon'] }}"></i><a href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
-											@endforeach 
-										@endif
+	
+										@if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
+	
+										<li><i class="{{ $item_menu['icon'] }}"></i><a
+												href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
+										@endforeach @endif
 										<li>
 											<a href="tel:{{$hotline}}">
 												<i class="pe-7s-call"></i> Hotline <b>{{$hotline}}</b> (24h/7)
 											</a>
 										</li>
-
+	
 									</ul>
-
+	
 								</ul>
 							</div>
 						</div>
@@ -183,67 +169,64 @@
 						<div class="logo">
 							<a href="<?php echo URL::to('/'); ?>">
 								@if($logo != null)
-									<img src="{{ $logo }}" alt="{{ $name_site }}">
+								<img src="{{ $logo }}" alt="{{ $name_site }}">
 								@else
-									<h1 class="text-logo-header"> {{$name_site}} </h1>
+								<h1 class="text-logo-header"> {{$name_site}} </h1>
 								@endif
 							</a>
 						</div>
-						
+	
 					</div>
-                    
+	
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
-					        <a href="#" target="_blank" rel="">
-					            <img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">0</span>
-					        </a>
-					    </div>
-					</div>
-					<div class="col-xs-12 col-sm-12">
-						<div class="form-search" >
-							<form method="post">
-								<input id="search_m" type="text" name="search" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
-								<button type="button" class="btn">Tìm kiếm</button>
-								<ul id="search_prd_m" class="resuiltSearch ul-menu-muiten search-suggest">
-								</ul>
-
-							</form>
+							<a href="{{route('showCart')}}" target="_blank" rel="">
+								<img alt="BẾP TỐT" src="{{asset('client/img/cart_bg.png')}}"><span class="num">{{Cart::count()}}</span>
+							</a>
 						</div>
-						
-					</div>
-
-
-					<div class="col-xs-12 col-sm-12">
-						<div class="btn-group-cate hidden-lg hidden-md">
-							<button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-								Lọc Danh mục sản phẩm <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu sub-categories-mobile" role="menu">
-								
-								@foreach ( $dataset as $id_category )
-								
-								@php
-									$cate_ = get_category_by_id($id_category['id']);
-								
-								@endphp
-								<li>
-									<a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
-											<img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
-								</li>
-								@endforeach
-							</ul>
-						
-							{{-- 
-												</form> --}}
-						</div>
-						
-					
 					</div>
 				
+	
+				</div>
+	
 			</div>
-		</div> <!-- menu mobile  -->
-		
-	</header><!-- /header -->
+			<div>
+					<div class="form-search">
+						<form method="post">
+							<input id="search_m" type="text" name="search" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
+							<button type="button" class="btn">Tìm kiếm</button>
+							<ul id="search_prd_m" class="resuiltSearch ul-menu-muiten search-suggest">
+							</ul>
+				
+						</form>
+					</div>
+				</div>
+				
+				<div>
+					<div class="btn-group-cate hidden-lg hidden-md">
+						<button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+							Lọc Danh mục sản phẩm <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu sub-categories-mobile" role="menu">
+				
+							@foreach ( $dataset as $id_category ) @php $cate_ = get_category_by_id($id_category['id']);
+							@endphp
+							<li>
+								<a href="{{ get_product_category_url($cate_['slug']) }}" rel=""><span>
+										<img src="{{ $cate_['image'] }}" alt="{{ $cate_['name'] }}"></span>{{ $cate_['name'] }}</a>
+							</li>
+							@endforeach
+						</ul>
+				
+						{{--
+					                        </form> --}}
+					</div>
+				
+				</div>
+			<!-- menu mobile  -->
+	
+	</header>
+	<!-- /header -->
 
 	@yield('content')
 
@@ -341,6 +324,7 @@
 										<iframe width="100%" height="450" src="https://www.youtube.com/embed/{{$my_array_of_vars['v']}}"" frameborder="0"
 											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 									</div>
+
 									<div class="col-sm-12 col-md-6 col-lg-6">
 											<?php echo $sw->embed_google_map ?>
 											<a href="{{ $sw->link }}" title="Giới thiệu Showroom" class="btn btnintro"
@@ -400,7 +384,14 @@
 				</div>
 			</div>
 		</footer>	
-	
+		<div class="ppocta-ft-fix horizontal">
+			<div id="messengerButton"> <a href="http://fb.com/msg/bepantoan.vn" target="_blank"
+					class="ppocta-btn-messenger-tracking"><i></i></a></div>
+			<div id="zaloButton"> <a href="http://zalo.me/0912331335" target="_blank"
+					class="ppocta-btn-zalo-tracking"><i></i></a></div>
+			<div id="callNowButton"> <a href="tel:0912331335" class="ppocta-btn-call-tracking"><i></i></a> <a
+					href="tel:0912331335" class="txt"><span>Gọi ngay</span></a></div>
+		</div>
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1"></script>
 	
 		<script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
@@ -445,7 +436,7 @@
 										'</div>'+
 										'<div class="media-body">'+
 											'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
-											'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+											'<div class="cate_pro_bot custom_search_data"><label>'+ item.sale_price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) +'</label><span>'+ item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span></div>'+
 										'</div>'+
 									'</div>'+
 								'</a>'+
@@ -480,6 +471,7 @@
 					data:{key:key},
 					success:function(data){
 						if(data.prd.length != 0 || data.cate.length != 0){
+
 							var arr_prd = data.prd;
 							var arr_cate = data.cate;
 							var html = '';
@@ -495,7 +487,7 @@
 										'</div>'+
 										'<div class="media-body">'+
 											'<h4 class="media-heading name-prd">'+item.name+'</h4>'+
-											'<p class="pri-item ss-name">'+item.price+'<sup>₫</sup></p>'+
+											'<div class="cate_pro_bot custom_search_data"><label>'+ item.sale_price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) +'</label><span>'+ item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'}) + '</span></div>'+
 										'</div>'+
 									'</div>'+
 								'</a>'+

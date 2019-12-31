@@ -80,9 +80,11 @@
                                                                         style="text-transform:capitalize">Số điện thoại
                                                                         : {{$data['phone']}}</span>
                                                                     <br>
-
+                                                                    
                                                                     <span>Sản phẩm : {{$product_name}}</span>
-                                                                    <br>Thời gian tư vấn : {{$data['time']}}
+                                                                    <br>Thời gian tư vấn : {{$data['time']}} <br>
+                                                                   
+                                                                    <br>Địa chỉ : {{$data['address']}}
 
                                                             </tr>
 
