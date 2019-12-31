@@ -11,5 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.styles([
+    // 'public/client/css/aos.css',
+    // 'public/client/css/bootstrap.min.css',
+    // 'public/client/css/font-akr.css',
+    // 'public/client/css/font-awesome.min.css',
+    // 'public/client/css/helper.css',
+    // 'public/client/css/owl.carousel.min.css',
+    // 'public/client/css/owl.theme.default.min.css',
+    // 'public/client/css/pe-icon-7-stroke.css',
+    'public/client/css/style.css',
+    // 'public/client/css/w3.css',
+
+ ], 'public/client/css/all-css.css');
