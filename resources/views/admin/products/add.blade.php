@@ -108,7 +108,7 @@ Thêm mới sản phẩm
     #category_id .chidren{
         margin-left: 20px;
     };
-   
+
 </style>
 @endsection
 
@@ -165,6 +165,12 @@ Thêm mới sản phẩm
         </div>
         <div class="col-md-4">
             <hr class="hr hrhr" style="display:none">
+
+            <div class="form-group">
+                <label for="">STT</label>
+                <input type="text" name="stt" value="0" class="form-control">
+            </div>
+
             <div class="form-group">
                 <label for="">Trạng thái sản phẩm</label>
                 <select name="status" id="status" class="status form-control select2">
@@ -188,24 +194,27 @@ Thêm mới sản phẩm
 
             <div class="form-group">
                 <label for="">Danh mục sản phẩm</label>
+                {{-- {{dd($categories)}} --}}
                 <select  name="category_id" id="category_id" class="category_id form-control select2">
                         <option value="">--Chọn--</option>
-                    @foreach ($categories as $item)
-                    {{-- {{dd($item)}} --}}
-                        <option value="{{$item->id}}" {{$item->parent_id == 0 ? 'disabled' : ''}} class="{{$item->parent_id != 0 ? 'chidren' : ''}}">{{$item->name}}</option>
-                    @endforeach
+                        @foreach ($categories as $item)
+                            @if (count($item->hasChildCategory) == 0)
+                                <option value="{{$item->id}}"
+                                    >{{$item->name}}</option>
+                            @endif
+                        @endforeach
                 </select>
                 <span class="errors error_category_id" style="color:red"></span>
                 <div>
                     <div class="filter"></div>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="">Quà tặng</label>
                 <div class="repeater0">
                     <div data-repeater-list="gift" class="gift_div">
-                        
+
                     </div>
                     <span class="errors error_gift" style="color:red"></span>
                     <div style="clear: both;width:100%"><a class="btn btn-success add_repeater0" data-repeater-create><i class="fa fa-plus"></i></a></div>
@@ -223,11 +232,11 @@ Thêm mới sản phẩm
             <div class="form-group">
                 <label>Thư viện ảnh</label>
                 <div class="gallery">
-                    
+
                 </div>
                 <span class="choose_gallery btn btn-sm btn-primary">Thêm ảnh</span>
             </div>
-            
+
             <div class="input-wrap" style="margin: 20px;">
                 <label class="checkbox">
                     <input type="checkbox" id="add_seo" name="add_seo">
@@ -298,7 +307,7 @@ Thêm mới sản phẩm
                 }
         });
     });
-    
+
     $('body').on('click', '.choose_image_gift', function(){
         var choose = $(this);
         CKFinder.popup( {
@@ -356,7 +365,7 @@ Thêm mới sản phẩm
     $(document).on('click','.add_repeater',function() {
         $('.specifications_div').append(`
             <div class="row" style="display: flex;align-items: flex-start;">
-                    <div class="col-sm-5"> 
+                    <div class="col-sm-5">
                         <input type="text" name="specifications[${i}][key]" value="" placeholder="Loại thông số"
                         class="form-control" />
                         <span class="errors error_specifications_${i}_key" style="color:red"></span>
@@ -368,13 +377,13 @@ Thêm mới sản phẩm
                     </div>
                     <div class="col-sm-2">
                         <a data-repeater-delete class="btn btn-danger remove_repeater"><i class="fa fa-minus"></i></a>
-                    </div>   
+                    </div>
             </div>
         `);
         i++;
     });
 
-   
+
     $(function () {
         $('body').on('keyup', '#name', function () {
             ChangeToSlug('name', 'slug');
@@ -386,10 +395,10 @@ Thêm mới sản phẩm
         if (r == true) {
             $(this).parents('div.img').remove();
         };
-    
+
     })
 
-    
+
     $(function () {
         var description = CKEDITOR.replace( 'description', {
         });
@@ -404,14 +413,15 @@ Thêm mới sản phẩm
         var json_value = `<?php echo json_encode($categories) ?> `;
 
         var object_current;
-        
-        
+
+
         $(document).on('change','#category_id',function() {
             id = $(this).val();
-            
+
             object_decode  = JSON.parse(json_value);
+            // console.log(json_value);
             object_current = object_decode.filter(function (object_decode) { return object_decode.id == id });
-            
+
             // console.log(object_current[0].properties.length);
             if (object_current[0].properties.length == 0) {
                 var html = '';
@@ -427,19 +437,19 @@ Thêm mới sản phẩm
             });
 
             $('.filter').html(html);
-            
+
         });
     })
 
 
-   
+
 
     $('body').on('submit','#infomation',function(e) {
         e.preventDefault();
         var infomation = new FormData($('form#infomation')[0]);
-    
+
         var description = CKEDITOR.instances.description.getData();
-        var infomation_detail = CKEDITOR.instances.infomation_detail.getData(); 
+        var infomation_detail = CKEDITOR.instances.infomation_detail.getData();
         infomation.append('description', description);
         infomation.append('infomation_detail', infomation_detail);
 
@@ -455,7 +465,7 @@ Thêm mới sản phẩm
                 if (result.errors == true) {
                     var msg = result.messages;
                     var msg_keys = Object.keys(msg);
-                   
+
                     $('body').find('.errors').html('');
                     console.log(msg_keys);
                     msg_keys.forEach(function (item, index) {
@@ -474,8 +484,8 @@ Thêm mới sản phẩm
                         text: "Thêm sản phẩm thành công!",
                         icon: "success",
                         button: "OK",
-                    }).then(function () {                  
-                        window.location.href = `{{route('admin.products.index')}}`;            
+                    }).then(function () {
+                        window.location.href = `{{route('admin.products.index')}}`;
                     });
                 }
             });
@@ -486,6 +496,6 @@ Thêm mới sản phẩm
     $(document).ready(function() {
         $('#brand_id').select2();
     });
-    
+
 </script>
 @endsection

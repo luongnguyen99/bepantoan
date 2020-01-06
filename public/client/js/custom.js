@@ -230,6 +230,8 @@ $(document).ready(function() {
 
 jQuery(document).ready(function () {
     jQuery('.menu-box .main-menu>li.menu-item-has-children>a').append('<i class="fa fa-angle-right"></i>');
+    
+    jQuery('.mega-menu .menu>li.menu-item-has-children>a').append('<i class="fa fa-angle-down"></i>');
 
     jQuery('.menu-site .btn-show-menu').click(function () {
         jQuery(this).parents('.menu-site').find('.menu-box').css('width','100%');
@@ -326,7 +328,7 @@ jQuery(document).ready(function () {
 
 
     //  cam ket
-
-
 });
+
+
 

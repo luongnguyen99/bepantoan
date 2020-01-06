@@ -25,7 +25,8 @@ class Product extends Model
         'seo_title',
         'seo_keyword',
         'seo_description',
-        'block_robot_google'
+        'block_robot_google',
+        'stt',
     ];
 
     public function property_values(){

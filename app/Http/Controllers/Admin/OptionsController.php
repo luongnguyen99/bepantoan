@@ -35,7 +35,7 @@ class OptionsController extends Controller
     {
         $db = Option::where('key','hotline')->first();
         $json = json_decode($db->value,true);
-       
+
         return view('admin.options.header.hotline.hotline',compact('json'));
     }
     public function postHotline(Request $r)
@@ -53,13 +53,13 @@ class OptionsController extends Controller
         }else{
             $request['content'] = null;
         }
-       
+
         $db = Option::where('key','hotline')->first();
         $db->value = json_encode($request);
         $db->save();
         return redirect()->back()->with('add_success','Thêm liên hệ thành công');
     }
-    
+
     public function getDelHotline()
     {
         $db = Option::where('key','hotline')->first();
@@ -72,15 +72,15 @@ class OptionsController extends Controller
     {
         $db = Option::where('key','footer')->first();
         $json = json_decode($db->value,true);
-        
+
         return view('admin.options.footer.footer-copy',compact('json'));
     }
     public function postCopyright(Request $r)
     {
         $arr = [];
-        
+
         $arr =['footer'=>$r->footer];
-       
+
         $json = json_encode($arr);
         $db = Option::where('key','footer_copy')->first();
         $db->value = $json;
@@ -102,7 +102,7 @@ class OptionsController extends Controller
         return view('admin.options.main.payment.payment',compact('json'));
     }
     public function postPayment(Request $r)
-    {   
+    {
         $db = Option::where('key','payment')->first();
         if($db->value == null){
             $arr = $r->all();
@@ -125,12 +125,12 @@ class OptionsController extends Controller
 
             $merge = array_merge($json,$type);
 
-            
+
             $db->value= json_encode($merge);
             $db->save();
             return redirect()->back()->with('add_success','Thêm phương thức thành công');
         }
-        
+
     }
     public function getEditPayment($id)
     {
@@ -141,12 +141,12 @@ class OptionsController extends Controller
                 $result = $val;
             }
         }
-        
+
         return view('admin.options.main.payment.edit_payment',compact(['json','result']));
     }
     public function postEditPayment(Request $r,$id)
     {
-        
+
         $db = Option::where('key','payment')->first();
         $json = json_decode($db->value,true);
         foreach($json as $key=>$val){
@@ -156,7 +156,7 @@ class OptionsController extends Controller
             $result[] = $val;
         }
         $json1 = json_encode($result);
-        $db->value = $json1; 
+        $db->value = $json1;
         $db->save();
         return redirect('admin/options/payment')->with('edit_success','Sửa thành công');
     }
@@ -181,7 +181,7 @@ class OptionsController extends Controller
         return view('admin.options.main.social_network.social_network',compact('json'));
     }
     public function postSocial_network(Request $r)
-    {   
+    {
         $db = Option::where('key','social_network')->first();
         if($db->value == null){
             $arr = $r->all();
@@ -204,12 +204,12 @@ class OptionsController extends Controller
 
             $merge = array_merge($json,$type);
 
-            
+
             $db->value= json_encode($merge);
             $db->save();
             return redirect()->back()->with('add_success','Thêm phương thức thành công');
         }
-        
+
     }
     public function getEditSocial_network($id)
     {
@@ -224,7 +224,7 @@ class OptionsController extends Controller
     }
     public function postEditSocial_network(Request $r,$id)
     {
-        
+
         $db = Option::where('key','social_network')->first();
         $json = json_decode($db->value,true);
         foreach($json as $key=>$val){
@@ -234,9 +234,9 @@ class OptionsController extends Controller
             $result[] = $val;
         }
         $json1 = json_encode($result);
-        
-        $db->value = $json1; 
-        
+
+        $db->value = $json1;
+
         $db->save();
         return redirect('admin/options/social_network')->with('edit_success','Sửa thành công');
     }
@@ -253,7 +253,7 @@ class OptionsController extends Controller
         $db->save();
         return redirect('admin/options/social_network/')->with('del_success','Xóa thành công');
     }
-    
+
     //  ==================== General setting ====================== //
 
     public function getGeneral(){
@@ -261,19 +261,23 @@ class OptionsController extends Controller
         $desc_site = Option::where('key','general_description_site')->first();
         $header_code = Option::where('key','general_header_code')->first();
         $footer_code = Option::where('key','general_footer_code')->first();
-        $data  = array( 'name_site' => $name_site->value , 'desc_site'=>$desc_site->value ,'header_code'=>$header_code->value ,'footer_code'=> $footer_code->value  );
+        $sort_by = Option::where('key','sort_by')->first();
+
+        // sort_by
+        $data  = array( 'name_site' => $name_site->value , 'desc_site'=>$desc_site->value ,'header_code'=>$header_code->value ,'footer_code'=> $footer_code->value ,'sort_by' => $sort_by->value);
         return view('admin.options.general.view',compact(['data']));
     }
 
     public function updateGeneral( Request $request ){
         $data_arr = $request->input();
+        // dd($data_arr);
         if(isset($data_arr) && !empty($data_arr)){
             foreach ($data_arr as $key => $value) {
                 if($key != "_token"){
                     $db = Option::where('key',$key)->first();
                     $db->value = $request->input($key);
-                    $db->save();    
-                }  
+                    $db->save();
+                }
             }
         }
         $request->session()->flash('alert-success', 'Cập nhật thành công!');
@@ -300,11 +304,11 @@ class OptionsController extends Controller
         ]);
 
         $arr = $r->all();
-        
+
         $count_arr = count($arr['table']['content']);
         if ($arr['table'] != null) {
             foreach($arr['table'] as $row){
-                
+
                 if (isset($arr['img_'])) {
                     if($row[$count_arr-1]){
                         $row[$count_arr-1]['img_'] = $arr['img_'];
@@ -332,7 +336,7 @@ class OptionsController extends Controller
     public function getEditSlide($id)
     {
         $slide = Option::where('key','slide')->first();
-        
+
         if($slide->value != null){
             $db = json_decode($slide->value,true);
             foreach($db[0] as  $key=>$val){
@@ -350,13 +354,13 @@ class OptionsController extends Controller
         $slide = Option::where('key','slide')->first();
         $arr = $r->all();
         $count_arr = count($arr['table']['content']);
-        
+
         foreach ($arr as $value_arr) {
-            
+
             if (isset($arr['img_']) || isset($arr['table']['content'][0]['type'])) {
                 if ($arr['table'] != null) {
                     foreach($arr['table'] as $row){
-                        
+
                         if (isset($arr['img_']) || isset($arr['table']['content'][0]['type'])) {
                             if(isset($arr['img_'])){
                                 if($row[$count_arr-1]){
@@ -367,7 +371,7 @@ class OptionsController extends Controller
                             }
                             else{
                                 $row[$count_arr-1]['img_'] = $row[$count_arr-1]['old_img'];
-                                
+
                             }
                         }
                         $result[] = $row;
@@ -376,15 +380,15 @@ class OptionsController extends Controller
                         foreach ($all_slide as $value) {
                             foreach($all_slide[0] as $key=>$row){
                                 $id_int = (int) $id;
-                                
+
                                 if ($key == $id_int) {
-                                   
+
                                     $value[$key] = $result[0][0];
-                                    
+
                                     $row1[0] = $value;
-                                    
+
                                     $slide->value = json_encode($row1);
-                                    
+
                                     $slide->save();
                                     return redirect('admin/options/slide/')->with('edit_success','Sửa thành công');
                                 }
@@ -405,7 +409,7 @@ class OptionsController extends Controller
             $id_int = (int) $id;
                if($key == $id_int){
                    $ninh = $slide_json[0][$key];
-                   unset($slide_json[0][$key]); 
+                   unset($slide_json[0][$key]);
                    $slide->value = json_encode($slide_json);
                    $slide->save();
                    return redirect('admin/options/slide/')->with('del_success','Xóa thành công');
@@ -417,12 +421,12 @@ class OptionsController extends Controller
     public function getMenu()
     {
         $options = Option::where('key', '=', 'menu')->first();
-        
+
         if (!empty($options->value)) {
             $json = json_decode($options->value);
-            
+
             $showMenu = $this->show_menu($json);
-           
+
         } else {
             $showMenu = '';
         }
@@ -439,8 +443,8 @@ class OptionsController extends Controller
                 $link = $item['link'];
                 $icon = $item['icon'];
                 $clss= $item['clss'];
-                
-                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '" 
+
+                $result .= '<li class="dd-item" data-link="' . $link . '" data-name="' . $name . '"
                 data-icon="' . $icon . '" data-clss="' . $clss . '">';
                 $result .= '<div class="dd-handle" style="padding:6px 150px;">' . $name . '</div>';
                 if (array_key_exists("children", $item)) {
@@ -465,7 +469,7 @@ class OptionsController extends Controller
             "clss"=> $r->menu_class
         );
         $new_item = (object) $new_item;
-        
+
         $opt_value[] = $new_item;
         $options->value = json_encode($opt_value);
         $options->save();
@@ -485,7 +489,7 @@ class OptionsController extends Controller
     public function getMenuPhone()
     {
         $options = Option::where('key', '=', 'menu_phone')->first();
-        
+
         if (!empty($options->value)) {
             $json = json_decode($options->value);
             $showMenu = $this->show_menu($json);
@@ -498,7 +502,7 @@ class OptionsController extends Controller
     public function postMenuPhone(Request $r)
     {
         $options = Option::where('key', '=', 'menu_phone')->first();
-        
+
         $opt_value = json_decode($options->value);
 
         $new_item = array(
@@ -507,7 +511,7 @@ class OptionsController extends Controller
             "icon" => $r->menu_icon,
             "clss"=> $r->menu_class
         );
-            
+
         $new_item = (object) $new_item;
         $opt_value[] = $new_item;
         $options->value = json_encode($opt_value);
@@ -570,7 +574,7 @@ class OptionsController extends Controller
         $switchboard = Option::where('key', '=', 'switchboard')->first();
         $request['phone'] = $r->phone;
         $request['content'] = $r->content_switchboard;
-        
+
         $switchboard->value = json_encode($request);
         $switchboard->save();
         return redirect()->back()->with('switchboard_success');
@@ -584,7 +588,7 @@ class OptionsController extends Controller
     }
     public function postSidebar(Request $r)
     {
-    	
+
         $sidebar = Option::where('key', '=', 'sidebar')->first();
         $arr = $r->all();
         $data_old = [];
@@ -596,7 +600,7 @@ class OptionsController extends Controller
                     $data_new[$k]['icon'] = $icon;
                 }
             }
-            
+
             if(!empty($arr['table']['content'])){
                 $merge_arr =  array_merge($data_new,$arr['table']['content']);
                 $sidebar->value = json_encode($merge_arr);
@@ -608,9 +612,9 @@ class OptionsController extends Controller
                 $sidebar->save();
                 return redirect()->back()->with('sidebar_success');
             }
-            
+
         }else{
-        	
+
             if(!empty($arr['table']['content'])){
                 $sidebar->value = json_encode($arr['table']['content']);
                 $sidebar->save();
@@ -634,7 +638,7 @@ class OptionsController extends Controller
     {
         $footer_m = Option::where('key', '=', 'footer')->first();
         $footer = json_decode($footer_m->value,true);
-        
+
         return view('admin.options.footer.footer',compact('footer'));
     }
     public function postFooter(Request $r)
@@ -653,7 +657,7 @@ class OptionsController extends Controller
     {
         $introduce_m = Option::where('key', '=', 'introduce')->first();
         $introduce = json_decode($introduce_m->value,true);
-        
+
         return view('admin.options.main.introduce.index',compact('introduce'));
     }
     public function postIntroduce(Request $r)
@@ -676,7 +680,7 @@ class OptionsController extends Controller
         $req['img_introduce'] = $r->img_introduce;
         $req['content'] = $r->content;
         $req['title_rep'] = $r->title_rep;
-        
+
         if(empty($r->content2_old)){
             $req['table'] = $r->table;
         }else{
@@ -685,13 +689,13 @@ class OptionsController extends Controller
             }
             if (!empty($r->table['content'])) {
                 $arr_new = array_merge($arr_old,$r->table['content']);
-                $req['table']['content'] = $arr_new; 
+                $req['table']['content'] = $arr_new;
             }else{
                 $req['table']['content'] = $arr_old;
             }
-            
+
         }
-       
+
         $introduce->value = json_encode($req);
         $introduce->save();
         return redirect()->back()->with('success');
@@ -703,12 +707,12 @@ class OptionsController extends Controller
             Option::where('key','=','categories_show_home')->update(['value' => json_encode($request->outer_list)]);
         };
         $categories = Category::all();
-        
+
         return view('admin.options.home.choose_category_show_home',compact('categories'));
     }
 
     public function show_brand_by_id_category(Request $request){
-      
+
         $checkCategory = Category::where('parent_id',$request->id)->get();
         $inCategory = [];
         if (count($checkCategory) != 0) {
@@ -718,7 +722,7 @@ class OptionsController extends Controller
         }else{
             $inCategory = [(int)$request->id];
         }
-       
+
         $brands = Brand::select('brands.*')
                 ->join('products','brands.id','=','products.brand_id')
                 ->join('categories','categories.id','=','products.category_id')

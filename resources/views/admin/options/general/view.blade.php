@@ -13,7 +13,7 @@ Liên hệ
 
         <div class="alert alert-success alert-dismissible show" role="alert">
             <strong>
-                
+
                     <div class="flash-message">
                         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                             @if(Session::has('alert-' . $msg))
@@ -21,8 +21,8 @@ Liên hệ
                             @endif
                         @endforeach
                     </div> <!-- end .flash-message -->
-                
-            </strong> 
+
+            </strong>
         </div>
 
         <div class="box box-success">
@@ -41,7 +41,7 @@ Liên hệ
                 <!--  content here -->
                 <form id=create_category method="post">
                   @csrf
-                   
+
                     <div class="main-option container">
                         <div class="form-group">
                             <label for="name">Tên website</label>
@@ -52,6 +52,15 @@ Liên hệ
                         <div class="form-group">
                             <label for="name">Mô tả ngắn website</label>
                             <input  class="form-control inline-block width-50 marginleft-30 form-float-right" type="text" name="general_description_site" value="{{ $data['desc_site'] }}">
+                            <div class="text-danger error_name" id="error_site_desc"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Sắp xếp theo</label>
+                            <select name="sort_by" id="sort_by" class="form-control inline-block width-50 marginleft-30 form-float-right">
+                                <option value="none">Mặc định</option>
+                                <option value="brand" {{$data['sort_by'] == 'brand' ? 'selected' : ''}}>Hãng</option>
+                                <option value="stt" {{$data['sort_by'] == 'stt' ? 'selected' : ''}}>Số thứ tự</option>
+                            </select>
                             <div class="text-danger error_name" id="error_site_desc"></div>
                         </div>
 
@@ -66,8 +75,8 @@ Liên hệ
                             <textarea cols="30" rows="8" class="form-control inline-block width-50 marginleft-30 form-float-right" type="text" name="general_footer_code">{{ $data['footer_code'] }}</textarea>
                             <div class="text-danger error_name" id="error_site_desc"></div>
                         </div>
-                        
-                
+
+
                         <div class="form-group" style="margin-top:20px">
                             <button class=" btn btn-success" type="submit">Lưu</button>
                         </div>

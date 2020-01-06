@@ -20,9 +20,9 @@
 	<link rel="stylesheet" href="{{asset('client/css/helper.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}">
 	<link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
-	<!-- <link rel="stylesheet" href="{{asset('client/css/aos.css')}}"> -->
+	{{-- <link rel="stylesheet" href="{{asset('client/css/aos.css')}}">  --}}
 	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
-
+	
 	@yield('css')
 </head>
 
@@ -103,7 +103,113 @@
 				</div>
 			</div>
 		</div>
-	
+		<!-- menu thêm mới -->
+		<div class="mega-menu hidden-xs hidden-sm">
+			<div class="container">
+				<ul class="menu">
+				    <li><a href="#">bếp từ</a></li>
+				    <li class="menu-item-has-children">
+				    	<a href="#">bếp gas</a>
+				    	<div class="dropdown-mega-content">	
+				    		<div class="row">
+				    			<div class="col-md-6 col-lg-6">
+				    				<h3>Phân loại</h3>
+				    				<ul class="list-item-mn">
+                                                
+                                        <li><a href="#">Bếp gas âm</a></li>
+                                        
+                                        <li><a href="#">Bếp gas dương</a></li>
+                                        
+                                        <li><a href="#">Bếp gas âm hồng ngoại</a></li>
+                                        
+                                        <li><a href="#">Bếp gas dương hồng ngoại</a></li>
+                                        
+                                        <li><a href="#">Bếp gas giá rẻ</a></li>
+                                        
+                                        <li><a href="#">Bếp gas công nghiệp| Bếp gas nhà hàng, khách sạn</a></li>
+                                        
+                                        <li><a href="#">Bếp gas kết hợp điện từ</a></li>
+                                        
+                                        <li><a href="#">Bếp và bình gas</a></li>
+                                        
+                                        <li><a href="#">Bếp gas đơn</a></li>
+                                        
+                                        <li><a href="#">Bếp gas du lịch</a></li>
+                                        
+                                        <li><a href="#">Bình gas &amp; Linh kiện</a></li>
+                                        
+                                    </ul>
+				    			</div>
+				    			<div class="col-md-6 col-lg-6">
+				    				<h3>Hãng sản xuất</h3>
+				    				<ul class="list-item-mn list-brand-home">        
+                                        <li>
+                                        	<a href="#">
+                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Eurosun"></label>
+                                        	</a>
+                                        </li>
+                                        
+                                        <li>
+                                        	<a href="#">
+                                            	<label><img src="https://beptot.vn/Data/upload/files/Adv/1-logo-thuong-hieu-0306/taka.png" class="icImgBrand" alt="Taka"></label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                        	<a href="#">
+                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Eurosun"></label>
+                                        	</a>
+                                        </li>
+                                        
+                                        <li>
+                                        	<a href="#">
+                                            	<label><img src="https://beptot.vn/Data/upload/files/Adv/1-logo-thuong-hieu-0306/taka.png" class="icImgBrand" alt="Taka"></label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                        	<a href="#">
+                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Eurosun"></label>
+                                        	</a>
+                                        </li>
+                                        
+                                        <li>
+                                        	<a href="#">
+                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Taka"></label>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+				    			</div>
+				    		</div>
+				    	</div>
+				    </li>
+				    <li><a href="#">bếp điện</a></li>
+				    <li><a href="#">Máy hút mùi</a></li>
+				    <li><a href="#">Bếp điện từ</a></li>
+				    <li><a href="#">Chậu vòi rửa chén bát</a></li>
+				    <li><a href="#">Máy rửa chén bát</a></li>
+				    <li><a href="#">Máy sấy chén bát</a></li>
+				    <li>
+				    	<a href="#">Thiết bị nhà bếp khác <i class="pe-7s-more"></i></a>
+				    	<ul class="dropdown-menu-list">
+                                    
+                            <li><a href="#">Lò nướng đa năng</a></li>
+                            
+                            <li><a href="#">Lò vi sóng</a></li>
+                            
+                            <li><a href="#">Đồ gia dụng</a></li>
+                            
+                            <li><a href="#">Bộ nồi từ - chảo từ</a></li>
+                            
+                            <li><a href="#">Máy giặt - Máy sấy</a></li>
+                            
+                            <li><a href="#">Tủ lạnh - Tủ Rượu</a></li>
+                            
+                        </ul>
+				    </li>
+				</ul>
+			</div>
+		</div>
+	<!-- hết menu mới -->
 		<div class="header-mobile hidden-md hidden-lg">
 			<div class="container">
 				<div class="row">

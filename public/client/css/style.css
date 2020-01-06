@@ -248,6 +248,107 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     margin-bottom: 0;
 }
+/* css menu mới */
+.mega-menu .menu li{
+    display: inline-block;
+    position: relative;
+}
+.mega-menu {
+    background-color: #ce0707;
+}
+.mega-menu .menu>li>a{
+    padding: 15px;
+    line-height: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.mega-menu .menu>li>a>i{
+    font-size: 18px;
+    display: inline-block;
+    padding-left: 4px;
+}
+.mega-menu .menu li .dropdown-mega-content{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    width: 600px;
+    padding: 15px 20px 0 20px;
+    display: none;
+}
+.mega-menu .menu>li:hover .dropdown-mega-content,.mega-menu .menu li:hover .dropdown-menu-list{
+    display: block;
+}
+.mega-menu .menu li .dropdown-mega-content .col-md-6 h3{
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    color: #ff8d1c;
+    padding: 0 10px;
+    line-height: 25px;
+}
+.mega-menu .menu li .dropdown-mega-content .col-md-6 .list-item-mn>li{
+    margin: 0;
+    padding: 8px;
+    font-size: 13px;
+    display: block;
+    font-weight: 400;
+    width: 100%;
+    text-transform: none;
+}
+.mega-menu .menu li .dropdown-mega-content .col-md-6 .list-item-mn>li>a{
+    color: #444;
+    cursor: pointer;
+    display: inline-block;
+}
+.mega-menu .menu li .dropdown-mega-content .col-md-6 .list-item-mn>li>a:hover,.mega-menu .menu li .dropdown-menu-list>li>a:hover{
+    color: #ff8d1c;
+}
+.mega-menu .menu li .dropdown-mega-content .col-md-6 .list-brand-home>li{
+    width: 49%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+}
+.mega-menu .menu li .dropdown-mega-content .col-md-6 ul.list-brand-home li img {
+    height: 40px;
+    text-align: center;
+    margin: auto;
+}
+.mega-menu .menu li .dropdown-menu-list{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    width: 180px;
+    padding: 5px 0;
+   display: none;
+}
+.mega-menu .menu li .dropdown-menu-list>li>a{
+    padding: 6px 0;
+    font-size: 13px;
+    margin: 0 15px;
+    font-weight: normal;
+    display: block;
+    color: #333;
+    white-space: nowrap;
+}
+.mega-menu .menu li .dropdown-menu-list:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+}
+
 /* footer */
 .footer-top {
 	padding-top: 30px;
@@ -825,7 +926,7 @@ h1, h2, h3, h4, h5, h6 {
     border-top: 1px solid #ddd;
 }
 .cate_pro_bot label {
-    float: left;
+    /* float: left; */
     display: inline-block;
     color: #ed1d24;
     font: bold 18px/50px arial;
@@ -892,7 +993,7 @@ h1, h2, h3, h4, h5, h6 {
     transform: perspective(600px) rotateX(0deg)!important;
 }
 .cate_pro_bot span {
-    float: left;
+    /* float: left;s */
     display: inline-block;
     color: #999;
     font: 13px/50px arial;
@@ -1027,7 +1128,7 @@ ul.tips-faq .item a:hover {
 	box-shadow: none;
 }
 .product .menu-cate .ctg-pro-item{
-	float: left;
+	/* float: left; */
 	width: calc(8.333% - 16px);
 	display: inline-block;
     margin-left: 8px;
@@ -1949,7 +2050,7 @@ ul.listform_filter {
     color: #337ab7;
     background-color: #fff;
     border: 1px solid #ddd;
-    float: left;
+    /* float: left; */
     margin-left: -1px;
 }
 .pagenavi .smaller {

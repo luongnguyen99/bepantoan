@@ -26,7 +26,9 @@ class ProductController extends Controller
         $categories = Category::select()->with('properties')->get();
         $categories->each(function($categories){
             $categories->properties->load('property_values');
+            $categories->load('hasChildCategory');
         });
+        // dd($categories);
         return view('admin.products.add',compact('categories','brands'));
     }
 
@@ -44,7 +46,7 @@ class ProductController extends Controller
                 'gift.*.value' => 'required',
                 'specifications.*.key' => 'required',
                 'specifications.*.value' => 'required',
-                
+
             ],
             [
                 'name.required' => 'Tên sản phẩm không được để trống',
@@ -61,7 +63,7 @@ class ProductController extends Controller
                 'sale_price.gt' => 'Giá khuyến mãi lớn hơn 0',
 
                 'status.required' => 'Trạng thái không được để trống',
-                
+
                 'category_id.required' => 'Danh mục sản phẩm không được để trống',
 
                 'brand_id.required' => 'Hãng sản xuất không được để trống',
@@ -92,7 +94,8 @@ class ProductController extends Controller
                 'infomation_detail' => $request->infomation_detail,
                 'status' => $request->status,
                 'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id
+                'brand_id' => $request->brand_id,
+                'stt' => $request->stt
                 ];
                 if ($request->add_seo == 'on') {
                     $data['seo_title'] = $request->seo_title;
@@ -107,13 +110,13 @@ class ProductController extends Controller
                 if (!empty($request->gift)){
                     $data['gift'] = json_encode($request->gift);
                 };
-                
+
                 if (!empty($request->specifications)) {
                     $data['specifications'] = json_encode($request->specifications);
                 }
-                
+
                 $insertProduct = Product::create($data);
-                
+
                 if (!empty($request->gallery) && count($request->gallery) > 0) {
                     foreach ($request->gallery as $key => $value) {
                         Gallery::insert([
@@ -122,7 +125,7 @@ class ProductController extends Controller
                         ]);
                     };
                 }
-                
+
                 if (!empty($request->value_property) && count($request->value_property) > 0) {
                     foreach ($request->value_property as $key => $value) {
                         Products_property_values::insert([
@@ -131,9 +134,9 @@ class ProductController extends Controller
                         ]);
                     }
                 };
-            
-            
-            
+
+
+
             return response(
                 [
                     'errors' => false,
@@ -151,6 +154,7 @@ class ProductController extends Controller
         $categories = Category::select()->with('properties')->get();
         $categories->each(function ($categories) {
             $categories->properties->load('property_values');
+            $categories->load('hasChildCategory');
         });
         $categoriesArray = $categories->toArray();
         // dd($product);
@@ -217,7 +221,8 @@ class ProductController extends Controller
                 'infomation_detail' => $request->infomation_detail,
                 'status' => $request->status,
                 'category_id' => $request->category_id,
-                'brand_id' => $request->brand_id
+                'brand_id' => $request->brand_id,
+                'stt' => $request->stt
 
             ];
             if ($request->add_seo == 'on') {

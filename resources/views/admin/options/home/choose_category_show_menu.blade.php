@@ -116,11 +116,11 @@ Chọn danh mục hiển thị menu mobile
                                 </li>
                             </ol>
                         </li> --}}
-                        
+
                         <ol class="dd-list">
                             @php
                             $arr = json_decode(get_option_by_key('show_category_menu_mobile'),true);
-                            
+
                             @endphp
                             @if (is_array($arr) && count($arr) > 0)
                             @foreach ($arr as $key => $item)
@@ -143,7 +143,7 @@ Chọn danh mục hiển thị menu mobile
                                         <span style="cursor: pointer" class="btn_remove_element">
                                             <i class="fa fa-close"></i>
                                         </span>
-                                    </div>            
+                                    </div>
                                     @if (!empty($item['children']) && is_array($item['children']) && count($item['children']) > 0)
                                         <ol class="dd-list">
                                             @foreach ($item['children'] as $item1)
@@ -159,7 +159,7 @@ Chọn danh mục hiển thị menu mobile
                                                         </span>
                                                     </div>
                                                 </li>
-                                            @endforeach    
+                                            @endforeach
                                         </ol>
                                     </li>
                                 @endif
@@ -195,6 +195,7 @@ Chọn danh mục hiển thị menu mobile
 <script>
     $(document).ready(function () {
         $('#categories2').select2();
+
     });
 
 </script>
@@ -221,10 +222,10 @@ Chọn danh mục hiển thị menu mobile
                 var msg = result;
                 if (result.error == false) {
                     window.location.reload();
-                } else {       
+                } else {
                     window.location.reload();
                 }
-              
+
             });
     })
 

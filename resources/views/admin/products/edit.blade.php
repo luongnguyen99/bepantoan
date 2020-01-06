@@ -167,6 +167,11 @@ Sửa sản phẩm
             <div class="col-md-4">
                 <hr class="hr hrhr" style="display:none">
                 <div class="form-group">
+                    <label for="">STT</label>
+                    <input type="text" name="stt" value="{{$product->stt}}" class="form-control">
+                </div>
+
+                <div class="form-group">
                     <label for="">Trạng thái sản phẩm</label>
                     <select name="status" id="status" class="status form-control select2">
                         <option value="">Trạng thái</option>
@@ -179,7 +184,7 @@ Sửa sản phẩm
                     <label for="">Hãng sản xuất</label>
                     <select name="brand_id" id="brand_id" class="status form-control select2">
                         <option value="">--Chọn--</option>
-                        
+
                         @foreach ($brands as $item)
                             <option {{$product->brand_id == $item->id ? 'selected' : ''}} value="{{$item->id}}">{{$item->name}}</option>
                         @endforeach
@@ -192,13 +197,15 @@ Sửa sản phẩm
                     <select name="category_id" id="category_id" class="category_id form-control select2">
                         <option value="">--Chọn--</option>
                         @foreach ($categories as $item)
-                        <option {{$item->id == $product->category->id ? 'selected' : ''}} {{$item->parent_id == 0 ? 'disabled' : ''}} value="{{$item->id}}">{{$item->name}}</option>
+                            @if (count($item->hasChildCategory) == 0)
+                                <option {{$item->id == $product->category->id ? 'selected' : ''}} {{$item->parent_id == 0 ? 'disabled' : ''}} value="{{$item->id}}">{{$item->name}}</option>
+                            @endif
                         @endforeach
                     </select>
                     <span class="errors error_category_id" style="color:red"></span>
                     <div>
                         @php
-                            $idCategory_selected = array_search($product->category->id,array_column($categoriesArray, 'id'));                
+                            $idCategory_selected = array_search($product->category->id,array_column($categoriesArray, 'id'));
                         @endphp
                         <div class="filter">
                             <div style="font-size:16px;margin-top: 16px;border-bottom:1px solid black">Chọn giá trị lọc: </div>
@@ -213,8 +220,8 @@ Sửa sản phẩm
                                     @endif
                                 @endforeach
                             @endif
-                        
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -239,7 +246,7 @@ Sửa sản phẩm
                                             <span class="errors error_gift_'.$key.'_link" style="color:red"></span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row" style="display: flex;align-items: flex-start;text-align: right;">
                                         <div class="col-sm-8">
                                             <input type="text" readonly name="gift['.$key.'][image]" value="'.$value->image.'" placeholder="Ảnh sản phẩm" class="form-control" />
@@ -254,7 +261,7 @@ Sửa sản phẩm
                                     </div>';
                                     };
                                 }
-                               
+
                             @endphp
                             @php
                                 echo $gift_html;
@@ -305,7 +312,7 @@ Sửa sản phẩm
                          @php
                             $galleries_html = '';
                             $galleries = $product->galleries;
-                            
+
                             if (count($galleries) > 0) {
                                 foreach ($galleries as $key => $value) {
                                 $galleries_html .= '<div class="img">
@@ -314,7 +321,7 @@ Sửa sản phẩm
                                     <i class="fa fa-times btn-remove"></i>
                                 </div>';
                                 };
-                            }       
+                            }
                         @endphp
                         @php
                             echo $galleries_html;
@@ -439,7 +446,7 @@ Sửa sản phẩm
                 <span class="errors error_gift_${k}_link" style="color:red"></span>
             </div>
         </div>
-        
+
         <div class="row" style="display: flex;align-items: flex-start;text-align: right;">
             <div class="col-sm-8">
                 <input type="text" readonly name="gift[${k}][image]" value="" placeholder="Ảnh sản phẩm" class="form-control" />
@@ -458,7 +465,7 @@ Sửa sản phẩm
     $(document).on('click','.add_repeater',function() {
         $('.specifications_div').append(`
             <div class="row" style="display: flex;align-items: flex-start;">
-                    <div class="col-sm-5"> 
+                    <div class="col-sm-5">
                         <input type="text" name="specifications[${i}][key]" value="" placeholder="Loại thông số"
                         class="form-control" />
                         <span class="errors error_specifications_${i}_key" style="color:red"></span>
@@ -470,13 +477,13 @@ Sửa sản phẩm
                     </div>
                     <div class="col-sm-2">
                         <a data-repeater-delete class="btn btn-danger remove_repeater"><i class="fa fa-minus"></i></a>
-                    </div>   
+                    </div>
             </div>
         `);
          i = Math.floor(1000 + Math.random() * 9000);
     });
 
-   
+
     $(function () {
         $('body').on('keyup', '#name', function () {
             ChangeToSlug('name', 'slug');
@@ -488,10 +495,10 @@ Sửa sản phẩm
         if (r == true) {
             $(this).parents('div.img').remove();
         };
-    
+
     })
 
-    
+
     $(function () {
         var description = CKEDITOR.replace( 'description', {
         });
@@ -506,13 +513,13 @@ Sửa sản phẩm
         var json_value = `<?php echo json_encode($categories) ?> `;
 
         var object_current;
-        
+
         $(document).on('change','#category_id',function() {
             id = $(this).val();
-            
+
             object_decode  = JSON.parse(json_value);
             object_current = object_decode.filter(function (object_decode) { return object_decode.id == id });
-            
+
             // console.log(object_current[0].properties.length);
             if (object_current[0].properties.length == 0) {
                 var html = '';
@@ -528,19 +535,19 @@ Sửa sản phẩm
             });
 
             $('.filter').html(html);
-            
+
         });
     })
 
 
-   
+
 
     $('body').on('submit','#infomation',function(e) {
         e.preventDefault();
         var infomation = new FormData($('form#infomation')[0]);
-    
+
         var description = CKEDITOR.instances.description.getData();
-        var infomation_detail = CKEDITOR.instances.infomation_detail.getData(); 
+        var infomation_detail = CKEDITOR.instances.infomation_detail.getData();
         infomation.append('description', description);
         infomation.append('infomation_detail', infomation_detail);
 
@@ -556,7 +563,7 @@ Sửa sản phẩm
                 if (result.errors == true) {
                     var msg = result.messages;
                     var msg_keys = Object.keys(msg);
-                   
+
                     $('body').find('.errors').html('');
                     console.log(msg_keys);
                     msg_keys.forEach(function (item, index) {
@@ -575,20 +582,20 @@ Sửa sản phẩm
                         text: "Sửa sản phẩm thành công!",
                         icon: "success",
                         button: "OK",
-                    }).then(function () {                  
-                        window.location.href = `{{route('admin.products.index')}}`;            
+                    }).then(function () {
+                        window.location.href = `{{route('admin.products.index')}}`;
                     });
                 }
             });
     });
-        
+
     $(document).ready(function() {
         $('#category_id').select2();
     });
     $(document).ready(function() {
         $('#brand_id').select2();
     });
-   
+
 
 </script>
 @endsection

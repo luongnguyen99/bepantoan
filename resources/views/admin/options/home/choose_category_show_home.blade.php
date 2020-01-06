@@ -10,19 +10,19 @@ Chọn danh mục nổi bật
         .cke_contents {
             min-height: 100px !important;
         }
-    
+
         .col-xs-12 {
             margin-top: 10px !important;
         }
-    
+
         .pull-right {
             margin-left: 5px;
         }
-    
+
         .dd-empty {
             display: none
         }
-    
+
         #nestable3 {
             padding: 4px 8px !important;
             border: 1px #e0e0e0 solid;
@@ -75,7 +75,7 @@ Chọn danh mục nổi bật
                         $categories_show_home = json_decode(get_option_by_key('categories_show_home'),true);
                         // dd($categories_show_home);
                     @endphp
-                    
+
                     <div data-repeater-list="outer_list" class="abcd">
                         @if (!empty($categories_show_home) && count($categories_show_home) > 0)
                             @foreach ($categories_show_home as $element)
@@ -97,15 +97,15 @@ Chọn danh mục nổi bật
                                             <input data-repeater-delete="" type="button" value="Xóa" class="btn btn-danger" style="margin-top:25px">
                                         </div>
                                     </div>
-                                
-                                
+
+
                                     <!-- innner repeater -->
                                     <div class="inner-repeater">
                                         <div class="form-group">
                                             @php $brand_category =  !empty($element['brands']) ? $element['brands'] : [0 => 'abc']  @endphp
                                             @php $brands = show_brand_by_id_category($element['category']) @endphp
                                             <label class="title_brand">Hãng sản xuất</label>
-                                            
+
                                             <select name="brands" class="form-control brands" multiple>
                                                 @if (!empty($brands))
                                                     @foreach ($brands as $brand)
@@ -120,16 +120,16 @@ Chọn danh mục nổi bật
                                             @php
                                             $product_arr =  !empty($element['products']) ? $element['products'] : [0 => 'abc'];
                                             $products = get_products_by_category_id_option($element['category']);
-                                            
+
                                             @endphp
                                             <select name="products" class="form-control products" multiple>
                                                 @foreach ($products as $product)
                                                     <option {{in_array($product['id'],$product_arr) ? 'selected' : ''}} value="{{$product['id']}}">{{$product['name']}}</option>
                                                 @endforeach
-        
+
                                             </select>
-                                        </div>                      
-                                    </div>                          
+                                        </div>
+                                    </div>
                                 </div>
                                 <hr>
                             @endforeach
@@ -146,20 +146,20 @@ Chọn danh mục nổi bật
                                         </select>
                                     </div>
                                     <div class="col-xs-2">
-                            
+
                                         <a class="btn btn-info up" style="margin-top:25px"><i class="fa fa-arrow-up"></i></a>
                                         <a class="btn btn-success down" style="margin-top:25px"><i class="fa fa-arrow-down"></i></a>
                                         <input data-repeater-delete="" type="button" value="Xóa" class="btn btn-danger" style="margin-top:25px">
                                     </div>
                                 </div>
-                            
-                            
+
+
                                 <!-- innner repeater -->
                                 <div class="inner-repeater">
-                                    
+
                                     <div class="form-group">
                                         <label class="title_brand">Hãng sản xuất</label>
-                                        <select name="brands" class="form-control brands" multiple>        
+                                        <select name="brands" class="form-control brands" multiple>
                                         </select>
                                     </div>
 
@@ -168,11 +168,11 @@ Chọn danh mục nổi bật
                                         <select name="products" class="form-control products" multiple>
                                         </select>
                                     </div>
-    
+
                                 </div>
                             </div>
                         @endif
-                        
+
                     </div>
                     <button type="submit" class="btn btn-success">Lưu</button>
                     <input data-repeater-create="" type="button" value="Thêm" class="btn btn-primary callBackSelect2">
@@ -214,7 +214,7 @@ $(document).ready(function () {
     $("select").on("select2:select", function (evt) {
         var element = evt.params.data.element;
         var $element = $(element);
-        
+
         $element.detach();
         // console.log($element);
         $(this).append($element);
@@ -238,7 +238,7 @@ $(document).ready(function () {
         $(divCurrent.prev()).find('select:eq(1)').attr('name',selectEq2_2);
 
         wrapper.insertBefore(divCurrent.prev());
-    }); 
+    });
 
     jQuery('body').on('click','.down',function(){
         divCurrent = $(this).parents('.repeater_div');
@@ -310,14 +310,16 @@ var i = 0;
                 $(this).parents('.repeater_div').find('.products').html(html);
         });
 
-        i = 1;  
+        i = 1;
     }else{
         i = 0;
     }
-   
+
 
 
 });
+
+
 
 
 </script>

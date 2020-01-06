@@ -56,20 +56,29 @@ if (!function_exists('get_detail_products_by_id')) {
 // get product
 if (!function_exists('get_products_by_category_id')) {
     function get_products_by_category_id($id){
-        $checkCategory = Category::where('parent_id',$id)->get();
+
+        $category = Category::where('id', $id )->first();
+        $category->load('hasChildCategory');
+        //
         $Agent = new Agent();
         $limit = $Agent->isMobile() ? 6 : 5;
-        // dd($limit);
-        if (count($checkCategory) == 0) {
+        if (get_option_by_key('sort_by') == 'stt') {
+            $order_by = [ 'key' => 'products.stt', 'value' => 'desc'];
+        }elseif(get_option_by_key('sort_by') == 'brand'){
+            $order_by = [ 'key' => DB::raw('order_brand.order_position'), 'value' => 'asc'];
+        }else{
+            $order_by = [ 'key' => 'products.created_at', 'value' => 'desc'];
+        }
+        if (count($category->hasChildCategory) == 0) {
             $products = Product::select(DB::raw('products.*'),DB::raw('order_brand.order_position as position'))
             ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')->where('products.category_id',$id)
             ->whereColumn('order_brand.category_id','=','products.category_id')
-            ->orderBy(DB::raw('order_brand.order_position'),'asc')
+            ->orderBy($order_by['key'],$order_by['value'])
             ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
             // dd($products);
         }else{
             $inCategory = [];
-            foreach ($checkCategory as $key => $value) {
+            foreach ($category->hasChildCategory as $key => $value) {
                 $inCategory[] = $value->id;
             }
 
@@ -77,12 +86,12 @@ if (!function_exists('get_products_by_category_id')) {
             ->leftJoin('order_brand','order_brand.brand_id','=','products.brand_id')
             ->whereColumn('order_brand.category_id','=','products.category_id')
             ->whereIn('products.category_id',$inCategory)
-            ->orderBy(DB::raw('order_brand.order_position'),'desc')
+            ->orderBy($order_by['key'],$order_by['value'])
             ->with('galleries','brand')->limit($Agent->isMobile() ? 6 : 5)->get();
         }
         // dd($products);
         return $products;
-       
+
     };
 }
 
@@ -102,7 +111,7 @@ if (!function_exists('get_products_by_category_id_option')) {
         $products = Product::select('id','name')->whereIn('category_id',$inCategory)->get()->toArray();
         // dd($products);
         return $products;
-       
+
     };
 }
 
@@ -134,11 +143,11 @@ if (!function_exists('get_products_relation_by_category_id')) {
         // }
         // dd($products);
         return $products;
-       
+
     };
 }
 
-// number format 
+// number format
 if (!function_exists('pveser_numberformat')) {
     function pveser_numberformat($price){
         $price =  number_format($price, 0, '', '.').'đ';
@@ -206,7 +215,7 @@ function GetCategory($category, $parent, $shift, $id_select)
 }
 //==============>Show Category<=====================
 function ShowCategory($category, $parent, $shift)
-{   
+{
     foreach ($category as $value) {
         if ($value['parent_id'] == $parent) {
             echo '
@@ -225,17 +234,17 @@ function ShowCategory($category, $parent, $shift)
 //=================>Cut Content<======================
 function get_excerpt($content, $number)
 {
-    
+
     $excerpt = $content;
-    
+
     $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
-    
+
     $excerpt = strip_tags($excerpt);
-    
+
     $excerpt = substr($excerpt, 0, $number);
-    
+
     $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
-    
+
     $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
     return $excerpt."...";
 }
@@ -255,7 +264,7 @@ function get_option_by_key($key){
 function check_last_child($dataArr , $id){
     $check = true;
     foreach ($dataArr as $key => $value) {
-        
+
         if( $value['parent'] == $id  ){
             $check = false;
 
@@ -292,7 +301,7 @@ function group_list_tree( $dataArr){
             unset($dataArr[$key]);
         }else{
             if( isset($dataResult[$value['parent']])  ){
-                $dataResult[$value['parent']][] = $value['id']; 
+                $dataResult[$value['parent']][] = $value['id'];
             }else{
                 foreach ($dataResult as $loop => $item) {
                     if(in_array( $value['parent'] ,  $item )){
@@ -370,7 +379,7 @@ if (!function_exists('show_brand_by_id_category')) {
         }else{
             $inCategory = [(int)$id];
         }
-        
+
         $brands = Brand::select('brands.*')
                 ->join('products','brands.id','=','products.brand_id')
                 ->join('categories','categories.id','=','products.category_id')
