@@ -26,8 +26,8 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
-            
-            
+
+
             {{-- brands  --}}
             <li class="treeview {{activeNav('brands')}}">
                 <a href="#">
@@ -39,7 +39,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="{{activeNav('brands','add')}}"><a href="{{route('admin.brands.index')}}"><span class="glyphicon glyphicon-record"></span> Danh sách</a></li>
-            
+
                 </ul>
             </li>
             {{-- products  --}}
@@ -206,7 +206,7 @@
                             <li class="{{activeNav('options','footer')}}"><a href="{{route('admin.options.footer')}}"><span class="glyphicon glyphicon-record"></span>
                                 Footer</a></li>
                             <li class="{{activeNav('options','choose_category_show_home')}}"><a href="{{route('admin.options.choose_category_show_home')}}"><span class="glyphicon glyphicon-record"></span> Chọn danh mục nổi bật</a></li>
-                            
+
                         </ul>
                     </li>
                     <li class="{{activeNav('options','seo_setting')}}"><a href="{{route('admin.options.seo_setting')}}"><span
@@ -218,12 +218,13 @@
                     <li class="{{activeNav('options','payment')}}"><a href="{{route('admin.options.payment')}}"><span class="glyphicon glyphicon-record"></span>Thanh toán</a></li>
                     <li class="{{activeNav('options','social_network')}}"><a href="{{route('admin.options.social_network')}}"><span class="glyphicon glyphicon-record"></span>Mạng xã hội</a></li>
                     <li class="{{activeNav('options','menu')}}"><a href="{{route('admin.options.menu')}}"><span class="glyphicon glyphicon-record"></span>Menu</a></li>
+                     <li class="{{activeNav('options','mega_menu')}}"><a href="{{route('admin.options.mega_menu')}}"><span class="glyphicon glyphicon-record"></span>Mega menu</a></li>
                     <li class="{{activeNav('options','choose_category_show_menu_mobile')}}"><a href="{{route('admin.options.choose_category_show_menu_mobile')}}"><span class="glyphicon glyphicon-record"></span>Danh mục mobile</a></li>
                     <li class="{{activeNav('options','prd-detail')}}"><a href="{{route('admin.options.prd-detail')}}"><span class="glyphicon glyphicon-record"></span>Chi tiết sản phẩm</a></li>
                     <li class="{{activeNav('options','introduce')}}"><a href="{{route('admin.options.introduce')}}"><span class="glyphicon glyphicon-record"></span>Giới thiệu</a></li>
-                    <li class="{{activeNav('options','general')}}"><a href="{{route('admin.options.general')}}"><span class="glyphicon glyphicon-record"></span>Thiết lập chung</a></li>    
+                    <li class="{{activeNav('options','general')}}"><a href="{{route('admin.options.general')}}"><span class="glyphicon glyphicon-record"></span>Thiết lập chung</a></li>
                 </ul>
-                
+
             </li>
 
         </ul>

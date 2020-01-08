@@ -21,11 +21,11 @@ Route::any('logout', 'Auth\LoginController@logout')->name('logout');
 Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middleware' => 'auth'], function () {
     Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
         ->name('ckfinder_examples');
-        
+
     Route::get('/', function () {
         return view('admin.home.index');
     })->name('home');
-    
+
     Route::group(['prefix' => 'categories','as' => 'categories.'], function () {
         Route::any('data', 'CategoryController@getData')->name('data');
         Route::get('/','CategoryController@index')->name('index');
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('add', 'ProductController@add')->name('add');
         Route::post('saveAdd', 'ProductController@saveAdd')->name('saveAdd');
-        
+
         Route::get('edit/{id}','ProductController@edit')->name('edit');
         Route::post('saveEdit/{id}','ProductController@saveEdit')->name('saveEdit');
 
@@ -101,7 +101,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
     //=================> Post category <===================
     Route::group(['prefix' => 'post_categories','as' => 'post_categories.'],function(){
-        
+
         Route::get('add', 'Post_categoriesController@getAdd')->name('add');
         Route::post('add', 'Post_categoriesController@postAdd');
 
@@ -164,7 +164,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('edit_payment/{id}', 'OptionsController@postEditPayment');
 
         Route::get('del_payment/{id}', 'OptionsController@getDelPayment');
-        
+
         //=================>Social network<=============================
         Route::get('social_network', 'OptionsController@getSocial_network')->name('social_network');
         Route::post('social_network', 'OptionsController@postSocial_network');
@@ -230,6 +230,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
         Route::post('show_product_by_id_category','OptionsController@show_product_by_id_category')->name('show_product_by_id_category');
         // Chọn danh mục hiển thị menu mobile
         Route::any('choose_category_show_menu_mobile', 'OptionsController@choose_category_show_menu_mobile')->name('choose_category_show_menu_mobile');
+        // Mega menu
+        Route::any('mega_menu', 'OptionsController@mega_menu')->name('mega_menu');
         // Email admin
         Route::any('email_admin', 'OptionsController@email_admin')->name('email_admin');
 
@@ -240,7 +242,7 @@ Route::group(['prefix' => 'admin','as' => 'admin.','namespace' => 'Admin','middl
 
         Route::get('edit/{id}','StatusorderController@getedit')->name('edit');;
         Route::post('edit/{id}','StatusorderController@postedit')->name('saveEdit');;
-        
+
         Route::get('del/{id}','StatusorderController@getdel');
     });
     //=================> Pages <===================
@@ -292,35 +294,37 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
 
     Route::get('search', 'IndexController@getSearch')->name('master.search');
     Route::get('search_m', 'IndexController@getSearchMobile')->name('master.search_m');
-    // danh muc san pham 
+    // danh muc san pham
     Route::get('danh-muc','ListCategoryController@index')->name('list-category');
     // danh muc chi tiet
     Route::get('danh-muc/{slug}/{slug2?}','ListCategoryController@category_detail')->name('category_detail');
     // danh muc thuong hieu
     Route::get('thuong-hieu-{slug}', 'BrandCategoryController@brand_category')->name('brand_category');
     // san pham chi tiet
-    
+
     //rate star
     Route::post('rate_star','ProductController@rate_star')->name('rate_star');
     //submit form tư vấn
     Route::post('submitform_advisory','ProductController@submitform_advisory')->name('submitform_advisory');
     //tim kiem
     Route::get('tim-kiem', 'IndexController@searchEnter')->name('searchEnter');
+    // get brand by id cate ajax
+    Route::post('show_brand_by_id_category_ajax', 'IndexController@show_brand_by_id_category_ajax')->name('show_brand_by_id_category_ajax');
     //saveCookie
     Route::post('saveCookieHistory', 'ProductController@saveCookieHistory')->name('saveCookieHistory');
-    
+
     // loadmore
     Route::post('loadmore', 'ListCategoryController@loadmore')->name('loadmore');
-    
+
     Route::group(['prefix' => 'cart','as' => 'cart.'], function () {
         Route::post('addCart','CartController@addCart')->name('addCart');
         Route::post('removeCart/{id}','CartController@removeCart')->name('removeCart');
         Route::post('updateCart/{id}','CartController@updateCart')->name('updateCart');
         Route::post('saveOrder','CartController@saveOrder')->name('saveOrder');
     });
-    
+
     Route::get('gio-hang', 'CartController@showCart')->name('showCart');
-    
+
     Route::get('cam-on',function(){
         return view('client.dathang');
     })->name('thankyou');
@@ -336,7 +340,7 @@ Route::group(['prefix' => '','namespace' => 'Client'], function () {
     Route::get('crawler','CrawlerController@index')->name('crawler');
     Route::get('crawler_product_detail', 'CrawlerController@crawler_product_detail')->name('crawler_product_detail');
     Route::get('crawler_product_detail_order_desc', 'CrawlerController@crawler_product_detail_order_desc')->name('crawler_product_detail_order_desc');
-    
+
     Route::get('/{slug}','ProductController@detail')->name('product_detail');
     Route::get('post/{slug}','BlogController@getData');
     Route::get('error/404','BlogController@get404');
@@ -354,7 +358,7 @@ View::composer('*', function($view) {
     // //=============>HOTLINE<=================
     // $hotline = App\Models\Option::where('key','hotline')->first();
     // if($hotline->value == null){
-    //     $hotline_j = null; 
+    //     $hotline_j = null;
     //     $view->with('hotline_j', $hotline_j);
     // }
     // else{
@@ -364,7 +368,7 @@ View::composer('*', function($view) {
     // //=============>FOOTER<=================
     // $footer = App\Models\Option::where('key','footer')->first();
     // if($footer->value == null){
-    //     $footer_j = null; 
+    //     $footer_j = null;
     //     $view->with('footer_j', $footer_j);
     // }
     // else{
@@ -373,9 +377,9 @@ View::composer('*', function($view) {
     // }
     // //=============>LOGO<=================
     // $logo = App\Models\Option::where('key','logo')->first();
-   
+
     // if($logo->value == null){
-    //     $logo->value = null; 
+    //     $logo->value = null;
     //     $view->with('logo', $logo->value);
     // }
     // else{
@@ -383,9 +387,9 @@ View::composer('*', function($view) {
     // }
     // //=============>PAYMENT<=================
     // $payment = App\Models\Option::where('key','payment')->first();
-   
+
     // if($payment->value == null){
-    //     $payment_j = null; 
+    //     $payment_j = null;
     //     $view->with('payment_j', $payment_j);
     // }
     // else{
@@ -394,9 +398,9 @@ View::composer('*', function($view) {
     // }
     // //=============>SOCIAL NETWORK<=================
     // $social_network = App\Models\Option::where('key','social_network')->first();
-   
+
     // if($social_network->value == null){
-    //     $social_network_j = null; 
+    //     $social_network_j = null;
     //     $view->with('social_network_j', $social_network_j);
     // }
     // else{

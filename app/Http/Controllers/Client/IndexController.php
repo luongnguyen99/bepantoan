@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\{Product,Category,Gallery,Post, Post_category};
+use App\Models\{Product,Category,Gallery,Post, Post_category,Brand};
 use DB;
 class IndexController extends Controller
 {
@@ -17,7 +17,7 @@ class IndexController extends Controller
         //     foreach ($categories_show_home as $key => $value) {
         //         $where .= ' categories.id = '.$value;
         //         if ($key+1 < count($categories_show_home)) {
-        //             $where .= ' or '; 
+        //             $where .= ' or ';
         //         }
         //     }
 
@@ -36,14 +36,14 @@ class IndexController extends Controller
         //     group by `categories`.`id`
         //     ORDER BY RAND() LIMIT 4 ");
         // };
-      
+
         $category_advisory = Post_category::where('id',1)->with(['posts' => function($query){
              $query->orderBy('id', 'desc')->limit(10);
         }])->first();
         $category_news = Post_category::where('id',3)->with(['posts' => function($query){
-            $query->orderBy('id', 'desc')->limit(4); 
+            $query->orderBy('id', 'desc')->limit(4);
         }])->first();
-        
+
         $category_sale = Post::where('post_category_id',2)->orderBy('id', 'desc')->limit(1)->first();
         $highlights_post = Post::orderby('views', 'desc')->where('post_category_id',3)->take(4)->get();
         // dd($categories);
@@ -51,19 +51,19 @@ class IndexController extends Controller
     }
     public function getSearch(Request $r)
     {
-        
+
         $key = $r->key;
         $arr_prd = Product::where('name', 'like', '%'.$key.'%')->select('*')->take(2)->get()->toarray();
-        
+
         $data['cate'] = Category::where('name','like','%'.$key.'%')->select('*')->take(3)->get();
-        
+
         if (!empty($arr_prd)) {
             foreach ($arr_prd as $key => $value) {
                 if ($img_url = Gallery::where('product_id',$value['id'])->first() != null) {
                     $img_url = Gallery::where('product_id',$value['id'])->first()->toarray();
-                    
+
                     if($img_url['image'] != null){
-                        
+
                         $arr_prd[$key]['image'] = $img_url['image'];
                     }else{
                         $arr_prd[$key]['image'] = null;
@@ -75,7 +75,7 @@ class IndexController extends Controller
             }
         }else{
             $arr_prd = [];
-            
+
         }
         $data['prd'] = $arr_prd;
 
@@ -84,8 +84,8 @@ class IndexController extends Controller
     public function searchBtn(Request $r)
     {
         // dd('aa');
-        $db = Product::where('name','like','%'.$r->search.'%')->get(); 
-        
+        $db = Product::where('name','like','%'.$r->search.'%')->get();
+
         return view('client.search',compact('db'));
     }
 
@@ -105,16 +105,16 @@ class IndexController extends Controller
         // dd('aaa');
         $key = $r->key;
         $arr_prd = Product::where('name', 'like', '%'.$key.'%')->select('*')->take(2)->get()->toarray();
-        
+
         $data['cate'] = Category::where('name','like','%'.$key.'%')->select('*')->take(3)->get();
-        
+
         if (!empty($arr_prd)) {
             foreach ($arr_prd as $key => $value) {
                 if ($img_url = Gallery::where('product_id',$value['id'])->first() != null) {
                     $img_url = Gallery::where('product_id',$value['id'])->first()->toarray();
-                    
+
                     if($img_url['image'] != null){
-                        
+
                         $arr_prd[$key]['image'] = $img_url['image'];
                     }else{
                         $arr_prd[$key]['image'] = null;
@@ -126,10 +126,46 @@ class IndexController extends Controller
             }
         }else{
             $arr_prd = [];
-            
+
         }
         $data['prd'] = $arr_prd;
-        
+
         return $data;
     }
+
+
+    public function show_brand_by_id_category_ajax(Request $request){
+        $categoryCurrent = Category::where('id',$request->id)->first();
+
+        $checkCategory = Category::where('parent_id',$request->id)->get();
+        $inCategory = [];
+        if (count($checkCategory) != 0) {
+            foreach ($checkCategory as $key => $value) {
+                $inCategory[] = $value->id;
+            }
+        }else{
+            $inCategory = [(int)$request->id];
+        }
+
+        $brands = Brand::select('brands.*')
+                ->join('products','brands.id','=','products.brand_id')
+                ->join('categories','categories.id','=','products.category_id')
+                ->whereIn('categories.id',$inCategory)
+                ->groupBy('brands.id')->get();
+        ob_start();
+        foreach($brands as $brand){
+    ?>
+        <li>
+            <a style="cursor:pointer;display:block" href="<?php route('category_detail',['slug' => (!empty($categoryCurrent->slug) ? $categoryCurrent->slug : '#'),'slug2' => $brand->slug ])?>">
+               <img src="<?php echo $brand->image ?>" class="icImgBrand"
+                        alt="<?php echo $brand->name ?>">
+            </a>
+        </li>
+    <?php
+        };
+        $content = ob_get_contents();
+        ob_get_clean();
+        return $content;
+    }
+
 }

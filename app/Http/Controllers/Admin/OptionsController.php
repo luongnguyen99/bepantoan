@@ -757,6 +757,18 @@ class OptionsController extends Controller
         return view('admin.options.home.choose_category_show_menu',compact('categories'));
     }
 
+    public function mega_menu(Request $request){
+        if ($request->isMethod('post')) {
+            // dd($request->all());
+            Option::where('key','=','mega_menu')->update(['value' => $request->categories]);
+            return response([
+                'errors' => false,
+            ]);
+        };
+        $categories = Category::all();
+        return view('admin.options.header.menu.mega-menu',compact('categories'));
+    }
+
     public function email_admin(Request $request){
         if ($request->isMethod('post')) {
             Option::where('key', '=', 'email_admin')->update(['value' => $request->email]);

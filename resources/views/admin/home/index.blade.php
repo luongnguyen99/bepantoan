@@ -13,7 +13,7 @@
             <li class="active">Dashboard</li>
         </ol>
     </section>
-    
+
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
@@ -22,7 +22,7 @@
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>{{DB::table('orders')->count()}}</h3>
-    
+
                         <p>Tổng số đơn hàng</p>
                     </div>
                     <div class="icon">
@@ -51,7 +51,7 @@
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>{{DB::table('users')->count()}}</h3>
-    
+
                         <p>Quản trị viên</p>
                     </div>
                     <div class="icon">
@@ -66,7 +66,7 @@
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3>{{DB::table('phone_order')->where('status',0)->count()}}</h3>
-    
+
                         <p>Điện thoại đang cần tư vấn</p>
                     </div>
                     <div class="icon">
@@ -78,7 +78,7 @@
             <!-- ./col -->
         </div>
         <!-- /.row -->
-    
-    
+
+
     </section>
 @endsection

@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	@yield('seo')
-	
+
 
 
 	<title>@yield('title')</title>
@@ -22,11 +22,15 @@
 	<link rel="stylesheet" href="{{asset('client/css/owl.theme.default.min.css')}}">
 	{{-- <link rel="stylesheet" href="{{asset('client/css/aos.css')}}">  --}}
 	<link rel="stylesheet" href="{{asset('client/css/style.css')}}">
-	
+    <style>
+        a.hover_show_brand.hover{
+            color: #ff8d1c !important;
+        }
+    </style>
 	@yield('css')
 </head>
 
-<?php 
+<?php
 
 	$menu = get_option_by_key('logo');
 	$name_site = get_option_by_key('general_name_site');
@@ -52,7 +56,7 @@
 				<div class="row" style="display: flex;align-items: center;">
 					<div class="col-md-2 col-xs-12 col-sm-12">
 						<div class="logo">
-	
+
 							<a href="<?php echo URL::to('/'); ?>">
 								@if($logo != null)
 								<img src="{{ $logo }}" alt="{{ $name_site }}">
@@ -71,22 +75,22 @@
 								<button type="button" class="btn">Tìm kiếm</button>
 								<ul id="search_prd" class="resuiltSearch ul-menu-muiten search-suggest">
 								</ul>
-	
+
 							</form>
 						</div>
 					</div>
 					<div class="col-md-7 col-xs-12 col-sm-12">
 						<div class="quick-menu hidden-xs">
-							<?php								
+							<?php
 									$menu = json_decode($menu, true);
 								?>
-	
+
 							@if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
 							<a href="{{ isset($item_menu['link']) && !empty($item_menu['link']) ? $item_menu['link'] : " # "  }}"
 								class="{{ isset($item_menu['clss']) && !empty($item_menu['clss']) ? $item_menu['clss'] : false  }}"><i
 									class="{{ $item_menu['icon'] }}"></i>{{ $item_menu['name'] }}</a> @endforeach @endif
 							@php $hotline = json_decode($hotline, true); $hotline = $hotline['phone']; @endphp
-	
+
 							<a class="hotline" href="tel:{{ $hotline }}" rel=""><i class="pe-7s-call"></i>
 								@if ($hotline)
 								{{ $hotline }}
@@ -103,113 +107,76 @@
 				</div>
 			</div>
 		</div>
-		<!-- menu thêm mới -->
+        <!-- menu thêm mới -->
+        @php
+            $arr = json_decode(get_option_by_key('mega_menu'),true);
+        @endphp
+
 		<div class="mega-menu hidden-xs hidden-sm">
 			<div class="container">
 				<ul class="menu">
-				    <li><a href="#">bếp từ</a></li>
-				    <li class="menu-item-has-children">
-				    	<a href="#">bếp gas</a>
-				    	<div class="dropdown-mega-content">	
-				    		<div class="row">
-				    			<div class="col-md-6 col-lg-6">
-				    				<h3>Phân loại</h3>
-				    				<ul class="list-item-mn">
-                                                
-                                        <li><a href="#">Bếp gas âm</a></li>
-                                        
-                                        <li><a href="#">Bếp gas dương</a></li>
-                                        
-                                        <li><a href="#">Bếp gas âm hồng ngoại</a></li>
-                                        
-                                        <li><a href="#">Bếp gas dương hồng ngoại</a></li>
-                                        
-                                        <li><a href="#">Bếp gas giá rẻ</a></li>
-                                        
-                                        <li><a href="#">Bếp gas công nghiệp| Bếp gas nhà hàng, khách sạn</a></li>
-                                        
-                                        <li><a href="#">Bếp gas kết hợp điện từ</a></li>
-                                        
-                                        <li><a href="#">Bếp và bình gas</a></li>
-                                        
-                                        <li><a href="#">Bếp gas đơn</a></li>
-                                        
-                                        <li><a href="#">Bếp gas du lịch</a></li>
-                                        
-                                        <li><a href="#">Bình gas &amp; Linh kiện</a></li>
-                                        
+                    @foreach ($arr as $item)
+                        @if (!empty($item['children']) && is_array($item['children']) && count($item['children']) > 0)
+                            @php $check_has_children = true @endphp
+                        @else
+                            @php $check_has_children = false @endphp
+                        @endif
+                        @if (!empty($check_has_children))
+                                @if (!empty($item['id']))
+                                <li class="{{!empty($check_has_children) ? 'menu-item-has-children' : ''}}">
+                                    <a href="{{!empty($item['slug']) ? $item['slug'] : '#' }}">{{$item['text']}}</a>
+                                    <div class="dropdown-mega-content">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-4 div_children">
+                                                <h3>Phân loại</h3>
+                                                <ul class="list-item-mn">
+                                                    @foreach ($item['children'] as $children)
+                                                        <li><a class="hover_show_brand" data-idCate="{{$children['id']}}" href="{{!empty($children['slug']) ? $children['slug'] : '#' }}">{{$children['text']}}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
+                                            <div class="col-md-8 col-lg-8 div_children">
+                                                <h3>Hãng sản xuất</h3>
+                                                <ul class="list-item-mn list-brand-home" style="max-height: 320px;z-index:999;overflow-y: scroll;;display: flex;flex-flow: row wrap;">
+                                                    @php $brands = show_brand_by_id_category($item['id']); @endphp
+                                                    @foreach ($brands as $brand)
+                                                        <li>
+                                                            <a style="cursor:pointer;display:block" href="{{(!empty($item['slug']) ? $item['slug'] : '#').'/'.$brand['slug']}}">
+                                                                <img src="{{$brand['image']}}" class="icImgBrand"
+                                                                        alt="{{$brand['name']}}">
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @else
+                                <li>
+                                    <a href="{{!empty($item['slug']) ? $item['slug'] : '#' }}">{{$item['text']}} <i class="pe-7s-more"></i></a>
+                                    <ul class="dropdown-menu-list">
+                                        @foreach ($item['children'] as $children)
+                                            <li><a href="{{!empty($children['slug']) ? $children['slug'] : '#' }}">{{$children['text']}}</a></li>
+                                        @endforeach
                                     </ul>
-				    			</div>
-				    			<div class="col-md-6 col-lg-6">
-				    				<h3>Hãng sản xuất</h3>
-				    				<ul class="list-item-mn list-brand-home">        
-                                        <li>
-                                        	<a href="#">
-                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Eurosun"></label>
-                                        	</a>
-                                        </li>
-                                        
-                                        <li>
-                                        	<a href="#">
-                                            	<label><img src="https://beptot.vn/Data/upload/files/Adv/1-logo-thuong-hieu-0306/taka.png" class="icImgBrand" alt="Taka"></label>
-                                            </a>
-                                        </li>
-                                        <li>
-                                        	<a href="#">
-                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Eurosun"></label>
-                                        	</a>
-                                        </li>
-                                        
-                                        <li>
-                                        	<a href="#">
-                                            	<label><img src="https://beptot.vn/Data/upload/files/Adv/1-logo-thuong-hieu-0306/taka.png" class="icImgBrand" alt="Taka"></label>
-                                            </a>
-                                        </li>
-                                        <li>
-                                        	<a href="#">
-                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Eurosun"></label>
-                                        	</a>
-                                        </li>
-                                        
-                                        <li>
-                                        	<a href="#">
-                                            	<label><img src="https://beptot.vn/Data/upload/files/banner/logo%20hang%20SX/eurosun(1).jpg" class="icImgBrand" alt="Taka"></label>
-                                            </a>
-                                        </li>
-                                        
-                                    </ul>
-				    			</div>
-				    		</div>
-				    	</div>
-				    </li>
-				    <li><a href="#">bếp điện</a></li>
-				    <li><a href="#">Máy hút mùi</a></li>
-				    <li><a href="#">Bếp điện từ</a></li>
-				    <li><a href="#">Chậu vòi rửa chén bát</a></li>
-				    <li><a href="#">Máy rửa chén bát</a></li>
-				    <li><a href="#">Máy sấy chén bát</a></li>
-				    <li>
-				    	<a href="#">Thiết bị nhà bếp khác <i class="pe-7s-more"></i></a>
-				    	<ul class="dropdown-menu-list">
-                                    
-                            <li><a href="#">Lò nướng đa năng</a></li>
-                            
-                            <li><a href="#">Lò vi sóng</a></li>
-                            
-                            <li><a href="#">Đồ gia dụng</a></li>
-                            
-                            <li><a href="#">Bộ nồi từ - chảo từ</a></li>
-                            
-                            <li><a href="#">Máy giặt - Máy sấy</a></li>
-                            
-                            <li><a href="#">Tủ lạnh - Tủ Rượu</a></li>
-                            
-                        </ul>
-				    </li>
+                                </li>
+                                @endif
+                        @else
+                            <li>
+                                <a href="{{!empty($item['slug']) ? $item['slug'] : '#' }}">{{$item['text']}}</a>
+                            </li>
+                        @endif
+
+
+                    @endforeach
+
+
 				</ul>
 			</div>
 		</div>
-	<!-- hết menu mới -->
+	    <!-- hết menu mới -->
 		<div class="header-mobile hidden-md hidden-lg">
 			<div class="container">
 				<div class="row">
@@ -218,7 +185,7 @@
 							<button class="btn btn-show-menu hidden-md hidden-lg"><i class="fa fa-bars"></i></button>
 							<div class="menu-box">
 								<div class="bg-menu hidden-md hidden-lg"></div>
-	
+
 								<ul class="main-menu">
 									<span class="logo-menu">
 										<a href="<?php echo URL::to('/'); ?>">
@@ -251,11 +218,11 @@
 										@endif
 									</li>
 									@endforeach @endif
-	
+
 									<ul class="mobile-support">
-	
+
 										@if (isset($menu) && !empty($menu)) @foreach ( $menu as $item_menu )
-	
+
 										<li><i class="{{ $item_menu['icon'] }}"></i><a
 												href="{{ $item_menu['link']  }}">{{ $item_menu['name'] }}</a></li>
 										@endforeach @endif
@@ -264,9 +231,9 @@
 												<i class="pe-7s-call"></i> Hotline <b>{{$hotline}}</b> (24h/7)
 											</a>
 										</li>
-	
+
 									</ul>
-	
+
 								</ul>
 							</div>
 						</div>
@@ -281,9 +248,9 @@
 								@endif
 							</a>
 						</div>
-	
+
 					</div>
-	
+
 					<div class="col-xs-3 col-sm-2">
 						<div class="quick-cart">
 							<a href="{{route('showCart')}}" target="_blank" rel="">
@@ -291,10 +258,10 @@
 							</a>
 						</div>
 					</div>
-				
-	
+
+
 				</div>
-	
+
 			</div>
 			<div>
 					<div class="form-search">
@@ -303,18 +270,18 @@
 							<button type="button" class="btn">Tìm kiếm</button>
 							<ul id="search_prd_m" class="resuiltSearch ul-menu-muiten search-suggest">
 							</ul>
-				
+
 						</form>
 					</div>
 				</div>
-				
+
 				<div>
 					<div class="btn-group-cate hidden-lg hidden-md">
 						<button type="button" class="btn-category dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 							Lọc Danh mục sản phẩm <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu sub-categories-mobile" role="menu">
-				
+
 							@foreach ( $dataset as $id_category ) @php $cate_ = get_category_by_id($id_category['id']);
 							@endphp
 							<li>
@@ -323,14 +290,14 @@
 							</li>
 							@endforeach
 						</ul>
-				
+
 						{{--
 					                        </form> --}}
 					</div>
-				
+
 				</div>
 			<!-- menu mobile  -->
-	
+
 	</header>
 	<!-- /header -->
 
@@ -340,7 +307,7 @@
 			<div class="footer-top">
 				<div class="container">
 					<div class="row">
-						
+
                         @php
                             $ft = json_decode(get_option_by_key('footer'),true);
                             @endphp
@@ -353,10 +320,10 @@
                                 </div>
                             @endforeach
                         @endif
-                            
+
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="social-media">
 				<div class="container">
@@ -364,7 +331,7 @@
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="paypal social-icon">
 								<ul>
-									
+
 									@php
 										$payment = json_decode($payment,true);
 									@endphp
@@ -401,10 +368,10 @@
 					<ul class="footer-address">
 						@php
 							$sw = App\Models\Showroom::orderBy('id','asc')->first();
-						
+
 						@endphp
 						@if (!empty($sw))
-					
+
 						<li>
 							<div class="bg">
 								 {{-- <h4>{{ $sw->name }}</h4> --}}
@@ -440,17 +407,17 @@
 												đồ đường đi</a>
 									</div>
 								</div>
-							
 
-								
+
+
 							</div>
 						</li>
-						
+
 						@endif
 					</ul>
-					
+
 					@if (!empty($sw))
-					
+
 					<div class="modal fade" id="exampleModalCenter{{ $sw->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 					<div class="modal-dialog  modal-dialog-centered" role="document">
 						<div class="modal-content" style="border-radius:0%">
@@ -465,11 +432,11 @@
 								<?php echo $sw->embed_google_map ?>
 							</div>
 						</div>
-						
+
 						</div>
 					</div>
 					</div>
-					
+
 					@endif
 				</div>
 			</div>
@@ -489,7 +456,7 @@
 					</div>
 				</div>
 			</div>
-		</footer>	
+		</footer>
 		<div class="ppocta-ft-fix horizontal">
 			<div id="messengerButton"> <a href="http://fb.com/msg/bepantoan.vn" target="_blank"
 					class="ppocta-btn-messenger-tracking"><i></i></a></div>
@@ -499,7 +466,7 @@
 					href="tel:0912331335" class="txt"><span>Gọi ngay</span></a></div>
 		</div>
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=503684500482559&autoLogAppEvents=1"></script>
-	
+
 		<script type="text/javascript" src="{{asset('client/js/jquery-1.9.1.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/jquery-ui.min.js')}}"></script>
 		<script type="text/javascript" src="{{asset('client/js/bootstrap.min.js')}}"></script>
@@ -517,7 +484,7 @@
 		});
 		$("#search").keyup(function() {
 			var key = $('#search').val();
-			
+
 			if(key != ''){
 				$.ajax({
 					url:"{{ route("master.search") }}",
@@ -549,7 +516,7 @@
 								'</li>'
 							});
 
-							
+
 							$('#search_prd').html(html);
 							var tick = $('body').not('#search_prd');
 							$("body").on( 'click' , $(tick) , function (e) {
@@ -569,7 +536,7 @@
 		});
 		$("#search_m").keyup(function() {
 			var key = $('#search_m').val();
-			
+
 			if(key != ''){
 				$.ajax({
 					url:"{{ route("master.search_m") }}",
@@ -617,10 +584,32 @@
 				$('#search_prd_m').html('');
 			}
 		});
-		</script>
+        </script>
+        {{-- load brand  --}}
+        <script>
+            $(document).on('mouseover','.hover_show_brand',function(){
+				if (!$(this).hasClass('hover')) {
+                	$(this).parents('ul').find('li > a').removeClass('hover');
+                    $(this).addClass('hover');
+                    let id = $(this).attr('data-idCate');
+                    jQuery.ajax({
+                        url: `{{route('show_brand_by_id_category_ajax')}}`,
+                        type: 'POST',
+                        dataType: 'html',
+                        data: {
+                            _token : `{{csrf_token()}}`,
+                            id : id,
+                        },
+                    }).done(result => {
+                        console.log($(this).parents('.dropdown-mega-content'));
+                        $(this).parents('.dropdown-mega-content').find('.list-item-mn.list-brand-home').html(result);
+                    });
+				}
+            })
+        </script>
 		@yield('js')
 
-		{!! $f_code; !!} 
+		{!! $f_code; !!}
 
 	</body>
 	</html>

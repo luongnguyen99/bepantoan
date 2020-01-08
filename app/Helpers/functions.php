@@ -394,3 +394,4 @@ function check_device(){
     $limit = $Agent->isMobile() ? 6 : 5;
 	return $limit;
 }
+
